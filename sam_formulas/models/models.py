@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 
-# from odoo import models, fields, api
+from odoo import models, fields, api
+
+class ListaMateriales(models.Model):
+    _inherit = 'mrp.bom.line'
+
+    x_porcentaje = fields.Float(string="%", digits=(3, 3))
 
 
 # class sam_formulas(models.Model):
