@@ -2,10 +2,12 @@
 
 from odoo import models, fields, api
 
+
 class ListaMateriales(models.Model):
     _inherit = 'mrp.bom.line'
 
-    x_porcentaje = fields.Float(string="%", digits=(3, 3))
+    x_porcentaje = fields.Float(string="%", digits=(3, 4))
+
 
 class ListaMaterialesHeader(models.Model):
     _inherit = 'mrp.bom'
