@@ -16,6 +16,12 @@ class ListaMaterialesHeader(models.Model):
     product_qty = fields.Float(string="Cantidad", digits=(12, 4))
     x_cantidad_il = fields.Float(string="Cantidad il", digits=(12, 4))
 
+
+class ReporteInventario(models.Model):
+    _inherit = 'stock.quant'
+    inventory_quantity = fields.Float(string="Cantidad disponible",  digits=(12,4))
+
+
 # class sam_formulas(models.Model):
 #     _name = 'sam_formulas.sam_formulas'
 #     _description = 'sam_formulas.sam_formulas'
