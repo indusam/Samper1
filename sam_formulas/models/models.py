@@ -7,13 +7,14 @@ class ListaMateriales(models.Model):
     _inherit = 'mrp.bom.line'
 
     x_porcentaje = fields.Float(string="%", digits=(3, 4))
+    x_porcentaje_il = fields.Float(string="% il", digits=(3, 4))
 
 
 class ListaMaterialesHeader(models.Model):
     _inherit = 'mrp.bom'
 
     product_qty = fields.Float(string="Cantidad", digits=(12, 4))
-
+    x_cantidad_il = fields.Float(string="Cantidad il", digits=(12, 4))
 
 # class sam_formulas(models.Model):
 #     _name = 'sam_formulas.sam_formulas'
