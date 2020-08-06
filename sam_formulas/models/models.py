@@ -10,12 +10,16 @@ class ListaMateriales(models.Model):
     x_porcentaje_il = fields.Float(string="% IL", digits=(3, 4))
     x_cantidad_il = fields.Float(string="Cantidad Limitante",  digits=(12,4))
 
+
 class ListaMaterialesHeader(models.Model):
     _inherit = 'mrp.bom'
 
     product_qty = fields.Float(string="Cantidad", digits=(12, 4))
     x_cantidad_il = fields.Float(string="Cantidad Limitante", digits=(12, 4))
-    x_ingrediente_limitante = fields.Many2one(comodel_name="mrp.bom.line", string="Ingrediente limitante", required=False, )
+    x_ingrediente_limitante = fields.Many2one(comodel_name="mrp.bom.line",
+                                              string="Ingrediente Limitante",
+                                              domain="[('bom_id', '=', bom_id)]")
+    
 
 class ReporteInventario(models.Model):
     _inherit = 'stock.quant'
