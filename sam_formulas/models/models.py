@@ -14,12 +14,15 @@ class ListaMateriales(models.Model):
 class ListaMaterialesHeader(models.Model):
     _inherit = 'mrp.bom'
 
+    @api.onchange('x_ingrediente_limitante')
+    def onchange_x_ingrediente_limitante(self):
+        for rec in self:
+            return {'domain': {'product_id': [('parent_product_tmpl_id', '=', rec.product_tmpl_id.id)]}}
+
     product_qty = fields.Float(string="Cantidad", digits=(12, 4))
     x_cantidad_il = fields.Float(string="Cantidad Limitante", digits=(12, 4))
-    x_ingrediente_limitante = \
-        fields.Many2one(comodel_name="mrp.bom.line",
-                        string="Ingrediente Limitante",
-                        domain="[('bom_id', '=', bom_id)]")
+    x_ingrediente_limitante = fields.Many2one(comodel_name="mrp.bom.line",
+                                              string="Ingrediente limitante")
 
 
 class ReporteInventario(models.Model):
