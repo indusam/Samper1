@@ -22,6 +22,7 @@ class ListaMaterialesHeader(models.Model):
 
     @api.onchange('x_formula')
     def onchange_x_formula(self):
+        raise Warning('api.onchange')
         for rec in self:
             return {'domain': {'product_id': [('product_tmpl_id', '=', rec.product_tmpl_id.id)]}}
 
