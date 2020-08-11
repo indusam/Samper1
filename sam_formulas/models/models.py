@@ -15,9 +15,11 @@ class ListaMaterialesHeader(models.Model):
     _inherit = 'mrp.bom'
 
     product_qty = fields.Float(string="Cantidad", digits=(12, 4))
+    x_formula = fields.Many2one('mrp.bom', string="Fórmula")
     x_cantidad_il = fields.Float(string="Cantidad Limitante", digits=(12, 4))
     x_ingrediente_limitante = fields.Many2one("mrp.bom.line",
                                               string="Ingrediente limitante")
+
 
     @api.onchange('x_ingrediente_limitante')
     def onchange_x_ingrediente_limitante(self):
