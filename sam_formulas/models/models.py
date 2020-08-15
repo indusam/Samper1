@@ -19,7 +19,7 @@ class ListaMaterialesHeader(models.Model):
     x_ingrediente_limitante = fields.Many2one("mrp.bom.line",
                                               string="Ingrediente limitante")
     x_formula = fields.Many2one("mrp.bom", string="Fórmula")
-
+    x_il = fields.Boolean(string="Il")
 
 class ReporteInventario(models.Model):
     _inherit = 'stock.quant'
