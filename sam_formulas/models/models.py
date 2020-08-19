@@ -8,7 +8,7 @@ class ListaMateriales(models.Model):
 
     x_porcentaje = fields.Float(string="%", digits=(3, 4))
     x_porcentaje_il = fields.Float(string="% IL", digits=(3, 4))
-    x_cantidad_il = fields.Float(string="Cantidad Limitante", digits=(12, 4)
+    x_cantidad_il = fields.Float(string="Cantidad Limitante", digits=(12, 4))
     x_ingrediente_limitante = fields.Boolean(string="IL")
 
 
