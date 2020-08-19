@@ -8,7 +8,8 @@ class ListaMateriales(models.Model):
 
     x_porcentaje = fields.Float(string="%", digits=(3, 4))
     x_porcentaje_il = fields.Float(string="% IL", digits=(3, 4))
-    x_cantidad_il = fields.Float(string="Cantidad Limitante", digits=(12, 4))
+    x_cantidad_il = fields.Float(string="Cantidad Limitante", digits=(12, 4)
+    x_ingrediente_limitante = fields.Boolean(string="IL")
 
 
 class ListaMaterialesHeader(models.Model):
@@ -16,13 +17,14 @@ class ListaMaterialesHeader(models.Model):
 
     product_qty = fields.Float(string="Cantidad", digits=(12, 4))
     x_cantidad_il = fields.Float(string="Cantidad Limitante", digits=(12, 4))
+    x_formula = fields.Many2one("mrp.bom", string="Fórmula")
     x_ingrediente_limitante = fields.Many2one("mrp.bom.line",
                                               string="Ingrediente limitante")
-
+                                 
 
 class ReporteInventario(models.Model):
     _inherit = 'stock.quant'
-    inventory_quantity = fields.Float(string="Cantidad disponible",
+    inventory_quantity = fields.Float(string="Cantidad Disponible",
                                       digits=(12, 4))
 
 # class sam_formulas(models.Model):
