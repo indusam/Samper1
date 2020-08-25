@@ -20,11 +20,10 @@ class ListaMaterialesHeader(models.Model):
     x_ingrediente_limitante = fields.Many2one("mrp.bom.line",
                                              string="Ingrediente limitante")
 
-    @api.onchange('x_ingrediente_limitante')
-    def onchange_x_ingrediente_limitante(self):
+    @api.onchange('x_cantidad_il')
+    def onchange_x_cantidad_il(self):
         for rec in self:
-            return 'nada'
-            # return {'domain': {'product_id': [('bom_id', '=', rec.product_tmpl_id.id)]}}
+            return {'domain': {'product_id': [('bom_id', '=', rec.product_tmpl_id.id)]}}
 
 
 class ReporteInventario(models.Model):
