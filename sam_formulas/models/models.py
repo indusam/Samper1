@@ -23,7 +23,8 @@ class ListaMaterialesHeader(models.Model):
     @api.onchange('x_ingrediente_limitante')
     def onchange_x_ingrediente_limitante(self):
         for rec in self:
-            return {'domain': {'product_id': [('bom_id', '=', rec.product_tmpl_id.id)]}}
+            return 'nada'
+            # return {'domain': {'product_id': [('bom_id', '=', rec.product_tmpl_id.id)]}}
 
 
 class ReporteInventario(models.Model):
