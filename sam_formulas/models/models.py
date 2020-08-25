@@ -17,8 +17,14 @@ class ListaMaterialesHeader(models.Model):
 
     product_qty = fields.Float(string="Cantidad", digits=(12, 4))
     x_cantidad_il = fields.Float(string="Cantidad Limitante", digits=(12, 4))
-    # x_ingrediente_limitante = fields.Many2one("mrp.bom.line",
-    #                                         string="Ingrediente limitante")
+    x_ingrediente_limitante = fields.Many2one("mrp.bom.line",
+                                             string="Ingrediente limitante")
+
+    @api.onchange('x_cantidad_il')
+    def onchange_x_cantidad_il(self):
+        for rec in self:
+            return {'domain': {'x_ingrediente_limitante':
+                                   [('parent_product_tmpl_id', '=', rec.product_tmpl_id.id)]}}
 
 
 class ReporteInventario(models.Model):
