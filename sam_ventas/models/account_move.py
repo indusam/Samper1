@@ -15,4 +15,4 @@ class AccountMove(models.Model):
     x_comision = fields.Float(string='Comisión',
                              required=False,
                              compute='calcula_comision')
-    x_vendedor = fields.Many2one("res.partner", string="Vendedor")
+    x_vendedor = fields.Many2one("res.partner", string='Vendedor')
