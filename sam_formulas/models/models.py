@@ -3,6 +3,12 @@
 from odoo import models, fields, api
 
 
+class ProductTemplate(models.Model):
+    _inherit = 'product.template'
+
+    x_presentacion = fields.Many2one("uom.uom", string="Presentacion")
+
+
 class ListaMateriales(models.Model):
     _inherit = 'mrp.bom.line'
 
@@ -24,7 +30,7 @@ class ListaMaterialesHeader(models.Model):
     def onchange_x_cantidad_il(self):
         for rec in self:
             return {'domain': {'x_ingrediente_limitante':
-                                   [('parent_product_tmpl_id', '=', rec.product_tmpl_id.id)]}}
+                                   [('bom_id', '=', rec.product_tmpl_id.id)]}}
 
 
 class ReporteInventario(models.Model):
