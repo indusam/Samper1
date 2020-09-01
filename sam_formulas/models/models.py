@@ -4,7 +4,7 @@ from odoo import models, fields, api
 
 
 class ProductTemplate(models.Model):
-    _inherit = product.template
+    _inherit = 'product.template'
 
     x_presentacion = fields.Many2one("uom.uom", string="Presentacion")
 
