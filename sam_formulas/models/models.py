@@ -39,14 +39,17 @@ class ListaMaterialesHeader(models.Model):
             for rec in self:
 
                 ncantoriginal = rec.product_qty
+                raise Warning(ncantoriginal)
+"""
+                 
                 npresentacion = rec.env['product.product'].search(
                     [('id', '=', rec.product_id.id)], limit=1).x_presentacion.id
                 nfactor = rec.env['uom.uom'].search(
                     [('id', '=', npresentacion)], limit=1).factor_inv
                 ncantidad = ncantoriginal * nfactor
 
-                rec.product_qty = npresentacion
-
+                rec.product_qty = ncantidad
+"""
 
 class ReporteInventario(models.Model):
     _inherit = 'stock.quant'
