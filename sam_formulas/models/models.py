@@ -43,7 +43,7 @@ class ListaMaterialesHeader(models.Model):
                     [('id', '=', rec.product_tmpl_id.id)],
                     limit=1).x_presentacion.id
 
-                raise Warning(rec.parent_product_tmpl_id.id)
+                raise Warning(rec.product_id.id)
 """
                  
                 npresentacion = rec.env['product.product'].search(
