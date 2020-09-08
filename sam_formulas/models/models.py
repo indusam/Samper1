@@ -25,12 +25,27 @@ class ListaMaterialesHeader(models.Model):
     x_cantidad_il = fields.Float(string="Cantidad Limitante", digits=(12, 4))
     x_ingrediente_limitante = fields.Many2one("mrp.bom.line",
                                              string="Ingrediente limitante")
+    x_piezas = fields.Integer(string='Piezas:')
 
     @api.onchange('x_cantidad_il')
     def onchange_x_cantidad_il(self):
         for rec in self:
             return {'domain': {'x_ingrediente_limitante':
                                    [('bom_id', '=', rec.product_tmpl_id.id)]}}
+
+    @api.onchange('x_piezas')
+    def onchange_x_piezas(self):
+        if x_piezas > 0:
+            for rec in self:
+
+                ncantoriginal = self.product_qty
+                npresentacion = self.env['product.product'].search(
+                    [('id', '=', self.product_id.id)], limit=1).x_presentacion.id
+                nfactor = self.env['uom.uom'].search(
+                    [('id', '=', npresentacion)], limit=1).factor
+                ncantidad = ncantoriginal * nfactor
+
+                self.product_qty = ncantidad
 
 
 class ReporteInventario(models.Model):
