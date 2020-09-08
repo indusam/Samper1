@@ -35,17 +35,17 @@ class ListaMaterialesHeader(models.Model):
 
     @api.onchange('x_piezas')
     def onchange_x_piezas(self):
-        if x_piezas > 0:
+        if self.x_piezas > 0:
             for rec in self:
 
-                ncantoriginal = self.product_qty
-                npresentacion = self.env['product.product'].search(
-                    [('id', '=', self.product_id.id)], limit=1).x_presentacion.id
-                nfactor = self.env['uom.uom'].search(
+                ncantoriginal = rec.product_qty
+                npresentacion = rec.env['product.product'].search(
+                    [('id', '=', rec.product_id.id)], limit=1).x_presentacion.id
+                nfactor = rec.env['uom.uom'].search(
                     [('id', '=', npresentacion)], limit=1).factor
                 ncantidad = ncantoriginal * nfactor
 
-                self.product_qty = ncantidad
+                rec.product_qty = ncantidad
 
 
 class ReporteInventario(models.Model):
