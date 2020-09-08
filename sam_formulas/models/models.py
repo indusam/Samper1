@@ -40,7 +40,7 @@ class ListaMaterialesHeader(models.Model):
 
                 ncantoriginal = rec.product_qty
                 npresentacion = rec.env['product.product'].search(
-                    [('id', '=', rec.product_id.id)],
+                    [('id', '=', rec.product__tmpl_id.id)],
                     limit=1).x_presentacion.id
 
                 raise Warning(npresentacion)
