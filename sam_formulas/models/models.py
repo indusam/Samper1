@@ -42,7 +42,7 @@ class ListaMaterialesHeader(models.Model):
                 npresentacion = rec.env['product.product'].search(
                     [('id', '=', rec.product_id.id)], limit=1).x_presentacion.id
                 nfactor = rec.env['uom.uom'].search(
-                    [('id', '=', npresentacion)], limit=1).factor
+                    [('id', '=', npresentacion)], limit=1).factor_inv
                 ncantidad = ncantoriginal * nfactor
 
                 rec.product_qty = ncantidad
