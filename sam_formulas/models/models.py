@@ -7,7 +7,7 @@ class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
     x_presentacion = fields.Many2one("uom.uom", string="Presentacion")
-
+    x_pct_variacion = fields.Float(string='% Variación', digits=(3,4))
 
 class ListaMateriales(models.Model):
     _inherit = 'mrp.bom.line'
