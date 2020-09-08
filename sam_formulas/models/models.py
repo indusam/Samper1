@@ -39,7 +39,11 @@ class ListaMaterialesHeader(models.Model):
             for rec in self:
 
                 ncantoriginal = rec.product_qty
-                raise Warning(ncantoriginal)
+                npresentacion = rec.env['product.product'].search(
+                    [('id', '=', rec.product_id.id)],
+                    limit=1).x_presentacion.id
+
+                raise Warning(npresentacion)
 """
                  
                 npresentacion = rec.env['product.product'].search(
