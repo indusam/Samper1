@@ -38,7 +38,6 @@ class ListaMaterialesHeader(models.Model):
         if self.x_piezas > 0:
             for rec in self:
 
-                ncantoriginal = rec.product_qty
                 npresentacion = rec.env['product.template'].search(
                     [('id', '=', rec.product_tmpl_id.id)],
                     limit=1).x_presentacion.id
@@ -46,17 +45,8 @@ class ListaMaterialesHeader(models.Model):
                     [('id', '=', npresentacion)], limit=1).factor_inv
 
                 ncantidad = nfactor * self.x_piezas
-                raise Warning(ncantidad)
-"""
-                 
-                npresentacion = rec.env['product.product'].search(
-                    [('id', '=', rec.product_id.id)], limit=1).x_presentacion.id
-                nfactor = rec.env['uom.uom'].search(
-                    [('id', '=', npresentacion)], limit=1).factor_inv
-                ncantidad = ncantoriginal * nfactor
 
                 rec.product_qty = ncantidad
-"""
 
 class ReporteInventario(models.Model):
     _inherit = 'stock.quant'
