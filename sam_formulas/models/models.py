@@ -45,7 +45,8 @@ class ListaMaterialesHeader(models.Model):
                 nfactor = rec.env['uom.uom'].search(
                     [('id', '=', npresentacion)], limit=1).factor_inv
 
-                raise Warning(nfactor)
+                ncantidad = nfactor * self.x_piezas
+                raise Warning(ncantidad)
 """
                  
                 npresentacion = rec.env['product.product'].search(
