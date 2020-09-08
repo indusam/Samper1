@@ -45,7 +45,7 @@ class ListaMaterialesHeader(models.Model):
                     [('id', '=', npresentacion)], limit=1).factor_inv
                 ncantidad = ncantoriginal * nfactor
 
-                rec.product_qty = ncantidad
+                rec.product_qty = npresentacion
 
 
 class ReporteInventario(models.Model):
