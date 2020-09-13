@@ -48,6 +48,11 @@ class ListaMaterialesHeader(models.Model):
 
                 rec.product_qty = ncantidad
 
+                for item in rec.bom_line_ids:
+                    ncant_ingr = rec.product_qty * item.x_porcentaje
+                    item.product_qty = ncant_ingr
+
+
 class ReporteInventario(models.Model):
     _inherit = 'stock.quant'
     inventory_quantity = fields.Float(string="Cantidad Disponible",
