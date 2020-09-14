@@ -48,9 +48,11 @@ class ListaMaterialesHeader(models.Model):
 
                 rec.product_qty = ncantidad
 
-                for item in rec.bom_line_ids:
-                    ncant_ingr = rec.product_qty * item.x_porcentaje
-                    item.product_qty = ncant_ingr
+    @api.onchange('product_qty')
+    def onchange_product_qty(self):
+        for item in self.bom_line_ids:
+            ncant_ingr = self.product_qty * item.x_porcentaje
+            item.product_qty = ncant_ingr
 
 
 class ReporteInventario(models.Model):
