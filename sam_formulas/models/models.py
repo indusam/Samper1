@@ -51,7 +51,7 @@ class ListaMaterialesHeader(models.Model):
     @api.onchange('product_qty')
     def onchange_product_qty(self):
         for item in self.bom_line_ids:
-            ncant_ingr = self.product_qty * item.x_porcentaje
+            ncant_ingr = self.product_qty * (item.x_porcentaje/100)
             item.product_qty = ncant_ingr
 
 
