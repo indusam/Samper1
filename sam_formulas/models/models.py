@@ -33,7 +33,7 @@ class ListaMaterialesHeader(models.Model):
     @api.onchange('x_cantidad_il')
     def onchange_x_cantidad_il(self):
         for rec in self:
-            return {'domain': {'x_ingrediente_limitante': [('bom_id', '=', rec.parent_product_tmpl_id.id)]}}
+            return {'domain': {'x_ingrediente_limitante': [('bom_id', '=', self.product_tmpl_id.id)]}}
 
     @api.onchange('x_piezas')
     def onchange_x_piezas(self):
