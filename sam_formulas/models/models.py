@@ -32,6 +32,7 @@ class ListaMaterialesHeader(models.Model):
 
     @api.onchange('x_cantidad_il')
     def onchange_x_cantidad_il(self):
+        raise Warning(self.product_tmpl_id.id)
         for rec in self:
             return {'domain': {'x_ingrediente_limitante': [('bom_id', '=', rec.product_tmpl_id.id)]}}
 
