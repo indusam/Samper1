@@ -70,7 +70,7 @@ class ListaMaterialesHeader(models.Model):
                 item.x_ingrediente_limitante = True
             else:
                 item.x_ingrediente_limitante = False
-
+        raise Warning(ncantidad_il)
         # Si la cantidad limitante = 0, borra las cantidades y porcentajes
         # limitantes de la fórmula, de lo contrario hace los cálculos
         if self.x_cantidad_il == 0:
