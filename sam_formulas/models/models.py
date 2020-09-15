@@ -33,8 +33,7 @@ class ListaMaterialesHeader(models.Model):
     @api.onchange('x_cantidad_il')
     def onchange_x_cantidad_il(self):
         for rec in self:
-            return {'domain': {'x_ingrediente_limitante':
-                                   [('bom_id', '=', rec.product_tmpl_id.id)]}}
+            return {'domain': {'x_ingrediente_limitante': [('bom_id', '=', rec.product_tmpl_id.id)]}}
 
     @api.onchange('x_piezas')
     def onchange_x_piezas(self):
@@ -55,6 +54,8 @@ class ListaMaterialesHeader(models.Model):
         for item in self.bom_line_ids:
             ncant_ingr = self.x_cantidad_pzas * (item.x_porcentaje / 100)
             item.x_cantidad_pzas = ncant_ingr
+
+
 """ 
     @api.onchange('x_ingrediente_limitante')
     def onchange_x_ingrediente_limitante(self):
@@ -111,6 +112,7 @@ class ListaMaterialesHeader(models.Model):
 
                 self.x_cantidad_il = 0
 """
+
 
 class ReporteInventario(models.Model):
     _inherit = 'stock.quant'
