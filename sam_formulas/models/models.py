@@ -33,8 +33,9 @@ class ListaMaterialesHeader(models.Model):
     @api.onchange('x_cantidad_il')
     def onchange_x_cantidad_il(self):
         nlista = self.product_tmpl_id.id
-        raise Warning(nlista)
         for rec in self:
+            nlistabom = rec.bom_line_ids.bom_id.id
+            raise Warning(nlistabom)
             return {'domain': {'x_ingrediente_limitante':
                                    [('bom_id', '=', nlista)]}}
 
