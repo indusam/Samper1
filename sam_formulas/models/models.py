@@ -24,15 +24,16 @@ class ListaMaterialesHeader(models.Model):
     _inherit = 'mrp.bom'
 
     product_qty = fields.Float(string="Cantidad", digits=(12, 4))
+    x_piezas = fields.Integer(string='Piezas:')
+    x_cantidad_pzas = fields.Float(string='Cantidad x piezas', digits=(12, 4))
     x_cantidad_il = fields.Float(string="Cantidad Limitante", digits=(12, 4))
     x_ingrediente_limitante = fields.Many2one("mrp.bom.line",
                                               string="Ingrediente limitante")
-    x_piezas = fields.Integer(string='Piezas:')
-    x_cantidad_pzas = fields.Float(string='Cantidad x piezas', digits=(12, 4))
 
     @api.onchange('x_cantidad_il')
     def onchange_x_cantidad_il(self):
         nlista = self.product_tmpl_id.id
+        raise Warning(nlista)
         for rec in self:
             return {'domain': {'x_ingrediente_limitante':
                                    [('bom_id', '=', nlista)]}}
