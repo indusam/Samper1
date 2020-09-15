@@ -61,7 +61,6 @@ class ListaMaterialesHeader(models.Model):
     @api.onchange('x_ingrediente_limitante')
     def onchange_x_ingrediente_limitante(self):
         ncantidadil = self.x_cantidad_il
-        raise Warning(ncantidadil)
         # Busca el ingrediente limitante
         ningrediente = self.x_ingrediente_limitante.id
         ncantidad_il = 0
