@@ -62,9 +62,13 @@ class ListaMaterialesHeader(models.Model):
 
         # Busca el ingrediente limitante
         ningrediente = self.x_ingrediente_limitante.id
-        ncantidad_il = 0
+
+        ncantidad_il = self.env['mrp.bom.line'].search(
+            [('parent_product_tmpl_id', '=', self.product_tmpl_id.id),
+             ('product_id', '=', ningrediente)]
+        ).product_qty
+        raise Warning(ncantidad_il)
         for item in self.bom_line_ids:
-            raise Warning(item.id.id)
             if item.id == ningrediente:
                 ncantidad_il = item.product_qty
                 item.x_ingrediente_limitante = True
