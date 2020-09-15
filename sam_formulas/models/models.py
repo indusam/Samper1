@@ -58,7 +58,6 @@ class ListaMaterialesHeader(models.Model):
             item.x_cantidad_pzas = ncant_ingr
 
 
-""" 
     @api.onchange('x_ingrediente_limitante')
     def onchange_x_ingrediente_limitante(self):
         # Busca el ingrediente limitante
@@ -113,7 +112,6 @@ class ListaMaterialesHeader(models.Model):
                     item.x_ingrediente_limitante = False
 
                 self.x_cantidad_il = 0
-"""
 
 
 class ReporteInventario(models.Model):
