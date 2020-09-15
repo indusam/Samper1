@@ -60,6 +60,7 @@ class ListaMaterialesHeader(models.Model):
 
     @api.onchange('x_ingrediente_limitante')
     def onchange_x_ingrediente_limitante(self):
+
         # Busca el ingrediente limitante
         ningrediente = self.x_ingrediente_limitante.id
         ncantidad_il = 0
@@ -88,7 +89,7 @@ class ListaMaterialesHeader(models.Model):
                     ntotal = ntotal + item.product_qty
 
                 # Calcula las cantidades en base al ingrediente limitante
-                for item in record.bom_line_ids:
+                for item in self.bom_line_ids:
                     item.x_cantidad_il = (self.x_cantidad_il * item.product_qty) / ncantidad_il
 
                 # Calcula el total de la cantidades con los ingredientes
