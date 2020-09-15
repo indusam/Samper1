@@ -60,9 +60,10 @@ class ListaMaterialesHeader(models.Model):
     @api.depends('x_cantidad_il')
     @api.onchange('x_ingrediente_limitante')
     def onchange_x_ingrediente_limitante(self):
-        ncantidadil = self.x_cantidad_il
+
         # Busca el ingrediente limitante
         ningrediente = self.x_ingrediente_limitante.id
+        raise Warning(ningrediente)
         ncantidad_il = 0
         for item in self.bom_line_ids:
             if item.id == ningrediente:
