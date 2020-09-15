@@ -63,7 +63,6 @@ class ListaMaterialesHeader(models.Model):
 
         # Busca el ingrediente limitante
         ningrediente = self.x_ingrediente_limitante.id
-        raise Warning(ningrediente)
         ncantidad_il = 0
         for item in self.bom_line_ids:
             if item.id == ningrediente:
@@ -90,6 +89,7 @@ class ListaMaterialesHeader(models.Model):
                     ntotal = ntotal + item.product_qty
 
                 # Calcula las cantidades en base al ingrediente limitante
+                raise Warning(ncantidad_il)
                 for item in self.bom_line_ids:
                     item.x_cantidad_il = (self.x_cantidad_il * item.product_qty) / ncantidad_il
 
