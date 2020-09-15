@@ -64,7 +64,7 @@ class ListaMaterialesHeader(models.Model):
         ningrediente = self.x_ingrediente_limitante.id
         ncantidad_il = 0
         for item in self.bom_line_ids:
-            raise Warning(item.id)
+            raise Warning(item.id.id)
             if item.id == ningrediente:
                 ncantidad_il = item.product_qty
                 item.x_ingrediente_limitante = True
