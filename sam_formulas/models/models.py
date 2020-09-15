@@ -16,7 +16,7 @@ class ListaMateriales(models.Model):
     x_porcentaje_il = fields.Float(string="% IL", digits=(3, 4))
     x_cantidad_il = fields.Float(string="Cantidad Limitante", digits=(12, 4))
     x_ingrediente_limitante = fields.Boolean(string="IL")
-
+    x_cantidad_pzas = fields.Float(string="Cantidad x piezas", digits=(12, 4))
 
 class ListaMaterialesHeader(models.Model):
     _inherit = 'mrp.bom'
@@ -47,13 +47,13 @@ class ListaMaterialesHeader(models.Model):
 
                 ncantidad = nfactor * self.x_piezas
 
-                rec.product_qty = ncantidad
+                rec.x_cantidad_pzas = ncantidad
 
-    @api.onchange('product_qty')
+    @api.onchange('x_cantidad_pzas')
     def onchange_product_qty(self):
         for item in self.bom_line_ids:
-            ncant_ingr = self.product_qty * (item.x_porcentaje/100)
-            item.product_qty = ncant_ingr
+            ncant_ingr = self.x_cantidad_pzas * (item.x_porcentaje/100)
+            item.x_cantidad_pzas = ncant_ingr
 
 
 class ReporteInventario(models.Model):
