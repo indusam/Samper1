@@ -35,7 +35,7 @@ class ListaMaterialesHeader(models.Model):
         nlista = self.product_tmpl_id.id
         for rec in self:
             return {'domain': {'x_ingrediente_limitante':
-                                   [('parent_product_tmpl', '=', nlista)]}}
+                                   [('parent_product_tmpl_id', '=', nlista)]}}
 
     @api.onchange('x_piezas')
     def onchange_x_piezas(self):
