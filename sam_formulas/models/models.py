@@ -68,9 +68,9 @@ class ListaMaterialesHeader(models.Model):
         #     [('parent_product_tmpl_id', '=', nlista),
         #      ('product_tmpl_id', '=', ningrediente)]
         # ).product_qty
-        ncantidad_il = self.env['mrp.bom.line'].search(
-            [('product_tmpl_id', '=', ningrediente)]).product_tmpl_id.id
-        raise Warning(ncantidad_il)
+        nlista = self.env['mrp.bom.line'].search(
+            [('parent_product_tmpl_id', '=', self.product_tmpl_id.id)])
+        raise Warning(nlista)
         for item in self.bom_line_ids:
             if item.id == ningrediente:
                 ncantidad_il = item.product_qty
