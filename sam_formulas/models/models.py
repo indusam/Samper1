@@ -71,7 +71,7 @@ class ListaMaterialesHeader(models.Model):
                 item.x_ingrediente_limitante = True
             else:
                 item.x_ingrediente_limitante = False
-                
+
         # Si la cantidad limitante = 0, borra las cantidades y porcentajes
         # limitantes de la fórmula, de lo contrario hace los cálculos
         if self.x_cantidad_il == 0:
@@ -90,7 +90,6 @@ class ListaMaterialesHeader(models.Model):
                     ntotal = ntotal + item.product_qty
 
                 # Calcula las cantidades en base al ingrediente limitante
-                raise Warning(ncantidad_il)
                 for item in self.bom_line_ids:
                     item.x_cantidad_il = (self.x_cantidad_il * item.product_qty) / ncantidad_il
 
