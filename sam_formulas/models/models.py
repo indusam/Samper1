@@ -57,21 +57,21 @@ class ListaMaterialesHeader(models.Model):
             ncant_ingr = self.x_cantidad_pzas * (item.x_porcentaje / 100)
             item.x_cantidad_pzas = ncant_ingr
 
-""" 
-    @api.depends('x_cantidad_il', 'x_ingrediente_limitante', 'bom_line_ids')
     @api.onchange('x_ingrediente_limitante')
     def onchange_x_ingrediente_limitante(self):
 
         # Busca el ingrediente limitante
         ningrediente = self.x_ingrediente_limitante.id
         ncantidad_il = 0
-        for item in self.bom_line_ids:
+        nlista = self.env['mrp.bom.line'].search(
+            [('parent_product_tmpl_id', '=', self.product_tmpl_id.id)])
+        for item in nlista:
             if item.id == ningrediente:
                 ncantidad_il = item.product_qty
                 item.x_ingrediente_limitante = True
             else:
                 item.x_ingrediente_limitante = False
-        raise Warning(ncantidad_il)
+
         # Si la cantidad limitante = 0, borra las cantidades y porcentajes
         # limitantes de la fórmula, de lo contrario hace los cálculos
         if self.x_cantidad_il == 0:
@@ -90,7 +90,6 @@ class ListaMaterialesHeader(models.Model):
                     ntotal = ntotal + item.product_qty
 
                 # Calcula las cantidades en base al ingrediente limitante
-                raise Warning(ncantidad_il)
                 for item in self.bom_line_ids:
                     item.x_cantidad_il = (self.x_cantidad_il * item.product_qty) / ncantidad_il
 
@@ -115,7 +114,7 @@ class ListaMaterialesHeader(models.Model):
                     item.x_ingrediente_limitante = False
 
                 self.x_cantidad_il = 0
-"""
+
 
 class ReporteInventario(models.Model):
     _inherit = 'stock.quant'
