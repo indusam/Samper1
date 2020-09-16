@@ -62,12 +62,6 @@ class ListaMaterialesHeader(models.Model):
 
         # Busca el ingrediente limitante
         ningrediente = self.x_ingrediente_limitante.id
-        nlista = self.product_tmpl_id.id
-        # raise Warning(ningrediente)
-        # ncantidad_il = self.env['mrp.bom.line'].search(
-        #     [('parent_product_tmpl_id', '=', nlista),
-        #      ('product_tmpl_id', '=', ningrediente)]
-        # ).product_qty
         ncantidad_il = 0
         nlista = self.env['mrp.bom.line'].search(
             [('parent_product_tmpl_id', '=', self.product_tmpl_id.id)])
@@ -75,15 +69,9 @@ class ListaMaterialesHeader(models.Model):
             if item.id == ningrediente:
                 ncantidad_il = item.product_qty
                 item.x_ingrediente_limitante = True
-        raise Warning(ncantidad_il)
-        
-        for item in self.bom_line_ids:
-            if item.id == ningrediente:
-                ncantidad_il = item.product_qty
-                item.x_ingrediente_limitante = True
             else:
                 item.x_ingrediente_limitante = False
-        raise Warning(ncantidad_il)
+                
         # Si la cantidad limitante = 0, borra las cantidades y porcentajes
         # limitantes de la fórmula, de lo contrario hace los cálculos
         if self.x_cantidad_il == 0:
