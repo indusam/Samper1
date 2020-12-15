@@ -114,6 +114,7 @@ class ListaMaterialesHeader(models.Model):
                     else:
                         item.x_porcentaje_il = 0
 
+                # vbueno 1512202013:18
                 # Calcula la información nutrimental en base a la cantidad limitante
                 for item in self.bom_line_ids:
                     x_proteina_kg = (item.product_id.x_pct_proteinas / 100) * item.x_cantidad_il
@@ -122,7 +123,7 @@ class ListaMaterialesHeader(models.Model):
                     x_humedad_kg = (item.product_id.x_pct_humedad / 100) * item.x_cantidad_il
                     x_carbs_kg = (item.product_id.x_pct_hidratos_de_carbono / 100) * item.x_cantidad_il
                     x_azucares_kg = (item.product_id.x_pct_azucares / 100) * item.x_cantidad_il
-                    x_sodio_mg = item.product_id.x_mg_sodio * item.x_cantidad_il               
+                    x_sodio_mg = item.product_id.x_mg_sodio * item.x_cantidad_il
 
             else:
                 # si no hay ingrediente limitante, limpia las cantidades
@@ -133,6 +134,17 @@ class ListaMaterialesHeader(models.Model):
                     item.x_ingrediente_limitante = False
 
                 self.x_cantidad_il = 0
+                # vbueno 1512202013:18
+                # Calcula la información nutrimental en base a la cantidad a producir.
+                for item in self.bom_line_ids:
+                    x_proteina_kg = (item.product_id.x_pct_proteinas / 100) * self.product_qty
+                    x_grasa_kg = (item.product_id.x_pct_grasas_totales / 100) * self.product_qty
+                    x_grasa_sat_kg = (item.product_id.x_pct_grasas_saturadas / 100) * self.product_qty
+                    x_humedad_kg = (item.product_id.x_pct_humedad / 100) * self.product_qty
+                    x_carbs_kg = (item.product_id.x_pct_hidratos_de_carbono / 100) * self.product_qty
+                    x_azucares_kg = (item.product_id.x_pct_azucares / 100) * self.product_qty
+                    x_sodio_mg = item.product_id.x_mg_sodio * self.product_qty              
+
 
 
 class ReporteInventario(models.Model):
