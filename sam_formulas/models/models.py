@@ -18,6 +18,14 @@ class ListaMateriales(models.Model):
     x_cantidad_il = fields.Float(string="Cantidad Limitante", digits=(12, 4))
     x_ingrediente_limitante = fields.Boolean(string="IL")
     x_cantidad_pzas = fields.Float(string="Cantidad x piezas", digits=(12, 4))
+    # información nutrimental vbueno 1512202012:50
+    x_proteina_kg = fields.Float(string="Proteína kg", digits=(10, 4))
+    x_grasa_kg = fields.Float(string="Grasa kg", digits=(10, 4))
+    x_grasa_sat_kg = fields.Float(string="Grasa Sat. kg", digits=(10, 4))
+    x_humedad_kg = fields.Float(string="Humedad kg", digits=(10, 4))
+    x_carbs_kg = fields.Float(string="Carbs. kg", digits=(10, 4))
+    x_azucares_kg = fields.Float(string="Azúcares kg", digits=(10, 4))
+    x_sodio_mg = fields.Float(string="Sodio mg/kg", digits=(10, 4))
 
 
 class ListaMaterialesHeader(models.Model):
@@ -105,6 +113,10 @@ class ListaMaterialesHeader(models.Model):
                         item.x_porcentaje_il = (item.x_cantidad_il / ntotal) * 100
                     else:
                         item.x_porcentaje_il = 0
+
+                # Calcula la información nutrimental en base a la cantidad limitante
+                # for item in self.bom_line_ids:                            
+
             else:
                 # si no hay ingrediente limitante, limpia las cantidades
                 # y porcentajes limitantes de la fórmula
