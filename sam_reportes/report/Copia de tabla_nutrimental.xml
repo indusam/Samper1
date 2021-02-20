@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Template overriden due to last page displays page count -->
+        <!-- Do not display page section only for report COTIZACION LLANTAS -->
+        <template id="inh_external_layout_standard" inherit_id="web.external_layout_standard">
+            <xpath expr="//div[hasclass('footer')]" position="replace">
+                <t t-if="report_name">
+                    <div class="footer o_standard_footer">
+
+                    </div>
+                </t>
+                <t t-else="">
+                    <div class="footer o_standard_footer">
+                        <div class="text-center" style="border-top: 1px solid black;">
+                            <ul class="list-inline mb4">
+                                <!-- using the list-inline-item class from bootstrap causes weird behaviours in pdf report
+                                     adding d-inline class fixes the problem-->
+                                <li t-if="company.phone" class="list-inline-item d-inline">Phone: <span t-field="company.phone"/></li>
+                                <li t-if="company.email" class="list-inline-item d-inline">Email: <span t-field="company.email"/></li>
+                                <li t-if="company.website" class="list-inline-item d-inline">Web: <span t-field="company.website"/></li>
+                                <li t-if="company.vat" class="list-inline-item d-inline"><t t-esc="company.country_id.vat_label or 'Tax ID'"/>: <span t-field="company.vat"/></li>
+                            </ul>
+
+                            <div name="financial_infos">
+                                <span t-field="company.report_footer"/>
+                            </div>
+
+                            <div t-if="report_type == 'pdf'" class="text-muted">
+                                Page: <span class="page"/> / <span class="topage"/>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </xpath>
+        </template>
+
+        <template id="custom_report_saleorder">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                     <t t-call="web.external_layout">
+                        <t t-set="report_name" t-value="'custom_report_saleorder'"/>
+                        <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)" />
+                         <div class="page">
+                            <div class="oe_structure"/>
+                             <table class="table">
+                                <tr>
+                                    <td colspan="4" style="padding-bottom:0px;"></td>
+                                </tr>
+                                 <tr>
+                                     <td style="border-style:none;padding-bottom:0px;padding-top:0px;" width="30%">
+                                         <b>Fecha de cotización:</b> &#160; <t t-esc="doc.date_order"/></td>
+                                     <td style="border-style:none;padding-bottom:0px;padding-top:0px;" width="30%">
+                                         <b>Fecha de caducidad:</b> &#160; <t t-esc="doc.validity_date"/></td>
+                                     <td style="border-style:none;padding-bottom:0px;padding-top:0px;" width="30%">
+                                         <b></b> &#160; <t t-esc="doc.pricelist_id.name"/></td>
+
+                                     <td style="border-style:none;padding-bottom:0px;padding-top:0px;" width="40%"><b>Tipo:</b> &#160; <t t-esc="doc.get_tipo(doc)"/></td>
+                                     <!-- <td style="border-style:none;padding-bottom:0px;padding-top:0px;" width="30%"/> -->
+                                 </tr>
+                                 <!-- <tr>
+                                     <td style="border-style:none;padding-bottom:0px;padding-top:0px;">
+                                         <t t-esc="doc.date_order"/> </td>
+                                     <td style="border-style:none;padding-bottom:0px;padding-top:0px;">
+                                         <t t-esc="doc.validity_date"/></td>
+                                     <td style="border-style:none;padding-bottom:0px;padding-top:0px;">
+                                         <t t-esc="doc.get_tipo(doc)"/></td>
+                                     <td style="border-style:none;padding-bottom:0px;" width="50%"/>
+                                 </tr> -->
+                             </table>
+                             <table class="table">
+                                 <tr>
+                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;width: 15%; vertical-align:middle;"><b>Producto</b></td>
+                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;width: 30%;vertical-align:middle;"><b>Desc</b></td>
+                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>Promocion</b></td>
+                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>Tnd</b></td>
+                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>Prov</b></td>
+                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>Bod</b></td>
+                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>GR</b></td>
+                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>Origen</b></td>
+                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>12 meses</b></td>
+                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>6 meses</b></td>
+                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>Contado</b></td>
+                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>Cap ca</b></td>
+                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>Vel</b></td>
+                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>Trea</b></td>
+                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>Trac</b></td>
+                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>Temp</b></td>
+                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>Ubicación</b></td>
+                                 </tr>
+                                 <tr>
+                                     <td style="padding-bottom:0px;padding-top:0px;"/>
+                                     <td style="border-bottom: 1px solid #000000;padding-bottom:0px;padding-top:10px;" colspan="14"/>
+                                 </tr>
+                                 <tr>
+                                     <td style="border-style:none;padding-top:0px;"/>
+                                     <td style="border-style:none;padding-top:0px;" colspan="14">
+                                         <b><t t-esc="doc.company_id.header"/></b>
+                                     </td>
+                                 </tr>
+                                 <t t-set="products_without_order"
+                                        t-value="doc._get_all_products(doc)"/>
+
+                                 <t t-set="all_products" t-value="doc._get_products_by_order_asc(products_without_order)"/>
+
+                                 <tr t-foreach="all_products" t-as="product">
+                                    <t t-set="product" t-value="product[0]"/>
+                                    <t t-set="attribute_line_ids" t-value="doc.get_attribute_line_ids(product)"/>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                        <t t-esc="product.default_code"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                        <t t-esc="product.name"/>
+                                    </td>
+                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                         <t t-if="doc._is_promotion_products(product)">
+                                             Promoción
+                                         </t>
+                                     </td>
+                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                         <t t-esc="doc._compute_quantities(product, doc, 'tnd')"/>
+                                     </td>
+                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                         <t t-esc="doc._compute_quantities(product, doc, 'prov')"/>
+                                     </td>
+                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                         <t t-esc="doc._compute_quantities(product, doc, 'cedis')"/>
+                                     </td>
+                                     <!-- vbueno: 2701202113:36  se agregó la existencia total (GR)   -->
+                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                         <t t-esc="doc._get_existot(product)"/>
+                                     </td>
+                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                         <t t-esc="attribute_line_ids.get('origen')"/>
+                                     </td>
+                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                         <t t-esc="doc._get_meses_contado(doc,product, 12)"/>
+                                     </td>
+                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                         <t t-esc="doc._get_meses_contado(doc,product, 6)"/>
+                                     </td>
+                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                         <t t-esc="doc._get_meses_contado(doc,product, 'contado')"/>
+                                     </td>
+                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                         <t t-esc="attribute_line_ids.get('cap ca')"/>
+                                     </td>
+                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                         <t t-esc="attribute_line_ids.get('vel')"/>
+                                     </td>
+                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                         <t t-esc="attribute_line_ids.get('trea')"/>
+                                     </td>
+                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                         <t t-esc="attribute_line_ids.get('trac')"/>
+                                     </td>
+                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                         <t t-esc="attribute_line_ids.get('temp')"/>
+                                     </td>
+                                     <!-- vbueno: 2308202014:13  se agregó la ubicación del producto en el almacén -->
+                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                         <t t-esc="doc._get_localizacion(product)"/>
+                                     </td>
+                                 </tr>
+                                 <tr>
+                                     <td style="border-style:none;padding-bottom:5px;"/>
+                                     <td style="border-style:none;padding-bottom:5px;" colspan="14">
+                                         <b><t t-esc="doc.x_obs1"/></b></td>
+                                 </tr>
+                                 <tr>
+                                     <td style="border-style:none;padding-bottom:2px;"/>
+                                     <td style="border-style:none;padding-bottom:2px;" colspan="14">
+                                         <b><t t-esc="doc.company_id.obs_2"/></b></td>
+                                 </tr>
+                             </table>
+                         </div>
+                     </t>
+                </t>
+            </t>
+        </template>
+
+        <report
+            id="action_custom_report_saleorder"
+            string="COTIZACION LLANTAS"
+            model="sale.order"
+            report_type="qweb-pdf"
+            file="jt_quotation_report.custom_report_saleorder"
+            name="jt_quotation_report.custom_report_saleorder"
+        />
+
+        <record id="paperformat_custom_sale_report" model="report.paperformat">
+            <field name="name">Custom Sale Report</field>
+            <field name="default" eval="False"/>
+            <field name="format">A4</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">45</field>
+            <field name="margin_bottom">20</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">45</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="action_custom_report_saleorder" model="ir.actions.report">
+            <field name="paperformat_id" ref="paperformat_custom_sale_report"/>
+        </record>
+
+    </data>
+</odoo>
