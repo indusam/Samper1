@@ -30,55 +30,13 @@ class SaleOrder(models.Model):
 
     _inherit = 'sale.order'
 
-    def get_tipo(self, order):
-        tipo = ''
-        for line in order.order_line:
-            if not tipo:
-                tipo = line.product_id.rim_type
-        return tipo
-
     def _get_all_products(self, order):
-        prod_obj = self.env['product.product']
+        prod_obj = self.env['mrp.bom'].search([('product_tmpl_id','=',self.product_tmpl_id)])
         related_products = []
 
-        # To calculate allowed companies
-        allowed_company_ids = []
-        if self.env.company:
-            allowed_company_ids.append(self.env.company.id)
-            if self.env.company.closest_organization:
-                allowed_company_ids.append(
-                    self.env.company.closest_organization.id)
-            if self.env.company.CEDIS_organization:
-                allowed_company_ids.append(
-                    self.env.company.CEDIS_organization.id)
-        warehouses = self.env['stock.warehouse'].sudo().search(
-            [('company_id', 'in', allowed_company_ids)])
+        for item in prod_obj.bom_line_ids:
+            related_products.append(item.product_id)
 
-        for line in order.order_line:
-            # Calculate total quantity in different warehouse
-            qty_available = 0
-            for warehouse in warehouses:
-                qty = line.product_id.sudo().with_context(to_date=datetime.now(
-                ), warehouse=warehouse.id).qty_available
-                qty_available += qty
-
-            # Add only main product if product has stock
-            # if qty_available > 0:
-            related_products.append(line.product_id)
-            # Iterate loop through and add sub products based on stock availability
-            if line.product_id.rim_type:
-                same_rim_type_products = prod_obj.search(
-                    [('rim_type', '=', line.product_id.rim_type), ('id', '!=', line.product_id.id)])
-                for prod in same_rim_type_products:
-                    # Calculate qty for child products
-                    qty_available_ch = 0
-                    for warehouse in warehouses:
-                        qty_ch = prod.sudo().with_context(to_date=datetime.now(
-                        ), warehouse=warehouse.id).qty_available
-                        qty_available_ch += qty_ch
-
-                    if qty_available_ch > 0 or prod.qty_available > 0:
-                        related_products.append(prod)
         return related_products
 
     def _get_domain_locations(self, company):
@@ -319,11 +277,3 @@ class SaleOrder(models.Model):
             dict_products.update({product: self._get_meses_contado(
                 self.with_context(lang=self.partner_id.lang), product, 'contado')})
         return sorted(dict_products.items(), key=lambda kv: (kv[1], kv[0]))
-
-
-class SaleOrderLine(models.Model):
-
-    _inherit = 'sale.order.line'
-
-    rim_type = fields.Char("Tipo de llanta", related='product_id.rim_type',
-                           store=True)
