@@ -28,9 +28,9 @@ from odoo.tools.safe_eval import safe_eval
 
 class SaleOrder(models.Model):
 
-    _inherit = 'sale.order'
+    _inherit = 'mrp.bom'
 
-    def _get_all_products(self, order):
+    def _get_all_products(self, product_tmpl_id):
         prod_obj = self.env['mrp.bom'].search([('product_tmpl_id','=',self.product_tmpl_id)])
         related_products = []
 
