@@ -120,7 +120,7 @@
             <field name="dpi">90</field>
         </record>
 
-        <record id="action_custom_report_tabla_nutimental" model="ir.actions.report">
+        <record id="action_custom_report_tabla_nutrimental" model="ir.actions.report">
             <field name="paperformat_id" ref="paperformat_custom_tabla_nutrimental_report"/>
         </record>
 
