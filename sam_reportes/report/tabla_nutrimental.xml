@@ -74,9 +74,9 @@
                                  </tr>
                                  <tr>
                                      <td style="border-style:none;padding-top:0px;"/>
-                                     <td style="border-style:none;padding-top:0px;" colspan="14">
-                                         <!-- <b><t t-esc="doc.company_id.header"/></b> -->
-                                     </td>
+                                     <!-- <td style="border-style:none;padding-top:0px;" colspan="14">
+                                         <b><t t-esc="doc.company_id.header"/></b>
+                                     </td> -->
                                  </tr>
                                  <t t-set="products_without_order"
                                         t-value="doc._get_all_products(doc)"/>
