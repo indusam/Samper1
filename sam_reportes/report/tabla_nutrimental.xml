@@ -75,7 +75,7 @@
                                  <tr>
                                      <td style="border-style:none;padding-top:0px;"/>
                                      <td style="border-style:none;padding-top:0px;" colspan="14">
-                                         <b><t t-esc="doc.company_id.header"/></b>
+                                         <!-- <b><t t-esc="doc.company_id.header"/></b> -->
                                      </td>
                                  </tr>
                                  <t t-set="products_without_order"
