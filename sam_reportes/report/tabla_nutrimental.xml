@@ -47,26 +47,6 @@
                                 <tr>
                                     <td colspan="4" style="padding-bottom:0px;"></td>
                                 </tr>
-                                 <!-- <tr>
-                                     <td style="border-style:none;padding-bottom:0px;padding-top:0px;" width="30%">
-                                         <b>Fecha de cotización:</b> &#160; <t t-esc="doc.date_order"/></td>
-                                     <td style="border-style:none;padding-bottom:0px;padding-top:0px;" width="30%">
-                                         <b>Fecha de caducidad:</b> &#160; <t t-esc="doc.validity_date"/></td>
-                                     <td style="border-style:none;padding-bottom:0px;padding-top:0px;" width="30%">
-                                         <b></b> &#160; <t t-esc="doc.pricelist_id.name"/></td>
-
-                                     <td style="border-style:none;padding-bottom:0px;padding-top:0px;" width="40%"><b>Tipo:</b> &#160; <t t-esc="doc.get_tipo(doc)"/></td> -->
-                                     <!-- <td style="border-style:none;padding-bottom:0px;padding-top:0px;" width="30%"/> -->
-                                 <!-- </tr> -->
-                                 <!-- <tr>
-                                     <td style="border-style:none;padding-bottom:0px;padding-top:0px;">
-                                         <t t-esc="doc.date_order"/> </td>
-                                     <td style="border-style:none;padding-bottom:0px;padding-top:0px;">
-                                         <t t-esc="doc.validity_date"/></td>
-                                     <td style="border-style:none;padding-bottom:0px;padding-top:0px;">
-                                         <t t-esc="doc.get_tipo(doc)"/></td>
-                                     <td style="border-style:none;padding-bottom:0px;" width="50%"/>
-                                 </tr> -->
                              </table>
                              <table class="table">
                                  <tr>
@@ -101,85 +81,15 @@
                                  <t t-set="products_without_order"
                                         t-value="doc._get_all_products(doc)"/>
 
-                                 <!-- <t t-set="all_products" t-value="doc._get_products_by_order_asc(products_without_order)"/> -->
-
                                  <tr t-foreach="all_products" t-as="product">
                                     <t t-set="product" t-value="product[0]"/>
-                                    <!-- <t t-set="attribute_line_ids" t-value="doc.get_attribute_line_ids(product)"/> -->
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
                                         <t t-esc="product.product_id"/>
                                     </td>
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
                                         <t t-esc="product.product_id.name"/>
                                     </td>
-                                     <!--
-                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
-                                         <t t-if="doc._is_promotion_products(product)">
-                                             Promoción
-                                         </t>
-                                     </td>
-                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
-                                         <t t-esc="doc._compute_quantities(product, doc, 'tnd')"/>
-                                     </td>
-                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
-                                         <t t-esc="doc._compute_quantities(product, doc, 'prov')"/>
-                                     </td>
-                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
-                                         <t t-esc="doc._compute_quantities(product, doc, 'cedis')"/>
-                                     </td>
-                                     -->
-                                     <!-- vbueno: 2701202113:36  se agregó la existencia total (GR)   -->
-                                     <!--
-                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
-                                         <t t-esc="doc._get_existot(product)"/>
-                                     </td>
-                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
-                                         <t t-esc="attribute_line_ids.get('origen')"/>
-                                     </td>
-                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
-                                         <t t-esc="doc._get_meses_contado(doc,product, 12)"/>
-                                     </td>
-                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
-                                         <t t-esc="doc._get_meses_contado(doc,product, 6)"/>
-                                     </td>
-                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
-                                         <t t-esc="doc._get_meses_contado(doc,product, 'contado')"/>
-                                     </td>
-                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
-                                         <t t-esc="attribute_line_ids.get('cap ca')"/>
-                                     </td>
-                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
-                                         <t t-esc="attribute_line_ids.get('vel')"/>
-                                     </td>
-                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
-                                         <t t-esc="attribute_line_ids.get('trea')"/>
-                                     </td>
-                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
-                                         <t t-esc="attribute_line_ids.get('trac')"/>
-                                     </td>
-                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
-                                         <t t-esc="attribute_line_ids.get('temp')"/>
-                                     </td>
-                                     -->
-                                     <!-- vbueno: 2308202014:13  se agregó la ubicación del producto en el almacén -->
-                                     <!--
-                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                         <t t-esc="doc._get_localizacion(product)"/>
-                                     </td>
-                                     -->
                                  </tr>
-                                 <!--
-                                 <tr>
-                                     <td style="border-style:none;padding-bottom:5px;"/>
-                                     <td style="border-style:none;padding-bottom:5px;" colspan="14">
-                                         <b><t t-esc="doc.x_obs1"/></b></td>
-                                 </tr>
-                                 <tr>
-                                     <td style="border-style:none;padding-bottom:2px;"/>
-                                     <td style="border-style:none;padding-bottom:2px;" colspan="14">
-                                         <b><t t-esc="doc.company_id.obs_2"/></b></td>
-                                 </tr>
-                                 -->
                              </table>
                          </div>
                      </t>
