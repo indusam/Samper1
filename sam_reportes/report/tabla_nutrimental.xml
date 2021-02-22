@@ -55,7 +55,7 @@
                                      <td style="border-style:none;padding-bottom:0px;padding-top:0px;" width="30%">
                                          <b></b> &#160; <t t-esc="doc.pricelist_id.name"/></td>
 
-                                     <td style="border-style:none;padding-bottom:0px;padding-top:0px;" width="40%"><b>Tipo:</b> &#160; <t t-esc="doc.get_tipo(doc)"/></td>
+                                     <td style="border-style:none;padding-bottom:0px;padding-top:0px;" width="40%"><b>Tipo:</b> &#160; <t t-esc="doc.get_tipo(doc)"/></td> -->
                                      <!-- <td style="border-style:none;padding-bottom:0px;padding-top:0px;" width="30%"/> -->
                                  <!-- </tr> -->
                                  <!-- <tr>
