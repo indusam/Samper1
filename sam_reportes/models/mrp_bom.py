@@ -31,11 +31,11 @@ class MrpBom(models.Model):
     _inherit = 'mrp.bom'
 
     def _get_all_products(self, product_tmpl_id):
-        prod_obj = self.env['mrp.bom'].search([('product_tmpl_id','=',self.product_tmpl_id)])
+        prod_obj = self.env['mrp.bom'].search([('product_tmpl_id.id','=',self.product_tmpl_id.id)])
         related_products = []
 
         for item in prod_obj.bom_line_ids:
-            related_products.append(item.product_id.id)
+            related_products.append(item.product_id)
 
         return related_products
 
