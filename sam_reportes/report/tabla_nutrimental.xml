@@ -28,7 +28,7 @@
                                 <span t-field="company.report_footer"/>
                             </div>
 
-                            <div t-if="report_type == 'html'" class="text-muted">
+                            <div t-if="report_type == 'pdf'" class="text-muted">
                                 Page: <span class="page"/> / <span class="topage"/>
                             </div>
                         </div>
@@ -103,7 +103,7 @@
             id="action_custom_report_tabla_nutrimental"
             string="Tabla Nutrimental xml"
             model="mrp.bom"
-            report_type="qweb-pdf"
+            report_type="html"
             file="sam_reportes.custom_report_tabla_nutrimental"
             name="sam_reportes.custom_report_tabla_nutrimental"
         />
