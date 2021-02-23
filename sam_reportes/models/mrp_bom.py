@@ -39,53 +39,6 @@ class MrpBom(models.Model):
 
         return related_products
 
-    def _get_domain_locations(self, company):
-        company_id = company.id
-        return (
-            [('location_id.company_id', '=', company_id),
-             ('location_id.usage', 'in', ['internal', 'transit'])],
-            ['&',
-             ('location_dest_id.company_id', '=', company_id),
-             '|',
-             ('location_id.company_id', '=', False),
-             '&',
-             ('location_id.usage', 'in', ['inventory', 'production']),
-             ('location_id.company_id', '=', company_id),
-             ],
-            ['&',
-             ('location_id.company_id', '=', company_id),
-             '|',
-             ('location_dest_id.company_id', '=', False),
-             '&',
-             ('location_dest_id.usage', 'in', ['inventory', 'production']),
-             ('location_dest_id.company_id', '=', company_id),
-             ]
-        )
-
-    def _compute_quantities(self, product, order, col):
-        company = order.company_id
-        is_right_comp = False
-        if col == 'tnd':
-            company = order.company_id
-            is_right_comp = True
-        elif col == 'prov' and company.closest_organization:
-            company = company.closest_organization
-            is_right_comp = True
-        elif col == 'cedis' and company.CEDIS_organization:
-            company = company.CEDIS_organization
-            is_right_comp = True
-        if is_right_comp:
-            domain_quant_loc, domain_move_in_loc, domain_move_out_loc = self._get_domain_locations(
-                company)
-            domain_quant = [('product_id', '=', product.id)] + domain_quant_loc
-            Quant = self.env['stock.quant']
-            quants_res = dict((item['product_id'][0], (item['quantity'], item['reserved_quantity'])) for item in Quant.sudo(
-            ).read_group(domain_quant, ['product_id', 'quantity', 'reserved_quantity'], ['product_id'], orderby='id'))
-            qty_available = quants_res.get(product.id, [0.0])[0]
-            if qty_available > 10:
-                qty_available = 10
-            return int(qty_available)
-
     def _get_localizacion(self, product):
         # vbueno: 2308202015:01 obtiene la localizacón de los productos.
         clocalizacion = self.env['x_localizacion_de_productos'].search([('x_Producto.id', '=', product.id),
