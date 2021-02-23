@@ -103,7 +103,7 @@
             id="action_custom_report_tabla_nutrimental"
             string="Tabla Nutrimental xml"
             model="mrp.bom"
-            report_type="html"
+            report_type="qweb-pdf"
             file="sam_reportes.custom_report_tabla_nutrimental"
             name="sam_reportes.custom_report_tabla_nutrimental"
         />
