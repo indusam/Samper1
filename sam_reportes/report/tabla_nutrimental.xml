@@ -52,23 +52,23 @@
                              </table>
                              <table class="table">
                                  <tr>
-                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;width: 15%; vertical-align:middle;"><b>Producto</b></td>
+                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;width: 15%; vertical-align:middle;"><b>Ingrediente</b></td>
                                      <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;width: 30%;vertical-align:middle;"><b>Desc</b></td>
-                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>Promocion</b></td>
-                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>Tnd</b></td>
-                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>Prov</b></td>
-                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>Bod</b></td>
-                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>GR</b></td>
-                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>Origen</b></td>
-                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>12 meses</b></td>
-                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>6 meses</b></td>
-                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>Contado</b></td>
-                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>Cap ca</b></td>
-                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>Vel</b></td>
-                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>Trea</b></td>
-                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>Trac</b></td>
-                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>Temp</b></td>
-                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>Ubicación</b></td>
+                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>Cantidad</b></td>
+                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>% Prot.</b></td>
+                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>% G.Tot</b></td>
+                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>% G.Sat</b></td>
+                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>% Humed</b></td>
+                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>% Carbs</b></td>
+                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>% Azuca</b></td>
+                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>Sodio (mg/kg)</b></td>
+                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>Prot. Kg.</b></td>
+                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>Grasa Kg.</b></td>
+                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>GrSat Kg.</b></td>
+                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>Humed Kg.</b></td>
+                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>Carbs Kg</b></td>
+                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>Azuca Kg</b></td>
+                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle;"><b>Sodio(mg)</b></td>
                                  </tr>
                                  <tr>
                                      <td style="padding-bottom:0px;padding-top:0px;"/>
@@ -118,7 +118,7 @@
             <field name="margin_left">7</field>
             <field name="margin_right">7</field>
             <field name="header_line" eval="False"/>
-            <field name="header_spacing">20</field>
+            <field name="header_spacing">45</field>
             <field name="dpi">90</field>
         </record>
 
