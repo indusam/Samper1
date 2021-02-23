@@ -26,7 +26,7 @@ from odoo import fields, models
 from odoo.tools.safe_eval import safe_eval
 
 
-class SaleOrder(models.Model):
+class MrpBom(models.Model):
 
     _inherit = 'mrp.bom'
 
