@@ -35,7 +35,7 @@ class MrpBom(models.Model):
         related_products = []
 
         for item in prod_obj.bom_line_ids:
-            related_products.append(item.product_id)
+            related_products.append(item.product_id.id)
 
         return related_products
 
