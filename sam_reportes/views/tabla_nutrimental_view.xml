@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="wizard_tabla_nutrimetal_view_form" model="ir.ui.view">
+        <field name="name">wizard.tabla.nutrimental.view.form</field>
+        <field name="model">wizard.tabla.nutrimental</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="Producto"/>
+                        <field name="Cantidad"/>
+                    </group>
+                    <group>
+                        <field name="Ingrediente limitante"/>
+                        <field name="Cantidad limitante"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="imprime_tabla_nutrimental" type="object" string="Imprimir" class="oe_highlight"/>
+                    <button special="cancel" string="Cancelar"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_tabla_nutrimental_wizard" model="ir.actions.act_window">
+        <field name="name">Tabla nutrimental</field>
+        <field name="res_model">wizard.tabla.nutrimental</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="wizard_tabla_nutrimental_view_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem
+        id="tabla_nutrimental_menu"
+        name="Tabla nutrimental"
+        action="action_tabla_nutrimental_wizard"
+        parent="studio_customization.samper_informes_9a4c552e-6a2c-49dc-b22f-2c77d1e02fac"
+        groups="base.group_user"
+        sequence="348"/>
+</odoo>
