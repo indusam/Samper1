@@ -7,11 +7,11 @@
             <form>
                 <group>
                     <group>
-                        <field name="Producto"/>
-                        <field name="Cantidad"/>
+                        <field name="producto"/>
+                        <field name="cantidad"/>
                     </group>
                     <group>
-                        <field name="ing__limitante"/>
+                        <field name="ing_limitante"/>
                         <field name="cant_limitante"/>
                     </group>
                 </group>
