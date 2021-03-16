@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="wizard_tabla_nutrimetal_view_form" model="ir.ui.view">
+    <record id="wizard_tabla_nutrimental_view_form" model="ir.ui.view">
         <field name="name">wizard.tabla.nutrimental.view.form</field>
         <field name="model">wizard.tabla.nutrimental</field>
         <field name="arch" type="xml">
