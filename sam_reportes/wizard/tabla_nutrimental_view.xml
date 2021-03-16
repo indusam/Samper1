@@ -25,7 +25,7 @@
 
     <record id="action_tabla_nutrimental_wizard" model="ir.actions.act_window">
         <field name="name">Tabla nutrimental</field>
-        <field name="res_model">wizard.tabla.nutrimental.view.form</field>
+        <field name="res_model">wizard.tabla.nutrimental</field>
         <field name="type">ir.actions.act_window</field>
         <field name="view_mode">form</field>
         <field name="view_id" ref="wizard_tabla_nutrimental_view_form"/>

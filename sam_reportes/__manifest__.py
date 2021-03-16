@@ -31,6 +31,6 @@
     'license': 'AGPL-3',
     'depends': ['base', 'mrp'],
     'data': [
-        'views/tabla_nutrimental_view.xml',
+        'wizard/tabla_nutrimental_view.xml',
     ],
 }
