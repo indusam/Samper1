@@ -40,34 +40,33 @@ class TablaNutrimental(models.TransientModel):
     def imprime_tabla_nutrimental(self):
         raise UserError("Imprimiendo...")
 
-""" 
-        vals=[]
-        ingredientes =  self.env['mrp.bom.line'].search([('bom_id.id','=',self.producto)])
+
+#        vals=[]
+#        ingredientes =  self.env['mrp.bom.line'].search([('bom_id.id','=',self.producto)])
 
 
-        for producto in productos:
-            ventas = self.env['account.move.line'].search([('date','>=',self.fecha_inicial),
-                                                           ('date','<=',self.fecha_final),
-                                                           ('product_id','=',producto.id)],limit=1).id
+#        for producto in productos:
+#            ventas = self.env['account.move.line'].search([('date','>=',self.fecha_inicial),
+#                                                           ('date','<=',self.fecha_final),
+#                                                           ('product_id','=',producto.id)],limit=1).id
 
-            if not ventas:
-                vals.append({
-                    'prod':producto.id,
-                    'nombre':producto.name,
-                    'referencia':producto.product_tmpl_id.default_code,
-                    'exis':producto.product_tmpl_id.qty_available,
-                    'costo':producto.product_tmpl_id.standard_price,
-                    'valor':producto.product_tmpl_id.qty_available * producto.product_tmpl_id.standard_price
-                })
+#            if not ventas:
+#                vals.append({
+#                    'prod':producto.id,
+#                    'nombre':producto.name,
+#                    'referencia':producto.product_tmpl_id.default_code,
+#                    'exis':producto.product_tmpl_id.qty_available,
+#                    'costo':producto.product_tmpl_id.standard_price,
+#                    'valor':producto.product_tmpl_id.qty_available * producto.product_tmpl_id.standard_price
+#                })
 
 
-        data = {'ids': self.ids,
-                'model':self._name,
-                'vals':vals,
-                'inicio':self.fecha_inicial,
-                'final':self.fecha_final,
-                'marca':self.marca
-                }
+#        data = {'ids': self.ids,
+#                'model':self._name,
+#                'vals':vals,
+#                'inicio':self.fecha_inicial,
+#                'final':self.fecha_final,
+#                'marca':self.marca
+#                }
 
-        return self.env.ref('gr_prod_sin_ventas.prod_sin_ventas_reporte').report_action(self, data=data)
-"""
+#        return self.env.ref('gr_prod_sin_ventas.prod_sin_ventas_reporte').report_action(self, data=data)

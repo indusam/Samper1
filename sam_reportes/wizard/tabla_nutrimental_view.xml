@@ -11,8 +11,8 @@
                         <field name="Cantidad"/>
                     </group>
                     <group>
-                        <field name="Ingrediente limitante"/>
-                        <field name="Cantidad limitante"/>
+                        <field name="ing__limitante"/>
+                        <field name="cant_limitante"/>
                     </group>
                 </group>
                 <footer>
