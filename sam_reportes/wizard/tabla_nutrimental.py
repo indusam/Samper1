@@ -37,7 +37,7 @@ class TablaNutrimental(models.TransientModel):
 
     @api.onchange('producto')
     def onchange_producto(self):
-        nlista = self.producto.id
+        nlista = self.product_tmpl_id.id
         for rec in self:
             return {'domain': {'ing_limitante':
                                    [('parent_product_tmpl_id', '=', nlista)]}}
