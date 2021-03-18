@@ -21,7 +21,7 @@ class TablaNutrimental(models.TransientModel):
     _name = 'wizard.tabla.nutrimental'
     _description = 'Tabla Nutrimental'
 
-    producto = fields.Many2one('product.product', string="Producto")
+    producto = fields.Many2one('mrp.bom', string="Producto")
     cantidad = fields.Float(string="Cantidad")
     ing_limitante = fields.Many2one('mrp.bom.line',string="Ingrediente limitante")
     cant_limitante = fields.Float(string="Cantidad Limitante")
