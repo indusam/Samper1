@@ -37,10 +37,10 @@ class TablaNutrimental(models.TransientModel):
 
     @api.onchange('producto')
     def onchange_producto(self):
-        nlista = self.product_tmpl_id.id
+        nlista = self.producto.id
         for rec in self:
             return {'domain': {'ing_limitante':
-                                   [('parent_product_tmpl_id', '=', nlista)]}}
+                                   [('bom_id', '=', nlista)]}}
 
     # imprime la tabla nutrimental.
     def imprime_tabla_nutrimental(self):
