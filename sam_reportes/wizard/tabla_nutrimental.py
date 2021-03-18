@@ -24,7 +24,7 @@ class TablaNutrimental(models.TransientModel):
     producto = fields.Many2one('mrp.bom', string="Producto")
     cantidad = fields.Float(string="Cantidad")
     ing_limitante = fields.Many2one('mrp.bom.line',string="Ingrediente limitante")
-    cant_limitante = fields.Float(string="Cantidad Limitante")
+    cant_limitante = fields.Float(string="Cantidad limitante")
     proteina_kg = fields.Float(string="Proteína kg")
     grasa_kg = fields.Float(string="Grasa kg")
     grasa_sat_kg = fields.Float(string="Grasa sat kg")
