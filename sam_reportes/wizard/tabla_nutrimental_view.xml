@@ -7,7 +7,7 @@
             <form>
                 <group>
                     <group>
-                        <field name="producto" attrs="{‘required’: [('producto','=',True)]}"/>
+                        <field name="producto" attrs="{‘required’: True}"/>
                         <field name="cantidad" attrs="{'invisible': [('ing_limitante','!=',False)]}"/>
                     </group>
                     <group>
