@@ -48,7 +48,7 @@ class TablaNutrimental(models.TransientModel):
         # raise UserError("Imprimiendo...")
         vals=[]
         ingredientes = self.env['mrp.bom.line'].search(
-                        [('bom_id.id', '=', self.producto)])
+                        [('bom_id.id', '=', self.producto.id)])
         raise UserError(ingredientes)
 
 #        vals=[]
