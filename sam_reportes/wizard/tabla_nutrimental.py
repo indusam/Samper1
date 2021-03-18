@@ -35,6 +35,7 @@ class TablaNutrimental(models.TransientModel):
     # product_ref = fields.Char(
     #    related="product_id.default_code", string="Referencia Interna")
 
+    # permite seleccionar el ingrediente limitante.
     @api.onchange('producto')
     def onchange_producto(self):
         nlista = self.producto.id
@@ -45,7 +46,10 @@ class TablaNutrimental(models.TransientModel):
     # imprime la tabla nutrimental.
     def imprime_tabla_nutrimental(self):
         raise UserError("Imprimiendo...")
-
+        vals=[]
+        ingredientes = self.env['mrp.bom.line'].search(
+                        [('bom_id.id', '=', self.producto)])
+        raise UserError(ingredientes)
 
 #        vals=[]
 #        ingredientes =  self.env['mrp.bom.line'].search([('bom_id.id','=',self.producto)])
