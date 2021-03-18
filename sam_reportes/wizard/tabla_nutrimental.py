@@ -35,6 +35,12 @@ class TablaNutrimental(models.TransientModel):
     # product_ref = fields.Char(
     #    related="product_id.default_code", string="Referencia Interna")
 
+    @api.onchange('producto')
+    def onchange_producto(self):
+        nlista = self.producto.id
+        for rec in self:
+            return {'domain': {'ing_limitante':
+                                   [('parent_product_tmpl_id', '=', nlista)]}}
 
     # imprime la tabla nutrimental.
     def imprime_tabla_nutrimental(self):
