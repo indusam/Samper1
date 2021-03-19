@@ -25,13 +25,13 @@ class TablaNutrimental(models.TransientModel):
     cantidad = fields.Float(string="Cantidad")
     ing_limitante = fields.Many2one('mrp.bom.line',string="Ingrediente limitante")
     cant_limitante = fields.Float(string="Cantidad limitante")
-    proteina_kg = fields.Float(string="Proteína kg")
-    grasa_kg = fields.Float(string="Grasa kg")
-    grasa_sat_kg = fields.Float(string="Grasa sat kg")
-    humedad_kg = fields.Float(string="Humedad kg")
-    carbs_kg = fields.Float(string="Carbs kg")
-    azucares_kg = fields.Float(string="Azúcares kg")
-    sodio_mg = fields.Float(string="Sodio mg/kg")
+    # proteina_kg = fields.Float(string="Proteína kg")
+    # grasa_kg = fields.Float(string="Grasa kg")
+    # grasa_sat_kg = fields.Float(string="Grasa sat kg")
+    # humedad_kg = fields.Float(string="Humedad kg")
+    # carbs_kg = fields.Float(string="Carbs kg")
+    # azucares_kg = fields.Float(string="Azúcares kg")
+    # sodio_mg = fields.Float(string="Sodio mg/kg")
     # product_ref = fields.Char(
     #    related="product_id.default_code", string="Referencia Interna")
 
@@ -51,39 +51,46 @@ class TablaNutrimental(models.TransientModel):
                         [('bom_id.id', '=', self.producto.id)])
 
         for ingrediente in ingredientes:
-            vals.append({
-                'componente': ingrediente.product_id,
-                'pct_proteina': ingrediente.product_id.x_pct_proteinas,
-                'pct_grasas_tot': ingrediente.product_id.x_pct_grasas_totales,
-                'pct_grasas_sat': ingrediente.product_id.x_pct_grasas_saturadas,
-                'pct_humedad': ingrediente.product_id.x_pct_humedad,
-                'pct_carbs': ingrediente.x_pct_hidratos_de_carbono,
-                'pct_azucares': ingrediente.x_pct_azucares,
-                'mg_sodio': ingrediente.product_id.x_mg_sodio
+            if not self.ing_limitante:
+                vals.append({
+                    'componente': ingrediente.product_id,
+                    'pct_proteina': ingrediente.product_id.x_pct_proteinas,
+                    'pct_grasas_tot': ingrediente.product_id.x_pct_grasas_totales,
+                    'pct_grasas_sat': ingrediente.product_id.x_pct_grasas_saturadas,
+                    'pct_humedad': ingrediente.product_id.x_pct_humedad,
+                    'pct_carbs': ingrediente.product_id.x_pct_hidratos_de_carbono,
+                    'pct_azucares': ingrediente.product_id.x_pct_azucares,
+                    'mg_sodio': ingrediente.product_id.x_mg_sodio,
+                    'proteina_kg': (ingrediente.product_id.x_pct_proteinas / 100) * self.cantidad,
+                    'grasa_kg': (ingrediente.product_id.x_pct_grasas_totales / 100) * self.cantidad,
+                    'grasa_sat_kg': (ingrediente.product_id.x_pct_grasas_saturadas / 100) * self.cantidad,
+                    'humedad_kg': (ingrediente.product_id.x_pct_humedad / 100) * self.cantidad,
+                    'carbs_kg': (ingrediente.product_id.x_pct_hidratos_de_carbono / 100) * self.cantidad,
+                    'azucares_kg': (ingrediente.product_id.x_pct_azucares / 100) * self.cantidad,
+                    'sodio_mg': ingrediente.product_id.x_mg_sodio * self.cantidad
 
+                })
 
-            })
-            
+            if self.ing_limitante:
+                vals.append({
+                    'componente': ingrediente.product_id,
+                    'pct_proteina': ingrediente.product_id.x_pct_proteinas,
+                    'pct_grasas_tot': ingrediente.product_id.x_pct_grasas_totales,
+                    'pct_grasas_sat': ingrediente.product_id.x_pct_grasas_saturadas,
+                    'pct_humedad': ingrediente.product_id.x_pct_humedad,
+                    'pct_carbs': ingrediente.product_id.x_pct_hidratos_de_carbono,
+                    'pct_azucares': ingrediente.product_id.x_pct_azucares,
+                    'mg_sodio': ingrediente.product_id.x_mg_sodio,
+                    'proteina_kg': (ingrediente.product_id.x_pct_proteinas / 100) * self.cant_limitante,
+                    'grasa_kg': (ingrediente.product_id.x_pct_grasas_totales / 100) * self.cant_limitante,
+                    'grasa_sat_kg': (ingrediente.product_id.x_pct_grasas_saturadas / 100) * self.cant_limitante,
+                    'humedad_kg': (ingrediente.product_id.x_pct_humedad / 100) * self.cant_limitante,
+                    'carbs_kg': (ingrediente.product_id.x_pct_hidratos_de_carbono / 100) * self.cant_limitante,
+                    'azucares_kg': (ingrediente.product_id.x_pct_azucares / 100) * self.cant_limitante,
+                    'sodio_mg': ingrediente.product_id.x_mg_sodio * self.cant_limitante
+                })
 
-#        vals=[]
-#        ingredientes =  self.env['mrp.bom.line'].search([('bom_id.id','=',self.producto)])
-
-
-#        for producto in productos:
-#            ventas = self.env['account.move.line'].search([('date','>=',self.fecha_inicial),
-#                                                           ('date','<=',self.fecha_final),
-#                                                           ('product_id','=',producto.id)],limit=1).id
-
-#            if not ventas:
-#                vals.append({
-#                    'prod':producto.id,
-#                    'nombre':producto.name,
-#                    'referencia':producto.product_tmpl_id.default_code,
-#                    'exis':producto.product_tmpl_id.qty_available,
-#                    'costo':producto.product_tmpl_id.standard_price,
-#                    'valor':producto.product_tmpl_id.qty_available * producto.product_tmpl_id.standard_price
-#                })
-
+            raise UserError(vals)
 
 #        data = {'ids': self.ids,
 #                'model':self._name,
