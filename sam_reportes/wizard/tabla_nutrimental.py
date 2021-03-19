@@ -45,11 +45,25 @@ class TablaNutrimental(models.TransientModel):
 
     # imprime la tabla nutrimental.
     def imprime_tabla_nutrimental(self):
-        # raise UserError("Imprimiendo...")
+
         vals=[]
         ingredientes = self.env['mrp.bom.line'].search(
                         [('bom_id.id', '=', self.producto.id)])
-        raise UserError(ingredientes)
+
+        for ingrediente in ingredientes:
+            vals.append({
+                'componente': ingrediente.product_id,
+                'pct_proteina': ingrediente.product_id.x_pct_proteinas,
+                'pct_grasas_tot': ingrediente.product_id.x_pct_grasas_totales,
+                'pct_grasas_sat': ingrediente.product_id.x_pct_grasas_saturadas,
+                'pct_humedad': ingrediente.product_id.x_pct_humedad,
+                'pct_carbs': ingrediente.x_pct_hidratos_de_carbono,
+                'pct_azucares': ingrediente.x_pct_azucares,
+                'mg_sodio': ingrediente.product_id.x_mg_sodio
+
+
+            })
+            
 
 #        vals=[]
 #        ingredientes =  self.env['mrp.bom.line'].search([('bom_id.id','=',self.producto)])
