@@ -50,7 +50,7 @@
                         </thead>
                         <tbody>
                             <!-- declara totales -->
-                            <t t-set="cant_comp" t-value="0"/>
+                            <t t-set="tot_cantidad" t-value="0"/>
                             <t t-set="tot_proteina" t-value="0"/>
                             <t t-set="tot_grasa" t-value="0"/>
                             <t t-set="tot_grasa_sat" t-value="0"/>
