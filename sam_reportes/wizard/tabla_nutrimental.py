@@ -94,7 +94,7 @@ class TablaNutrimental(models.TransientModel):
         data = {'ids': self.ids,
                 'model':self._name,
                 'vals':vals,
-                'producto':self.producto.name,
+                'producto':self.producto.product_id.name,
                 'cantidad':self.cantidad,
                 'ing_limitante':self.ing_limitante,
                  'cant_limitante':self.cant_limitante
