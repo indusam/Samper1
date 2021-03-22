@@ -32,21 +32,21 @@
                     <table class="table table-condensed">
                         <thead>
                             <tr >
-                                <th style="text-align:middle;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">Producto</th>
-                                <th style="text-align:middle;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px;">% Proteína</th>
-                                <th style="text-align:middle;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px;">% Grasas tot</th>
-                                <th style="text-align:middle;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">% Grasas sat</th>
-                                <th style="text-align:middle;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">% Humedad</th>
-                                <th style="text-align:middle;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">% Carbs</th>
-                                <th style="text-align:middle;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">% Azúcares</th>
-                                <th style="text-align:middle;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">mg Sodio</th>
-                                <th style="text-align:middle;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">kg Proteína</th>
-                                <th style="text-align:middle;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">kg Grasa Tot</th>
-                                <th style="text-align:middle;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">kg Grasa Sat</th>
-                                <th style="text-align:middle;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">kg Humedad</th>
-                                <th style="text-align:middle;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">kg Carbs</th>
-                                <th style="text-align:middle;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">kg Azúcares</th>
-                                <th style="text-align:middle;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">mg/kg Sodio</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">Producto</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px;">% Proteína</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px;">% Grasas tot</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">% Grasas sat</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">% Humedad</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">% Carbs</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">% Azúcares</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">mg Sodio</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">kg Proteína</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">kg Grasa Tot</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">kg Grasa Sat</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">kg Humedad</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">kg Carbs</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">kg Azúcares</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">mg/kg Sodio</th>
 
                             </tr>
                         </thead>
@@ -57,7 +57,7 @@
                             -->
                             <t t-foreach="vals" t-as="doc">
                                 <tr>
-                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="doc['componente']"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
