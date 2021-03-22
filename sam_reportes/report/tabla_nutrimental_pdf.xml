@@ -10,7 +10,7 @@
                     <div style="text-align:left;color:black!important;">
                         <strong>
                             <h5>
-                                Tabla nutrimental <span t-esc="producto"/>
+                                Tabla nutrimental:   <span t-esc="producto"/>
                             </h5>
                         </strong>
                     </div>
@@ -48,10 +48,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!--
-                            <t t-set="total_valor" t-value="0"/>
-                            <t t-set="total_exis" t-value="0"/>
-                            -->
+                            <!-- declara totales -->
+                            <t t-set="tot_proteina" t-value="0"/>
+                            <t t-set="tot_grasa" t-value="0"/>
+                            <t t-set="tot_grasa_sat" t-value="0"/>
+                            <t t-set="tot_humedad" t-value="0"/>
+                            <t t-set="tot_carbs" t-value="0"/>
+                            <t t-set="tot_azucares" t-value="0"/>
+                            <t t-set="tot_sodio" t-value="0"/>
+
                             <t t-foreach="vals" t-as="doc">
                                 <tr>
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -100,25 +105,49 @@
                                         <t t-esc="'{0:,.4f}'.format(int(doc['sodio_mg']))"/>
                                     </td>
 
-                                    <!--
-                                    <t t-set="total_valor" t-value="total_valor + doc['valor']"/>
-                                    <t t-set="total_exis" t-value="total_exis + doc['exis']"/>
-                                    -->
+                                    <!-- Suma totales -->
+                                    <t t-set="tot_proteina" t-value="tot_proteina + doc['proteina_kg']"/>
+                                    <t t-set="tot_grasa" t-value="tot_grasa + doc['grasa_kg']"/>
+                                    <t t-set="tot_grasa_sat" t-value="tot_grasa_sat + doc['grasa_sat_kg']"/>
+                                    <t t-set="tot_humedad" t-value="tot_humedad + doc['humedad_kg']"/>
+                                    <t t-set="tot_carbs" t-value="tot_carbs + doc['carbs_kg']"/>
+                                    <t t-set="tot_azucares" t-value="tot_azucares + doc['azucares_kg']"/>
+                                    <t t-set="tot_sodio" t-value="tot_sodio + doc['sodio_mg']"/>
+
                                 </tr>
                             </t>
-                            <!--
+                            <!-- Imprime Totales -->
                             <tr>
                                 <th style="text-align:left;color:black!important;">        </th>
-                                <th style="text-align:left;color:black!important;">      </th>
+                                <th style="text-align:left;color:black!important;">        </th>
+                                <th style="text-align:left;color:black!important;">        </th>
+                                <th style="text-align:left;color:black!important;">        </th>
+                                <th style="text-align:left;color:black!important;">        </th>
+                                <th style="text-align:left;color:black!important;">        </th>
+                                <th style="text-align:left;color:black!important;">        </th>
                                 <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
-                                    <span t-att-style="style" t-esc="'{0:,.0f}'.format(int(total_exis))"/>
+                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(int(tot_proteina))"/>
                                 </th>
-                                <th style="text-align:right;color:black!important;">          </th>
                                 <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
-                                    <span t-att-style="style" t-esc="'{0:,.0f}'.format(int(total_valor))"/>
+                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(int(tot_grasa))"/>
+                                </th>
+                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(int(tot_grasa_sat))"/>
+                                </th>
+                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(int(tot_humedad))"/>
+                                </th>
+                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(int(tot_carbs))"/>
+                                </th>
+                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(int(tot_azucares))"/>
+                                </th>
+                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(int(tot_sodio))"/>
                                 </th>
                             </tr>
-                            -->
+
                         </tbody>
                     </table>
                 </div>
