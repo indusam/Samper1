@@ -125,6 +125,7 @@
                                 <th style="text-align:left;color:black!important;">        </th>
                                 <th style="text-align:left;color:black!important;">        </th>
                                 <th style="text-align:left;color:black!important;">        </th>
+                                <th style="text-align:left;color:black!important;">        </th>
                                 <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
                                     <span t-att-style="style" t-esc="'{0:,.4f}'.format(int(tot_proteina))"/>
                                 </th>
