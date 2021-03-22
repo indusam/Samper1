@@ -53,7 +53,7 @@ class TablaNutrimental(models.TransientModel):
         for ingrediente in ingredientes:
             if not self.ing_limitante:
                 vals.append({
-                    'componente': ingrediente.product_id,
+                    'componente': ingrediente.product_id.name,
                     'pct_proteina': ingrediente.product_id.x_pct_proteinas,
                     'pct_grasas_tot': ingrediente.product_id.x_pct_grasas_totales,
                     'pct_grasas_sat': ingrediente.product_id.x_pct_grasas_saturadas,
