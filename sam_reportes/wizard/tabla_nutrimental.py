@@ -25,15 +25,7 @@ class TablaNutrimental(models.TransientModel):
     cantidad = fields.Float(string="Cantidad")
     ing_limitante = fields.Many2one('mrp.bom.line',string="Ingrediente limitante")
     cant_limitante = fields.Float(string="Cantidad limitante")
-    # proteina_kg = fields.Float(string="Proteína kg")
-    # grasa_kg = fields.Float(string="Grasa kg")
-    # grasa_sat_kg = fields.Float(string="Grasa sat kg")
-    # humedad_kg = fields.Float(string="Humedad kg")
-    # carbs_kg = fields.Float(string="Carbs kg")
-    # azucares_kg = fields.Float(string="Azúcares kg")
-    # sodio_mg = fields.Float(string="Sodio mg/kg")
-    # product_ref = fields.Char(
-    #    related="product_id.default_code", string="Referencia Interna")
+
 
     # permite seleccionar el ingrediente limitante.
     @api.onchange('producto')
@@ -94,7 +86,7 @@ class TablaNutrimental(models.TransientModel):
         data = {'ids': self.ids,
                 'model':self._name,
                 'vals':vals,
-                'producto':self.producto.product_id.name,
+                'producto':self.producto.id.name,
                 'cantidad':self.cantidad,
                 'ing_limitante':self.ing_limitante,
                  'cant_limitante':self.cant_limitante

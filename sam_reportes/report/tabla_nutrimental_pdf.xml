@@ -9,9 +9,6 @@
                     <br/>
                     <div style="text-align:left;color:black!important;">
                         <strong>
-                            <h4>
-                                <span t-esc="env.company.name"/>
-                            </h4>
                             <h5>
                                 Tabla nutrimental <span t-esc="producto"/>
                             </h5>
