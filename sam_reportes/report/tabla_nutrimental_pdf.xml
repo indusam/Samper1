@@ -4,7 +4,7 @@
     <template id="tabla_nutrimental_template">
 
         <t t-call="web.html_container">
-            <t t-call="web.basic_layout">
+            <t t-call="web.standard_layout">
                 <div class="page">
                     <br/>
                     <div style="text-align:left;color:black!important;">
@@ -32,14 +32,22 @@
                     <table class="table table-condensed">
                         <thead>
                             <tr >
-                                <th style="text-align:left;color:black!important;">Producto</th>
-                                <th style="text-align:left;color:black!important;">% Proteína</th>
-                                <th style="text-align:left;color:black!important;">% Grasas tot</th>
-                                <th style="text-align:left;color:black!important;">% Grasas sat</th>
-                                <th style="text-align:left;color:black!important;">% Humedad</th>
-                                <th style="text-align:left;color:black!important;">% Carbs</th>
-                                <th style="text-align:left;color:black!important;">% Azúcares</th>
-                                <th style="text-align:left;color:black!important;">mg Sodio</th>
+                                <th style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">Producto</th>
+                                <th style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px;">% Proteína</th>
+                                <th style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px;">% Grasas tot</th>
+                                <th style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">% Grasas sat</th>
+                                <th style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">% Humedad</th>
+                                <th style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">% Carbs</th>
+                                <th style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">% Azúcares</th>
+                                <th style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">mg Sodio</th>
+                                <th style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">kg Proteína</th>
+                                <th style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">kg Grasa Tot</th>
+                                <th style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">kg Grasa Sat</th>
+                                <th style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">kg Humedad</th>
+                                <th style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">kg Carbs</th>
+                                <th style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">kg Azúcares</th>
+                                <th style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">mg/kg Sodio</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -71,8 +79,30 @@
                                         <t t-esc="'{0:,.2f}'.format(int(doc['pct_azucares']))"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
-                                        <t t-esc="'{0:,.2f}'.format(int(doc['mg_sodio']))"/>
+                                        <t t-esc="'{0:,.4f}'.format(int(doc['mg_sodio']))"/>
                                     </td>
+                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                        <t t-esc="'{0:,.4f}'.format(int(doc['proteina_kg']))"/>
+                                    </td>
+                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                        <t t-esc="'{0:,.4f}'.format(int(doc['grasa_kg']))"/>
+                                    </td>
+                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                        <t t-esc="'{0:,.4f}'.format(int(doc['grasa_sat_kg']))"/>
+                                    </td>
+                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                        <t t-esc="'{0:,.4f}'.format(int(doc['humedad_kg']))"/>
+                                    </td>
+                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                        <t t-esc="'{0:,.4f}'.format(int(doc['carbs_kg']))"/>
+                                    </td>
+                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                        <t t-esc="'{0:,.4f}'.format(int(doc['azucares_kg']))"/>
+                                    </td>
+                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                        <t t-esc="'{0:,.4f}'.format(int(doc['sodio_mg']))"/>
+                                    </td>
+
                                     <!--
                                     <t t-set="total_valor" t-value="total_valor + doc['valor']"/>
                                     <t t-set="total_exis" t-value="total_exis + doc['exis']"/>
