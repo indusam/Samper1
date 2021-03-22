@@ -43,8 +43,10 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <!--
                             <t t-set="total_valor" t-value="0"/>
                             <t t-set="total_exis" t-value="0"/>
+                            -->
                             <t t-foreach="vals" t-as="doc">
                                 <tr>
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
@@ -71,10 +73,10 @@
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
                                         <t t-esc="'{0:,.2f}'.format(int(doc['mg_sodio']))"/>
                                     </td>
-
+                                    <!--
                                     <t t-set="total_valor" t-value="total_valor + doc['valor']"/>
                                     <t t-set="total_exis" t-value="total_exis + doc['exis']"/>
-
+                                    -->
                                 </tr>
                             </t>
                             <!--
