@@ -30,6 +30,7 @@
                         <thead>
                             <tr >
                                 <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">Producto</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">Cantidad</th>
                                 <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px;">% Proteína</th>
                                 <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px;">% Grasas tot</th>
                                 <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">% Grasas sat</th>
@@ -49,6 +50,7 @@
                         </thead>
                         <tbody>
                             <!-- declara totales -->
+                            <t t-set="cant_comp" t-value="0"/>
                             <t t-set="tot_proteina" t-value="0"/>
                             <t t-set="tot_grasa" t-value="0"/>
                             <t t-set="tot_grasa_sat" t-value="0"/>
@@ -61,6 +63,9 @@
                                 <tr>
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="doc['componente']"/>
+                                    </td>
+                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                        <t t-esc="'{0:,.4f}'.format(int(doc['cant_comp']))"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
                                         <t t-esc="'{0:,.2f}'.format(int(doc['pct_proteina']))"/>
@@ -106,6 +111,7 @@
                                     </td>
 
                                     <!-- Suma totales -->
+                                    <t t-set="tot_cantidad" t-value="tot_cantidad + doc['cant_comp']"/>
                                     <t t-set="tot_proteina" t-value="tot_proteina + doc['proteina_kg']"/>
                                     <t t-set="tot_grasa" t-value="tot_grasa + doc['grasa_kg']"/>
                                     <t t-set="tot_grasa_sat" t-value="tot_grasa_sat + doc['grasa_sat_kg']"/>
@@ -119,13 +125,16 @@
                             <!-- Imprime Totales -->
                             <tr>
                                 <th style="text-align:left;color:black!important;">        </th>
+                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(int(tot_cantidad))"/>
+                                </th>
                                 <th style="text-align:left;color:black!important;">        </th>
                                 <th style="text-align:left;color:black!important;">        </th>
                                 <th style="text-align:left;color:black!important;">        </th>
                                 <th style="text-align:left;color:black!important;">        </th>
                                 <th style="text-align:left;color:black!important;">        </th>
                                 <th style="text-align:left;color:black!important;">        </th>
-                                <th style="text-align:left;color:black!important;">         </th>
+                                <th style="text-align:left;color:black!important;">        </th>
                                 <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
                                     <span t-att-style="style" t-esc="'{0:,.4f}'.format(int(tot_proteina))"/>
                                 </th>
