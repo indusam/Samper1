@@ -1,5 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
+    <template id="prod_sin_ventas_template">
+
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <div class="page">
+                    <br/>
+                    <div style="text-align:left;color:black!important;">
+                        <strong>
+                            <h4>
+                                <span t-esc="env.company.name"/>
+                            </h4>
+                            <h5>
+                                Tabla nutrimental <span t-esc="producto"/>
+                            </h5>
+                        </strong>
+                    </div>
+                    <br/>
+                    <!-- Aquí va el ingrediente limitante
+                    <div style="text-align:left;color:black!important;">
+                        <strong>
+                            <p>
+                                Del : <span t-esc="inicio"/>
+                                 Al : <span t-esc="final"/>
+                            </p>
+                        </strong>
+                    </div>
+                    -->
+                    <br/>
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr >
+                                <th style="text-align:left;color:black!important;">Producto</th>
+                                <th style="text-align:left;color:black!important;">% Proteína</th>
+                                <th style="text-align:left;color:black!important;">% Grasas tot</th>
+                                <th style="text-align:left;color:black!important;">% Grasas sat</th>
+                                <th style="text-align:left;color:black!important;">% Humedad</th>
+                                <th style="text-align:left;color:black!important;">% Carbs</th>
+                                <th style="text-align:left;color:black!important;">% Azúcares</th>
+                                <th style="text-align:left;color:black!important;">mg Sodio</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="total_valor" t-value="0"/>
+                            <t t-set="total_exis" t-value="0"/>
+                            <t t-foreach="vals" t-as="doc">
+                                <tr>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                        <t t-esc="doc['componente']"/>
+                                    </td>
+                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                        <t t-esc="'{0:,.2f}'.format(int(doc['pct_proteina']))"/>
+                                    </td>
+                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                        <t t-esc="'{0:,.2f}'.format(int(doc['pct_grasas_tot']))"/>
+                                    </td>
+                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                        <t t-esc="'{0:,.2f}'.format(int(doc['pct_grasas_sat']))"/>
+                                    </td>
+                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                        <t t-esc="'{0:,.2f}'.format(int(doc['pct_humedad']))"/>
+                                    </td>
+                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                        <t t-esc="'{0:,.2f}'.format(int(doc['pct_carbs']))"/>
+                                    </td>
+                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                        <t t-esc="'{0:,.2f}'.format(int(doc['pct_azucares']))"/>
+                                    </td>
+                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                        <t t-esc="'{0:,.2f}'.format(int(doc['mg_sodio']))"/>
+                                    </td>
+
+                                    <t t-set="total_valor" t-value="total_valor + doc['valor']"/>
+                                    <t t-set="total_exis" t-value="total_exis + doc['exis']"/>
+
+                                </tr>
+                            </t>
+                            <!--
+                            <tr>
+                                <th style="text-align:left;color:black!important;">        </th>
+                                <th style="text-align:left;color:black!important;">      </th>
+                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                    <span t-att-style="style" t-esc="'{0:,.0f}'.format(int(total_exis))"/>
+                                </th>
+                                <th style="text-align:right;color:black!important;">          </th>
+                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                    <span t-att-style="style" t-esc="'{0:,.0f}'.format(int(total_valor))"/>
+                                </th>
+                            </tr>
+                            -->
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>
+
+
+
+
+
+
+
+
+
+
+
+
+<odoo>
     <data>
         <!-- Template overriden due to last page displays page count -->
         <!-- Do not display page section only for report COTIZACION LLANTAS -->
@@ -37,7 +148,7 @@
             </xpath>
         </template>
 
-        <template id="custom_report_tabla_nutrimental">
+        <template id="tabla_nutrimental_template">
             <t t-call="web.html_container">
                 <t t-foreach="docs" t-as="doc">
                      <t t-call="web.basic_layout">

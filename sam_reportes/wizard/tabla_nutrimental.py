@@ -92,12 +92,13 @@ class TablaNutrimental(models.TransientModel):
 
             raise UserError(vals)
 
-#        data = {'ids': self.ids,
-#                'model':self._name,
-#                'vals':vals,
-#                'inicio':self.fecha_inicial,
-#                'final':self.fecha_final,
-#                'marca':self.marca
-#                }
+        data = {'ids': self.ids,
+                'model':self._name,
+                'vals':vals,
+                'producto':self.producto,
+                'cantidad':self.cantidad,
+                'ing_limitante':self.ing_limitante,
+                 'cant_limitante':self.cant_limitante
+                }
 
-#        return self.env.ref('gr_prod_sin_ventas.prod_sin_ventas_reporte').report_action(self, data=data)
+        return self.env.ref('sam_reportes.tabla_nutrimental_reporte').report_action(self, data=data)
