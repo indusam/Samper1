@@ -73,7 +73,7 @@ class TablaNutrimental(models.TransientModel):
 
             if self.ing_limitante:
                 vals.append({
-                    'componente': ingrediente.product_id,
+                    'componente': ingrediente.product_id.name,
                     'pct_proteina': ingrediente.product_id.x_pct_proteinas,
                     'pct_grasas_tot': ingrediente.product_id.x_pct_grasas_totales,
                     'pct_grasas_sat': ingrediente.product_id.x_pct_grasas_saturadas,
@@ -94,7 +94,7 @@ class TablaNutrimental(models.TransientModel):
         data = {'ids': self.ids,
                 'model':self._name,
                 'vals':vals,
-                'producto':self.producto,
+                'producto':self.producto.name,
                 'cantidad':self.cantidad,
                 'ing_limitante':self.ing_limitante,
                  'cant_limitante':self.cant_limitante
