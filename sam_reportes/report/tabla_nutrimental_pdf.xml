@@ -125,26 +125,26 @@
                                 <th style="text-align:left;color:black!important;">        </th>
                                 <th style="text-align:left;color:black!important;">        </th>
                                 <th style="text-align:left;color:black!important;">        </th>
-                                <th style="text-align:left;color:black!important;">        </th>
-                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                <th style="text-align:left;color:black!important;">         </th>
+                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
                                     <span t-att-style="style" t-esc="'{0:,.4f}'.format(int(tot_proteina))"/>
                                 </th>
-                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
                                     <span t-att-style="style" t-esc="'{0:,.4f}'.format(int(tot_grasa))"/>
                                 </th>
-                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
                                     <span t-att-style="style" t-esc="'{0:,.4f}'.format(int(tot_grasa_sat))"/>
                                 </th>
-                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
                                     <span t-att-style="style" t-esc="'{0:,.4f}'.format(int(tot_humedad))"/>
                                 </th>
-                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
                                     <span t-att-style="style" t-esc="'{0:,.4f}'.format(int(tot_carbs))"/>
                                 </th>
-                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
                                     <span t-att-style="style" t-esc="'{0:,.4f}'.format(int(tot_azucares))"/>
                                 </th>
-                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
                                     <span t-att-style="style" t-esc="'{0:,.4f}'.format(int(tot_sodio))"/>
                                 </th>
                             </tr>
