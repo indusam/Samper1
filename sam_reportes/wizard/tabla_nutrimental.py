@@ -54,13 +54,13 @@ class TablaNutrimental(models.TransientModel):
                     'pct_carbs': ingrediente.product_id.x_pct_hidratos_de_carbono,
                     'pct_azucares': ingrediente.product_id.x_pct_azucares,
                     'mg_sodio': ingrediente.product_id.x_mg_sodio,
-                    'proteina_kg': (ingrediente.product_id.x_pct_proteinas / 100) * self.cantidad,
-                    'grasa_kg': (ingrediente.product_id.x_pct_grasas_totales / 100) * self.cantidad,
-                    'grasa_sat_kg': (ingrediente.product_id.x_pct_grasas_saturadas / 100) * self.cantidad,
-                    'humedad_kg': (ingrediente.product_id.x_pct_humedad / 100) * self.cantidad,
-                    'carbs_kg': (ingrediente.product_id.x_pct_hidratos_de_carbono / 100) * self.cantidad,
-                    'azucares_kg': (ingrediente.product_id.x_pct_azucares / 100) * self.cantidad,
-                    'sodio_mg': ingrediente.product_id.x_mg_sodio * self.cantidad
+                    'proteina_kg': ((ingrediente.product_id.x_pct_proteinas * ingrediente.product_id.x_porcentaje) / 100) * self.cantidad,
+                    'grasa_kg': ((ingrediente.product_id.x_pct_grasas_totales * ingrediente.product_id.x_porcentaje) / 100) * self.cantidad,
+                    'grasa_sat_kg': ((ingrediente.product_id.x_pct_grasas_saturadas  * ingrediente.product_id.x_porcentaje) / 100) * self.cantidad,
+                    'humedad_kg': ((ingrediente.product_id.x_pct_humedad * ingrediente.product_id.x_porcentaje) / 100) * self.cantidad,
+                    'carbs_kg': ((ingrediente.product_id.x_pct_hidratos_de_carbono * ingrediente.product_id.x_porcentaje) / 100) * self.cantidad,
+                    'azucares_kg': ((ingrediente.product_id.x_pct_azucares * ingrediente.product_id.x_porcentaje) / 100) * self.cantidad,
+                    'sodio_mg': ((ingrediente.product_id.x_mg_sodio * ingrediente.product_id.x_porcentaje) / 100) * self.cantidad
 
                 })
 
