@@ -65,10 +65,10 @@
                                         <t t-esc="doc['componente']"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
-                                        <t t-esc="'{0:,.4f}'.format(int(doc['cant_comp']))"/>
+                                        <t t-esc="'{0:,.4f}'.format(doc['cant_comp'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
-                                        <t t-esc="'{0:,.2f}'.format(int(doc['pct_proteina']))"/>
+                                        <t t-esc="'{0:,.2f}'.format(doc['pct_proteina'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
                                         <t t-esc="'{0:,.2f}'.format(int(doc['pct_grasas_tot']))"/>
