@@ -86,28 +86,28 @@
                                         <t t-esc="'{0:,.2f}'.format(int(doc['pct_azucares']))"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
-                                        <t t-esc="'{0:,.4f}'.format(int(doc['mg_sodio']))"/>
+                                        <t t-esc="'{0:,.4f}'.format(doc['mg_sodio'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
-                                        <t t-esc="'{0:,.4f}'.format(int(doc['proteina_kg']))"/>
+                                        <t t-esc="'{0:,.4f}'.format(doc['proteina_kg'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
-                                        <t t-esc="'{0:,.4f}'.format(int(doc['grasa_kg']))"/>
+                                        <t t-esc="'{0:,.4f}'.format(doc['grasa_kg'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
-                                        <t t-esc="'{0:,.4f}'.format(int(doc['grasa_sat_kg']))"/>
+                                        <t t-esc="'{0:,.4f}'.format(doc['grasa_sat_kg'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
-                                        <t t-esc="'{0:,.4f}'.format(int(doc['humedad_kg']))"/>
+                                        <t t-esc="'{0:,.4f}'.format(doc['humedad_kg'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
-                                        <t t-esc="'{0:,.4f}'.format(int(doc['carbs_kg']))"/>
+                                        <t t-esc="'{0:,.4f}'.format(doc['carbs_kg'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
-                                        <t t-esc="'{0:,.4f}'.format(int(doc['azucares_kg']))"/>
+                                        <t t-esc="'{0:,.4f}'.format(doc['azucares_kg'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
-                                        <t t-esc="'{0:,.4f}'.format(int(doc['sodio_mg']))"/>
+                                        <t t-esc="'{0:,.4f}'.format(doc['sodio_mg'])"/>
                                     </td>
 
                                     <!-- Suma totales -->
@@ -136,25 +136,25 @@
                                 <th style="text-align:left;color:black!important;">        </th>
                                 <th style="text-align:left;color:black!important;">        </th>
                                 <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
-                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(int(tot_proteina))"/>
+                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_proteina)"/>
                                 </th>
                                 <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
-                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(int(tot_grasa))"/>
+                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_grasa)"/>
                                 </th>
                                 <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
-                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(int(tot_grasa_sat))"/>
+                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_grasa_sat)"/>
                                 </th>
                                 <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
-                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(int(tot_humedad))"/>
+                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_humedad)"/>
                                 </th>
                                 <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
-                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(int(tot_carbs))"/>
+                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_carbs)"/>
                                 </th>
                                 <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
-                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(int(tot_azucares))"/>
+                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_azucares)"/>
                                 </th>
                                 <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
-                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(int(tot_sodio))"/>
+                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_sodio)"/>
                                 </th>
                             </tr>
 
