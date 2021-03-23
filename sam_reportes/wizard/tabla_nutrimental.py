@@ -77,13 +77,13 @@ class TablaNutrimental(models.TransientModel):
                     'pct_carbs': ingrediente.product_id.x_pct_hidratos_de_carbono,
                     'pct_azucares': ingrediente.product_id.x_pct_azucares,
                     'mg_sodio': ingrediente.product_id.x_mg_sodio,
-                    'proteina_kg': (ingrediente.product_id.x_pct_proteinas / 100) * self.cant_limitante,
-                    'grasa_kg': (ingrediente.product_id.x_pct_grasas_totales / 100) * self.cant_limitante,
-                    'grasa_sat_kg': (ingrediente.product_id.x_pct_grasas_saturadas / 100) * self.cant_limitante,
-                    'humedad_kg': (ingrediente.product_id.x_pct_humedad / 100) * self.cant_limitante,
-                    'carbs_kg': (ingrediente.product_id.x_pct_hidratos_de_carbono / 100) * self.cant_limitante,
-                    'azucares_kg': (ingrediente.product_id.x_pct_azucares / 100) * self.cant_limitante,
-                    'sodio_mg': ingrediente.product_id.x_mg_sodio * self.cant_limitante
+                    'proteina_kg': (ingrediente.product_id.x_pct_proteinas / 100) * self.cant_limitante * (ingrediente.product_qty / ncantidad_il),
+                    'grasa_kg': (ingrediente.product_id.x_pct_grasas_totales / 100) * self.cant_limitante * (ingrediente.product_qty / ncantidad_il),
+                    'grasa_sat_kg': (ingrediente.product_id.x_pct_grasas_saturadas / 100) * self.cant_limitante * (ingrediente.product_qty / ncantidad_il),
+                    'humedad_kg': (ingrediente.product_id.x_pct_humedad / 100) * self.cant_limitante * (ingrediente.product_qty / ncantidad_il),
+                    'carbs_kg': (ingrediente.product_id.x_pct_hidratos_de_carbono / 100) * self.cant_limitante * (ingrediente.product_qty / ncantidad_il),
+                    'azucares_kg': (ingrediente.product_id.x_pct_azucares / 100) * self.cant_limitante * (ingrediente.product_qty / ncantidad_il),
+                    'sodio_mg': ingrediente.product_id.x_mg_sodio * self.cant_limitante * (ingrediente.product_qty / ncantidad_il)
                 })
 
 
