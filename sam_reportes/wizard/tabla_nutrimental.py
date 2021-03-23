@@ -46,7 +46,7 @@ class TablaNutrimental(models.TransientModel):
             if not self.ing_limitante:
                 vals.append({
                     'componente': ingrediente.product_id.name,
-                    'cant_comp': ingrediente.product_qty * (ingrediente.product_id.x_porcentaje / 100),
+                    'cant_comp': ingrediente.product_qty * (ingrediente.x_porcentaje / 100),
                     'pct_proteina': ingrediente.product_id.x_pct_proteinas,
                     'pct_grasas_tot': ingrediente.product_id.x_pct_grasas_totales,
                     'pct_grasas_sat': ingrediente.product_id.x_pct_grasas_saturadas,
