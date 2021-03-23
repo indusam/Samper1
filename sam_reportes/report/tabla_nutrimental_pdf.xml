@@ -29,22 +29,22 @@
                     <table class="table table-condensed">
                         <thead>
                             <tr >
-                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">Producto</th>
-                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">Cantidad</th>
-                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px;">% Proteína</th>
-                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px;">% Grasas tot</th>
-                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">% Grasas sat</th>
-                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">% Humedad</th>
-                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">% Carbs</th>
-                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">% Azúcares</th>
-                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">mg Sodio</th>
-                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">kg Proteína</th>
-                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">kg Grasa Tot</th>
-                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">kg Grasa Sat</th>
-                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">kg Humedad</th>
-                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">kg Carbs</th>
-                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">kg Azúcares</th>
-                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">mg/kg Sodio</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Producto</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Cantidad</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px;">% Proteína</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px;">% Grasas tot</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">% Grasas sat</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">% Humedad</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">% Carbs</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">% Azúcares</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">mg Sodio</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">kg Proteína</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">kg Grasa Tot</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">kg Grasa Sat</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">kg Humedad</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">kg Carbs</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">kg Azúcares</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">mg/kg Sodio</th>
 
                             </tr>
                         </thead>
@@ -64,49 +64,49 @@
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="doc['componente']"/>
                                     </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="'{0:,.4f}'.format(doc['cant_comp'])"/>
                                     </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="'{0:,.2f}'.format(doc['pct_proteina'])"/>
                                     </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="'{0:,.2f}'.format(int(doc['pct_grasas_tot']))"/>
                                     </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="'{0:,.2f}'.format(int(doc['pct_grasas_sat']))"/>
                                     </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="'{0:,.2f}'.format(int(doc['pct_humedad']))"/>
                                     </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="'{0:,.2f}'.format(int(doc['pct_carbs']))"/>
                                     </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="'{0:,.2f}'.format(int(doc['pct_azucares']))"/>
                                     </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="'{0:,.4f}'.format(doc['mg_sodio'])"/>
                                     </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="'{0:,.4f}'.format(doc['proteina_kg'])"/>
                                     </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="'{0:,.4f}'.format(doc['grasa_kg'])"/>
                                     </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="'{0:,.4f}'.format(doc['grasa_sat_kg'])"/>
                                     </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="'{0:,.4f}'.format(doc['humedad_kg'])"/>
                                     </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="'{0:,.4f}'.format(doc['carbs_kg'])"/>
                                     </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="'{0:,.4f}'.format(doc['azucares_kg'])"/>
                                     </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="'{0:,.4f}'.format(doc['sodio_mg'])"/>
                                     </td>
 
@@ -125,7 +125,7 @@
                             <!-- Imprime Totales -->
                             <tr>
                                 <th style="text-align:left;color:black!important;">        </th>
-                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <span t-att-style="style" t-esc="'{0:,.4f}'.format(int(tot_cantidad))"/>
                                 </th>
                                 <th style="text-align:left;color:black!important;">        </th>
@@ -135,25 +135,25 @@
                                 <th style="text-align:left;color:black!important;">        </th>
                                 <th style="text-align:left;color:black!important;">        </th>
                                 <th style="text-align:left;color:black!important;">        </th>
-                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_proteina)"/>
                                 </th>
-                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_grasa)"/>
                                 </th>
-                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_grasa_sat)"/>
                                 </th>
-                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_humedad)"/>
                                 </th>
-                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_carbs)"/>
                                 </th>
-                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_azucares)"/>
                                 </th>
-                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:11px">
+                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_sodio)"/>
                                 </th>
                             </tr>
