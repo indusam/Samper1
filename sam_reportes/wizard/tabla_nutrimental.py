@@ -42,8 +42,8 @@ class TablaNutrimental(models.TransientModel):
         ingredientes = self.env['mrp.bom.line'].search(
                         [('bom_id.id', '=', self.producto.id)])
 
-        for ingrediente in ingredientes:
-            if not self.ing_limitante:
+        if not self.ing_limitante:
+            for ingrediente in ingredientes:
                 vals.append({
                     'componente': ingrediente.product_id.name,
                     'cant_comp': self.cantidad * (ingrediente.x_porcentaje / 100),
@@ -64,10 +64,12 @@ class TablaNutrimental(models.TransientModel):
 
                 })
 
-            if self.ing_limitante:
+        if self.ing_limitante:
+
+            for ingrediente in ingredientes:
                 vals.append({
                     'componente': ingrediente.product_id.name,
-                    'cant_comp': self.cant_limitante * (ingrediente.x_porcentaje / 100),
+                    'cant_comp': self.cant_limitante * (ingrediente.product_qty / self.cant_limitante),
                     'pct_proteina': ingrediente.product_id.x_pct_proteinas,
                     'pct_grasas_tot': ingrediente.product_id.x_pct_grasas_totales,
                     'pct_grasas_sat': ingrediente.product_id.x_pct_grasas_saturadas,
