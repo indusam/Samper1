@@ -11,6 +11,7 @@
                         <strong>
                             <h5>
                                 Tabla nutrimental:   <span t-esc="producto"/>
+                                Cantidad: <span t-esc="cantidad"/> kgs.
                             </h5>
                         </strong>
                     </div>
