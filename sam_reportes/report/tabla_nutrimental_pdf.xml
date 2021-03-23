@@ -10,7 +10,7 @@
                     <div style="text-align:left;color:black!important;">
                         <strong>
                             <h5>
-                                Tabla nutrimental:   <span t-esc="producto"/>
+                                Tabla nutrimental:   <span t-esc="codigo"/> <span t-esc="producto"/>
                                 Cantidad: <span t-esc="cantidad"/> kgs.
                             </h5>
                         </strong>
