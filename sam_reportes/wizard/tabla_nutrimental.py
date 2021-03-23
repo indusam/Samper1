@@ -54,7 +54,7 @@ class TablaNutrimental(models.TransientModel):
                     'pct_carbs': ingrediente.product_id.x_pct_hidratos_de_carbono,
                     'pct_azucares': ingrediente.product_id.x_pct_azucares,
                     'mg_sodio': ingrediente.product_id.x_mg_sodio,
-                    'proteina_kg': (ingrediente.product_id.x_pct_proteinas / 100) * vals['cant_comp'],
+                    'proteina_kg': (ingrediente.product_id.x_pct_proteinas / 100) * vals[1],
                     'grasa_kg': (ingrediente.product_id.x_pct_grasas_totales / 100) * self.cantidad,
                     'grasa_sat_kg': (ingrediente.product_id.x_pct_grasas_saturadas / 100) * self.cantidad,
                     'humedad_kg': (ingrediente.product_id.x_pct_humedad / 100) * self.cantidad,
