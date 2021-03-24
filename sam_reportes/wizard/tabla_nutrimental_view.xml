@@ -7,12 +7,12 @@
             <form>
                 <group>
                     <group>
-                        <field name="producto"/>
-                        <field name="cantidad"/>
+                        <field name="producto" required="1"/>
+                        <field name="cantidad" attrs="{'invisible': [('ing_limitante','!=',False)]}"/>
                     </group>
                     <group>
-                        <field name="ing_limitante"/>
-                        <field name="cant_limitante"/>
+                        <field name="ing_limitante" attrs="{'invisible': [('cantidad','>',0)]}"/>
+                        <field name="cant_limitante" attrs="{'invisible': [('cantidad','>',0)]}"/>
                     </group>
                 </group>
                 <footer>
