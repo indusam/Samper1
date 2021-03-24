@@ -9,7 +9,7 @@
                     <br/>
                     <div style="text-align:left;color:black!important;">
                         <strong>
-                            <t t-if="cant_limitante = 0">
+                            <t t-if="ing_limitante">
                                 <h5>
                                     Tabla nutrimental:   <span t-esc="codigo"/> - <span t-esc="producto"/>
                                     <br/>
