@@ -9,11 +9,19 @@
                     <br/>
                     <div style="text-align:left;color:black!important;">
                         <strong>
-                            <t t-if="ing_limitante">
+                            <t t-if="not ing_limitante">
                                 <h5>
                                     Tabla nutrimental:   <span t-esc="codigo"/> - <span t-esc="producto"/>
                                     <br/>
                                     Cantidad: <span t-esc="cantidad"/> kgs.
+                                </h5>
+                            </t>
+                            <t t-if="ing_limitante">
+                                <h5>
+                                    Tabla nutrimental:   <span t-esc="codigo"/> - <span t-esc="producto"/>
+                                    <br/>
+                                    Ingrediente limitante: <span t-esc="ing_limitante"/>
+                                    Cantidad: <span t-esc="cant_limitante"/> kgs.
                                 </h5>
                             </t>
                         </strong>
