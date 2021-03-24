@@ -94,6 +94,7 @@ class TablaNutrimental(models.TransientModel):
                 'codigo': self.producto.product_tmpl_id.default_code,
                 'cantidad':self.cantidad,
                 'ing_limitante':self.ing_limitante,
+                'nombre_il':self.ing_limitante.product_tmpl_id.name,
                 'cant_limitante':self.cant_limitante
                 }
 

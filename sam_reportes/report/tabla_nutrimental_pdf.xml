@@ -20,7 +20,7 @@
                                 <h5>
                                     Tabla nutrimental:   <span t-esc="codigo"/> - <span t-esc="producto"/>
                                     <br/>
-                                    Ingrediente limitante: <span t-esc="ing_limitante"/>
+                                    Ingrediente limitante: <span t-esc="nombre_il"/>
                                     Cantidad: <span t-esc="cant_limitante"/> kgs.
                                 </h5>
                             </t>
