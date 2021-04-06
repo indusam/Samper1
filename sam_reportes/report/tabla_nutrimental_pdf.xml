@@ -86,16 +86,16 @@
                                         <t t-esc="'{0:,.2f}'.format(int(doc['pct_grasas_tot']))"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.2f}'.format(int(doc['pct_grasas_sat']))"/>
+                                        <t t-esc="'{0:,.2f}'.format(doc['pct_grasas_sat'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.2f}'.format(int(doc['pct_humedad']))"/>
+                                        <t t-esc="'{0:,.2f}'.format(doc['pct_humedad'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.2f}'.format(int(doc['pct_carbs']))"/>
+                                        <t t-esc="'{0:,.2f}'.format(doc['pct_carbs'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.2f}'.format(int(doc['pct_azucares']))"/>
+                                        <t t-esc="'{0:,.2f}'.format(doc['pct_azucares'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="'{0:,.4f}'.format(doc['mg_sodio'])"/>
