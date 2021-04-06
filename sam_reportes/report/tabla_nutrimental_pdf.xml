@@ -36,14 +36,14 @@
                                 <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">% Humedad</th>
                                 <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">% Carbs</th>
                                 <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">% Azúcares</th>
-                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">mg Sodio</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">mg/100g Sodio</th>
                                 <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">kg Proteína</th>
                                 <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">kg Grasa Tot</th>
                                 <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">kg Grasa Sat</th>
                                 <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">kg Humedad</th>
                                 <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">kg Carbs</th>
                                 <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">kg Azúcares</th>
-                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">mg/kg Sodio</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">mg/100g Sodio</th>
 
                             </tr>
                         </thead>
