@@ -55,6 +55,7 @@
                             <t t-set="tot_proteina" t-value="0"/>
                             <t t-set="tot_grasa" t-value="0"/>
                             <t t-set="tot_grasa_sat" t-value="0"/>
+                            <t t-set="tot_grasa_trans" t-value="0"/>
                             <t t-set="tot_humedad" t-value="0"/>
                             <t t-set="tot_carbs" t-value="0"/>
                             <t t-set="tot_azucares" t-value="0"/>
@@ -69,6 +70,9 @@
                                         <t t-esc="'{0:,.4f}'.format(doc['cant_comp'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="'{0:,.2f}'.format(doc['pct_humedad'])"/>
+                                    </td>
+                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="'{0:,.2f}'.format(doc['pct_proteina'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -78,7 +82,7 @@
                                         <t t-esc="'{0:,.2f}'.format(doc['pct_grasas_sat'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.2f}'.format(doc['pct_humedad'])"/>
+                                        <t t-esc="'{0:,.2f}'.format(doc['pct_grasas_trans'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="'{0:,.2f}'.format(doc['pct_carbs'])"/>
@@ -90,6 +94,9 @@
                                         <t t-esc="'{0:,.4f}'.format(doc['mg_sodio'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="'{0:,.4f}'.format(doc['humedad_kg'])"/>
+                                    </td>
+                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="'{0:,.4f}'.format(doc['proteina_kg'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -99,7 +106,7 @@
                                         <t t-esc="'{0:,.4f}'.format(doc['grasa_sat_kg'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.4f}'.format(doc['humedad_kg'])"/>
+                                        <t t-esc="'{0:,.4f}'.format(doc['grasa_trans_kg'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="'{0:,.4f}'.format(doc['carbs_kg'])"/>
@@ -116,6 +123,7 @@
                                     <t t-set="tot_proteina" t-value="tot_proteina + doc['proteina_kg']"/>
                                     <t t-set="tot_grasa" t-value="tot_grasa + doc['grasa_kg']"/>
                                     <t t-set="tot_grasa_sat" t-value="tot_grasa_sat + doc['grasa_sat_kg']"/>
+                                    <t t-set="tot_grasa_trans" t-value="tot_grasa_trans + doc['grasa_trans_kg']"/>
                                     <t t-set="tot_humedad" t-value="tot_humedad + doc['humedad_kg']"/>
                                     <t t-set="tot_carbs" t-value="tot_carbs + doc['carbs_kg']"/>
                                     <t t-set="tot_azucares" t-value="tot_azucares + doc['azucares_kg']"/>
@@ -137,6 +145,9 @@
                                 <th style="text-align:left;color:black!important;">        </th>
                                 <th style="text-align:left;color:black!important;">        </th>
                                 <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_humedad)"/>
+                                </th>
+                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_proteina)"/>
                                 </th>
                                 <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -146,7 +157,7 @@
                                     <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_grasa_sat)"/>
                                 </th>
                                 <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_humedad)"/>
+                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_grasa_trans)"/>
                                 </th>
                                 <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_carbs)"/>
