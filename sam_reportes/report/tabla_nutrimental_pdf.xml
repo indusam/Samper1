@@ -27,17 +27,6 @@
                         </strong>
                     </div>
                     <br/>
-                    <!-- Aquí va el ingrediente limitante
-                    <div style="text-align:left;color:black!important;">
-                        <strong>
-                            <p>
-                                Del : <span t-esc="inicio"/>
-                                 Al : <span t-esc="final"/>
-                            </p>
-                        </strong>
-                    </div>
-                    -->
-                    <br/>
                     <table class="table table-condensed">
                         <thead>
                             <tr >
