@@ -42,10 +42,10 @@
                                 <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">kg Proteína</th>
                                 <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">kg Grasa Tot</th>
                                 <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">kg Grasa Sat</th>
-                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">mg/100g Grasas Trans</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">mg Grasas Trans</th>
                                 <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">kg Carbs</th>
                                 <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">kg Azúcares</th>
-                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">mg/100g Sodio</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">mg Sodio</th>
 
                             </tr>
                         </thead>

@@ -87,7 +87,7 @@ class TablaNutrimental(models.TransientModel):
                     'humedad_kg': (ingrediente.product_id.x_pct_humedad / 100) * self.cant_limitante * (ingrediente.product_qty / ncantidad_il),
                     'carbs_kg': (ingrediente.product_id.x_pct_hidratos_de_carbono / 100) * self.cant_limitante * (ingrediente.product_qty / ncantidad_il),
                     'azucares_kg': (ingrediente.product_id.x_pct_azucares / 100) * self.cant_limitante * (ingrediente.product_qty / ncantidad_il),
-                    'sodio_mg': ingrediente.product_id.x_mg_sodio * self.cant_limitante * (ingrediente.product_qty / ncantidad_il)
+                    'sodio_mg': ingrediente.product_id.x_mg_sodio * 1000 * self.cant_limitante * (ingrediente.product_qty / ncantidad_il)
                 })
 
 
