@@ -182,14 +182,14 @@
                             </tr>
 
                             <!-- Calcula e imprime % totales -->
-                            <t t-set="tot_pct_proteina" t-value="tot_proteina / doc['cant_comp'] * 100"/>
-                            <t t-set="tot_pct_grasa" t-value="tot_grasa / doc['cant_comp'] * 100"/>
-                            <t t-set="tot_pct_grasa_sat" t-value="tot_grasa_sat / doc['cant_comp'] * 100"/>
-                            <t t-set="tot_pct_grasa_trans" t-value="tot_grasa_trans / doc['cant_comp'] * 100"/>
-                            <t t-set="tot_pct_humedad" t-value="tot_humedad  / doc['cant_comp'] * 100"/>
-                            <t t-set="tot_pct_carbs" t-value="tot_carbs  / doc['cant_comp'] * 100"/>
-                            <t t-set="tot_pct_azucares" t-value="tot_azucares / doc['cant_comp'] * 100"/>
-                            <t t-set="tot_pct_sodio" t-value="tot_sodio / doc['cant_comp'] * 100"/>
+                            <t t-set="tot_pct_proteina" t-value="tot_proteina / doc['cant_comp']"/>
+                            <t t-set="tot_pct_grasa" t-value="tot_grasa / doc['cant_comp']"/>
+                            <t t-set="tot_pct_grasa_sat" t-value="tot_grasa_sat / doc['cant_comp']"/>
+                            <t t-set="tot_pct_grasa_trans" t-value="tot_grasa_trans / doc['cant_comp']"/>
+                            <t t-set="tot_pct_humedad" t-value="tot_humedad  / doc['cant_comp']"/>
+                            <t t-set="tot_pct_carbs" t-value="tot_carbs  / doc['cant_comp']"/>
+                            <t t-set="tot_pct_azucares" t-value="tot_azucares / doc['cant_comp']"/>
+                            <t t-set="tot_pct_sodio" t-value="tot_sodio / doc['cant_comp']"/>
 
                             <t t-set="tot_pct_cantidad" t-value="tot_pct_proteina + tot_pct_grasa +
                                                                  tot_pct_grasa_sat + tot_pct_humedad +
