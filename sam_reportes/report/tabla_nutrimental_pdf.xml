@@ -60,16 +60,6 @@
                             <t t-set="tot_carbs" t-value="0"/>
                             <t t-set="tot_azucares" t-value="0"/>
                             <t t-set="tot_sodio" t-value="0"/>
-                            <!-- declara % totales -->
-                            <t t-set="tot_pct_cantidad" t-value="0"/>
-                            <t t-set="tot_pct_proteina" t-value="0"/>
-                            <t t-set="tot_pct_grasa" t-value="0"/>
-                            <t t-set="tot_pct_grasa_sat" t-value="0"/>
-                            <t t-set="tot_pct_grasa_trans" t-value="0"/>
-                            <t t-set="tot_pct_humedad" t-value="0"/>
-                            <t t-set="tot_pct_carbs" t-value="0"/>
-                            <t t-set="tot_pct_azucares" t-value="0"/>
-                            <t t-set="tot_pct_sodio" t-value="0"/>
 
                             <t t-foreach="vals" t-as="doc">
                                 <tr>
@@ -182,7 +172,17 @@
                             </tr>
 
                             <!-- Calcula e imprime % totales -->
-                            <t t-set="tot_pct_proteina" t-value="tot_proteina / doc['cant_comp']"/>
+                            <t t-set="tot_pct_cantidad" t-value="0"/>
+                            <t t-set="tot_pct_proteina" t-value="0"/>
+                            <t t-set="tot_pct_grasa" t-value="0"/>
+                            <t t-set="tot_pct_grasa_sat" t-value="0"/>
+                            <t t-set="tot_pct_grasa_trans" t-value="0"/>
+                            <t t-set="tot_pct_humedad" t-value="0"/>
+                            <t t-set="tot_pct_carbs" t-value="0"/>
+                            <t t-set="tot_pct_azucares" t-value="0"/>
+                            <t t-set="tot_pct_sodio" t-value="0"/>
+
+                            <t t-set="tot_pct_proteina" t-value="100 * tot_proteina / doc['cant_comp']"/>
                             <t t-set="tot_pct_grasa" t-value="tot_grasa / doc['cant_comp']"/>
                             <t t-set="tot_pct_grasa_sat" t-value="tot_grasa_sat / doc['cant_comp']"/>
                             <t t-set="tot_pct_grasa_trans" t-value="tot_grasa_trans / doc['cant_comp']"/>
