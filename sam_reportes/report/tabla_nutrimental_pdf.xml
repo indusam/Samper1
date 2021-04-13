@@ -181,30 +181,15 @@
                             <t t-set="tot_pct_carbs" t-value="0"/>
                             <t t-set="tot_pct_azucares" t-value="0"/>
                             <t t-set="tot_pct_sodio" t-value="0"/>
-                            <t t-if="tot_proteina > 0">
-                                <t t-set="tot_pct_proteina" t-value="(tot_cantidad / tot_proteina) *  100"/>
-                            </t>
-                            <t t-if="tot_grasa > 0">
-                                <t t-set="tot_pct_grasa" t-value="(tot_cantidad / tot_grasa) * 100"/>
-                            </t>
-                            <t t-if="tot_grasa_sat > 0">
-                                <t t-set="tot_pct_grasa_sat" t-value="(tot_cantidad / tot_grasa_sat) * 100"/>
-                            </t>
-                            <t t-if="tot_grasa_trans > 0">
-                                <t t-set="tot_pct_grasa_trans" t-value="(tot_cantidad / tot_grasa_trans) * 100"/>
-                            </t>
-                            <t t-if="tot_humedad > 0">
-                                <t t-set="tot_pct_humedad" t-value="(tot_cantidad / tot_humedad) * 100"/>
-                            </t>
-                            <t t-if="tot_carbs > 0">
-                                <t t-set="tot_pct_carbs" t-value="(tot_cantidad / tot_carbs) * 100"/>
-                            </t>
-                            <t t-if="tot_azucares > 0">
-                                <t t-set="tot_pct_azucares" t-value="(tot_cantidad / tot_azucares) * 100"/>
-                            </t>
-                            <t t-if="tot_sodio > 0">
-                                <t t-set="tot_pct_sodio" t-value="(tot_cantidad / tot_sodio) * 100"/>
-                            </t>
+
+                            <t t-set="tot_pct_proteina" t-value="(tot_proteina / tot_cantidad) *  100"/>
+                            <t t-set="tot_pct_grasa" t-value="(tot_grasa / tot_cantidad) * 100"/>
+                            <t t-set="tot_pct_grasa_sat" t-value="(tot_grasa_sat / tot_cantidad) * 100"/>
+                            <t t-set="tot_pct_grasa_trans" t-value="(tot_grasa_trans / tot_cantidad) * 100"/>
+                            <t t-set="tot_pct_humedad" t-value="(tot_humedad / tot_cantidad) * 100"/>
+                            <t t-set="tot_pct_carbs" t-value="(tot_carbs / tot_cantidad) * 100"/>
+                            <t t-set="tot_pct_azucares" t-value="(tot_azucares / tot_cantidad) * 100"/>
+                            <t t-set="tot_pct_sodio" t-value="(tot_sodio / tot_cantidad) * 100"/>
 
                             <t t-set="tot_pct_cantidad" t-value="tot_pct_proteina + tot_pct_grasa +
                                                                  tot_pct_grasa_sat + tot_pct_humedad +
