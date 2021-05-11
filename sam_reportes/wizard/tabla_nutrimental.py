@@ -103,7 +103,7 @@ class TablaNutrimental(models.TransientModel):
                 'pct_merma':self.producto.product_id.x_pct_merma
                 }
 
-        if self.producto.product_id.x_pct_merma > 0:
-            raise UserError(self.producto.product_id.x_pct_merma)
+        if self.producto.product_id.x_pct_merma >= 0:
+            raise UserError('producto: '+self.producto.default_code)+'\n'+ 'merma: '+str(self.producto.product_id.x_pct_merma))
 
         return self.env.ref('sam_reportes.tabla_nutrimental_reporte').report_action(self, data=data)
