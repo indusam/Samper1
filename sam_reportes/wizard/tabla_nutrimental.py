@@ -100,7 +100,7 @@ class TablaNutrimental(models.TransientModel):
                 'ing_limitante':self.ing_limitante,
                 'nombre_il':self.ing_limitante.product_tmpl_id.name,
                 'cant_limitante':self.cant_limitante,
-                'pct_merma':self.producto.product_tmpl_id.x_pct_merma
+                'pct_merma':self.producto.product_id.x_pct_merma
                 }
 
         return self.env.ref('sam_reportes.tabla_nutrimental_reporte').report_action(self, data=data)
