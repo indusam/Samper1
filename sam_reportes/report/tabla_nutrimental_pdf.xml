@@ -293,9 +293,9 @@
                                                                      tm_pct_grasa_sat + tm_pct_humedad +
                                                                      tm_pct_carbs + tm_pct_azucares +
                                                                      tm_pct_sodio"/>
-                                <t t-set="tit_pct" t-value="'% DESPUES DE MERMA'"/>
+                                <t t-set="tit_pct" t-value="'% Después de merma'"/>
                                 <tr>
-                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <span t-att-style="style" t-esc="tit_pct"/>
                                     </th>
                                     <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
