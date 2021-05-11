@@ -172,17 +172,6 @@
                             </tr>
 
                             <!-- Calcula e imprime % totales -->
-                            <!--
-                            <t t-set="tot_pct_cantidad" t-value="0"/>
-                            <t t-set="tot_pct_proteina" t-value="0"/>
-                            <t t-set="tot_pct_grasa" t-value="0"/>
-                            <t t-set="tot_pct_grasa_sat" t-value="0"/>
-                            <t t-set="tot_pct_grasa_trans" t-value="0"/>
-                            <t t-set="tot_pct_humedad" t-value="0"/>
-                            <t t-set="tot_pct_carbs" t-value="0"/>
-                            <t t-set="tot_pct_azucares" t-value="0"/>
-                            <t t-set="tot_pct_sodio" t-value="0"/>
-                            -->
                             <t t-set="tot_pct_proteina" t-value="(tot_proteina / tot_cantidad) *  100"/>
                             <t t-set="tot_pct_grasa" t-value="(tot_grasa / tot_cantidad) * 100"/>
                             <t t-set="tot_pct_grasa_sat" t-value="(tot_grasa_sat / tot_cantidad) * 100"/>
@@ -288,6 +277,61 @@
                                     </th>
                                     <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_sodi_merma)"/>
+                                    </th>
+                                </tr>
+                                <!-- Calcula e imprime % totales después de merma-->
+                                <t t-set="tm_pct_proteina" t-value="(tot_prot_merma / tot_cant_merma) *  100"/>
+                                <t t-set="tm_pct_grasa" t-value="(tot_gras_merma / tot_cant_merma) * 100"/>
+                                <t t-set="tm_pct_grasa_sat" t-value="(tot_gsat_merma / tot_cant_merma) * 100"/>
+                                <t t-set="tm_pct_grasa_trans" t-value="((tot_gtra_merma/1000000) / tot_cant_merma) * 100"/>
+                                <t t-set="tm_pct_humedad" t-value="(tot_hume_merma / tot_cant_merma) * 100"/>
+                                <t t-set="tm_pct_carbs" t-value="(tot_carb_merma / tot_cant_merma) * 100"/>
+                                <t t-set="tm_pct_azucares" t-value="(tot_azuc_merma / tot_cant_merma) * 100"/>
+                                <t t-set="tm_pct_sodio" t-value="((tot_sodi_merma / 1000000) / tot_cant_merma) * 100"/>
+
+                                <t t-set="tm_pct_cantidad" t-value="tm_pct_proteina + tm_pct_grasa +
+                                                                     tm_pct_grasa_sat + tm_pct_humedad +
+                                                                     tm_pct_carbs + tm_pct_azucares +
+                                                                     tm_pct_sodio"/>
+                                <t t-set="tit_pct" t-value="'% DESPUES DE MERMA'"/>
+                                <tr>
+                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <span t-att-style="style" t-esc="tit_pct"/>
+                                    </th>
+                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <span t-att-style="style" t-esc="'{0:,.2f}'.format(tm_pct_cantidad)"/>
+                                    </th>
+                                    <th style="text-align:left;color:black!important;">        </th>
+                                    <th style="text-align:left;color:black!important;">        </th>
+                                    <th style="text-align:left;color:black!important;">        </th>
+                                    <th style="text-align:left;color:black!important;">        </th>
+                                    <th style="text-align:left;color:black!important;">        </th>
+                                    <th style="text-align:left;color:black!important;">        </th>
+                                    <th style="text-align:left;color:black!important;">        </th>
+                                    <th style="text-align:left;color:black!important;">        </th>
+                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <span t-att-style="style" t-esc="'{0:,.2f}'.format(tm_pct_humedad)"/>
+                                    </th>
+                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <span t-att-style="style" t-esc="'{0:,.2f}'.format(tm_pct_proteina)"/>
+                                    </th>
+                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <span t-att-style="style" t-esc="'{0:,.2f}'.format(tm_pct_grasa)"/>
+                                    </th>
+                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <span t-att-style="style" t-esc="'{0:,.2f}'.format(tm_pct_grasa_sat)"/>
+                                    </th>
+                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <span t-att-style="style" t-esc="'{0:,.2f}'.format(tm_pct_grasa_trans)"/>
+                                    </th>
+                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <span t-att-style="style" t-esc="'{0:,.2f}'.format(tm_pct_carbs)"/>
+                                    </th>
+                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <span t-att-style="style" t-esc="'{0:,.2f}'.format(tm_pct_azucares)"/>
+                                    </th>
+                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <span t-att-style="style" t-esc="'{0:,.2f}'.format(tm_pct_sodio)"/>
                                     </th>
                                 </tr>
                             </t>
