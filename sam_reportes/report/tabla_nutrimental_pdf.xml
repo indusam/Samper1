@@ -236,7 +236,20 @@
                                     <span t-att-style="style" t-esc="'{0:,.2f}'.format(tot_pct_sodio)"/>
                                 </th>
                             </tr>
-
+                            <!-- Calcula e imprime la merma -->
+                            <t t-if="pct_merma > 0">
+                                <t t-set="tot_cant_merma" t-value="tot_cantidad * ((100 - pct_merma) / 100 )"/>
+                                <t t-set="tit_merma" t-value="'% Merma: '"/>
+                                <tr>
+                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <span t-att-style="style" t-esc="tit_merma"/>
+                                        <span t-att-style="style" t-esc="pct_merma"/>
+                                    </th>
+                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                       <span t-att-style="style" t-esc="'{0:,.2f}'.format(tot_cant_merma)"/>
+                                    </th>
+                                </tr>
+                            </t>
                         </tbody>
                     </table>
                 </div>
