@@ -9,7 +9,7 @@
                     <group>
                         <field name="producto" required="1"/>
                         <field name="cantidad" attrs="{'invisible': [('ing_limitante','!=',False)]}"/>
-                        <field name="% Merma" required="0"/>
+                        <field name="pct_merma" required="0"/>
                     </group>
                     <group>
                         <field name="ing_limitante" attrs="{'invisible': [('cantidad','>',0)]}"/>
