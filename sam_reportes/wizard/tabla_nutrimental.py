@@ -25,7 +25,7 @@ class TablaNutrimental(models.TransientModel):
     cantidad = fields.Float(string="Cantidad")
     ing_limitante = fields.Many2one('mrp.bom.line',string="Ingrediente limitante")
     cant_limitante = fields.Float(string="Cantidad limitante")
-
+    pct_merma = fields.Float(string='% Merma')
 
     # permite seleccionar el ingrediente limitante.
     @api.onchange('producto')
@@ -100,10 +100,7 @@ class TablaNutrimental(models.TransientModel):
                 'ing_limitante':self.ing_limitante,
                 'nombre_il':self.ing_limitante.product_tmpl_id.name,
                 'cant_limitante':self.cant_limitante,
-                'pct_merma':self.producto.product_id.x_pct_merma
+                'pct_merma':self.pct_merma
                 }
-
-        if self.producto.product_id.x_pct_merma >= 0:
-            raise UserError('producto: '+self.producto.product_id.default_code+'\n'+ 'merma: '+str(self.producto.product_id.x_pct_merma))
 
         return self.env.ref('sam_reportes.tabla_nutrimental_reporte').report_action(self, data=data)
