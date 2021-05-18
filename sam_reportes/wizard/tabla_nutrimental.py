@@ -37,7 +37,7 @@ class TablaNutrimental(models.TransientModel):
         
     @api.onchange('cantidad')
     def onchange_cantidad(self):
-        raise UserError(self.producto.x_pct_merma)
+        raise UserError(self.producto.product_id.x_pct_merma)
         self.pct_merma = self.producto.x_pct_merma
 
 
