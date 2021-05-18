@@ -39,7 +39,7 @@ class TablaNutrimental(models.TransientModel):
     def onchange_cantidad(self):
         if self.producto:
             raise UserError('producto: '+self.producto+' '+str(self.producto.product_id)+str(self.producto.product_id.x_pct_merma))
-        self.pct_merma = self.producto.x_pct_merma
+        self.pct_merma = self.producto.product_id.x_pct_merma
 
 
     # imprime la tabla nutrimental.
