@@ -33,7 +33,7 @@ class TablaNutrimental(models.TransientModel):
         nlista = self.producto.id
         # self.pct_merma = self.producto.product_tmpl_id.x_pct_merma
         if self.producto:
-            raise UserError('producto:' + str(self.producto.x_pct_merma))
+            raise UserError('producto:' + self.producto.id.name)
              
         for rec in self:
             return {'domain': {'ing_limitante':
