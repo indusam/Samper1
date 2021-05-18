@@ -31,6 +31,7 @@ class TablaNutrimental(models.TransientModel):
     @api.onchange('producto')
     def onchange_producto(self):
         nlista = self.producto.id
+        self.pct_merma = self.producto.product_tmpl_id.x_pct_merma
         for rec in self:
             return {'domain': {'ing_limitante':
                                    [('bom_id', '=', nlista)]}}
