@@ -35,6 +35,7 @@ class TablaNutrimental(models.TransientModel):
             return {'domain': {'ing_limitante':
                                    [('bom_id', '=', nlista)]}}
 
+
     # imprime la tabla nutrimental.
     def imprime_tabla_nutrimental(self):
 
