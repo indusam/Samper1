@@ -34,12 +34,6 @@ class TablaNutrimental(models.TransientModel):
         for rec in self:
             return {'domain': {'ing_limitante':
                                    [('bom_id', '=', nlista)]}}
-        
-    @api.onchange('cantidad')
-    def onchange_cantidad(self):
-        if self.producto:
-            raise UserError('producto: '+self.producto+' '+str(self.producto.product_id)+str(self.producto.product_id.x_pct_merma))
-        self.pct_merma = self.producto.product_id.x_pct_merma
 
 
     # imprime la tabla nutrimental.
