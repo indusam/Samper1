@@ -34,6 +34,7 @@ class TablaNutrimental(models.TransientModel):
         for rec in self:
             return {'domain': {'ing_limitante':
                                    [('bom_id', '=', nlista)]}}
+        self.cantidad = 100
 
     # imprime la tabla nutrimental.
     def imprime_tabla_nutrimental(self):
