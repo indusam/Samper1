@@ -30,11 +30,15 @@ class TablaNutrimental(models.TransientModel):
     # permite seleccionar el ingrediente limitante.
     @api.onchange('producto')
     def onchange_producto(self):
-        self.cantidad = 100
         nlista = self.producto.id
         for rec in self:
             return {'domain': {'ing_limitante':
                                    [('bom_id', '=', nlista)]}}
+        
+    @api.onchange('cantidad')
+    def onchange_cantidad(self):
+        self.pct_merma = self.producto.x_pct_merma
+
 
     # imprime la tabla nutrimental.
     def imprime_tabla_nutrimental(self):
