@@ -32,7 +32,10 @@
     'depends': ['base', 'mrp'],
     'data': [
         'views/tabla_nutrimental_reporte.xml',
+        'views/formulas_reporte.xml',
         'wizard/tabla_nutrimental_view.xml',
+        'wizard/formulas_view.xml',
         'report/tabla_nutrimental_pdf.xml',
+        'report/formulas_pdf.xml',
     ],
 }
