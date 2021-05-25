@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="wizard_formula_view_form" model="ir.ui.view">
+    <record id="wizard_formulas_view_form" model="ir.ui.view">
         <field name="name">wizard.formula.view.form</field>
         <field name="model">wizard.formula</field>
         <field name="arch" type="xml">
@@ -23,12 +23,12 @@
         </field>
     </record>
 
-    <record id="action_formula_wizard" model="ir.actions.act_window">
+    <record id="action_formulas_wizard" model="ir.actions.act_window">
         <field name="name">Fórmulas</field>
-        <field name="res_model">wizard.formula</field>
+        <field name="res_model">wizard.formulas</field>
         <field name="type">ir.actions.act_window</field>
         <field name="view_mode">form</field>
-        <field name="view_id" ref="wizard_formula_view_form"/>
+        <field name="view_id" ref="wizard_formulas_view_form"/>
         <field name="target">new</field>
     </record>
 
