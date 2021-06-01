@@ -39,8 +39,6 @@ class Formulas(models.TransientModel):
     # imprime formula
     def imprime_formula(self):
 
-        raise UserError('Procesando....')
-
         vals=[]
         ingredientes = self.env['mrp.bom.line'].search(
                         [('bom_id.id', '=', self.producto.id)])
