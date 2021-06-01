@@ -24,6 +24,7 @@ class Formulas(models.TransientModel):
     cantidad = fields.Float(string="Cantidad")
     ing_limitante = fields.Many2one('mrp.bom.line',string="Ingrediente limitante")
     cant_limitante = fields.Float(string="Cantidad limitante")
+    consolidado = fields.Boolean(string="Fórmula consolidada",  )
 
     # permite seleccionar el ingrediente limitante.
     @api.onchange('producto')
