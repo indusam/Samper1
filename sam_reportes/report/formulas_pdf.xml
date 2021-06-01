@@ -33,7 +33,7 @@
                                 <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Cantidad</th>
                                 <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Unidad</th>
                                 <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px;">% Fórmula</th>
-                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px;">% Grupo</th>
+                                <!-- <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px;">% Grupo</th> -->
                             </tr>
                         </thead>
                         <tbody>
@@ -58,14 +58,14 @@
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="'{0:,.2f}'.format(doc['pct_formula'])"/>
                                     </td>
+                                    <!--
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="'{0:,.2f}'.format(doc['pct_categoria'])"/>
                                     </td>
-
+                                    -->
                                     <!-- Suma totales -->
                                     <t t-set="tot_cantidad" t-value="tot_cantidad + doc['cant_comp']"/>
                                     <t t-set="tot_pct_formula" t-value="tot_pct_formula + doc['pct_formula']"/>
-
                                 </tr>
                             </t>
                             <!-- Imprime Totales -->
