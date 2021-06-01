@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <data>
-        <record id="tabla_nutrimental_reporte" model="ir.actions.report">
+        <record id="formulas_reporte" model="ir.actions.report">
             <field name="name">Tabla nutrimental</field>
             <field name="model">mrp.bom</field>
             <field name="report_type">qweb-pdf</field>
-            <field name="report_name">sam_reportes.tabla_nutrimental_template</field>
+            <field name="report_name">sam_reportes.formulas_template</field>
         </record>
     </data>
 </odoo>
