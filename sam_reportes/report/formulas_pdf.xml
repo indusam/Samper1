@@ -52,11 +52,9 @@
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="'{0:,.4f}'.format(doc['cant_comp'])"/>
                                     </td>
-                                    <!--
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="doc['unidad']"/>
                                     </td>
-                                    -->
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="'{0:,.2f}'.format(doc['pct_formula'])"/>
                                     </td>
@@ -80,9 +78,6 @@
                                 <th style="text-align:left;color:black!important;">        </th>
                                 <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_pct_formula)"/>
-                                </th>
-                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_proteina)"/>
                                 </th>
                             </tr>
 

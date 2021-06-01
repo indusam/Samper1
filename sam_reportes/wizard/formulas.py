@@ -53,7 +53,7 @@ class Formulas(models.TransientModel):
                     'componente': ingrediente.product_id.name,
                     'cod_prov': codprov,
                     'cant_comp': self.cantidad * (ingrediente.x_porcentaje / 100),
-                    'unidad:': ingrediente.product_id.uom_id.name,
+                    'unidad': ingrediente.product_id.uom_id.name,
                     'pct_formula': ingrediente.x_porcentaje,
                     'pct_categoria': ingrediente.x_porcentaje_categoria
                 })
@@ -70,7 +70,7 @@ class Formulas(models.TransientModel):
                     'componente': ingrediente.product_id.name,
                     'cod_prov': codprov,
                     'cant_comp': self.cant_limitante * (ingrediente.product_qty / ncantidad_il),
-                    'unidad:': ingrediente.product_id.uom_id.name,
+                    'unidad': ingrediente.product_id.uom_id.name,
                     'pct_formula': ingrediente.x_porcentaje,
                     'pct_categoria': ingrediente.x_porcentaje_categoria
                     })
