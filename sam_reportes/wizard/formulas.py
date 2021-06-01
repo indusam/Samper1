@@ -45,9 +45,13 @@ class Formulas(models.TransientModel):
 
         if not self.ing_limitante:
             for ingrediente in ingredientes:
+                codprov = self.env['product.supplier_info'].search(
+                    [('product_id.id','=',ingrediente.product_id.id)]
+                ).product_code
+
                 vals.append({
                     'componente': ingrediente.product_id.name,
-                    'cod_prov': ingrediente.product_id.product_tmpl_id.product_code,
+                    'cod_prov': codprov,
                     'cant_comp': self.cantidad * (ingrediente.x_porcentaje / 100),
                     'unidad:': ingrediente.product_id.uom_id.name,
                     'pct_formula': ingrediente.x_porcentaje,
