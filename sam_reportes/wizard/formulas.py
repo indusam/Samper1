@@ -45,7 +45,7 @@ class Formulas(models.TransientModel):
 
         if not self.ing_limitante:
             for ingrediente in ingredientes:
-                codprov = self.env['product.supplier_info'].search(
+                codprov = self.env['product.supplierinfo'].search(
                     [('product_id.id','=',ingrediente.product_id.id)]
                 ).product_code
 
