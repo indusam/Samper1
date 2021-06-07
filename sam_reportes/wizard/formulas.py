@@ -79,7 +79,7 @@ class Formulas(models.TransientModel):
         # y los suma a vals[]
         if self.consolidado:
             for ingrediente in ingredientes:
-                if 5 in ingrediente.product_tmpl_id.route_ids:
+                if ingrediente.product_tmpl_id.route_ids.id == 5:
                     raise UserError('El producto: '+ingrediente.product_tmpl_id.name+' se fabrica')
 
 
