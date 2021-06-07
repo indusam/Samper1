@@ -78,9 +78,9 @@ class Formulas(models.TransientModel):
         # si se consolida la fórmula busca los ingredientes de los subproductos
         # y los suma a vals[]
         if self.consolidado:
-            raise UserError(ingredientes)
-            
             for ingrediente in ingredientes:
+                raise UserError(ingrediente.product_tmpl_id.name)
+                
                 if ingrediente.product_tmpl_id.route_ids == 5:
                     raise UserError('El producto: '+ingrediente.product_tmpl_id.name+' se fabrica')
 
