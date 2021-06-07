@@ -75,6 +75,14 @@ class Formulas(models.TransientModel):
                     'pct_categoria': ingrediente.x_porcentaje_categoria
                     })
 
+        # si se consolida la fórmula busca los ingredientes de los subproductos
+        # y los suma a vals[]
+        if self.consolidado:
+            for ingrediente in ingredientes:
+                if ingrediente.product_tmpl_id.route_ids == 5:
+                    raise UserError('El producto: '+ingrediente.product_tmpl_id.name+' se fabrica')
+
+
         data = {'ids': self.ids,
                 'model':self._name,
                 'vals':vals,
