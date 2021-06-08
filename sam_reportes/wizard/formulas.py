@@ -84,7 +84,7 @@ class Formulas(models.TransientModel):
                         [('bom_id.id', '=', ingrediente.id)])
                     # ningr = ingrediente.product_id
 
-                    raise UserError(subformula)
+                    raise UserError(ingrediente.id)
 
 
 
