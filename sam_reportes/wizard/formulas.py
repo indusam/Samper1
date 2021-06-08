@@ -80,12 +80,12 @@ class Formulas(models.TransientModel):
         if self.consolidado:
             for ingrediente in ingredientes:
                 if ingrediente.product_tmpl_id.route_ids.id == 5:
-                    subformula = self.['mrp.bom.line'].search(
+                    subformula = self.env['mrp.bom.line'].search(
                         [('bom_id.id', '=', ingrediente.producto.id)])
                     # ningr = ingrediente.product_id
 
                     raise UserError(subformula)
-                    
+
 
 
         data = {'ids': self.ids,
