@@ -91,7 +91,7 @@ class Formulas(models.TransientModel):
                         codprov = self.env['product.supplierinfo'].search(
                             [('product_id.id', '=', ingrediente.product_id.id)]
                         ).product_code
-                        ncomponente = self.env['fomrula.consolidada'].search(
+                        ncomponente = self.env['formula.consolidada'].search(
                             [('ingr.id',' =', componente.id)])
                         if not ncomponente:
                             self.env['formula.consolidada'].create({
@@ -120,6 +120,17 @@ class Formulas(models.TransientModel):
                                 'pct_formula': ingrediente.x_porcentaje,
                                 'pct_categoria': ingrediente.x_porcentaje_categoria
                     })
+
+            bom_consolidada = self.env['formula.consolidada'].search([])
+            for ingrediente in bom_consolidada:
+                vals.append({
+                    'componente': ingrediente.product_id.name,
+                    'cod_prov': ingrediente.codprov,
+                    'cant_comp': ingrediente.cant_comp,
+                    'unidad': ingrediente.product_id.uom_id.name,
+                    'pct_formula': ingrediente.x_porcentaje,
+                    'pct_categoria': ingrediente.x_porcentaje_categoria
+                })
 
         data = {'ids': self.ids,
                 'model':self._name,
