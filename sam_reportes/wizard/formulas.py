@@ -15,18 +15,6 @@ from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
 
-class FormulaConsolidada(models.TransientModel):
-    _name = 'formula.consolidada'
-    _description = 'Fórmulas Consolidada'
-
-    ingr = fields.Many2one('product.product', string="Producto")
-    cod_prov = fields.Char(string="Código Prov", required=False, )
-    cantidad = fields.Float(string="Cantidad", digits=(12, 4))
-    unidad = fields.Char(string="Unidad")
-    pct_formula = fields.Float(string="% Fórmula", digits=(6,2))
-    pct_categoria = fields.Float(string="% Grupo", digits=(6,2))
-
-
 class Formulas(models.TransientModel):
 
     _name = 'wizard.formulas'
@@ -37,6 +25,14 @@ class Formulas(models.TransientModel):
     ing_limitante = fields.Many2one('mrp.bom.line',string="Ingrediente limitante")
     cant_limitante = fields.Float(string="Cantidad limitante")
     consolidado = fields.Boolean(string="Fórmula consolidada",  )
+
+    # campos para consolidar
+    ingr = fields.Many2one('product.product', string="Producto")
+    cod_prov = fields.Char(string="Código Prov", required=False, )
+    cant_tot = fields.Float(string="Cant Total", digits=(12, 4))
+    unidad = fields.Char(string="Unidad")
+    pct_formula = fields.Float(string="% Fórmula", digits=(6, 2))
+    pct_categoria = fields.Float(string="% Grupo", digits=(6, 2))
 
     # permite seleccionar el ingrediente limitante.
     @api.onchange('producto')
@@ -101,7 +97,7 @@ class Formulas(models.TransientModel):
 
                     for componente in subformula:
 
-                        ncomponente = self.env['formula.consolidada'].search(
+                        ncomponente = self.env['wizard.formula'].search(
                             [('ingr.id','=', componente.id)])
 
                         if not ncomponente:
@@ -110,7 +106,7 @@ class Formulas(models.TransientModel):
                                   componente.product_id.id)]
                             ).product_code
 
-                            self.env['formula.consolidada'].create({
+                            self.env['wizard.formula'].create({
                                 'ingr': componente.product_id.id,
                                 'cod_prov': codprov,
                                 'cant_comp': componente.product_qty,
@@ -128,7 +124,7 @@ class Formulas(models.TransientModel):
                         [('product_id.id', '=', ingrediente.product_id.id)]
                     ).product_code
 
-                    self.env['formula.consolidada'].create({
+                    self.env['wizard.formulas'].create({
                                 'ingr': ingrediente.product_id.id,
                                 'cod_prov': codprov,
                                 'cant_comp': ingrediente.product_qty,
@@ -137,7 +133,7 @@ class Formulas(models.TransientModel):
                                 'pct_categoria': ingrediente.x_porcentaje_categoria
                     })
 
-            bom_consolidada = self.env['formula.consolidada'].search([])
+            bom_consolidada = self.env['wizard.formulas'].search([])
             for ingrediente in bom_consolidada:
                 vals.append({
                     'componente': ingrediente.product_id.id,
@@ -147,6 +143,7 @@ class Formulas(models.TransientModel):
                     'pct_formula': ingrediente.x_porcentaje,
                     'pct_categoria': ingrediente.x_porcentaje_categoria
                 })
+
 
         data = {'ids': self.ids,
                 'model':self._name,
