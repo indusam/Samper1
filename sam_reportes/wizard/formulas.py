@@ -88,11 +88,14 @@ class Formulas(models.TransientModel):
                         ('bom_id.id', '=', bom_pf)])
 
                     for componente in subformula:
+
                         codprov = self.env['product.supplierinfo'].search(
                             [('product_id.id', '=', ingrediente.product_id.id)]
                         ).product_code
+
                         ncomponente = self.env['formula.consolidada'].search(
                             [('ingr.id',' =', componente.id)])
+
                         if not ncomponente:
                             self.env['formula.consolidada'].create({
                                 'ingr': ingrediente.product_id.name,
@@ -150,7 +153,7 @@ class FormulaConsolidada(models.TransientModel):
     _name = 'formula.consolidada'
     _description = 'Fórmulas Consolidada'
 
-    ingr = fields.Many2one('mrp.bom', string="Producto")
+    ingr = fields.Many2one('product.product', string="Producto")
     cod_prov = fields.Char(string="Código Prov", required=False, )
     cantidad = fields.Float(string="Cantidad", digits=(12, 4))
     unidad = fields.Char(string="Unidad")
