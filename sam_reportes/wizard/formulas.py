@@ -43,52 +43,83 @@ class Formulas(models.TransientModel):
         ingredientes = self.env['mrp.bom.line'].search(
                         [('bom_id.id', '=', self.producto.id)])
 
-        if not self.ing_limitante:
-            for ingrediente in ingredientes:
-                codprov = self.env['product.supplierinfo'].search(
-                    [('product_id.id','=',ingrediente.product_id.id)]
-                ).product_code
+        if not self.consolidado:
 
-                vals.append({
-                    'componente': ingrediente.product_id.name,
-                    'cod_prov': codprov,
-                    'cant_comp': self.cantidad * (ingrediente.x_porcentaje / 100),
-                    'unidad': ingrediente.product_id.uom_id.name,
-                    'pct_formula': ingrediente.x_porcentaje,
-                    'pct_categoria': ingrediente.x_porcentaje_categoria
-                })
+            if not self.ing_limitante:
+                for ingrediente in ingredientes:
+                    codprov = self.env['product.supplierinfo'].search(
+                        [('product_id.id','=',ingrediente.product_id.id)]
+                    ).product_code
 
-        if self.ing_limitante:
-            ncantidad_il = self.ing_limitante.product_qty
-            for ingrediente in ingredientes:
-
-                codprov = self.env['product.supplierinfo'].search(
-                    [('product_id.id', '=', ingrediente.product_id.id)]
-                ).product_code
-
-                vals.append({
-                    'componente': ingrediente.product_id.name,
-                    'cod_prov': codprov,
-                    'cant_comp': self.cant_limitante * (ingrediente.product_qty / ncantidad_il),
-                    'unidad': ingrediente.product_id.uom_id.name,
-                    'pct_formula': ingrediente.x_porcentaje,
-                    'pct_categoria': ingrediente.x_porcentaje_categoria
+                    vals.append({
+                        'componente': ingrediente.product_id.name,
+                        'cod_prov': codprov,
+                        'cant_comp': self.cantidad * (ingrediente.x_porcentaje / 100),
+                        'unidad': ingrediente.product_id.uom_id.name,
+                        'pct_formula': ingrediente.x_porcentaje,
+                        'pct_categoria': ingrediente.x_porcentaje_categoria
                     })
 
-        # si se consolida la fórmula busca los ingredientes de los subproductos
-        # y los suma a vals[]
+            if self.ing_limitante:
+                ncantidad_il = self.ing_limitante.product_qty
+                for ingrediente in ingredientes:
+                    codprov = self.env['product.supplierinfo'].search(
+                        [('product_id.id', '=', ingrediente.product_id.id)]
+                    ).product_code
+
+                    vals.append({
+                        'componente': ingrediente.product_id.name,
+                        'cod_prov': codprov,
+                        'cant_comp': self.cant_limitante * (ingrediente.product_qty / ncantidad_il),
+                        'unidad': ingrediente.product_id.uom_id.name,
+                        'pct_formula': ingrediente.x_porcentaje,
+                        'pct_categoria': ingrediente.x_porcentaje_categoria
+                        })
+
         if self.consolidado:
             for ingrediente in ingredientes:
+
                 if ingrediente.product_tmpl_id.route_ids.id == 5:
+
                     bom_pf = self.env['mrp.bom'].search([(
                         'product_tmpl_id','=',ingrediente.product_tmpl_id.id)]).id
 
                     subformula = self.env['mrp.bom.line'].search([
                         ('bom_id.id', '=', bom_pf)])
 
-                    raise UserError(subformula)
+                    for componente in subformula:
+                        codprov = self.env['product.supplierinfo'].search(
+                            [('product_id.id', '=', ingrediente.product_id.id)]
+                        ).product_code
+                        ncomponente = self.env['fomrula.consolidada'].search(
+                            [('ingr.id',' =', componente.id)])
+                        if not ncomponente:
+                            self.env['formula.consolidada'].create({
+                                'ingr': ingrediente.product_id.name,
+                                'cod_prov': codprov,
+                                'cant_comp': componente.product_qty,
+                                'unidad': componente.product_id.uom_id.name,
+                                'pct_formula': componente.x_porcentaje,
+                                'pct_categoria': componente.x_porcentaje_categoria
+                            })
 
+                        if ncomponente:
+                            ncant = ncomponente.product_qty
+                            componente.write({'cant_comp':componente.cant_comp + ncant})
 
+                else:
+                    codprov = self.env['product.supplierinfo'].search(
+                        [('product_id.id', '=', ingrediente.product_id.id)]
+                    ).product_code
+
+                    self.env['formula.consolidada'].create({
+                                'ingr': ingrediente.product_id.name,
+                                'cod_prov': codprov,
+                                'cant_comp': ingrediente.product_qty,
+                                'unidad': ingrediente.product_id.uom_id.name,
+                                'pct_formula': ingrediente.x_porcentaje,
+                                'pct_categoria': ingrediente.x_porcentaje_categoria
+                    })
 
         data = {'ids': self.ids,
                 'model':self._name,
@@ -102,3 +133,15 @@ class Formulas(models.TransientModel):
                 }
 
         return self.env.ref('sam_reportes.formulas_reporte').report_action(self, data=data)
+
+
+class FormulaConsolidada(models.TransientModel):
+    _name = 'formula.consolidada'
+    _description = 'Fórmulas Consolidada'
+
+    ingr = fields.Many2one('mrp.bom', string="Producto")
+    cod_prov = fields.Char(string="Código Prov", required=False, )
+    cantidad = fields.Float(string="Cantidad", digits=(12, 4))
+    unidad = fields.Char(string="Unidad")
+    pct_formula = fields.Float(string="% Fórmula", digits=(6,2))
+    pct_categoria = fields.Float(string="% Grupo", digits=(6,2))
