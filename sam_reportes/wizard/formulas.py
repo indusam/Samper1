@@ -15,6 +15,18 @@ from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
 
+class FormulaConsolidada(models.TransientModel):
+    _name = 'formula.consolidada'
+    _description = 'Fórmulas Consolidada'
+
+    ingr = fields.Many2one('product.product', string="Producto")
+    cod_prov = fields.Char(string="Código Prov", required=False, )
+    cantidad = fields.Float(string="Cantidad", digits=(12, 4))
+    unidad = fields.Char(string="Unidad")
+    pct_formula = fields.Float(string="% Fórmula", digits=(6,2))
+    pct_categoria = fields.Float(string="% Grupo", digits=(6,2))
+
+
 class Formulas(models.TransientModel):
 
     _name = 'wizard.formulas'
@@ -89,16 +101,17 @@ class Formulas(models.TransientModel):
 
                     for componente in subformula:
 
-                        codprov = self.env['product.supplierinfo'].search(
-                            [('product_id.id', '=', ingrediente.product_id.id)]
-                        ).product_code
-
                         ncomponente = self.env['formula.consolidada'].search(
                             [('ingr.id',' =', componente.id)])
 
                         if not ncomponente:
+                            codprov = self.env['product.supplierinfo'].search(
+                                [('product_id.id', '=',
+                                  componente.product_id.id)]
+                            ).product_code
+
                             self.env['formula.consolidada'].create({
-                                'ingr': ingrediente.product_id.id,
+                                'ingr': componente.product_id.id,
                                 'cod_prov': codprov,
                                 'cant_comp': componente.product_qty,
                                 'unidad': componente.product_id.uom_id.name,
@@ -148,14 +161,3 @@ class Formulas(models.TransientModel):
 
         return self.env.ref('sam_reportes.formulas_reporte').report_action(self, data=data)
 
-
-class FormulaConsolidada(models.TransientModel):
-    _name = 'formula.consolidada'
-    _description = 'Fórmulas Consolidada'
-
-    ingr = fields.Many2one('product.product', string="Producto")
-    cod_prov = fields.Char(string="Código Prov", required=False, )
-    cantidad = fields.Float(string="Cantidad", digits=(12, 4))
-    unidad = fields.Char(string="Unidad")
-    pct_formula = fields.Float(string="% Fórmula", digits=(6,2))
-    pct_categoria = fields.Float(string="% Grupo", digits=(6,2))
