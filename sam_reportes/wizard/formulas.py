@@ -102,7 +102,7 @@ class Formulas(models.TransientModel):
                     for componente in subformula:
 
                         ncomponente = self.env['formula.consolidada'].search(
-                            [('ingr.id',' =', componente.id)])
+                            [('ingr.id','=', componente.id)])
 
                         if not ncomponente:
                             codprov = self.env['product.supplierinfo'].search(
