@@ -98,7 +98,7 @@ class Formulas(models.TransientModel):
 
                         if not ncomponente:
                             self.env['formula.consolidada'].create({
-                                'ingr': ingrediente.product_id.name,
+                                'ingr': ingrediente.product_id.id,
                                 'cod_prov': codprov,
                                 'cant_comp': componente.product_qty,
                                 'unidad': componente.product_id.uom_id.name,
@@ -116,7 +116,7 @@ class Formulas(models.TransientModel):
                     ).product_code
 
                     self.env['formula.consolidada'].create({
-                                'ingr': ingrediente.product_id.name,
+                                'ingr': ingrediente.product_id.id,
                                 'cod_prov': codprov,
                                 'cant_comp': ingrediente.product_qty,
                                 'unidad': ingrediente.product_id.uom_id.name,
@@ -127,7 +127,7 @@ class Formulas(models.TransientModel):
             bom_consolidada = self.env['formula.consolidada'].search([])
             for ingrediente in bom_consolidada:
                 vals.append({
-                    'componente': ingrediente.product_id.name,
+                    'componente': ingrediente.product_id.id,
                     'cod_prov': ingrediente.codprov,
                     'cant_comp': ingrediente.cant_comp,
                     'unidad': ingrediente.product_id.uom_id.name,
