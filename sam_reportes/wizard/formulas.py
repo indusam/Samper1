@@ -84,6 +84,7 @@ class Formulas(models.TransientModel):
                         'pct_categoria': ingrediente.x_porcentaje_categoria
                         })
 
+        # Se consolida la fórmula.
         if self.consolidado:
             for ingrediente in ingredientes:
 
@@ -109,7 +110,7 @@ class Formulas(models.TransientModel):
                             self.env['wizard.formulas'].create({
                                 'ingr': componente.product_id.id,
                                 'cod_prov': codprov,
-                                'cant_comp': componente.product_qty,
+                                'cant_tot': componente.product_qty,
                                 'unidad': componente.product_id.uom_id.name,
                                 'pct_formula': componente.x_porcentaje,
                                 'pct_categoria': componente.x_porcentaje_categoria
@@ -117,7 +118,7 @@ class Formulas(models.TransientModel):
 
                         if ncomponente:
                             ncant = ncomponente.product_qty
-                            componente.write({'cant_comp':componente.cant_comp + ncant})
+                            componente.write({'cant_tot':componente.cant_comp + ncant})
 
                 else:
                     codprov = self.env['product.supplierinfo'].search(
@@ -127,7 +128,7 @@ class Formulas(models.TransientModel):
                     self.env['wizard.formulas'].create({
                                 'ingr': ingrediente.product_id.id,
                                 'cod_prov': codprov,
-                                'cant_comp': ingrediente.product_qty,
+                                'cant_tot': ingrediente.product_qty,
                                 'unidad': ingrediente.product_id.uom_id.name,
                                 'pct_formula': ingrediente.x_porcentaje,
                                 'pct_categoria': ingrediente.x_porcentaje_categoria
@@ -138,7 +139,7 @@ class Formulas(models.TransientModel):
                 vals.append({
                     'componente': ingrediente.product_id.id,
                     'cod_prov': ingrediente.codprov,
-                    'cant_comp': ingrediente.cant_comp,
+                    'cant_comp': ingrediente.cant_tot,
                     'unidad': ingrediente.product_id.uom_id.name,
                     'pct_formula': ingrediente.x_porcentaje,
                     'pct_categoria': ingrediente.x_porcentaje_categoria
