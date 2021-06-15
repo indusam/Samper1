@@ -11,10 +11,12 @@
                         <field name="cantidad" attrs="{'invisible': [('ing_limitante','!=',False)]}"/>
                         <field name="consolidado" />
                     </group>
+                    <!--
                     <group>
                         <field name="ing_limitante" attrs="{'invisible': [('cantidad','>',0)]}"/>
                         <field name="cant_limitante" attrs="{'invisible': [('cantidad','>',0)]}"/>
                     </group>
+                    -->
                 </group>
                 <footer>
                     <button name="imprime_formula" type="object" string="Imprimir" class="oe_highlight"/>
