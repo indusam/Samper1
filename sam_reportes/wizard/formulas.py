@@ -47,6 +47,10 @@ class Formulas(models.TransientModel):
     # imprime formula
     def imprime_formula(self):
 
+        paso = self.env['wizard.formulas'].search()
+        for registro in paso:
+            registro.unlink()
+            
         vals=[]
         ingredientes = self.env['mrp.bom.line'].search(
                         [('bom_id.id', '=', self.producto.id)])
