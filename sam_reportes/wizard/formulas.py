@@ -137,10 +137,10 @@ class Formulas(models.TransientModel):
             bom_consolidada = self.env['wizard.formulas'].search([])
             for ingrediente in bom_consolidada:
                 vals.append({
-                    'componente': ingrediente.product_id.id,
+                    'componente': ingrediente.ingr.id,
                     'cod_prov': ingrediente.codprov,
                     'cant_comp': ingrediente.cant_tot,
-                    'unidad': ingrediente.product_id.uom_id.name,
+                    'unidad': ingrediente.ingr.uom_id.name,
                     'pct_formula': ingrediente.x_porcentaje,
                     'pct_categoria': ingrediente.x_porcentaje_categoria
                 })
