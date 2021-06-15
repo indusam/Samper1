@@ -8,7 +8,8 @@
                 <group>
                     <group>
                         <field name="producto" required="1"/>
-                        <field name="cantidad" attrs="{'invisible': [('ing_limitante','!=',False)]}"/>
+                        <field name="cantidad" />
+                        <!-- attrs="{'invisible': [('ing_limitante','!=',False)]}"/> -->
                         <field name="consolidado" />
                     </group>
                     <!--
