@@ -97,7 +97,7 @@ class Formulas(models.TransientModel):
 
                     for componente in subformula:
 
-                        ncomponente = self.env['wizard.formula'].search(
+                        ncomponente = self.env['wizard.formulas'].search(
                             [('ingr.id','=', componente.id)])
 
                         if not ncomponente:
@@ -106,7 +106,7 @@ class Formulas(models.TransientModel):
                                   componente.product_id.id)]
                             ).product_code
 
-                            self.env['wizard.formula'].create({
+                            self.env['wizard.formulas'].create({
                                 'ingr': componente.product_id.id,
                                 'cod_prov': codprov,
                                 'cant_comp': componente.product_qty,
