@@ -141,8 +141,8 @@ class Formulas(models.TransientModel):
                     'cod_prov': ingrediente.cod_prov,
                     'cant_comp': ingrediente.cant_tot,
                     'unidad': ingrediente.ingr.uom_id.name,
-                    'pct_formula': ingrediente.x_porcentaje,
-                    'pct_categoria': ingrediente.x_porcentaje_categoria
+                    'pct_formula': ingrediente.pct_formula,
+                    'pct_categoria': ingrediente.pct_categoria
                 })
 
 
