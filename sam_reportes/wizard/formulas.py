@@ -138,7 +138,7 @@ class Formulas(models.TransientModel):
             for ingrediente in bom_consolidada:
                 vals.append({
                     'componente': ingrediente.ingr.id,
-                    'cod_prov': ingrediente.codprov,
+                    'cod_prov': ingrediente.cod_prov,
                     'cant_comp': ingrediente.cant_tot,
                     'unidad': ingrediente.ingr.uom_id.name,
                     'pct_formula': ingrediente.x_porcentaje,
