@@ -121,7 +121,7 @@ class Formulas(models.TransientModel):
 
                         if ncomponente:
                             ncant = ncomponente.cant_tot
-                            componente.write({'cant_tot':componente.cant_tot + ncant})
+                            ncomponente.write({'cant_tot':componente.product_qty + ncant})
 
                 else:
                     codprov = self.env['product.supplierinfo'].search(
