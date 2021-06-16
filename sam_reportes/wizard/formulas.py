@@ -101,7 +101,7 @@ class Formulas(models.TransientModel):
                     for componente in subformula:
                         ncomponente = self.env['wizard.formulas'].search(
                                 [('ingr.id','=', componente.id),
-                                 ('secuencia','=',nsecuencia)]).id
+                                 ('x_secuencia','=',nsecuencia)]).id
 
                         if not ncomponente:
                             codprov = self.env['product.supplierinfo'].search(
@@ -110,7 +110,7 @@ class Formulas(models.TransientModel):
                             ).product_code
 
                             self.env['wizard.formulas'].create({
-                                'secuencia':nsecuencia,
+                                'x_secuencia':nsecuencia,
                                 'ingr': componente.product_id.id,
                                 'cod_prov': codprov,
                                 'cant_tot': componente.product_qty,
@@ -129,7 +129,7 @@ class Formulas(models.TransientModel):
                     ).product_code
 
                     self.env['wizard.formulas'].create({
-                                'secuencia':nsecuencia,
+                                'x_secuencia':nsecuencia,
                                 'ingr': ingrediente.product_id.id,
                                 'cod_prov': codprov,
                                 'cant_tot': ingrediente.product_qty,
@@ -138,7 +138,7 @@ class Formulas(models.TransientModel):
                                 'pct_categoria': ingrediente.x_porcentaje_categoria
                     })
 
-            bom_consolidada = self.env['wizard.formulas'].search(['secuencia','=',nsecuencia])
+            bom_consolidada = self.env['wizard.formulas'].search(['x_secuencia','=',nsecuencia])
             for ingrediente in bom_consolidada:
                 if ingrediente.cant_tot > 0:
                     vals.append({
