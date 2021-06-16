@@ -110,7 +110,10 @@ class Formulas(models.TransientModel):
                                   componente.product_id.product_tmpl_id.id)]
                             ).product_code
 
-                            raise UserError(ncant_limitante * (componente.x_porcentaje / 100))
+                            raise UserError('ncant_limitante: '+str(ncant_limitante)+'\n'+
+                                            'componente.x_porcentaje / 100: '+
+                                            str(componente.x_porcentaje/100)+'\n'+
+                                ncant_limitante * (componente.x_porcentaje / 100))
                             
                             self.env['wizard.formulas'].create({
                                 'x_secuencia':nsecuencia,
