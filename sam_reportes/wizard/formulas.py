@@ -100,7 +100,7 @@ class Formulas(models.TransientModel):
 
                     for componente in subformula:
                         ncomponente = self.env['wizard.formulas'].search(
-                                [('ingr.id','=', componente.id)
+                                [('ingr.id','=', componente.id),
                                  ('secuencia','=',nsecuencia)]).id
 
                         if not ncomponente:
