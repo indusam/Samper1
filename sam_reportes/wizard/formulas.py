@@ -27,6 +27,7 @@ class Formulas(models.TransientModel):
     consolidado = fields.Boolean(string="Fórmula consolidada",  )
 
     # campos para consolidar
+    secuencia = fields.Char(string="Número")
     ingr = fields.Many2one('product.product', string="Producto")
     cod_prov = fields.Char(string="Código Prov", required=False, )
     cant_tot = fields.Float(string="Cant Total", digits=(12, 4))
@@ -86,8 +87,9 @@ class Formulas(models.TransientModel):
 
         # Se consolida la fórmula.
         if self.consolidado:
-            for ingrediente in ingredientes:
+            nsecuencia = self.env['ir.sequence'].next_by_code('formulas.consolidadas')
 
+            for ingrediente in ingredientes:
                 if ingrediente.product_tmpl_id.route_ids.id == 5:
 
                     bom_pf = self.env['mrp.bom'].search([(
@@ -99,7 +101,8 @@ class Formulas(models.TransientModel):
                     for componente in subformula:
 
                         ncomponente = self.env['wizard.formulas'].search(
-                            [('ingr.id','=', componente.id)]).id
+                                [('secuencia','=',nsecuencia),
+                                 ('ingr.id','=', componente.id)]).id
 
                         if not ncomponente:
                             codprov = self.env['product.supplierinfo'].search(
@@ -108,6 +111,7 @@ class Formulas(models.TransientModel):
                             ).product_code
 
                             self.env['wizard.formulas'].create({
+                                'secuencia':nsecuencia,
                                 'ingr': componente.product_id.id,
                                 'cod_prov': codprov,
                                 'cant_tot': componente.product_qty,
@@ -126,6 +130,7 @@ class Formulas(models.TransientModel):
                     ).product_code
 
                     self.env['wizard.formulas'].create({
+                                'secuencia': nsecuencia,
                                 'ingr': ingrediente.product_id.id,
                                 'cod_prov': codprov,
                                 'cant_tot': ingrediente.product_qty,
@@ -134,7 +139,7 @@ class Formulas(models.TransientModel):
                                 'pct_categoria': ingrediente.x_porcentaje_categoria
                     })
 
-            bom_consolidada = self.env['wizard.formulas'].search([])
+            bom_consolidada = self.env['wizard.formulas'].search([('secuencia','=',nsecuencia)])
             for ingrediente in bom_consolidada:
                 if ingrediente.cant_tot > 0:
                     vals.append({
