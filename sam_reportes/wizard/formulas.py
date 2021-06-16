@@ -145,7 +145,7 @@ class Formulas(models.TransientModel):
                     })
 
             bom_consolidada = self.env['wizard.formulas'].search([('x_secuencia','=',nsecuencia)])
-            bom_ordenada = sorted(bom_consolidada, key=lambda l: (l.cant_tot, l.ingr.default_code), reverse=True)
+            bom_ordenada = sorted(bom_consolidada, key=lambda l: (l.cant_tot, l.ingr.x_studio_categora_de_producto), reverse=True)
             for ingrediente in bom_ordenada:
                 if ingrediente.cant_tot > 0:
                     vals.append({
