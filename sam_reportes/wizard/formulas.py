@@ -91,6 +91,7 @@ class Formulas(models.TransientModel):
 
             for ingrediente in ingredientes:
                 if ingrediente.product_tmpl_id.route_ids.id == 5:
+                    ncant_limitante = ingrediente.product_qty
 
                     bom_pf = self.env['mrp.bom'].search([(
                         'product_tmpl_id','=',ingrediente.product_tmpl_id.id)]).id
@@ -113,7 +114,7 @@ class Formulas(models.TransientModel):
                                 'x_secuencia':nsecuencia,
                                 'ingr': componente.product_id.id,
                                 'cod_prov': codprov,
-                                'cant_tot': componente.product_qty,
+                                'cant_tot': ncant_limitante * (componente.x_porcentaje / 100),
                                 'unidad': componente.product_id.uom_id.name,
                                 'pct_formula': componente.x_porcentaje,
                                 'pct_categoria': componente.x_porcentaje_categoria
@@ -121,7 +122,7 @@ class Formulas(models.TransientModel):
 
                         if ncomponente:
                             ncant = ncomponente.cant_tot
-                            ncomponente.write({'cant_tot':componente.product_qty + ncant})
+                            ncomponente.write({'cant_tot':(ncant_limitante * (componente.x_porcentaje / 100)) + ncant})
 
                 else:
                     codprov = self.env['product.supplierinfo'].search(
