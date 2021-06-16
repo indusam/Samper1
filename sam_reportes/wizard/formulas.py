@@ -87,7 +87,7 @@ class Formulas(models.TransientModel):
 
         # Se consolida la fórmula.
         if self.consolidado:
-            nsecuencia = self.env['ir.sequence'].next_by_code('formulas.consolidadas')
+            # nsecuencia = self.env['ir.sequence'].next_by_code('formulas.consolidadas')
 
             for ingrediente in ingredientes:
                 if ingrediente.product_tmpl_id.route_ids.id == 5:
