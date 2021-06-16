@@ -138,7 +138,7 @@ class Formulas(models.TransientModel):
                                 'pct_categoria': ingrediente.x_porcentaje_categoria
                     })
 
-            bom_consolidada = self.env['wizard.formulas'].search(['x_secuencia','=',nsecuencia])
+            bom_consolidada = self.env['wizard.formulas'].search([('x_secuencia','=',nsecuencia)])
             for ingrediente in bom_consolidada:
                 if ingrediente.cant_tot > 0:
                     vals.append({
