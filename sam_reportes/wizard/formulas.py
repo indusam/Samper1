@@ -87,7 +87,7 @@ class Formulas(models.TransientModel):
 
         # Se consolida la fórmula.
         if self.consolidado:
-            # nsecuencia = self.env['ir.sequence'].next_by_code('formulas.consolidadas')
+            nsecuencia = self.env['ir.sequence'].next_by_code('formulas.consolidadas')
 
             for ingrediente in ingredientes:
                 if ingrediente.product_tmpl_id.route_ids.id == 5:
@@ -100,7 +100,8 @@ class Formulas(models.TransientModel):
 
                     for componente in subformula:
                         ncomponente = self.env['wizard.formulas'].search(
-                                [('ingr.id','=', componente.id)]).id
+                                [('ingr.id','=', componente.id)
+                                 ('secuencia','=',nsecuencia)]).id
 
                         if not ncomponente:
                             codprov = self.env['product.supplierinfo'].search(
@@ -109,6 +110,7 @@ class Formulas(models.TransientModel):
                             ).product_code
 
                             self.env['wizard.formulas'].create({
+                                'secuencia':nsecuencia,
                                 'ingr': componente.product_id.id,
                                 'cod_prov': codprov,
                                 'cant_tot': componente.product_qty,
@@ -127,6 +129,7 @@ class Formulas(models.TransientModel):
                     ).product_code
 
                     self.env['wizard.formulas'].create({
+                                'secuencia':nsecuencia,
                                 'ingr': ingrediente.product_id.id,
                                 'cod_prov': codprov,
                                 'cant_tot': ingrediente.product_qty,
@@ -135,7 +138,7 @@ class Formulas(models.TransientModel):
                                 'pct_categoria': ingrediente.x_porcentaje_categoria
                     })
 
-            bom_consolidada = self.env['wizard.formulas'].search([])
+            bom_consolidada = self.env['wizard.formulas'].search(['secuencia','=',nsecuencia])
             for ingrediente in bom_consolidada:
                 if ingrediente.cant_tot > 0:
                     vals.append({
