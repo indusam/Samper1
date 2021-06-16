@@ -27,7 +27,7 @@ class Formulas(models.TransientModel):
     consolidado = fields.Boolean(string="Fórmula consolidada",  )
 
     # campos para consolidar
-    secuencia = fields.Char(string="Número")
+    x_secuencia = fields.Char(string="Número")
     ingr = fields.Many2one('product.product', string="Producto")
     cod_prov = fields.Char(string="Código Prov", required=False, )
     cant_tot = fields.Float(string="Cant Total", digits=(12, 4))
