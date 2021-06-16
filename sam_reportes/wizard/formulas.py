@@ -145,14 +145,15 @@ class Formulas(models.TransientModel):
                     })
 
             bom_consolidada = self.env['wizard.formulas'].search([('x_secuencia','=',nsecuencia)])
-            for ingrediente in bom_consolidada:
+            bom_ordenada = sorted(bom_consolidada, key=lambda l: l.cant_tot, reverse=True)
+            for ingrediente in bom_ordenada:
                 if ingrediente.cant_tot > 0:
                     vals.append({
                         'componente': ingrediente.ingr.name,
                         'cod_prov': ingrediente.cod_prov,
                         'cant_comp': ingrediente.cant_tot,
                         'unidad': ingrediente.ingr.uom_id.name,
-                        'pct_formula': ingrediente.pct_formula,
+                        'pct_formula': (ingrediente.cant_tot / self.cantidad) * 100 ,
                         'pct_categoria': ingrediente.pct_categoria
                     })
 
