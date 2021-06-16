@@ -100,8 +100,8 @@ class Formulas(models.TransientModel):
 
                     for componente in subformula:
                         ncomponente = self.env['wizard.formulas'].search(
-                                [('ingr.id','=', componente.id),
-                                 ('x_secuencia','=',nsecuencia)]).id
+                                [('ingr.id','=', componente.product_id.id),
+                                 ('x_secuencia','=',nsecuencia)])
 
                         if not ncomponente:
                             codprov = self.env['product.supplierinfo'].search(
