@@ -127,7 +127,7 @@ class Formulas(models.TransientModel):
                                 'unidad': componente.product_id.uom_id.name,
                                 'pct_formula': componente.x_porcentaje,
                                 'pct_categoria': componente.x_porcentaje_categoria,
-                                'orden': norden
+                                'x_orden': norden
                             })
 
                         if ncomponente:
@@ -155,11 +155,11 @@ class Formulas(models.TransientModel):
                                 'unidad': ingrediente.product_id.uom_id.name,
                                 'pct_formula': ingrediente.x_porcentaje,
                                 'pct_categoria': ingrediente.x_porcentaje_categoria,
-                                'orden': norden
+                                'x_orden': norden
                     })
 
             bom_consolidada = self.env['wizard.formulas'].search([('x_secuencia','=',nsecuencia)])
-            bom_ordenada = sorted(bom_consolidada, key=lambda l: (l.ingr.orden), reverse=True)
+            bom_ordenada = sorted(bom_consolidada, key=lambda l: (l.ingr.x_orden), reverse=True)
             for ingrediente in bom_ordenada:
                 if ingrediente.cant_tot > 0:
                     vals.append({
