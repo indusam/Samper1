@@ -111,14 +111,12 @@ class Formulas(models.TransientModel):
                                   componente.product_id.product_tmpl_id.id)]
                             ).product_code
 
-                            raise UserError(componente.product_id.default_code)
-
                             norden = 0
-                            if 'ca' in componente.product_id.name:
+                            if 'ca' in componente.product_id.default_code:
                                 norden = 1
-                            elif 'ad' in componente.product_id.name:
+                            elif 'ad' in componente.product_id.default_code:
                                 norden = 2
-                            elif 'in' in componente.product_id.name:
+                            elif 'in' in componente.product_id.default_code:
                                 norden = 3
 
                             self.env['wizard.formulas'].create({
