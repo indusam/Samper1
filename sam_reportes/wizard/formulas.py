@@ -111,8 +111,8 @@ class Formulas(models.TransientModel):
                                   componente.product_id.product_tmpl_id.id)]
                             ).product_code
 
-                            raise UserError(componente.product_id.name)
-                                
+                            raise UserError(componente.product_id.default_code)
+
                             norden = 0
                             if 'ca' in componente.product_id.name:
                                 norden = 1
