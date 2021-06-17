@@ -26,6 +26,17 @@ class Formulas(models.TransientModel):
     cant_limitante = fields.Float(string="Cantidad limitante")
     consolidado = fields.Boolean(string="Fórmula consolidada",  )
 
+    # campos para consolidar
+    x_secuencia = fields.Char(string="Número")
+    ingr = fields.Many2one('product.product', string="Producto")
+    cod_prov = fields.Char(string="Código Prov", required=False, )
+    cant_tot = fields.Float(string="Cant Total", digits=(12, 4))
+    unidad = fields.Char(string="Unidad")
+    pct_formula = fields.Float(string="% Fórmula", digits=(6, 2))
+    pct_categoria = fields.Float(string="% Grupo", digits=(6, 2))
+    x_orden = fields.Integer(string="Orden", required=False, )
+
+
     # permite seleccionar el ingrediente limitante.
     @api.onchange('producto')
     def onchange_producto(self):
@@ -35,7 +46,6 @@ class Formulas(models.TransientModel):
             return {'domain': {'ing_limitante':
                                    [('bom_id', '=', nlista)]}}
 
-
     # imprime formula
     def imprime_formula(self):
 
@@ -43,37 +53,124 @@ class Formulas(models.TransientModel):
         ingredientes = self.env['mrp.bom.line'].search(
                         [('bom_id.id', '=', self.producto.id)])
 
-        if not self.ing_limitante:
-            for ingrediente in ingredientes:
-                codprov = self.env['product.supplierinfo'].search(
-                    [('product_id.id','=',ingrediente.product_id.id)]
-                ).product_code
+        if not self.consolidado:
 
-                vals.append({
-                    'componente': ingrediente.product_id.name,
-                    'cod_prov': codprov,
-                    'cant_comp': self.cantidad * (ingrediente.x_porcentaje / 100),
-                    'unidad': ingrediente.product_id.uom_id.name,
-                    'pct_formula': ingrediente.x_porcentaje,
-                    'pct_categoria': ingrediente.x_porcentaje_categoria
-                })
+            if not self.ing_limitante:
+                for ingrediente in ingredientes:
+                    codprov = self.env['product.supplierinfo'].search(
+                        [('product_tmpl_id.id','=',ingrediente.product_id.product_tmpl_id.id)], limit=1
+                    ).product_name
 
-        if self.ing_limitante:
-            ncantidad_il = self.ing_limitante.product_qty
-            for ingrediente in ingredientes:
-
-                codprov = self.env['product.supplierinfo'].search(
-                    [('product_id.id', '=', ingrediente.product_id.id)]
-                ).product_code
-
-                vals.append({
-                    'componente': ingrediente.product_id.name,
-                    'cod_prov': codprov,
-                    'cant_comp': self.cant_limitante * (ingrediente.product_qty / ncantidad_il),
-                    'unidad': ingrediente.product_id.uom_id.name,
-                    'pct_formula': ingrediente.x_porcentaje,
-                    'pct_categoria': ingrediente.x_porcentaje_categoria
+                    vals.append({
+                        'componente': ingrediente.product_id.name,
+                        'cod_prov': codprov,
+                        'cant_comp': self.cantidad * (ingrediente.x_porcentaje / 100),
+                        'unidad': ingrediente.product_id.uom_id.name,
+                        'pct_formula': ingrediente.x_porcentaje,
+                        'pct_categoria': ingrediente.x_porcentaje_categoria
                     })
+
+            if self.ing_limitante:
+                ncantidad_il = self.ing_limitante.product_qty
+                for ingrediente in ingredientes:
+                    codprov = self.env['product.supplierinfo'].search(
+                        [('product_tmpl_id.id', '=', ingrediente.product_id.product_tmpl_id.id)], limit=1
+                    ).product_name
+
+                    vals.append({
+                        'componente': ingrediente.product_id.name,
+                        'cod_prov': codprov,
+                        'cant_comp': self.cant_limitante * (ingrediente.product_qty / ncantidad_il),
+                        'unidad': ingrediente.product_id.uom_id.name,
+                        'pct_formula': ingrediente.x_porcentaje,
+                        'pct_categoria': ingrediente.x_porcentaje_categoria
+                        })
+
+        # Se consolida la fórmula.
+        if self.consolidado:
+            nsecuencia = self.env['ir.sequence'].next_by_code('formulas.consolidadas')
+
+            for ingrediente in ingredientes:
+                if ingrediente.product_tmpl_id.route_ids.id == 5:
+                    ncant_limitante = self.cantidad * (ingrediente.x_porcentaje / 100)
+
+                    bom_pf = self.env['mrp.bom'].search([(
+                        'product_tmpl_id','=',ingrediente.product_tmpl_id.id)]).id
+
+                    subformula = self.env['mrp.bom.line'].search([
+                        ('bom_id.id', '=', bom_pf)])
+
+                    for componente in subformula:
+                        ncomponente = self.env['wizard.formulas'].search(
+                                [('ingr.id','=', componente.product_id.id),
+                                 ('x_secuencia','=',nsecuencia)])
+
+                        if not ncomponente:
+                            codprov = self.env['product.supplierinfo'].search(
+                                [('product_tmpl_id.id', '=',
+                                  componente.product_id.product_tmpl_id.id)], limit=1
+                            ).product_name
+
+                            norden = 0
+                            if 'ca' in componente.product_id.default_code:
+                                norden = 1
+                            elif 'ad' in componente.product_id.default_code:
+                                norden = 2
+                            elif 'in' in componente.product_id.default_code:
+                                norden = 3
+
+                            self.env['wizard.formulas'].create({
+                                'x_secuencia':nsecuencia,
+                                'ingr': componente.product_id.id,
+                                'cod_prov': codprov,
+                                'cant_tot': ncant_limitante * (componente.x_porcentaje / 100),
+                                'unidad': componente.product_id.uom_id.name,
+                                'pct_formula': componente.x_porcentaje,
+                                'pct_categoria': componente.x_porcentaje_categoria,
+                                'x_orden': norden
+                            })
+
+                        if ncomponente:
+                            ncant = ncomponente.cant_tot
+                            ncomponente.write({'cant_tot':(ncant_limitante * (componente.x_porcentaje / 100)) + ncant})
+
+                else:
+                    codprov = self.env['product.supplierinfo'].search(
+                        [('product_tmpl_id.id', '=', ingrediente.product_id.product_tmpl_id.id)], limit=1
+                    ).product_name
+
+                    norden = 0
+                    if 'ca' in componente.product_id.default_code:
+                        norden = 1
+                    elif 'ad' in componente.product_id.default_code:
+                        norden = 2
+                    elif 'in' in componente.product_id.default_code:
+                        norden = 3
+
+                    self.env['wizard.formulas'].create({
+                                'x_secuencia':nsecuencia,
+                                'ingr': ingrediente.product_id.id,
+                                'cod_prov': codprov,
+                                'cant_tot': ingrediente.product_qty,
+                                'unidad': ingrediente.product_id.uom_id.name,
+                                'pct_formula': ingrediente.x_porcentaje,
+                                'pct_categoria': ingrediente.x_porcentaje_categoria,
+                                'x_orden': norden
+                    })
+
+            bom_consolidada = self.env['wizard.formulas'].search([('x_secuencia','=',nsecuencia)])
+            bom_ordenada = sorted(bom_consolidada, key=lambda l: (l.x_orden), reverse=False)
+            for ingrediente in bom_ordenada:
+                if ingrediente.cant_tot > 0:
+                    vals.append({
+                        'componente': ingrediente.ingr.name,
+                        'cod_prov': ingrediente.cod_prov,
+                        'cant_comp': ingrediente.cant_tot,
+                        'unidad': ingrediente.ingr.uom_id.name,
+                        'pct_formula': (ingrediente.cant_tot / self.cantidad) * 100 ,
+                        'pct_categoria': ingrediente.pct_categoria
+                    })
+
 
         data = {'ids': self.ids,
                 'model':self._name,
@@ -87,3 +184,4 @@ class Formulas(models.TransientModel):
                 }
 
         return self.env.ref('sam_reportes.formulas_reporte').report_action(self, data=data)
+
