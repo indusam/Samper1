@@ -140,11 +140,11 @@ class Formulas(models.TransientModel):
                     ).product_name
 
                     norden = 0
-                    if 'ca' in componente.product_id.default_code:
+                    if 'ca' in ingrediente.product_id.default_code:
                         norden = 1
-                    elif 'ad' in componente.product_id.default_code:
+                    elif 'ad' in ingrediente.product_id.default_code:
                         norden = 2
-                    elif 'in' in componente.product_id.default_code:
+                    elif 'in' in ingrediente.product_id.default_code:
                         norden = 3
 
                     self.env['wizard.formulas'].create({
