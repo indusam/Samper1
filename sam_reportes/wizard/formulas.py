@@ -75,7 +75,7 @@ class Formulas(models.TransientModel):
                 for ingrediente in ingredientes:
                     codprov = self.env['product.supplierinfo'].search(
                         [('product_id.id', '=', ingrediente.product_id.id)]
-                    ).product_code
+                    ).product_name
 
                     vals.append({
                         'componente': ingrediente.product_id.name,
@@ -109,7 +109,7 @@ class Formulas(models.TransientModel):
                             codprov = self.env['product.supplierinfo'].search(
                                 [('product_id.id', '=',
                                   componente.product_id.product_tmpl_id.id)]
-                            ).product_code
+                            ).product_name
 
                             norden = 0
                             if 'ca' in componente.product_id.default_code:
@@ -159,7 +159,7 @@ class Formulas(models.TransientModel):
                     })
 
             bom_consolidada = self.env['wizard.formulas'].search([('x_secuencia','=',nsecuencia)])
-            bom_ordenada = sorted(bom_consolidada, key=lambda l: (l.x_orden), reverse=True)
+            bom_ordenada = sorted(bom_consolidada, key=lambda l: (l.x_orden), reverse=False)
             for ingrediente in bom_ordenada:
                 if ingrediente.cant_tot > 0:
                     vals.append({
