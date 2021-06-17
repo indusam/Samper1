@@ -58,7 +58,7 @@ class Formulas(models.TransientModel):
             if not self.ing_limitante:
                 for ingrediente in ingredientes:
                     codprov = self.env['product.supplierinfo'].search(
-                        [('product_tmpl_id.id','=',ingrediente.product_id.product_tmpl_id.id)]
+                        [('product_tmpl_id.id','=',ingrediente.product_id.product_tmpl_id.id)], limit=1
                     ).product_name
 
                     vals.append({
@@ -74,7 +74,7 @@ class Formulas(models.TransientModel):
                 ncantidad_il = self.ing_limitante.product_qty
                 for ingrediente in ingredientes:
                     codprov = self.env['product.supplierinfo'].search(
-                        [('product_tmpl_id.id', '=', ingrediente.product_id.product_tmpl_id.id)]
+                        [('product_tmpl_id.id', '=', ingrediente.product_id.product_tmpl_id.id)], limit=1
                     ).product_name
 
                     vals.append({
@@ -108,7 +108,7 @@ class Formulas(models.TransientModel):
                         if not ncomponente:
                             codprov = self.env['product.supplierinfo'].search(
                                 [('product_tmpl_id.id', '=',
-                                  componente.product_id.product_tmpl_id.id)]
+                                  componente.product_id.product_tmpl_id.id)], limit=1
                             ).product_name
 
                             norden = 0
@@ -136,8 +136,8 @@ class Formulas(models.TransientModel):
 
                 else:
                     codprov = self.env['product.supplierinfo'].search(
-                        [('product_tmpl_id.id', '=', ingrediente.product_id.product_tmpl_id.id)]
-                    ).product_code
+                        [('product_tmpl_id.id', '=', ingrediente.product_id.product_tmpl_id.id)], limit=1
+                    ).product_name
 
                     norden = 0
                     if 'ca' in componente.product_id.default_code:
