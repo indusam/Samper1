@@ -150,6 +150,9 @@ class Formulas(models.TransientModel):
 
                 if subf == 0:
 
+                    ncant_limitante = self.cantidad * (
+                                ingrediente.x_porcentaje / 100)
+
                     codprov = self.env['product.supplierinfo'].search(
                         [('product_tmpl_id.id', '=', ingrediente.product_id.product_tmpl_id.id)], limit=1
                     ).product_name
@@ -168,7 +171,7 @@ class Formulas(models.TransientModel):
                                 'x_secuencia':nsecuencia,
                                 'ingr': ingrediente.product_id.id,
                                 'cod_prov': codprov,
-                                'cant_tot': ingrediente.product_qty,
+                                'cant_tot': ncant_limitante,
                                 'unidad': ingrediente.product_id.uom_id.name,
                                 'pct_formula': ingrediente.x_porcentaje,
                                 'pct_categoria': ingrediente.x_porcentaje_categoria,
