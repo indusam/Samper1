@@ -188,9 +188,11 @@ class Formulas(models.TransientModel):
                         ncantcomp = ncant_limitante * (componente.x_porcentaje/100)
                         ncant = ncomponente.cant_tot
 
-                        raise UserError('ncantcomp: '+str(ncantcomp)+'\n'+
+                        raise UserError('ncant_limitante: '+str(ncant_limitante)+'\n'+
+                                        'porcentaje: '+str(componente.x_porcentaje/100)+'\n'+
+                                        'ncantcomp: '+str(ncantcomp)+'\n'+
                                         'ncant: '+str(ncant))
-                        
+
                         ncomponente.write({'cant_tot': (ncant_limitante * (
                                     componente.x_porcentaje / 100)) + ncant})
 
