@@ -26,7 +26,19 @@ class TablaNutrimental(models.TransientModel):
     ing_limitante = fields.Many2one('mrp.bom.line',string="Ingrediente limitante")
     cant_limitante = fields.Float(string="Cantidad limitante")
     pct_merma = fields.Float(string='% Merma')
+    consolidado = fields.Boolean(string="Fórmula consolidada", )
 
+    # campos para consolidar
+    x_secuencia = fields.Char(string="Número")
+    ingr = fields.Many2one('product.product', string="Producto")
+    cod_prov = fields.Char(string="Código Prov", required=False, )
+    cant_tot = fields.Float(string="Cant Total", digits=(12, 4))
+    unidad = fields.Char(string="Unidad")
+    pct_formula = fields.Float(string="% Fórmula", digits=(6, 2))
+    pct_categoria = fields.Float(string="% Grupo", digits=(6, 2))
+    x_orden = fields.Integer(string="Orden", required=False, )
+
+    
     # permite seleccionar el ingrediente limitante.
     @api.onchange('producto')
     def onchange_producto(self):
