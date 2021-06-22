@@ -99,7 +99,7 @@ class Formulas(models.TransientModel):
                     if ruta.id == 5: # 5 == fabricar
                         subf = 1
                         break
-                
+
                 if subf == 1:
                     ncant_limitante = self.cantidad * (ingrediente.x_porcentaje / 100)
 
@@ -127,6 +127,8 @@ class Formulas(models.TransientModel):
                                 norden = 2
                             elif 'in' in componente.product_id.default_code:
                                 norden = 3
+                            else:
+                                norden = 4
 
                             self.env['wizard.formulas'].create({
                                 'x_secuencia':nsecuencia,
@@ -144,6 +146,8 @@ class Formulas(models.TransientModel):
                             ncomponente.write({'cant_tot':(ncant_limitante * (componente.x_porcentaje / 100)) + ncant})
 
                 else:
+                    raise UserError('no es fórmula')
+                    
                     codprov = self.env['product.supplierinfo'].search(
                         [('product_tmpl_id.id', '=', ingrediente.product_id.product_tmpl_id.id)], limit=1
                     ).product_name
@@ -155,6 +159,8 @@ class Formulas(models.TransientModel):
                         norden = 2
                     elif 'in' in ingrediente.product_id.default_code:
                         norden = 3
+                    else:
+                        norden = 4
 
                     self.env['wizard.formulas'].create({
                                 'x_secuencia':nsecuencia,
