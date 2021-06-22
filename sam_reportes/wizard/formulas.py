@@ -188,6 +188,8 @@ class Formulas(models.TransientModel):
                         ncant_tot = ncant + nccomp
 
                         raise UserError('ncant: '+str(ncant)+'\n'+
+                                        'ncant_limitante: '+str(ncant_limitante)+'\n'+
+                                        'pct: '+str(componente.x_porcentaje)+'\n'+
                                         'nccomp: '+str(nccomp)+'\n'+
                                         'ncant_tot: '+str(ncant_tot))
 
