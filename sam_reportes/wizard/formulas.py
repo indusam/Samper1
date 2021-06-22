@@ -184,14 +184,14 @@ class Formulas(models.TransientModel):
 
                     if ncomponente:
                         ncant = ncomponente.cant_tot
-                        nccomp = ncant_limitante 
+                        nccomp = ncant_limitante
                         ncant_tot = ncant + nccomp
 
-                        raise UserError('ncant: '+str(ncant)+'\n'+
-                                        'ncant_limitante: '+str(ncant_limitante)+'\n'+
-                                        'pct: '+str(componente.x_porcentaje)+'\n'+
-                                        'nccomp: '+str(nccomp)+'\n'+
-                                        'ncant_tot: '+str(ncant_tot))
+                        # raise UserError('ncant: '+str(ncant)+'\n'+
+                        #                 'ncant_limitante: '+str(ncant_limitante)+'\n'+
+                        #                 'pct: '+str(componente.x_porcentaje)+'\n'+
+                        #                 'nccomp: '+str(nccomp)+'\n'+
+                        #                 'ncant_tot: '+str(ncant_tot))
 
                         ncomponente.write({'cant_tot': ncant_tot})
 
