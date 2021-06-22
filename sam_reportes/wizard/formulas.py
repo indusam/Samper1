@@ -91,7 +91,16 @@ class Formulas(models.TransientModel):
             nsecuencia = self.env['ir.sequence'].next_by_code('formulas.consolidadas')
 
             for ingrediente in ingredientes:
-                if ingrediente.product_tmpl_id.route_ids.id == 5:
+                # verifica que el ingrediente se fabrique.
+                # las rutas pueden incluir comprar, fabricar, vender, etc.
+                subf = 0
+                rutas = ingrediente.product_tmpl_id.route_ids
+                for ruta in rutas:
+                    if ruta.id == 5: # 5 == fabricar
+                        subf = 1
+                        break
+
+                if subf == 1:
                     ncant_limitante = self.cantidad * (ingrediente.x_porcentaje / 100)
 
                     bom_pf = self.env['mrp.bom'].search([(
@@ -99,6 +108,9 @@ class Formulas(models.TransientModel):
 
                     subformula = self.env['mrp.bom.line'].search([
                         ('bom_id.id', '=', bom_pf)])
+
+                    if not subformula:
+                        subf = 0
 
                     for componente in subformula:
                         ncomponente = self.env['wizard.formulas'].search(
@@ -118,6 +130,8 @@ class Formulas(models.TransientModel):
                                 norden = 2
                             elif 'in' in componente.product_id.default_code:
                                 norden = 3
+                            else:
+                                norden = 4
 
                             self.env['wizard.formulas'].create({
                                 'x_secuencia':nsecuencia,
@@ -134,7 +148,11 @@ class Formulas(models.TransientModel):
                             ncant = ncomponente.cant_tot
                             ncomponente.write({'cant_tot':(ncant_limitante * (componente.x_porcentaje / 100)) + ncant})
 
-                else:
+                if subf == 0:
+
+                    ncant_limitante = self.cantidad * (
+                                ingrediente.x_porcentaje / 100)
+
                     codprov = self.env['product.supplierinfo'].search(
                         [('product_tmpl_id.id', '=', ingrediente.product_id.product_tmpl_id.id)], limit=1
                     ).product_name
@@ -146,12 +164,14 @@ class Formulas(models.TransientModel):
                         norden = 2
                     elif 'in' in ingrediente.product_id.default_code:
                         norden = 3
+                    else:
+                        norden = 4
 
                     self.env['wizard.formulas'].create({
                                 'x_secuencia':nsecuencia,
                                 'ingr': ingrediente.product_id.id,
                                 'cod_prov': codprov,
-                                'cant_tot': ingrediente.product_qty,
+                                'cant_tot': ncant_limitante,
                                 'unidad': ingrediente.product_id.uom_id.name,
                                 'pct_formula': ingrediente.x_porcentaje,
                                 'pct_categoria': ingrediente.x_porcentaje_categoria,
