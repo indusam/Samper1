@@ -109,6 +109,9 @@ class Formulas(models.TransientModel):
                     subformula = self.env['mrp.bom.line'].search([
                         ('bom_id.id', '=', bom_pf)])
 
+                    if not subformula:
+                        subf = 0
+
                     for componente in subformula:
                         ncomponente = self.env['wizard.formulas'].search(
                                 [('ingr.id','=', componente.product_id.id),
