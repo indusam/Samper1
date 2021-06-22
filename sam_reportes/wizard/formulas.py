@@ -149,7 +149,6 @@ class Formulas(models.TransientModel):
                             ncomponente.write({'cant_tot':(ncant_limitante * (componente.x_porcentaje / 100)) + ncant})
 
                 if subf == 0:
-                    raise UserError('no es fórmula')
 
                     codprov = self.env['product.supplierinfo'].search(
                         [('product_tmpl_id.id', '=', ingrediente.product_id.product_tmpl_id.id)], limit=1
