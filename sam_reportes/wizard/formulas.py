@@ -157,7 +157,7 @@ class Formulas(models.TransientModel):
                          ('x_secuencia', '=', nsecuencia)])
 
                     if not ncomponente:
-                        raise Warning('no encontro el componente')
+
                         codprov = self.env['product.supplierinfo'].search(
                             [('product_tmpl_id.id', '=', ingrediente.product_id.product_tmpl_id.id)], limit=1
                         ).product_name
@@ -184,9 +184,13 @@ class Formulas(models.TransientModel):
                         })
 
                     if ncomponente:
-                        raise Warning('si encontro el componente')
-                        
+
+                        ncantcomp = ncant_limitante * (componente.x_porcentaje/100)
                         ncant = ncomponente.cant_tot
+
+                        raise UserError('ncantcomp: '+str(ncantcomp)+'\n'+
+                                        'ncant: '+str(ncant))
+                        
                         ncomponente.write({'cant_tot': (ncant_limitante * (
                                     componente.x_porcentaje / 100)) + ncant})
 
