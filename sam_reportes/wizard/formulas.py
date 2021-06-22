@@ -156,7 +156,7 @@ class Formulas(models.TransientModel):
                         [('ingr.id', '=', componente.product_id.id),
                          ('x_secuencia', '=', nsecuencia)])
 
-                    raise UserError(ncomponente.name)
+                    raise UserError(ingr.id.name)
 
                     if not ncomponente:
                         codprov = self.env['product.supplierinfo'].search(
