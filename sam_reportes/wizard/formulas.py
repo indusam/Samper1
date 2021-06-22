@@ -187,10 +187,10 @@ class Formulas(models.TransientModel):
                         nccomp = ncant_limitante * (componente.x_porcentaje / 100)
                         ncant_tot = ncant + nccomp
 
-                        raise UserError('ncant: '+str(ncant,4,4)+'\n'+
-                                        'nccomp: '+str(nccomp,4,4)+'\n'+
-                                        'ncant_tot: '+str(ncant_tot,4,4))
-                        
+                        raise UserError('ncant: '+str(ncant)+'\n'+
+                                        'nccomp: '+str(nccomp)+'\n'+
+                                        'ncant_tot: '+str(ncant_tot))
+
                         ncomponente.write({'cant_tot': ncant_tot})
 
             bom_consolidada = self.env['wizard.formulas'].search([('x_secuencia','=',nsecuencia)])
