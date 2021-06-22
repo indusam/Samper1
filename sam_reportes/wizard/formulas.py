@@ -91,8 +91,16 @@ class Formulas(models.TransientModel):
             nsecuencia = self.env['ir.sequence'].next_by_code('formulas.consolidadas')
 
             for ingrediente in ingredientes:
-                # if ingrediente.product_tmpl_id.route_ids.id == 5:
-                if '5' in ingrediente.product_tmpl_id.route_ids:
+                # verifica que el ingrediente se fabrique.
+                # las rutas pueden incluir comprar, fabricar, vender, etc.
+                subf = 0
+                rutas = ingrediente.product_tmpl_id.route_ids
+                for ruta in rutas:
+                    if ruta.id == 5: # 5 == fabricar
+                        subf = 1
+                        break
+                
+                if subf == 1:
                     ncant_limitante = self.cantidad * (ingrediente.x_porcentaje / 100)
 
                     bom_pf = self.env['mrp.bom'].search([(
