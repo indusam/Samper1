@@ -92,7 +92,7 @@ class Formulas(models.TransientModel):
 
             for ingrediente in ingredientes:
                 # if ingrediente.product_tmpl_id.route_ids.id == 5:
-                if 5 in ingrediente.product_tmpl_id.route_ids:
+                if '5' in ingrediente.product_tmpl_id.route_ids:
                     ncant_limitante = self.cantidad * (ingrediente.x_porcentaje / 100)
 
                     bom_pf = self.env['mrp.bom'].search([(
