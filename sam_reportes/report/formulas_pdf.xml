@@ -56,7 +56,7 @@
                                         <t t-esc="doc['unidad']"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.2f}'.format(doc['pct_formula'])"/>
+                                        <t t-esc="'{0:,.4f}'.format(doc['pct_formula'])"/>
                                     </td>
                                     <!--
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
