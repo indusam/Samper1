@@ -157,7 +157,6 @@ class Formulas(models.TransientModel):
                          ('x_secuencia', '=', nsecuencia)])
 
                     if not ncomponente:
-
                         codprov = self.env['product.supplierinfo'].search(
                             [('product_tmpl_id.id', '=', ingrediente.product_id.product_tmpl_id.id)], limit=1
                         ).product_name
@@ -184,19 +183,10 @@ class Formulas(models.TransientModel):
                         })
 
                     if ncomponente:
-
                         ncantcomp = ncant_limitante * (componente.x_porcentaje/100)
                         ncant = ncomponente.cant_tot
                         ncant_tot = ncant + ncantcomp
-
-                        raise UserError('ncant_limitante: '+str(ncant_limitante)+'\n'+
-                                        'porcentaje: '+str(componente.x_porcentaje/100)+'\n'+
-                                        'ncantcomp: '+str(ncantcomp)+'\n'+
-                                        'ncant: '+str(ncant)+'\n'+
-                                        'ncant_tot: '+str(ncant_tot))
-
-                        ncomponente.write({'cant_tot': (ncant_limitante * (
-                                    componente.x_porcentaje / 100)) + ncant})
+                        ncomponente.write({'cant_tot': ncant_tot})
 
             bom_consolidada = self.env['wizard.formulas'].search([('x_secuencia','=',nsecuencia)])
             bom_ordenada = sorted(bom_consolidada, key=lambda l: (l.x_orden), reverse=False)
