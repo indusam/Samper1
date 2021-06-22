@@ -38,7 +38,7 @@ class TablaNutrimental(models.TransientModel):
     pct_categoria = fields.Float(string="% Grupo", digits=(6, 2))
     x_orden = fields.Integer(string="Orden", required=False, )
 
-    
+
     # permite seleccionar el ingrediente limitante.
     @api.onchange('producto')
     def onchange_producto(self):
