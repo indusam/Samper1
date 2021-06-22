@@ -184,7 +184,7 @@ class Formulas(models.TransientModel):
 
                     if ncomponente:
                         ncant = ncomponente.cant_tot
-                        nccomp = ncant_limitante * (componente.x_porcentaje / 100)
+                        nccomp = ncant_limitante 
                         ncant_tot = ncant + nccomp
 
                         raise UserError('ncant: '+str(ncant)+'\n'+
