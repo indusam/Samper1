@@ -156,7 +156,7 @@ class Formulas(models.TransientModel):
                         [('ingr.id', '=', componente.product_id.id),
                          ('x_secuencia', '=', nsecuencia)]).name
 
-                    raise UserError(ncomponente)
+                    raise UserError(ncomponente.ingr.name)
 
 
                     if not ncomponente:
