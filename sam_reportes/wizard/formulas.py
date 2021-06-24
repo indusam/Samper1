@@ -156,6 +156,13 @@ class Formulas(models.TransientModel):
                         [('ingr.id', '=', componente.product_id.id),
                          ('x_secuencia', '=', nsecuencia)])
 
+                    raise UserError('ingr.id (wizard.formulas: '+
+                                    str(ingr.id)+' '+ingr.id.product_id.name+'\n'+
+                                    'componente.product_id.id (mrp.bom.line): '+
+                                    str(componente.product_id.id)+' '+
+                                    componente.product_id.name)
+
+
                     if not ncomponente:
                         codprov = self.env['product.supplierinfo'].search(
                             [('product_tmpl_id.id', '=', ingrediente.product_id.product_tmpl_id.id)], limit=1
