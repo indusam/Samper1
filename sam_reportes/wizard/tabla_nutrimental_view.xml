@@ -11,7 +11,6 @@
                         <field name="cantidad" attrs="{'invisible': [('ing_limitante','!=',False)]}"/>
                         <field name="pct_merma" required="0"/>
                         <field name="consolidado" attrs="{'invisible': [('ing_limitante','!=',False)]}"/>
-                        
                     </group>
                     <group>
                         <field name="ing_limitante" attrs="{'invisible': [('cantidad','>',0)]}"/>
