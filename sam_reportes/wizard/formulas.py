@@ -154,13 +154,9 @@ class Formulas(models.TransientModel):
 
                     ncomponente = self.env['wizard.formulas'].search(
                         [('ingr.id', '=', componente.product_id.id),
-                         ('x_secuencia', '=', nsecuencia)])
+                         ('x_secuencia', '=', nsecuencia)]).name
 
-                    raise UserError('ingr.id (wizard.formulas: '+
-                                    str(ingr.id)+' '+ingr.id.product_id.name+'\n'+
-                                    'componente.product_id.id (mrp.bom.line): '+
-                                    str(componente.product_id.id)+' '+
-                                    componente.product_id.name)
+                    raise UserError(ncomponente)
 
 
                     if not ncomponente:
