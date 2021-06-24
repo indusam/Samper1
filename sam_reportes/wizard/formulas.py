@@ -154,7 +154,7 @@ class Formulas(models.TransientModel):
 
                     ncomponente = self.env['wizard.formulas'].search(
                         [('ingr.id', '=', componente.product_id.id),
-                         ('x_secuencia', '=', nsecuencia)]).name
+                         ('x_secuencia', '=', nsecuencia)])
 
                     raise UserError(ncomponente.ingr.id.product_id.name)
 
