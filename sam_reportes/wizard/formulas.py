@@ -153,10 +153,10 @@ class Formulas(models.TransientModel):
                                 ingrediente.x_porcentaje / 100)
 
                     ncomponente = self.env['wizard.formulas'].search(
-                        [('ingr.product_id', '=', componente.product_id.id),
+                        [('ingr.id', '=', componente.product_id.id),
                          ('x_secuencia', '=', nsecuencia)])
 
-                    raise UserError(ncomponente.ingr.product_id.name)
+                    raise UserError(ncomponente.ingr.id)
 
 
                     if not ncomponente:
