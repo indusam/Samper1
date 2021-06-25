@@ -188,18 +188,13 @@ class Formulas(models.TransientModel):
                         ncant = ncomponente.cant_tot
                         nccomp = ncant_limitante
                         ncant_tot = ncant + nccomp
-
-                        # raise UserError('ncant: '+str(ncant)+'\n'+
-                        #                 'ncant_limitante: '+str(ncant_limitante)+'\n'+
-                        #                 'pct: '+str(componente.x_porcentaje)+'\n'+
-                        #                 'nccomp: '+str(nccomp)+'\n'+
-                        #                 'ncant_tot: '+str(ncant_tot))
-
                         ncomponente.write({'cant_tot': ncant_tot})
 
             bom_consolidada = self.env['wizard.formulas'].search([('x_secuencia','=',nsecuencia)])
-            bom_ordenada = sorted(bom_consolidada, key=lambda l: (l.x_orden), reverse=False)
-            for ingrediente in bom_ordenada:
+            bom_ordenada = sorted(bom_consolidada, key=lambda l: l.cant_tot,
+                                  reverse=True)
+            bom_ordenada1 = sorted(bom_ordenada, key=lambda l: l.x_orden, reverse=False)
+            for ingrediente in bom_ordenada1:
                 if ingrediente.cant_tot > 0:
                     vals.append({
                         'componente': ingrediente.ingr.name,
