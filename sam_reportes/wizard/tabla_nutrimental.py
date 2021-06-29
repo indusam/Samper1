@@ -16,29 +16,6 @@ from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
 
-class TablaNutrimentalConsolidada(models.TransientModel):
-    _inherit = 'wizard.tabla.nutrimental'
-
-    # estos campos son para consolidar la fórmula
-    x_componente = fields.Char(string="Componente", required=False, )
-    x_cant_comp = fields.Float(string="Cantidad", required=False, digits=(8, 4))
-    x_pct_proteina = fields.Float(string="% Proteína", required=False, digits=(3, 4))
-    x_pct_grasas_tot = fields.Float(string="% Grasas tot", required=False, digits=(3, 2))
-    x_pct_grasas_sat = fields.Float(string="% Grasas sat", required=False, digits=(3, 2))
-    x_pct_grasas_trans = fields.Float(string="% Grasas trans", required=False, digits=(3, 2))
-    x_pct_humedad = fields.Float(string="% Humedad", required=False, digits=(3, 2))
-    x_pct_carbs = fields.Float(string="% Carbs", required=False, digits=(3, 2))
-    x_pct_azucares = fields.Float(string="% Azúcares", required=False, digits=(3, 2))
-    x_mg_sodio = fields.Float(string="mg Sodio", required=False, digits=(5, 4))
-    x_proteina_kg = fields.Float(string="kg Proteína", required=False, digits=(4, 4))
-    x_grasa_kg = fields.Float(string="kg Grasa", required=False, digits=(4, 4))
-    x_grasa_sat_kg = fields.Float(string="kg Grasa sat", required=False, digits=(4, 4))
-    x_grasa_trans_kg = fields.Float(string="kg Grasa trans", required=False, digits=(4, 4))
-    x_humedad_kg = fields.Float(string="kg Humedad", required=False, digits=(4, 4))
-    x_carbs_kg = fields.Float(string="kg Carbs", required=False, digits=(4, 4))
-    x_azucares_kg = fields.Float(string="kg Azúcares", required=False, digits=(4, 4))
-    x_sodio_mg = fields.Float(string="mg Sodio", required=False, digits=(4, 4))
-
 
 class TablaNutrimental(models.TransientModel):
 
@@ -206,3 +183,27 @@ class TablaNutrimental(models.TransientModel):
                 }
 
         return self.env.ref('sam_reportes.tabla_nutrimental_reporte').report_action(self, data=data)
+
+
+class TablaNutrimentalConsolidada(models.TransientModel):
+    _inherit = 'wizard.tabla.nutrimental'
+
+    # estos campos son para consolidar la fórmula
+    x_componente = fields.Char(string="Componente", required=False, )
+    x_cant_comp = fields.Float(string="Cantidad", required=False, digits=(8, 4))
+    x_pct_proteina = fields.Float(string="% Proteína", required=False, digits=(3, 4))
+    x_pct_grasas_tot = fields.Float(string="% Grasas tot", required=False, digits=(3, 2))
+    x_pct_grasas_sat = fields.Float(string="% Grasas sat", required=False, digits=(3, 2))
+    x_pct_grasas_trans = fields.Float(string="% Grasas trans", required=False, digits=(3, 2))
+    x_pct_humedad = fields.Float(string="% Humedad", required=False, digits=(3, 2))
+    x_pct_carbs = fields.Float(string="% Carbs", required=False, digits=(3, 2))
+    x_pct_azucares = fields.Float(string="% Azúcares", required=False, digits=(3, 2))
+    x_mg_sodio = fields.Float(string="mg Sodio", required=False, digits=(5, 4))
+    x_proteina_kg = fields.Float(string="kg Proteína", required=False, digits=(4, 4))
+    x_grasa_kg = fields.Float(string="kg Grasa", required=False, digits=(4, 4))
+    x_grasa_sat_kg = fields.Float(string="kg Grasa sat", required=False, digits=(4, 4))
+    x_grasa_trans_kg = fields.Float(string="kg Grasa trans", required=False, digits=(4, 4))
+    x_humedad_kg = fields.Float(string="kg Humedad", required=False, digits=(4, 4))
+    x_carbs_kg = fields.Float(string="kg Carbs", required=False, digits=(4, 4))
+    x_azucares_kg = fields.Float(string="kg Azúcares", required=False, digits=(4, 4))
+    x_sodio_mg = fields.Float(string="mg Sodio", required=False, digits=(4, 4))
