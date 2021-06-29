@@ -38,40 +38,40 @@ class TablaNutrimental(models.TransientModel):
     pct_categoria = fields.Float(string="% Grupo", digits=(6, 2))
     x_orden = fields.Integer(string="Orden", required=False, )
 
-    componente = fields.Char(string="Componente", required=False, )
-    cant_comp = fields.Float(string="Cantidad",  required=False, digits=(8,4) )
-    pct_proteina = fields.Float(string="% Proteína", required=False, digits=(3, 4))
-    pct_grasas_tot = fields.Float(string="% Grasas tot", required=False,
+    # estos campos son para consolidar la fórmula
+    x_componente = fields.Char(string="Componente", required=False, )
+    x_cant_comp = fields.Float(string="Cantidad",  required=False, digits=(8,4) )
+    x_pct_proteina = fields.Float(string="% Proteína", required=False, digits=(3, 4))
+    x_pct_grasas_tot = fields.Float(string="% Grasas tot", required=False,
                                 digits=(3, 2))
-    pct_grasas_sat = fields.Float(string="% Grasas sat", required=False,
+    x_pct_grasas_sat = fields.Float(string="% Grasas sat", required=False,
                                 digits=(3, 2))
-    pct_grasas_trans = fields.Float(string="% Grasas trans", required=False,
+    x_pct_grasas_trans = fields.Float(string="% Grasas trans", required=False,
                                 digits=(3, 2))
-    pct_humedad = fields.Float(string="% Humedad", required=False,
+    x_pct_humedad = fields.Float(string="% Humedad", required=False,
                                 digits=(3, 2))
-    pct_carbs = fields.Float(string="% Carbs", required=False,
+    x_pct_carbs = fields.Float(string="% Carbs", required=False,
                                 digits=(3, 2))
-    pct_azucares = fields.Float(string="% Azúcares", required=False,
+    x_pct_azucares = fields.Float(string="% Azúcares", required=False,
                                 digits=(3, 2))
-    mg_sodio = fields.Float(string="mg Sodio", required=False,
+    x_mg_sodio = fields.Float(string="mg Sodio", required=False,
                                 digits=(5, 4))
-    proteina_kg = fields.Float(string="kg Proteína", required=False,
+    x_proteina_kg = fields.Float(string="kg Proteína", required=False,
                                 digits=(4, 4))
-    grasa_kg = fields.Float(string="kg Grasa", required=False,
+    x_grasa_kg = fields.Float(string="kg Grasa", required=False,
                                 digits=(4, 4))
-    grasa_sat_kg = fields.Float(string="kg Grasa sat", required=False,
+    x_grasa_sat_kg = fields.Float(string="kg Grasa sat", required=False,
                                 digits=(4, 4))
-    grasa_trans_kg = fields.Float(string="kg Grasa trans", required=False,
+    x_grasa_trans_kg = fields.Float(string="kg Grasa trans", required=False,
                                 digits=(4, 4))
-    humedad_kg = fields.Float(string="kg Humedad", required=False,
+    x_humedad_kg = fields.Float(string="kg Humedad", required=False,
                                   digits=(4, 4))
-    carbs_kg = fields.Float(string="kg Carbs", required=False,
+    x_carbs_kg = fields.Float(string="kg Carbs", required=False,
                                   digits=(4, 4))
-    azucares_kg = fields.Float(string="kg Azúcares", required=False,
+    x_azucares_kg = fields.Float(string="kg Azúcares", required=False,
                                   digits=(4, 4))
-    sodio_mg = fields.Float(string="mg Sodio", required=False,
+    x_sodio_mg = fields.Float(string="mg Sodio", required=False,
                                   digits=(4, 4))
-
 
     # permite seleccionar el ingrediente limitante.
     @api.onchange('producto')
@@ -87,8 +87,11 @@ class TablaNutrimental(models.TransientModel):
     def imprime_tabla_nutrimental(self):
 
         vals = []
-        ingredientes = self.env['mrp.bom.line'].search(
+        ingredientes1 = self.env['mrp.bom.line'].search(
             [('bom_id.id', '=', self.producto.id)])
+
+        ingredientes = sorted(ingredientes1, key=lambda l: l.cant_comp,
+                              reverse=True)
 
         if not self.consolidado: # la fórmula no se consolida
 
@@ -196,8 +199,6 @@ class TablaNutrimental(models.TransientModel):
                         if ncomponente:
                             ncant = ncomponente.cant_tot
                             ncomponente.write({'cant_tot':(ncant_limitante * (componente.x_porcentaje / 100)) + ncant})
-
-
 
 
 
