@@ -39,6 +39,38 @@ class TablaNutrimental(models.TransientModel):
     pct_categoria = fields.Float(string="% Grupo", digits=(6, 2))
     x_orden = fields.Integer(string="Orden", required=False, )
 
+    # estos campos son para consolidar la fórmula
+    componente = fields.Char(string="Componente", required=False, )
+    cant_comp = fields.Float(string="Cantidad", required=False,
+                               digits=(8, 4))
+    pct_proteina = fields.Float(string="% Proteína", required=False,
+                                  digits=(3, 4))
+    pct_grasas_tot = fields.Float(string="% Grasas tot", required=False,
+                                    digits=(3, 2))
+    pct_grasas_sat = fields.Float(string="% Grasas sat", required=False,
+                                    digits=(3, 2))
+    pct_grasas_trans = fields.Float(string="% Grasas trans", required=False,
+                                      digits=(3, 2))
+    pct_humedad = fields.Float(string="% Humedad", required=False,
+                                 digits=(3, 2))
+    pct_carbs = fields.Float(string="% Carbs", required=False, digits=(3, 2))
+    pct_azucares = fields.Float(string="% Azúcares", required=False,
+                                  digits=(3, 2))
+    mg_sodio = fields.Float(string="mg Sodio", required=False, digits=(5, 4))
+    proteina_kg = fields.Float(string="kg Proteína", required=False,
+                                 digits=(4, 4))
+    grasa_kg = fields.Float(string="kg Grasa", required=False, digits=(4, 4))
+    grasa_sat_kg = fields.Float(string="kg Grasa sat", required=False,
+                                  digits=(4, 4))
+    grasa_trans_kg = fields.Float(string="kg Grasa trans", required=False,
+                                    digits=(4, 4))
+    humedad_kg = fields.Float(string="kg Humedad", required=False,
+                                digits=(4, 4))
+    carbs_kg = fields.Float(string="kg Carbs", required=False, digits=(4, 4))
+    azucares_kg = fields.Float(string="kg Azúcares", required=False,
+                                 digits=(4, 4))
+    sodio_mg = fields.Float(string="mg Sodio", required=False, digits=(4, 4))
+
 
     # permite seleccionar el ingrediente limitante.
     @api.onchange('producto')
@@ -168,8 +200,6 @@ class TablaNutrimental(models.TransientModel):
                             ncomponente.write({'cant_tot':(ncant_limitante * (componente.x_porcentaje / 100)) + ncant})
 
 
-
-
         data = {'ids': self.ids,
                 'model':self._name,
                 'vals':vals,
@@ -183,27 +213,3 @@ class TablaNutrimental(models.TransientModel):
                 }
 
         return self.env.ref('sam_reportes.tabla_nutrimental_reporte').report_action(self, data=data)
-
-
-class TablaNutrimentalConsolidada(models.TransientModel):
-    _inherit = 'wizard.tabla.nutrimental'
-
-    # estos campos son para consolidar la fórmula
-    x_componente = fields.Char(string="Componente", required=False, )
-    x_cant_comp = fields.Float(string="Cantidad", required=False, digits=(8, 4))
-    x_pct_proteina = fields.Float(string="% Proteína", required=False, digits=(3, 4))
-    x_pct_grasas_tot = fields.Float(string="% Grasas tot", required=False, digits=(3, 2))
-    x_pct_grasas_sat = fields.Float(string="% Grasas sat", required=False, digits=(3, 2))
-    x_pct_grasas_trans = fields.Float(string="% Grasas trans", required=False, digits=(3, 2))
-    x_pct_humedad = fields.Float(string="% Humedad", required=False, digits=(3, 2))
-    x_pct_carbs = fields.Float(string="% Carbs", required=False, digits=(3, 2))
-    x_pct_azucares = fields.Float(string="% Azúcares", required=False, digits=(3, 2))
-    x_mg_sodio = fields.Float(string="mg Sodio", required=False, digits=(5, 4))
-    x_proteina_kg = fields.Float(string="kg Proteína", required=False, digits=(4, 4))
-    x_grasa_kg = fields.Float(string="kg Grasa", required=False, digits=(4, 4))
-    x_grasa_sat_kg = fields.Float(string="kg Grasa sat", required=False, digits=(4, 4))
-    x_grasa_trans_kg = fields.Float(string="kg Grasa trans", required=False, digits=(4, 4))
-    x_humedad_kg = fields.Float(string="kg Humedad", required=False, digits=(4, 4))
-    x_carbs_kg = fields.Float(string="kg Carbs", required=False, digits=(4, 4))
-    x_azucares_kg = fields.Float(string="kg Azúcares", required=False, digits=(4, 4))
-    x_sodio_mg = fields.Float(string="mg Sodio", required=False, digits=(4, 4))
