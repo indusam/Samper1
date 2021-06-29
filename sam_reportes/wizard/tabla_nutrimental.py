@@ -157,6 +157,9 @@ class TablaNutrimental(models.TransientModel):
                         break
 
                 if subf == 1:
+
+                    raise UserError('subformula:' + str(ingrediente.id))
+                    
                     # ncant_limitante = self.cantidad * (ingrediente.x_porcentaje / 100)
                     ncantidad_il = self.cantidad * (ingrediente.x_porcentaje / 100)
 
