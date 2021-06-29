@@ -315,7 +315,6 @@ class TablaNutrimental(models.TransientModel):
                     'sodio_mg': ingrediente.sodio_mg
                 })
 
-        raise UserError(vals)
 
         data = {'ids': self.ids,
                 'model':self._name,
