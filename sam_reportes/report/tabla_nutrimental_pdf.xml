@@ -171,7 +171,7 @@
                                 </th>
                             </tr>
 
-                            <!-- Calcula e imprime % totales
+                            <!-- Calcula e imprime % totales -->
                             <t t-set="tot_pct_proteina" t-value="(tot_proteina / tot_cantidad) *  100"/>
                             <t t-set="tot_pct_grasa" t-value="(tot_grasa / tot_cantidad) * 100"/>
                             <t t-set="tot_pct_grasa_sat" t-value="(tot_grasa_sat / tot_cantidad) * 100"/>
@@ -226,8 +226,8 @@
                                     <span t-att-style="style" t-esc="'{0:,.2f}'.format(tot_pct_sodio)"/>
                                 </th>
                             </tr>
-                            -->
-                            <!-- Calcula e imprime la merma
+
+                            <!-- Calcula e imprime la merma -->
                             <t t-if="pct_merma > 0">
                                 <t t-set="tit_merma" t-value="'% Merma'"/>
                                 <t t-set="tot_cant_merma" t-value="tot_cantidad * ((100 - pct_merma) / 100 )"/>
@@ -281,8 +281,8 @@
                                         <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_sodi_merma)"/>
                                     </th>
                                 </tr>
-                                -->
-                                <!-- Calcula e imprime % totales después de merma
+
+                                <!-- Calcula e imprime % totales después de merma -->
                                 <t t-set="tm_pct_proteina" t-value="(tot_prot_merma / tot_cant_merma) *  100"/>
                                 <t t-set="tm_pct_grasa" t-value="(tot_gras_merma / tot_cant_merma) * 100"/>
                                 <t t-set="tm_pct_grasa_sat" t-value="(tot_gsat_merma / tot_cant_merma) * 100"/>
@@ -338,7 +338,6 @@
                                     </th>
                                 </tr>
                             </t>
-                            -->
                         </tbody>
                     </table>
                 </div>
