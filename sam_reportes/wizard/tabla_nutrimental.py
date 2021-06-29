@@ -170,7 +170,7 @@ class TablaNutrimental(models.TransientModel):
                         subf = 0
 
                     for componente in subformula:
-                        ncomponente = self.env['wizard.formulas'].search(
+                        ncomponente = self.env['wizard.tabla.nutrimental'].search(
                                 [('ingr.id','=', componente.product_id.id),
                                  ('x_secuencia','=',nsecuencia)])
 
