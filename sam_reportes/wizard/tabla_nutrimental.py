@@ -294,27 +294,26 @@ class TablaNutrimental(models.TransientModel):
             bom_ordenada1 = sorted(bom_ordenada, key=lambda l: l.x_orden, reverse=False)
 
             for ingrediente in bom_ordenada1:
-                if ingrediente.cant_tot > 0:
-                    vals.append({
-                        'componente': ingrediente.componente,
-                        'cant_comp': ingrediente.cant_comp,
-                        'pct_proteina': ingrediente.pct_proteina,
-                        'pct_grasas_tot': ingrediente.pct_grasas_tot ,
-                        'pct_grasas_sat': ingrediente.pct_grasas_sat,
-                        'pct_grasas_trans': ingrediente.pct_grasas_trans,
-                        'pct_humedad': ingrediente.pct_humedad,
-                        'pct_carbs': ingrediente.pct_carbs,
-                        'pct_azucares': ingrediente.pct_azucares,
-                        'mg_sodio': ingrediente.mg_sodio,
-                        'proteina_kg': ingrediente.proteina_kg,
-                        'grasa_kg': ingrediente.grasa_kg,
-                        'grasa_sat_kg': ingrediente.grasa_sat_kg,
-                        'grasa_trans_kg': ingrediente.grasa_trans_kg,
-                        'humedad_kg': ingrediente.humedad_kg,
-                        'carbs_kg': ingrediente.carbs_kg,
-                        'azucares_kg': ingrediente.azucares_kg,
-                        'sodio_mg': ingrediente.sodio_mg
-                    })
+                vals.append({
+                    'componente': ingrediente.componente,
+                    'cant_comp': ingrediente.cant_comp,
+                    'pct_proteina': ingrediente.pct_proteina,
+                    'pct_grasas_tot': ingrediente.pct_grasas_tot ,
+                    'pct_grasas_sat': ingrediente.pct_grasas_sat,
+                    'pct_grasas_trans': ingrediente.pct_grasas_trans,
+                    'pct_humedad': ingrediente.pct_humedad,
+                    'pct_carbs': ingrediente.pct_carbs,
+                    'pct_azucares': ingrediente.pct_azucares,
+                    'mg_sodio': ingrediente.mg_sodio,
+                    'proteina_kg': ingrediente.proteina_kg,
+                    'grasa_kg': ingrediente.grasa_kg,
+                    'grasa_sat_kg': ingrediente.grasa_sat_kg,
+                    'grasa_trans_kg': ingrediente.grasa_trans_kg,
+                    'humedad_kg': ingrediente.humedad_kg,
+                    'carbs_kg': ingrediente.carbs_kg,
+                    'azucares_kg': ingrediente.azucares_kg,
+                    'sodio_mg': ingrediente.sodio_mg
+                })
 
         data = {'ids': self.ids,
                 'model':self._name,
