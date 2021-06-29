@@ -90,7 +90,7 @@ class TablaNutrimental(models.TransientModel):
         ingredientes1 = self.env['mrp.bom.line'].search(
             [('bom_id.id', '=', self.producto.id)])
 
-        ingredientes = sorted(ingredientes1, key=lambda l: l.cant_comp,
+        ingredientes = sorted(ingredientes1, key=lambda l: l.product_qty,
                               reverse=True)
 
         if not self.consolidado: # la fórmula no se consolida
