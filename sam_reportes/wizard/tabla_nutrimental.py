@@ -229,6 +229,64 @@ class TablaNutrimental(models.TransientModel):
                             ncant = ncomponente.cant_tot
                             ncomponente.write({'cant_tot':(ncantidad_il * (componente.x_porcentaje / 100)) + ncant})
 
+                if subf == 0:
+                    ncantidad_il = self.cantidad * (
+                                ingrediente.x_porcentaje / 100)
+
+                    ncomponente = self.env['wizard.formulas'].search(
+                        [('ingr.id', '=', ingrediente.product_id.id),
+                         ('x_secuencia', '=', nsecuencia)])
+
+
+                    if not ncomponente:
+
+                        norden = 0
+                        if 'ca' in ingrediente.product_id.default_code:
+                            norden = 1
+                        elif 'ad' in ingrediente.product_id.default_code:
+                            norden = 2
+                        elif 'in' in ingrediente.product_id.default_code:
+                            norden = 3
+                        else:
+                            norden = 4
+
+                        self.env['wizard.tabla.nutrimental'].create({
+                            'x_secuencia': nsecuencia,
+                            'x_orden': norden,
+                            'componente': ingrediente.product_id.name,
+                            'cant_comp': self.cant_limitante * (
+                                    ingrediente.product_qty / ncantidad_il),
+                            'pct_proteina': ingrediente.product_id.x_pct_proteinas,
+                            'pct_grasas_tot': ingrediente.product_id.x_pct_grasas_totales,
+                            'pct_grasas_sat': ingrediente.product_id.x_pct_grasas_saturadas,
+                            'pct_grasas_trans': ingrediente.product_id.x_mgkg_grasas_trans,
+                            'pct_humedad': ingrediente.product_id.x_pct_humedad,
+                            'pct_carbs': ingrediente.product_id.x_pct_hidratos_de_carbono,
+                            'pct_azucares': ingrediente.product_id.x_pct_azucares,
+                            'mg_sodio': ingrediente.product_id.x_mg_sodio,
+                            'proteina_kg': (ingrediente.product_id.x_pct_proteinas / 100) * self.cant_limitante * (
+                                            ingrediente.product_qty / ncantidad_il),
+                            'grasa_kg': (ingrediente.product_id.x_pct_grasas_totales / 100) * self.cant_limitante * (
+                                         ingrediente.product_qty / ncantidad_il),
+                            'grasa_sat_kg': (ingrediente.product_id.x_pct_grasas_saturadas / 100) * self.cant_limitante * (
+                                             ingrediente.product_qty / ncantidad_il),
+                            'grasa_trans_kg': ingrediente.product_id.x_mgkg_grasas_trans * 10 * self.cant_limitante * (
+                                              ingrediente.product_qty / ncantidad_il),
+                            'humedad_kg': (ingrediente.product_id.x_pct_humedad / 100) * self.cant_limitante * (
+                                            ingrediente.product_qty / ncantidad_il),
+                            'carbs_kg': (ingrediente.product_id.x_pct_hidratos_de_carbono / 100) * self.cant_limitante * (
+                                         ingrediente.product_qty / ncantidad_il),
+                            'azucares_kg': (ingrediente.product_id.x_pct_azucares / 100) * self.cant_limitante * (
+                                            ingrediente.product_qty / ncantidad_il),
+                            'sodio_mg': ingrediente.product_id.x_mg_sodio * 10 * self.cant_limitante * (
+                                    ingrediente.product_qty / ncantidad_il)
+                        })
+
+                    if ncomponente:
+                        ncant = ncomponente.cant_tot
+                        nccomp = ncantidad_il
+                        ncant_tot = ncant + nccomp
+                        ncomponente.write({'cant_tot': ncant_tot})
 
         data = {'ids': self.ids,
                 'model':self._name,
