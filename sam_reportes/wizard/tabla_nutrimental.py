@@ -157,7 +157,8 @@ class TablaNutrimental(models.TransientModel):
                         break
 
                 if subf == 1:
-                    ncant_limitante = self.cantidad * (ingrediente.x_porcentaje / 100)
+                    # ncant_limitante = self.cantidad * (ingrediente.x_porcentaje / 100)
+                    ncantidad_il = self.cantidad * (ingrediente.x_porcentaje / 100)
 
                     bom_pf = self.env['mrp.bom'].search([(
                         'product_tmpl_id','=',ingrediente.product_tmpl_id.id)]).id
@@ -187,17 +188,46 @@ class TablaNutrimental(models.TransientModel):
 
                             self.env['wizard.formulas'].create({
                                 'x_secuencia':nsecuencia,
-                                'ingr': componente.product_id.id,
-                                'cant_tot': ncant_limitante * (componente.x_porcentaje / 100),
-                                'unidad': componente.product_id.uom_id.name,
-                                'pct_formula': componente.x_porcentaje,
-                                'pct_categoria': componente.x_porcentaje_categoria,
-                                'x_orden': norden
+                                'x_orden': norden,
+                                'componente': componente.product_id.name,
+                                'cant_comp': self.cant_limitante * (
+                                            componente.product_qty / ncantidad_il),
+                                'pct_proteina': componente.product_id.x_pct_proteinas,
+                                'pct_grasas_tot': componente.product_id.x_pct_grasas_totales,
+                                'pct_grasas_sat': componente.product_id.x_pct_grasas_saturadas,
+                                'pct_grasas_trans': componente.product_id.x_mgkg_grasas_trans,
+                                'pct_humedad': componente.product_id.x_pct_humedad,
+                                'pct_carbs': componente.product_id.x_pct_hidratos_de_carbono,
+                                'pct_azucares': componente.product_id.x_pct_azucares,
+                                'mg_sodio': componente.product_id.x_mg_sodio,
+                                'proteina_kg': (componente.product_id.x_pct_proteinas / 100) * self.cant_limitante * (
+                                                componente.product_qty / ncantidad_il),
+                                'grasa_kg': (componente.product_id.x_pct_grasas_totales / 100) * self.cant_limitante * (
+                                             componente.product_qty / ncantidad_il),
+                                'grasa_sat_kg': (componente.product_id.x_pct_grasas_saturadas / 100) * self.cant_limitante * (
+                                                 componente.product_qty / ncantidad_il),
+                                'grasa_trans_kg': componente.product_id.x_mgkg_grasas_trans * 10 * self.cant_limitante * (
+                                            componente.product_qty / ncantidad_il),
+                                'humedad_kg': (componente.product_id.x_pct_humedad / 100) * self.cant_limitante * (
+                                                componente.product_qty / ncantidad_il),
+                                'carbs_kg': (componente.product_id.x_pct_hidratos_de_carbono / 100) * self.cant_limitante * (
+                                             componente.product_qty / ncantidad_il),
+                                'azucares_kg': (componente.product_id.x_pct_azucares / 100) * self.cant_limitante * (
+                                                componente.product_qty / ncantidad_il),
+                                'sodio_mg': componente.product_id.x_mg_sodio * 10 * self.cant_limitante * (
+                                            componente.product_qty / ncantidad_il)
+
+                                # 'ingr': componente.product_id.id,
+                                # 'cant_tot': ncant_limitante * (componente.x_porcentaje / 100),
+                                # 'unidad': componente.product_id.uom_id.name,
+                                # 'pct_formula': componente.x_porcentaje,
+                                # 'pct_categoria': componente.x_porcentaje_categoria
+
                             })
 
                         if ncomponente:
                             ncant = ncomponente.cant_tot
-                            ncomponente.write({'cant_tot':(ncant_limitante * (componente.x_porcentaje / 100)) + ncant})
+                            ncomponente.write({'cant_tot':(ncantidad_il * (componente.x_porcentaje / 100)) + ncant})
 
 
         data = {'ids': self.ids,
