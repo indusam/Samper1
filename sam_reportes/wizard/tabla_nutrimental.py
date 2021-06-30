@@ -38,8 +38,6 @@ class TablaNutrimental(models.TransientModel):
     pct_formula = fields.Float(string="% Fórmula", digits=(6, 2))
     pct_categoria = fields.Float(string="% Grupo", digits=(6, 2))
     x_orden = fields.Integer(string="Orden", required=False, )
-
-    # estos campos son para consolidar la fórmula
     componente = fields.Char(string="Componente", required=False, )
     cant_comp = fields.Float(string="Cantidad", required=False,
                                digits=(8, 4))
@@ -166,6 +164,8 @@ class TablaNutrimental(models.TransientModel):
                     subformula = self.env['mrp.bom.line'].search([
                         ('bom_id.id', '=', bom_pf)])
 
+                    raise UserError(subformula)
+
                     if not subformula:
                         subf = 0
 
@@ -216,12 +216,6 @@ class TablaNutrimental(models.TransientModel):
                                                 componente.product_qty / ncantidad_il),
                                 'sodio_mg': componente.product_id.x_mg_sodio * 10 * self.cant_limitante * (
                                             componente.product_qty / ncantidad_il)
-
-                                # 'ingr': componente.product_id.id,
-                                # 'cant_tot': ncant_limitante * (componente.x_porcentaje / 100),
-                                # 'unidad': componente.product_id.uom_id.name,
-                                # 'pct_formula': componente.x_porcentaje,
-                                # 'pct_categoria': componente.x_porcentaje_categoria
 
                             })
 
