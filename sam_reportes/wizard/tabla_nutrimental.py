@@ -169,6 +169,8 @@ class TablaNutrimental(models.TransientModel):
                     if not subformula:
                         subf = 0
 
+                    raise UserError(subformula)
+
                     for componente in subformula:
                         ncomponente = self.env['wizard.tabla.nutrimental'].search(
                                 [('ingr.id','=', componente.product_id.id),
