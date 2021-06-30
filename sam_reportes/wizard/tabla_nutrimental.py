@@ -174,8 +174,6 @@ class TablaNutrimental(models.TransientModel):
                                 [('ingr.id','=', componente.product_id.id),
                                  ('x_secuencia','=',nsecuencia)])
 
-                        raise UserError(ncomponente)
-
                         if not ncomponente:
 
                             norden = 0
