@@ -242,9 +242,9 @@ class TablaNutrimental(models.TransientModel):
                         else:
                             norden = 4
 
-                        raise UserError(componente.product_id.name+'\n'+
-                                        'self.cant_limitante: '+str(self.cant_limitante)+'\n'+
-                                        'componente.product_qty: '+str(componente.product_qty)+'\n'+
+                        raise UserError(ingrediente.product_id.name+'\n'+
+                                        'self.cantidad: '+str(self.cantidad)+'\n'+
+                                        'ingrediente.product_qty: '+str(ingrediente.product_qty)+'\n'+
                                         'ncantidad_il:' +str(ncantidad_il))
 
                         self.env['wizard.tabla.nutrimental'].create({
