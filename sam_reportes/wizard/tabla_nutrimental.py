@@ -242,11 +242,6 @@ class TablaNutrimental(models.TransientModel):
                         else:
                             norden = 4
 
-                        # raise UserError(ingrediente.product_id.name+'\n'+
-                        #                 'self.cantidad: '+str(self.cantidad)+'\n'+
-                        #                 'ingrediente.product_qty: '+str(ingrediente.product_qty)+'\n'+
-                        #                 'ncantidad_il:' +str(ncantidad_il))
-
                         self.env['wizard.tabla.nutrimental'].create({
                             'x_secuencia': nsecuencia,
                             'x_orden': norden,
@@ -284,10 +279,10 @@ class TablaNutrimental(models.TransientModel):
                         ncant = ncomponente.cant_comp
                         nccomp = ncantidad_il
                         ncant_tot = ncant + nccomp
-                        ncomponente.write({'cant_tot': ncant_tot})
+                        ncomponente.write({'cant_comp': ncant_tot})
 
             bom_consolidada = self.env['wizard.tabla.nutrimental'].search([('x_secuencia','=',nsecuencia)])
-            bom_ordenada = sorted(bom_consolidada, key=lambda l: l.cant_tot,
+            bom_ordenada = sorted(bom_consolidada, key=lambda l: l.cant_comp,
                                   reverse=True)
             bom_ordenada1 = sorted(bom_ordenada, key=lambda l: l.x_orden, reverse=False)
 
