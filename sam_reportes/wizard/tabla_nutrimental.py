@@ -184,17 +184,17 @@ class TablaNutrimental(models.TransientModel):
                             else:
                                 norden = 4
 
-                            raise UserError(componente.product_id.name+'\n'+
-                                            'self.cant_limitante: '+str(self.cant_limitante)+'\n'+
-                                            'componente.product_qty: '+str(componente.product_qty)+'\n'+
-                                            'ncantidad_il:' +str(ncantidad_il))
+                            # raise UserError(componente.product_id.name+'\n'+
+                            #                'self.cant_limitante: '+str(self.cant_limitante)+'\n'+
+                            #                'componente.product_qty: '+str(componente.product_qty)+'\n'+
+                            #                'ncantidad_il:' +str(ncantidad_il))
 
                             self.env['wizard.tabla.nutrimental'].create({
                                 'x_secuencia':nsecuencia,
                                 'x_orden': norden,
                                 'ingr': componente.product_id.id,
                                 'componente': componente.product_id.name,
-                                'cant_comp': self.cant_limitante * (
+                                'cant_comp': self.cantidad * (
                                             componente.product_qty / ncantidad_il),
                                 'pct_proteina': componente.product_id.x_pct_proteinas,
                                 'pct_grasas_tot': componente.product_id.x_pct_grasas_totales,
