@@ -155,7 +155,6 @@ class TablaNutrimental(models.TransientModel):
                         break
 
                 if subf == 1:
-                    # ncant_limitante = self.cantidad * (ingrediente.x_porcentaje / 100)
                     ncantidad_il = self.cantidad * (ingrediente.x_porcentaje / 100)
 
                     bom_pf = self.env['mrp.bom'].search([(
@@ -229,8 +228,10 @@ class TablaNutrimental(models.TransientModel):
                         [('ingr.id', '=', ingrediente.product_id.id),
                          ('x_secuencia', '=', nsecuencia)])
 
-                    raise UserError(ncomponente)
+                    nform = self.env['wizard.formulas'].search(
+                        [('x_secuencia', '=', nsecuencia)])
 
+                    raise UserError(nform)
 
                     if not ncomponente:
 
