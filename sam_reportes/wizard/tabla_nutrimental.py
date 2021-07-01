@@ -219,7 +219,7 @@ class TablaNutrimental(models.TransientModel):
                             })
 
                         if ncomponente:
-                            ncant = ncomponente.cant_tot
+                            ncant = ncomponente.cant_comp
                             ncomponente.write({'cant_tot':(ncantidad_il * (componente.x_porcentaje / 100)) + ncant})
 
                 if subf == 0:
@@ -246,6 +246,7 @@ class TablaNutrimental(models.TransientModel):
                         self.env['wizard.tabla.nutrimental'].create({
                             'x_secuencia': nsecuencia,
                             'x_orden': norden,
+                            'ingr': componente.product_id.id,
                             'componente': ingrediente.product_id.name,
                             'cant_comp': self.cant_limitante * (
                                     ingrediente.product_qty / ncantidad_il),
@@ -276,7 +277,7 @@ class TablaNutrimental(models.TransientModel):
                         })
 
                     if ncomponente:
-                        ncant = ncomponente.cant_tot
+                        ncant = ncomponente.cant_comp
                         nccomp = ncantidad_il
                         ncant_tot = ncant + nccomp
                         ncomponente.write({'cant_tot': ncant_tot})
