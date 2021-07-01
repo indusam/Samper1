@@ -158,8 +158,6 @@ class TablaNutrimental(models.TransientModel):
                     # ncant_limitante = self.cantidad * (ingrediente.x_porcentaje / 100)
                     ncantidad_il = self.cantidad * (ingrediente.x_porcentaje / 100)
 
-                    raise UserError(ncantidad_il)
-
                     bom_pf = self.env['mrp.bom'].search([(
                         'product_tmpl_id','=',ingrediente.product_tmpl_id.id)]).id
 
@@ -185,6 +183,11 @@ class TablaNutrimental(models.TransientModel):
                                 norden = 3
                             else:
                                 norden = 4
+
+                            raise UserError(componente.product_id.name+'\n'+
+                                            'self.cant_limitante: '+str(self.cant_limitante)+'\n'+
+                                            'componente.product_qty: '+str(componente.product_qty)+'\n'+
+                                            'ncantidad_il:' +str(ncantidad_il))
 
                             self.env['wizard.tabla.nutrimental'].create({
                                 'x_secuencia':nsecuencia,
