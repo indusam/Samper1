@@ -231,7 +231,7 @@ class TablaNutrimental(models.TransientModel):
                     nform = self.env['wizard.formulas'].search(
                         [('x_secuencia', '=', nsecuencia)])
 
-                    raise UserError(nform)
+                    raise UserError(nsecuencia)
 
                     if not ncomponente:
 
