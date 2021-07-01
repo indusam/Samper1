@@ -194,8 +194,8 @@ class TablaNutrimental(models.TransientModel):
                                 'x_orden': norden,
                                 'ingr': componente.product_id.id,
                                 'componente': componente.product_id.name,
-                                'cant_comp': self.cantidad * (
-                                            componente.product_qty / ncantidad_il),
+                                'cant_comp': ncantidad_il * (
+                                            componente.x_porcentaje / 100),
                                 'pct_proteina': componente.product_id.x_pct_proteinas,
                                 'pct_grasas_tot': componente.product_id.x_pct_grasas_totales,
                                 'pct_grasas_sat': componente.product_id.x_pct_grasas_saturadas,
