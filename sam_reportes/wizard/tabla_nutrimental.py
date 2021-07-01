@@ -187,6 +187,7 @@ class TablaNutrimental(models.TransientModel):
                             self.env['wizard.tabla.nutrimental'].create({
                                 'x_secuencia':nsecuencia,
                                 'x_orden': norden,
+                                'ingr': componente.product_id.id,
                                 'componente': componente.product_id.name,
                                 'cant_comp': self.cant_limitante * (
                                             componente.product_qty / ncantidad_il),
