@@ -158,6 +158,8 @@ class TablaNutrimental(models.TransientModel):
                     # ncant_limitante = self.cantidad * (ingrediente.x_porcentaje / 100)
                     ncantidad_il = self.cantidad * (ingrediente.x_porcentaje / 100)
 
+                    raise UserError(ncantidad_il)
+
                     bom_pf = self.env['mrp.bom'].search([(
                         'product_tmpl_id','=',ingrediente.product_tmpl_id.id)]).id
 
