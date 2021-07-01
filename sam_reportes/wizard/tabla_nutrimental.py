@@ -220,7 +220,7 @@ class TablaNutrimental(models.TransientModel):
 
                         if ncomponente:
                             ncant = ncomponente.cant_comp
-                            ncomponente.write({'cant_tot':(ncantidad_il * (componente.x_porcentaje / 100)) + ncant})
+                            ncomponente.write({'cant_comp':(ncantidad_il * (componente.x_porcentaje / 100)) + ncant})
 
                 if subf == 0:
                     ncantidad_il = self.cantidad * (ingrediente.x_porcentaje / 100)
