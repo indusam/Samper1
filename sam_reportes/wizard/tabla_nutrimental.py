@@ -190,8 +190,7 @@ class TablaNutrimental(models.TransientModel):
                                 'x_orden': norden,
                                 'ingr': componente.product_id.id,
                                 'componente': componente.product_id.name,
-                                'cant_comp': ncantidad_il * (
-                                            componente.x_porcentaje / 100),
+                                'cant_comp': ncantidad_il * (componente.x_porcentaje / 100),
                                 'pct_proteina': componente.product_id.x_pct_proteinas,
                                 'pct_grasas_tot': componente.product_id.x_pct_grasas_totales,
                                 'pct_grasas_sat': componente.product_id.x_pct_grasas_saturadas,
@@ -201,19 +200,13 @@ class TablaNutrimental(models.TransientModel):
                                 'pct_azucares': componente.product_id.x_pct_azucares,
                                 'mg_sodio': componente.product_id.x_mg_sodio,
                                 'proteina_kg': (componente.product_id.x_pct_proteinas / 100) * (ncantidad_il * (componente.x_porcentaje / 100)),
-                                'grasa_kg': (componente.product_id.x_pct_grasas_totales / 100) * self.cant_limitante * (
-                                             componente.product_qty / ncantidad_il),
-                                'grasa_sat_kg': (componente.product_id.x_pct_grasas_saturadas / 100) * self.cant_limitante * (
-                                                 componente.product_qty / ncantidad_il),
-                                'grasa_trans_kg': componente.product_id.x_mgkg_grasas_trans * 10 * self.cant_limitante * (
-                                            componente.product_qty / ncantidad_il),
+                                'grasa_kg': (componente.product_id.x_pct_grasas_totales / 100) * (ncantidad_il * (componente.x_porcentaje / 100)),
+                                'grasa_sat_kg': (componente.product_id.x_pct_grasas_saturadas / 100) * (ncantidad_il * (componente.x_porcentaje / 100)),
+                                'grasa_trans_kg': (componente.product_id.x_mkg_grasas_trans / 100) * (ncantidad_il * (componente.x_porcentaje / 100)),
                                 'humedad_kg': (componente.product_id.x_pct_humedad / 100) * (ncantidad_il * (componente.x_porcentaje / 100)),
-                                'carbs_kg': (componente.product_id.x_pct_hidratos_de_carbono / 100) * self.cant_limitante * (
-                                             componente.product_qty / ncantidad_il),
-                                'azucares_kg': (componente.product_id.x_pct_azucares / 100) * self.cant_limitante * (
-                                                componente.product_qty / ncantidad_il),
-                                'sodio_mg': componente.product_id.x_mg_sodio * 10 * self.cant_limitante * (
-                                            componente.product_qty / ncantidad_il)
+                                'carbs_kg': (componente.product_id.x_pct_hidratos_de_carbono / 100) * (ncantidad_il * (componente.x_porcentaje / 100)),
+                                'azucares_kg': (componente.product_id.x_pct_azucares / 100) * (ncantidad_il * (componente.x_porcentaje / 100)),
+                                'sodio_mg': componente.product_id.x_mg_sodio * 10 * (ncantidad_il * (componente.x_porcentaje / 100))
 
                             })
 
