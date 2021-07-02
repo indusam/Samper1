@@ -207,8 +207,7 @@ class TablaNutrimental(models.TransientModel):
                                                  componente.product_qty / ncantidad_il),
                                 'grasa_trans_kg': componente.product_id.x_mgkg_grasas_trans * 10 * self.cant_limitante * (
                                             componente.product_qty / ncantidad_il),
-                                'humedad_kg': (componente.product_id.x_pct_humedad / 100) * self.cant_limitante * (
-                                                componente.product_qty / ncantidad_il),
+                                'humedad_kg': (componente.product_id.x_pct_proteinas / 100) * (ncantidad_il * (componente.x_porcentaje / 100)),
                                 'carbs_kg': (componente.product_id.x_pct_hidratos_de_carbono / 100) * self.cant_limitante * (
                                              componente.product_qty / ncantidad_il),
                                 'azucares_kg': (componente.product_id.x_pct_azucares / 100) * self.cant_limitante * (
