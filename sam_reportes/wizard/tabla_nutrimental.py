@@ -202,7 +202,7 @@ class TablaNutrimental(models.TransientModel):
                                 'proteina_kg': (componente.product_id.x_pct_proteinas / 100) * (ncantidad_il * (componente.x_porcentaje / 100)),
                                 'grasa_kg': (componente.product_id.x_pct_grasas_totales / 100) * (ncantidad_il * (componente.x_porcentaje / 100)),
                                 'grasa_sat_kg': (componente.product_id.x_pct_grasas_saturadas / 100) * (ncantidad_il * (componente.x_porcentaje / 100)),
-                                'grasa_trans_kg': (componente.product_id.x_mkg_grasas_trans / 100) * (ncantidad_il * (componente.x_porcentaje / 100)),
+                                'grasa_trans_kg': (componente.product_id.x_mgkg_grasas_trans / 100) * (ncantidad_il * (componente.x_porcentaje / 100)),
                                 'humedad_kg': (componente.product_id.x_pct_humedad / 100) * (ncantidad_il * (componente.x_porcentaje / 100)),
                                 'carbs_kg': (componente.product_id.x_pct_hidratos_de_carbono / 100) * (ncantidad_il * (componente.x_porcentaje / 100)),
                                 'azucares_kg': (componente.product_id.x_pct_azucares / 100) * (ncantidad_il * (componente.x_porcentaje / 100)),
