@@ -183,6 +183,12 @@ class TablaNutrimental(models.TransientModel):
                             else:
                                 norden = 4
 
+                            npctprot = componente.product_id.x_pct_proteinas / 100
+                            ncantcomp = ncantidad_il * (componente.x_porcentaje / 100)
+                            nkgprot = npctprot * ncantcomp
+
+                            raise UserError(nkgprot)
+
                             self.env['wizard.tabla.nutrimental'].create({
                                 'x_secuencia':nsecuencia,
                                 'x_orden': norden,
