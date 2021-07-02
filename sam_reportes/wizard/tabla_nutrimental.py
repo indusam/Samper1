@@ -230,7 +230,8 @@ class TablaNutrimental(models.TransientModel):
 
                     if not ncomponente:
 
-                        raise UserError(ingrediente.product_id.name)
+                        raise UserError(ingrediente.product_id.name+'\n'+
+                                        'cantidad_il: '+str(ncantidad_il)+'\n')
 
                         norden = 0
                         if 'ca' in ingrediente.product_id.default_code:
