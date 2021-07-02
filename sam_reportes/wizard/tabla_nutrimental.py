@@ -183,11 +183,9 @@ class TablaNutrimental(models.TransientModel):
                             else:
                                 norden = 4
 
-                            npctprot = componente.product_id.x_pct_proteinas / 100
-                            ncantcomp = ncantidad_il * (componente.x_porcentaje / 100)
-                            nkgprot = npctprot * ncantcomp
+                            nkgprot = (componente.product_id.x_pct_proteinas / 100) * (ncantidad_il * (componente.x_porcentaje / 100))
 
-                            raise UserError(nkgprot)
+
 
                             self.env['wizard.tabla.nutrimental'].create({
                                 'x_secuencia':nsecuencia,
@@ -204,8 +202,7 @@ class TablaNutrimental(models.TransientModel):
                                 'pct_carbs': componente.product_id.x_pct_hidratos_de_carbono,
                                 'pct_azucares': componente.product_id.x_pct_azucares,
                                 'mg_sodio': componente.product_id.x_mg_sodio,
-                                'proteina_kg': (componente.product_id.x_pct_proteinas / 100) * self.cant_limitante * (
-                                             componente.product_qty / ncantidad_il),
+                                'proteina_kg': nkgprot,
                                 'grasa_kg': (componente.product_id.x_pct_grasas_totales / 100) * self.cant_limitante * (
                                              componente.product_qty / ncantidad_il),
                                 'grasa_sat_kg': (componente.product_id.x_pct_grasas_saturadas / 100) * self.cant_limitante * (
