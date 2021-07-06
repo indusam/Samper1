@@ -182,8 +182,7 @@
                             <t t-set="tot_pct_sodio" t-value="((tot_sodio / 1000000) / tot_cantidad) * 100"/>
 
                             <t t-set="tot_pct_cantidad" t-value="tot_pct_proteina + tot_pct_grasa +
-                                                                 tot_pct_grasa_sat + tot_pct_humedad +
-                                                                 tot_pct_carbs + tot_pct_azucares +
+                                                                 tot_pct_humedad + tot_pct_carbs +
                                                                  tot_pct_sodio"/>
                             <t t-set="tit_pct" t-value="'%'"/>
                             <tr>
@@ -293,8 +292,7 @@
                                 <t t-set="tm_pct_sodio" t-value="((tot_sodi_merma / 1000000) / tot_cant_merma) * 100"/>
 
                                 <t t-set="tm_pct_cantidad" t-value="tm_pct_proteina + tm_pct_grasa +
-                                                                     tm_pct_grasa_sat + tm_pct_humedad +
-                                                                     tm_pct_carbs + tm_pct_azucares +
+                                                                     tm_pct_humedad + tm_pct_carbs +
                                                                      tm_pct_sodio"/>
                                 <t t-set="tit_pct" t-value="'% Después de merma'"/>
                                 <tr>
