@@ -9,7 +9,7 @@
                         <strong>
                             <t t-if="cantidad > 0">
                                 <h5>
-                                    Tabla nutrimental:   <span t-esc="codigo"/> - <span t-esc="producto"/>
+                                    Tabla nutrimental (Generales, grasas y sodio):   <span t-esc="codigo"/> - <span t-esc="producto"/>
                                     <br/>
                                     Cantidad: <span t-esc="cantidad"/> kgs.
                                 </h5>
