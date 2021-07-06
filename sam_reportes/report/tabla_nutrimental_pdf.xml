@@ -9,14 +9,14 @@
                         <strong>
                             <t t-if="cantidad > 0">
                                 <h5>
-                                    Tabla nutrimental:   <span t-esc="codigo"/> - <span t-esc="producto"/>
+                                    Tabla nutrimental (Generales, grasas y sodio):   <span t-esc="codigo"/> - <span t-esc="producto"/>
                                     <br/>
                                     Cantidad: <span t-esc="cantidad"/> kgs.
                                 </h5>
                             </t>
                             <t t-if="cant_limitante > 0">
                                 <h5>
-                                    Tabla nutrimental:   <span t-esc="codigo"/> - <span t-esc="producto"/>
+                                    Tabla nutrimental (Generales, grasas y sodio):   <span t-esc="codigo"/> - <span t-esc="producto"/>
                                     <br/>
                                     Ingrediente limitante: <span t-esc="nombre_il"/>
                                     Cantidad: <span t-esc="cant_limitante"/> kgs.
