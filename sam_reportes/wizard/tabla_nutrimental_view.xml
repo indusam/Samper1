@@ -26,7 +26,7 @@
     </record>
 
     <record id="action_tabla_nutrimental_wizard" model="ir.actions.act_window">
-        <field name="name">Tabla nutrimental</field>
+        <field name="name">Tabla nutrimental (Generales, grasas y sodio)</field>
         <field name="res_model">wizard.tabla.nutrimental</field>
         <field name="type">ir.actions.act_window</field>
         <field name="view_mode">form</field>
@@ -36,7 +36,7 @@
 
     <menuitem
         id="tabla_nutrimental_menu"
-        name="Tabla nutrimental"
+        name="Generales, grasas y sodio"
         action="action_tabla_nutrimental_wizard"
         parent="studio_customization.samper_informes_9a4c552e-6a2c-49dc-b22f-2c77d1e02fac"
         groups="base.group_user"
