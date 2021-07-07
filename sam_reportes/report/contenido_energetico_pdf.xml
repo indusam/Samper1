@@ -57,8 +57,8 @@
                             <t t-foreach="vals" t-as="doc">
 
                                 <t t-set="tot_proteina" t-value="tot_proteina + doc['proteina_kg']"/>
-                                <t t-set="tot_gras" t-value="tot_grasa + doc['grasa_kg']"/>
-                                <t t-set="tot_carb" t-value="tot_carbs + doc['carbs_kg']"/>
+                                <t t-set="tot_gras" t-value="tot_gras + doc['grasa_kg']"/>
+                                <t t-set="tot_carb" t-value="tot_carb + doc['carbs_kg']"/>
 
                                 <t t-set="tot_cantidad" t-value="tot_cantidad +
                                                                  doc['proteina_kg'] +
