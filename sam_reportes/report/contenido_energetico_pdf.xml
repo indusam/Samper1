@@ -73,14 +73,18 @@
                             <t t-set="tot_kj_prot" t-value="round(tot_proteina,1) * 17" />
                             <t t-set="tot_kc_prot" t-value="round(tot_proteina,1) * 4" />
 
-                            <t t-set="tot_kj_gras" t-value="tot_gras * 37" />
-                            <t t-set="tot_kc_gras" t-value="tot_gras * 9" />
+                            <t t-set="tot_kj_gras" t-value="round(tot_gras,1) * 37" />
+                            <t t-set="tot_kc_gras" t-value="round(tot_gras,1) * 9" />
 
-                            <t t-set="tot_kj_carb" t-value="tot_carb * 17" />
-                            <t t-set="tot_kc_carb" t-value="tot_carb * 4" />
+                            <t t-set="tot_kj_carb" t-value="round(tot_carb,1) * 17" />
+                            <t t-set="tot_kc_carb" t-value="round(tot_carb,1) * 4" />
 
                             <t t-set="tot_kc" t-value="tot_kc_prot + tot_kc_gras + tot_kc_carb" />
                             <t t-set="tot_kj" t-value="tot_kj_prot + tot_kj_gras + tot_kj_carb" />
+
+                            <t t-set="pct_prot" t-value="(tot_kc_prot / tot_kc) * 100"/>
+                            <t t-set="pct_gras" t-value="(tot_kc_gras / tot_kc) * 100"/>
+                            <t t-set="pct_carb" t-value="(tot_kc_carb / tot_kc) * 100"/>
 
                             <tr>
                                 <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -97,6 +101,9 @@
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <t t-esc="'{0:,.2f}'.format(tot_kc_prot)"/>
+                                </td>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="'{0:,.2f}'.format(pct_prot)"/>
                                 </td>
                             </tr>
                             <tr>
@@ -115,6 +122,9 @@
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <t t-esc="'{0:,.2f}'.format(tot_kc_gras)"/>
                                 </td>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="'{0:,.2f}'.format(pct_gras)"/>
+                                </td>
                             </tr>
                             <tr>
                                 <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -131,6 +141,9 @@
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <t t-esc="'{0:,.2f}'.format(tot_kc_carb)"/>
+                                </td>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="'{0:,.2f}'.format(pct_carb)"/>
                                 </td>
                             </tr>
 
