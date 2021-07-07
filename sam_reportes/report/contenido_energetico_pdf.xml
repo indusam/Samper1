@@ -84,16 +84,16 @@
                                     <span t-att-style="style" t-esc="tit_prot"/>
                                 </th>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <t t-esc="'{0:,.4f}'.format(tot_proteina])"/>
+                                    <t t-esc="'{0:,.4f}'.format(tot_proteina)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <t t-esc="'{0:,.1f}'.format(tot_proteina])"/>
+                                    <t t-esc="'{0:,.1f}'.format(tot_proteina)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <t t-esc="'{0:,.2f}'.format(tot_kj_prot])"/>
+                                    <t t-esc="'{0:,.2f}'.format(tot_kj_prot)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <t t-esc="'{0:,.2f}'.format(tot_kc_prot])"/>
+                                    <t t-esc="'{0:,.2f}'.format(tot_kc_prot)"/>
                                 </td>
                             </tr>
                             <tr>
@@ -101,16 +101,16 @@
                                     <span t-att-style="style" t-esc="tit_gras"/>
                                 </th>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <t t-esc="'{0:,.4f}'.format(tot_gras])"/>
+                                    <t t-esc="'{0:,.4f}'.format(tot_gras)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <t t-esc="'{0:,.1f}'.format(tot_gras])"/>
+                                    <t t-esc="'{0:,.1f}'.format(tot_gras)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <t t-esc="'{0:,.2f}'.format(tot_kj_gras])"/>
+                                    <t t-esc="'{0:,.2f}'.format(tot_kj_gras)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <t t-esc="'{0:,.2f}'.format(tot_kc_gras])"/>
+                                    <t t-esc="'{0:,.2f}'.format(tot_kc_gras)"/>
                                 </td>
                             </tr>
                             <tr>
@@ -118,16 +118,16 @@
                                     <span t-att-style="style" t-esc="tit_carb"/>
                                 </th>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <t t-esc="'{0:,.4f}'.format(tot_carb])"/>
+                                    <t t-esc="'{0:,.4f}'.format(tot_carb)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <t t-esc="'{0:,.1f}'.format(tot_carb])"/>
+                                    <t t-esc="'{0:,.1f}'.format(tot_carb)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <t t-esc="'{0:,.2f}'.format(tot_kj_carb])"/>
+                                    <t t-esc="'{0:,.2f}'.format(tot_kj_carb)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <t t-esc="'{0:,.2f}'.format(tot_kc_carb])"/>
+                                    <t t-esc="'{0:,.2f}'.format(tot_kc_carb)"/>
                                 </td>
                             </tr>
 
