@@ -41,9 +41,9 @@
                         <tbody>
                             <!-- declara título de columnas -->
                             <t t-set="tit_prot" t-value="PROTEINA"/>
-                            <t t-set="tit_gras" t-value="GRASA TOTAL"/>
+                            <t t-set="tit_gras" t-value="GRASA_TOTAL"/>
                             <t t-set="tit_carb" t-value="CARBOHIDRATOS"/>
-                            <t t-set="tit_porcion" t-value="PORCION (g)" />
+                            <t t-set="tit_porcion" t-value="PORCION_(g)" />
 
                             <t t-set="tot_cantidad" t-value="0"/>
                             <t t-set="tot_kj" t-value="0"/>
@@ -130,7 +130,7 @@
                                     <t t-esc="'{0:,.2f}'.format(tot_kc_carb])"/>
                                 </td>
                             </tr>
-                            
+
                             <!-- Imprime Totales -->
 
                             <tr>
