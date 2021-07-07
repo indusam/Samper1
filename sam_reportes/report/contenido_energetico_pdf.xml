@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="contenido_energetico_template">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <br/>
+                    <div style="text-align:left;color:black!important;">
+                        <strong>
+                            <t t-if="cantidad > 0">
+                                <h5>
+                                    Contenido energético:   <span t-esc="codigo"/> - <span t-esc="producto"/>
+                                    <br/>
+                                    Porción (grs.): <span t-esc="cantidad"/>
+                                </h5>
+                            </t>
+                            <!--
+                            <t t-if="cant_limitante > 0">
+                                <h5>
+                                    Tabla nutrimental (Generales, grasas y sodio):   <span t-esc="codigo"/> - <span t-esc="producto"/>
+                                    <br/>
+                                    Ingrediente limitante: <span t-esc="nombre_il"/>
+                                    Cantidad: <span t-esc="cant_limitante"/> kgs.
+                                </h5>
+                            </t>
+                            -->
+                        </strong>
+                    </div>
+                    <br/>
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr >
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">            </th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Cantidad</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Renondeo</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px;">    </th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px;"> kj </th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px;">    </th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px;"> kc </th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px"> % </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- declara título de columnas -->
+                            <t t-set="tit_prot" t-value="'PROTEINA'"/>
+                            <t t-set="tit_gras" t-value="'GRASA TOTAL'"/>
+                            <t t-set="tit_carb" t-value="'CARBOHIDRATOS'"/>
+                            <t t-set="tit_porcion" t-value="'PORCION (g)'" />
+
+                            <t t-set="tot_cantidad" t-value="0"/>
+                            <t t-set="tot_kj" t-value="0"/>
+                            <t t-set="tot_kc" t-value="0"/>
+                            <t t-set="tot_pct" t-value="0"/>
+
+                            <t t-set="tot_proteina" t-value="0"/>
+                            <t t-set="tot_gras" t-value="0"/>
+                            <t t-set="tot_carb" t-value="0"/>
+
+                            <t t-set="tot_cantidad" t-value="cantidad"/>
+
+                            <t t-foreach="vals" t-as="doc">
+
+                                <t t-set="tot_proteina" t-value="tot_proteina + doc['proteina_kg']"/>
+                                <t t-set="tot_gras" t-value="tot_gras + doc['grasa_kg']"/>
+                                <t t-set="tot_carb" t-value="tot_carb + doc['carbs_kg']"/>
+
+                                <!--
+                                <t t-set="tot_cantidad" t-value="tot_cantidad +
+                                                                 doc['proteina_kg'] +
+                                                                 doc['grasa_kg'] +
+                                                                 doc['carbs_kg']"/>
+                                -->
+                            </t>
+
+                            <t t-set="tot_kj_prot" t-value="round(tot_proteina,1) * 17" />
+                            <t t-set="tot_kc_prot" t-value="round(tot_proteina,1) * 4" />
+
+                            <t t-set="tot_kj_gras" t-value="round(tot_gras,1) * 37" />
+                            <t t-set="tot_kc_gras" t-value="round(tot_gras,1) * 9" />
+
+                            <t t-set="tot_kj_carb" t-value="round(tot_carb,1) * 17" />
+                            <t t-set="tot_kc_carb" t-value="round(tot_carb,1) * 4" />
+
+                            <t t-set="tot_kc" t-value="tot_kc_prot + tot_kc_gras + tot_kc_carb" />
+                            <t t-set="tot_kj" t-value="tot_kj_prot + tot_kj_gras + tot_kj_carb" />
+
+                            <t t-set="pct_prot" t-value="(tot_kc_prot / tot_kc) * 100"/>
+                            <t t-set="pct_gras" t-value="(tot_kc_gras / tot_kc) * 100"/>
+                            <t t-set="pct_carb" t-value="(tot_kc_carb / tot_kc) * 100"/>
+
+                            <tr>
+                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <span t-att-style="style" t-esc="tit_prot"/>
+                                </th>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="'{0:,.4f}'.format(tot_proteina)"/>
+                                </td>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="'{0:,.1f}'.format(tot_proteina)"/>
+                                </td>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="' (17) '"/>
+                                </td>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="'{0:,.2f}'.format(tot_kj_prot)"/>
+                                </td>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="' (4) '"/>
+                                </td>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="'{0:,.2f}'.format(tot_kc_prot)"/>
+                                </td>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="'{0:,.2f}'.format(pct_prot)"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <span t-att-style="style" t-esc="tit_gras"/>
+                                </th>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="'{0:,.4f}'.format(tot_gras)"/>
+                                </td>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="'{0:,.1f}'.format(tot_gras)"/>
+                                </td>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="' (37) '"/>
+                                </td>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="'{0:,.2f}'.format(tot_kj_gras)"/>
+                                </td>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="' (9) '"/>
+                                </td>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="'{0:,.2f}'.format(tot_kc_gras)"/>
+                                </td>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="'{0:,.2f}'.format(pct_gras)"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <span t-att-style="style" t-esc="tit_carb"/>
+                                </th>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="'{0:,.4f}'.format(tot_carb)"/>
+                                </td>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="'{0:,.1f}'.format(tot_carb)"/>
+                                </td>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="' (17) '"/>
+                                </td>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="'{0:,.2f}'.format(tot_kj_carb)"/>
+                                </td>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="' (4) '"/>
+                                </td>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="'{0:,.2f}'.format(tot_kc_carb)"/>
+                                </td>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="'{0:,.2f}'.format(pct_carb)"/>
+                                </td>
+                            </tr>
+
+                            <!-- Imprime Totales -->
+
+                            <tr>
+                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <span t-att-style="style" t-esc="tit_porcion"/>
+                                </th>
+                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_cantidad)"/>
+                                </th>
+                                <th style="text-align:left;color:black!important;">        </th>
+                                <th style="text-align:left;color:black!important;">        </th>
+                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_kj)"/>
+                                </th>
+                                <th style="text-align:left;color:black!important;">        </th>
+                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_kc)"/>
+                                </th>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>
