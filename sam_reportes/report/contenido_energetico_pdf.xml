@@ -31,7 +31,7 @@
                         <thead>
                             <tr >
                                 <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">            </th>
-                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Cantidad Kgs.</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Cantidad</th>
                                 <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Renondeo</th>
                                 <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px;">    </th>
                                 <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px;"> kj </th>
