@@ -105,6 +105,9 @@
                                     <t t-esc="'{0:,.2f}'.format(tot_kj_prot)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="' (4) '"/>
+                                </td>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <t t-esc="'{0:,.2f}'.format(tot_kc_prot)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -126,6 +129,9 @@
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <t t-esc="'{0:,.2f}'.format(tot_kj_gras)"/>
+                                </td>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="' (9) '"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <t t-esc="'{0:,.2f}'.format(tot_kc_gras)"/>
@@ -151,6 +157,9 @@
                                     <t t-esc="'{0:,.2f}'.format(tot_kj_carb)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="' (4) '"/>
+                                </td>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <t t-esc="'{0:,.2f}'.format(tot_kc_carb)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -168,9 +177,11 @@
                                     <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_cantidad)"/>
                                 </th>
                                 <th style="text-align:left;color:black!important;">        </th>
+                                <th style="text-align:left;color:black!important;">        </th>
                                 <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_kj)"/>
                                 </th>
+                                <th style="text-align:left;color:black!important;">        </th>
                                 <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_kc)"/>
                                 </th>
