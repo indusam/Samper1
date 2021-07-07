@@ -11,7 +11,7 @@
                                 <h5>
                                     Contenido energético:   <span t-esc="codigo"/> - <span t-esc="producto"/>
                                     <br/>
-                                    Porción (grs.): <span t-esc="cantidad"/> kgs.
+                                    Porción (grs.): <span t-esc="cantidad"/>
                                 </h5>
                             </t>
                             <!--
@@ -54,21 +54,24 @@
                             <t t-set="tot_gras" t-value="0"/>
                             <t t-set="tot_carb" t-value="0"/>
 
+                            <t t-set="tot_cantidad" t-value="cantidad"/>
+
                             <t t-foreach="vals" t-as="doc">
 
                                 <t t-set="tot_proteina" t-value="tot_proteina + doc['proteina_kg']"/>
                                 <t t-set="tot_gras" t-value="tot_gras + doc['grasa_kg']"/>
                                 <t t-set="tot_carb" t-value="tot_carb + doc['carbs_kg']"/>
 
+                                <!--
                                 <t t-set="tot_cantidad" t-value="tot_cantidad +
                                                                  doc['proteina_kg'] +
                                                                  doc['grasa_kg'] +
                                                                  doc['carbs_kg']"/>
-
+                                -->
                             </t>
 
-                            <t t-set="tot_kj_prot" t-value="tot_proteina * 17" />
-                            <t t-set="tot_kc_prot" t-value="tot_proteina * 4" />
+                            <t t-set="tot_kj_prot" t-value="round(tot_proteina,1) * 17" />
+                            <t t-set="tot_kc_prot" t-value="round(tot_proteina,1) * 4" />
 
                             <t t-set="tot_kj_gras" t-value="tot_gras * 37" />
                             <t t-set="tot_kc_gras" t-value="tot_gras * 9" />
