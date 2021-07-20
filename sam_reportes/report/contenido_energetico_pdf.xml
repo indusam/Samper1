@@ -206,7 +206,7 @@
                                 <t t-set="tot_prot_merma" t-value="tot_proteina "/>
                                 <t t-set="tot_gras_merma" t-value="tot_gras"/>
                                 <t t-set="tot_carb_merma" t-value="tot_carb"/>
-                                <t t-set="tot_hume_merma" t-value="tot_humedad - tcantmerma"/>
+                                <t t-set="tot_hume_merma" t-value="tot_hume - tcantmerma"/>
                                 <tr>
                                     <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <span t-att-style="style" t-esc="pct_merma"/>
@@ -215,7 +215,7 @@
                                     <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                        <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_cant_merma)"/>
                                     </th>
-                                    
+
                                 </tr>
                              </t>
 
