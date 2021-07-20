@@ -62,6 +62,8 @@
 
                             <t t-set="tot_kj_carb" t-value="round(tot_carb,1) * 17" />
                             <t t-set="tot_kc_carb" t-value="round(tot_carb,1) * 4" />
+                            <t t-set="tot_kj_hume" t-value="0" />
+                            <t t-set="tot_kc_hume" t-value="0" />
 
                             <t t-set="tot_kc" t-value="tot_kc_prot + tot_kc_gras + tot_kc_carb" />
                             <t t-set="tot_kj" t-value="tot_kj_prot + tot_kj_gras + tot_kj_carb" />
@@ -69,6 +71,8 @@
                             <t t-set="pct_prot" t-value="(tot_kc_prot / tot_kc) * 100"/>
                             <t t-set="pct_gras" t-value="(tot_kc_gras / tot_kc) * 100"/>
                             <t t-set="pct_carb" t-value="(tot_kc_carb / tot_kc) * 100"/>
+                            <t t-set="pct_hume" t-value="0"/>
+
 
                             <tr>
                                 <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -158,11 +162,21 @@
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <t t-esc="'{0:,.1f}'.format(tot_hume)"/>
                                 </td>
-                                <th style="text-align:left;color:black!important;">        </th>
-                                <th style="text-align:left;color:black!important;">        </th>
-                                <th style="text-align:left;color:black!important;">        </th>
-                                <th style="text-align:left;color:black!important;">        </th>
-                                <th style="text-align:left;color:black!important;">        </th>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="' (0) '"/>
+                                </td>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="'{0:,.2f}'.format(tot_kj_hume)"/>
+                                </td>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="' (0) '"/>
+                                </td>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="'{0:,.2f}'.format(tot_kc_hume)"/>
+                                </td>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="'{0:,.2f}'.format(pct_hume)"/>
+                                </td>
 
                             </tr>
 
