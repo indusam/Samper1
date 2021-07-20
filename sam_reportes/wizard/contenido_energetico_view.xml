@@ -9,17 +9,9 @@
                     <group>
                         <field name="producto" required="1"/>
                         <field name="cantidad" />
-                        <!-- attrs="{'invisible': [('ing_limitante','!=',False)]}"/> -->
-                        <!-- <field name="pct_merma" required="0"/> -->
+                        <field name="pct_merma" required="0"/>
                         <field name="consolidado" />
-                        <!-- attrs="{'invisible': [('ing_limitante','!=',False)]}"/> -->
                     </group>
-                    <!--
-                    <group>
-                        <field name="ing_limitante" attrs="{'invisible': [('cantidad','>',0)]}"/>
-                        <field name="cant_limitante" attrs="{'invisible': [('cantidad','>',0)]}"/>
-                    </group>
-                    -->
                 </group>
                 <footer>
                     <button name="imprime_contenido_energetico" type="object" string="Imprimir" class="oe_highlight"/>
