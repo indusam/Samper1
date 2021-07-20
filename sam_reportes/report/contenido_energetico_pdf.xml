@@ -321,8 +321,7 @@
                                         <t t-esc="'{0:,.2f}'.format(pct_hume)"/>
                                     </td>
                                 </tr>
-                                <!-- Imprime Totales -->
-
+                                <!-- Imprime Totales 
                                 <tr>
                                     <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <span t-att-style="style" t-esc="'PORCION (g)'"/>
@@ -340,6 +339,7 @@
                                         <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_kc)"/>
                                     </th>
                                 </tr>
+                                -->
                              </t>
                         </tbody>
 
