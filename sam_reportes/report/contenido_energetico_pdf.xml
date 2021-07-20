@@ -31,11 +31,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- declara título de columnas -->
-                            <t t-set="tit_prot" t-value="'PROTEINA'"/>
-                            <t t-set="tit_gras" t-value="'GRASA TOTAL'"/>
-                            <t t-set="tit_carb" t-value="'CARBOHIDRATOS'"/>
-                            <t t-set="tit_porcion" t-value="'PORCION (g)'" />
+                            <!-- declara variables -->
 
                             <t t-set="tot_cantidad" t-value="0"/>
                             <t t-set="tot_kj" t-value="0"/>
@@ -45,6 +41,7 @@
                             <t t-set="tot_proteina" t-value="0"/>
                             <t t-set="tot_gras" t-value="0"/>
                             <t t-set="tot_carb" t-value="0"/>
+                            <t t-set="tot_hume" t-value="0"/>
 
                             <t t-set="tot_cantidad" t-value="cantidad"/>
 
@@ -53,7 +50,7 @@
                                 <t t-set="tot_proteina" t-value="tot_proteina + doc['proteina_kg']"/>
                                 <t t-set="tot_gras" t-value="tot_gras + doc['grasa_kg']"/>
                                 <t t-set="tot_carb" t-value="tot_carb + doc['carbs_kg']"/>
-                                <t t-set="tot_hume" t-value="tot_carb + doc['humedad_kg']"/>
+                                <t t-set="tot_hume" t-value="tot_hume + doc['humedad_kg']"/>
 
                             </t>
 
@@ -101,7 +98,7 @@
                             </tr>
                             <tr>
                                 <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <span t-att-style="style" t-esc="tit_gras"/>
+                                    <span t-att-style="style" t-esc="'GRASA TOTAL'"/>
                                 </th>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <t t-esc="'{0:,.4f}'.format(tot_gras)"/>
@@ -127,7 +124,7 @@
                             </tr>
                             <tr>
                                 <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <span t-att-style="style" t-esc="tit_carb"/>
+                                    <span t-att-style="style" t-esc="'CARBOHIDRATOS'"/>
                                 </th>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <t t-esc="'{0:,.4f}'.format(tot_carb)"/>
@@ -151,12 +148,29 @@
                                     <t t-esc="'{0:,.2f}'.format(pct_carb)"/>
                                 </td>
                             </tr>
+                            <tr>
+                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <span t-att-style="style" t-esc="'HUMEDAD'"/>
+                                </th>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="'{0:,.4f}'.format(tot_hume)"/>
+                                </td>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="'{0:,.1f}'.format(tot_hume)"/>
+                                </td>
+                                <th style="text-align:left;color:black!important;">        </th>
+                                <th style="text-align:left;color:black!important;">        </th>
+                                <th style="text-align:left;color:black!important;">        </th>
+                                <th style="text-align:left;color:black!important;">        </th>
+                                <th style="text-align:left;color:black!important;">        </th>
+
+                            </tr>
 
                             <!-- Imprime Totales -->
 
                             <tr>
                                 <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <span t-att-style="style" t-esc="tit_porcion"/>
+                                    <span t-att-style="style" t-esc="'PORCION (g)'"/>
                                 </th>
                                 <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_cantidad)"/>
