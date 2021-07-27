@@ -209,10 +209,11 @@
                                 <t t-set="tit_merma" t-value="'% Merma'"/>
                                 <t t-set="tot_cant_merma" t-value="tot_cantidad * ((100 - pct_merma) / 100 )"/>
                                 <t t-set="tcantmerma" t-value="tot_cantidad - tot_cant_merma"/>
-                                <t t-set="tot_prot_merma" t-value="tot_proteina "/>
-                                <t t-set="tot_gras_merma" t-value="tot_gras"/>
-                                <t t-set="tot_carb_merma" t-value="tot_carb"/>
-                                <t t-set="tot_hume_merma" t-value="tot_hume - tcantmerma"/>
+
+                                <t t-set="tot_prot_merma" t-value="(tot_proteina / tot_cant_merma) * 100"/>
+                                <t t-set="tot_gras_merma" t-value="(tot_gras / tot_cant_merma) * 100"/>
+                                <t t-set="tot_carb_merma" t-value="(tot_carb / tot_cant_merma) * 100"/>
+                                <t t-set="tot_hume_merma" t-value="(tot_hume / tot_cant_merma) * 100"/>
                                 <tr>
                                     <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <span t-att-style="style" t-esc="pct_merma"/>
@@ -228,10 +229,10 @@
                                         <span t-att-style="style" t-esc="'PROTEINA'"/>
                                     </th>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.4f}'.format(tot_proteina)"/>
+                                        <t t-esc="'{0:,.4f}'.format(tot_prot_merma)"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.1f}'.format(tot_proteina)"/>
+                                        <t t-esc="'{0:,.1f}'.format(tot_prot_merma)"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="' (17) '"/>
@@ -254,10 +255,10 @@
                                         <span t-att-style="style" t-esc="'GRASA TOTAL'"/>
                                     </th>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.4f}'.format(tot_gras)"/>
+                                        <t t-esc="'{0:,.4f}'.format(tot_gras_merma)"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.1f}'.format(tot_gras)"/>
+                                        <t t-esc="'{0:,.1f}'.format(tot_gras_merma)"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="' (37) '"/>
@@ -280,10 +281,10 @@
                                         <span t-att-style="style" t-esc="'CARBOHIDRATOS'"/>
                                     </th>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.4f}'.format(tot_carb)"/>
+                                        <t t-esc="'{0:,.4f}'.format(tot_carb_merma)"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.1f}'.format(tot_carb)"/>
+                                        <t t-esc="'{0:,.1f}'.format(tot_carb_merma)"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="' (17) '"/>
