@@ -47,13 +47,19 @@
 
                             <t t-foreach="vals" t-as="doc">
 
-                                <t t-set="tot_proteina" t-value="tot_proteina + doc['pct_proteina']"/>
-                                <t t-set="tot_gras" t-value="tot_gras + doc['pct_grasas_tot']"/>
-                                <t t-set="tot_carb" t-value="tot_carb + doc['pct_carbs']"/>
-                                <t t-set="tot_hume" t-value="tot_hume + doc['pct_humedad']"/>
+                                <t t-set="tot_proteina" t-value="tot_proteina + doc['proteina_kg']"/>
+                                <t t-set="tot_gras" t-value="tot_gras + doc['grasa_kg']"/>
+                                <t t-set="tot_carb" t-value="tot_carb + doc['carbs_kg']"/>
+                                <t t-set="tot_hume" t-value="tot_hume + doc['humedad_kg']"/>
 
                             </t>
+                            <!-- Calcula % en base a la cantidad -->
+                            <t t-set="tpct_prot" t-value="(tot_proteina / tot_cantidad) *  100"/>
+                            <t t-set="tpct_gras" t-value="(tot_gras / tot_cantidad) *  100"/>
+                            <t t-set="tpct_carb" t-value="(tot_carb / tot_cantidad) *  100"/>
+                            <t t-set="tpct_hume" t-value="(tot_hume / tot_cantidad) *  100"/>
 
+                            <!-- Calcula energía -->
                             <t t-set="tot_kj_prot" t-value="round(tot_proteina,1) * 17" />
                             <t t-set="tot_kc_prot" t-value="round(tot_proteina,1) * 4" />
 
@@ -78,10 +84,10 @@
                                     <span t-att-style="style" t-esc="'PROTEINA'"/>
                                 </th>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <t t-esc="'{0:,.4f}'.format(tot_proteina)"/>
+                                    <t t-esc="'{0:,.4f}'.format(tpct_prot)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <t t-esc="'{0:,.1f}'.format(tot_proteina)"/>
+                                    <t t-esc="'{0:,.1f}'.format(tpct_prot)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <t t-esc="' (17) '"/>
@@ -104,10 +110,10 @@
                                     <span t-att-style="style" t-esc="'GRASA TOTAL'"/>
                                 </th>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <t t-esc="'{0:,.4f}'.format(tot_gras)"/>
+                                    <t t-esc="'{0:,.4f}'.format(tpct_gras)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <t t-esc="'{0:,.1f}'.format(tot_gras)"/>
+                                    <t t-esc="'{0:,.1f}'.format(tpct_gras)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <t t-esc="' (37) '"/>
@@ -130,10 +136,10 @@
                                     <span t-att-style="style" t-esc="'CARBOHIDRATOS'"/>
                                 </th>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <t t-esc="'{0:,.4f}'.format(tot_carb)"/>
+                                    <t t-esc="'{0:,.4f}'.format(tpct_carb)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <t t-esc="'{0:,.1f}'.format(tot_carb)"/>
+                                    <t t-esc="'{0:,.1f}'.format(tpct_carb)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <t t-esc="' (17) '"/>
@@ -156,10 +162,10 @@
                                     <span t-att-style="style" t-esc="'HUMEDAD'"/>
                                 </th>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <t t-esc="'{0:,.4f}'.format(tot_hume)"/>
+                                    <t t-esc="'{0:,.4f}'.format(tpct_hume)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <t t-esc="'{0:,.1f}'.format(tot_hume)"/>
+                                    <t t-esc="'{0:,.1f}'.format(tpct_hume)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <t t-esc="' (0) '"/>
