@@ -246,9 +246,11 @@
                                         <span t-att-style="style" t-esc="pct_merma"/>
                                         <span t-att-style="style" t-esc="tit_merma"/>
                                     </th>
+                                    <!--
                                     <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                        <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_cant_merma)"/>
                                     </th>
+                                    -->
                                 </tr>
 
                                 <tr>
