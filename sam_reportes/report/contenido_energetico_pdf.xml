@@ -210,11 +210,32 @@
                                 <t t-set="tot_cant_merma" t-value="tot_cantidad * ((100 - pct_merma) / 100 )"/>
                                 <t t-set="tcantmerma" t-value="tot_cantidad - tot_cant_merma"/>
                                 <t t-set="tot_hume" t-value="tpct_hume - tcantmerma"/>
-                                
+
                                 <t t-set="tot_prot_merma" t-value="(tot_proteina / tot_cant_merma) * 100"/>
                                 <t t-set="tot_gras_merma" t-value="(tot_gras / tot_cant_merma) * 100"/>
                                 <t t-set="tot_carb_merma" t-value="(tot_carb / tot_cant_merma) * 100"/>
                                 <t t-set="tot_hume_merma" t-value="(tot_hume /tot_cant_merma) * 100"/>
+
+                                <!-- Calcula energía después de merma-->
+                                <t t-set="tot_kj_prot" t-value="round(tot_prot_merma,1) * 17" />
+                                <t t-set="tot_kc_prot" t-value="round(tot_prot_merma,1) * 4" />
+
+                                <t t-set="tot_kj_gras" t-value="round(tot_gras_merma,1) * 37" />
+                                <t t-set="tot_kc_gras" t-value="round(tot_gras_merma,1) * 9" />
+
+                                <t t-set="tot_kj_carb" t-value="round(tot_carb_merma,1) * 17" />
+                                <t t-set="tot_kc_carb" t-value="round(tot_carb_merma,1) * 4" />
+                                <t t-set="tot_kj_hume" t-value="0" />
+                                <t t-set="tot_kc_hume" t-value="0" />
+
+                                <t t-set="tot_kc" t-value="tot_kc_prot + tot_kc_gras + tot_kc_carb" />
+                                <t t-set="tot_kj" t-value="tot_kj_prot + tot_kj_gras + tot_kj_carb" />
+
+                                <t t-set="pct_prot" t-value="(tot_kc_prot / tot_kc) * 100"/>
+                                <t t-set="pct_gras" t-value="(tot_kc_gras / tot_kc) * 100"/>
+                                <t t-set="pct_carb" t-value="(tot_kc_carb / tot_kc) * 100"/>
+                                <t t-set="pct_hume" t-value="0"/>
+                                
                                 <tr>
                                     <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <span t-att-style="style" t-esc="pct_merma"/>
