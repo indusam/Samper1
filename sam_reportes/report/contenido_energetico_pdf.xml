@@ -32,27 +32,23 @@
                         </thead>
                         <tbody>
                             <!-- declara variables -->
-
                             <t t-set="tot_cantidad" t-value="0"/>
                             <t t-set="tot_kj" t-value="0"/>
                             <t t-set="tot_kc" t-value="0"/>
                             <t t-set="tot_pct" t-value="0"/>
-
                             <t t-set="tot_proteina" t-value="0"/>
                             <t t-set="tot_gras" t-value="0"/>
                             <t t-set="tot_carb" t-value="0"/>
                             <t t-set="tot_hume" t-value="0"/>
-
                             <t t-set="tot_cantidad" t-value="cantidad"/>
 
                             <t t-foreach="vals" t-as="doc">
-
                                 <t t-set="tot_proteina" t-value="tot_proteina + doc['proteina_kg']"/>
                                 <t t-set="tot_gras" t-value="tot_gras + doc['grasa_kg']"/>
                                 <t t-set="tot_carb" t-value="tot_carb + doc['carbs_kg']"/>
                                 <t t-set="tot_hume" t-value="tot_hume + doc['humedad_kg']"/>
-
                             </t>
+
                             <!-- Calcula % en base a la cantidad -->
                             <t t-set="tpct_prot" t-value="(tot_proteina / tot_cantidad) *  100"/>
                             <t t-set="tpct_gras" t-value="(tot_gras / tot_cantidad) *  100"/>
@@ -186,7 +182,6 @@
                             </tr>
 
                             <!-- Imprime Totales -->
-
                             <tr>
                                 <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <span t-att-style="style" t-esc="'PORCION (g)'"/>
@@ -246,11 +241,6 @@
                                         <span t-att-style="style" t-esc="pct_merma"/>
                                         <span t-att-style="style" t-esc="tit_merma"/>
                                     </th>
-                                    <!--
-                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                       <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_cant_merma)"/>
-                                    </th>
-                                    -->
                                 </tr>
 
                                 <tr>
