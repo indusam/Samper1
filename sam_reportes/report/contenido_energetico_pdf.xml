@@ -47,10 +47,10 @@
 
                             <t t-foreach="vals" t-as="doc">
 
-                                <t t-set="tot_proteina" t-value="tot_proteina + doc['proteina_kg']"/>
-                                <t t-set="tot_gras" t-value="tot_gras + doc['grasa_kg']"/>
-                                <t t-set="tot_carb" t-value="tot_carb + doc['carbs_kg']"/>
-                                <t t-set="tot_hume" t-value="tot_hume + doc['humedad_kg']"/>
+                                <t t-set="tot_proteina" t-value="tot_proteina + doc['pct_proteina']"/>
+                                <t t-set="tot_gras" t-value="tot_gras + doc['pct_grasas_tot']"/>
+                                <t t-set="tot_carb" t-value="tot_carb + doc['pct_carbs']"/>
+                                <t t-set="tot_hume" t-value="tot_hume + doc['pct_humedad']"/>
 
                             </t>
 
@@ -321,7 +321,7 @@
                                         <t t-esc="'{0:,.2f}'.format(pct_hume)"/>
                                     </td>
                                 </tr>
-                                <!-- Imprime Totales 
+                                <!-- Imprime Totales
                                 <tr>
                                     <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <span t-att-style="style" t-esc="'PORCION (g)'"/>
