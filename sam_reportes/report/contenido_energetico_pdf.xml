@@ -97,8 +97,8 @@
                             <t t-set="tot_kc_azucares" t-value="round(tot_azucares,1) * 4" />
                             <t t-set="tot_kj_azucares_anadidos" t-value="round(tot_azucares_anadidos,1) * 17" />
                             <t t-set="tot_kc_azucares_anadidos" t-value="round(tot_azucares_anadidos,1) * 4" />
-                            <t t-set="tot_kj_otros_carb" t-value="round(tot_kj_carb - (tot_azucares + tot_azucares_anadidos),1) * 17" />
-                            <t t-set="tot_kc_otros_carb" t-value="round(tot_kc_carb - (tot_azucares + tot_azucares_anadidos),1) * 4" />
+                            <t t-set="tot_kj_otros_carb" t-value="round(tot_otros_carb,1) * 17" />
+                            <t t-set="tot_kc_otros_carb" t-value="round(tot_otros_carb,1) * 4" />
 
                             <t t-set="tot_kj_hume" t-value="0" />
                             <t t-set="tot_kc_hume" t-value="0" />
