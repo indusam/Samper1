@@ -318,6 +318,8 @@ class ContenidoEnergetico(models.TransientModel):
                     'proteina_kg': ingrediente.proteina_kg,
                     'grasa_kg': ingrediente.grasa_kg,
                     'grasa_sat_kg': ingrediente.grasa_sat_kg,
+                    'grasa_polisat_kg': ingrediente.grasa_polisat_kg,
+                    'grasa_monosat_kg': ingrediente.grasa_monosat_kg,
                     'grasa_trans_kg': ingrediente.grasa_trans_kg,
                     'humedad_kg': ingrediente.humedad_kg,
                     'carbs_kg': ingrediente.carbs_kg,
