@@ -47,6 +47,10 @@ class ContenidoEnergetico(models.TransientModel):
                                     digits=(3, 2))
     pct_grasas_sat = fields.Float(string="% Grasas sat", required=False,
                                     digits=(3, 2))
+    pct_grpoli_sat = fields.Float(string="% Grasas polsat", required=False,
+                                  digits=(3, 2))
+    pct_grmono_sat = fields.Float(string="% Grasas monsat", required=False,
+                                  digits=(3, 2))
     pct_grasas_trans = fields.Float(string="% Grasas trans", required=False,
                                       digits=(3, 2))
     pct_humedad = fields.Float(string="% Humedad", required=False,
@@ -54,12 +58,20 @@ class ContenidoEnergetico(models.TransientModel):
     pct_carbs = fields.Float(string="% Carbs", required=False, digits=(3, 2))
     pct_azucares = fields.Float(string="% Azúcares", required=False,
                                   digits=(3, 2))
+    pct_azucares_anadidos = fields.Float(string="% Azúcares añadidos", required=False,
+                                digits=(3, 2))
+    pct_otros_carbs = fields.Float(string="% Otros carbs", required=False,
+                                         digits=(3, 2))
     mg_sodio = fields.Float(string="mg Sodio", required=False, digits=(5, 4))
     proteina_kg = fields.Float(string="kg Proteína", required=False,
                                  digits=(4, 4))
     grasa_kg = fields.Float(string="kg Grasa", required=False, digits=(4, 4))
     grasa_sat_kg = fields.Float(string="kg Grasa sat", required=False,
                                   digits=(4, 4))
+    grasa_polisat_kg = fields.Float(string="kg Grasa psat", required=False,
+                                digits=(4, 4))
+    grasa_monosat_kg = fields.Float(string="kg Grasa msat", required=False,
+                                digits=(4, 4))
     grasa_trans_kg = fields.Float(string="kg Grasa trans", required=False,
                                     digits=(4, 4))
     humedad_kg = fields.Float(string="kg Humedad", required=False,
@@ -67,8 +79,11 @@ class ContenidoEnergetico(models.TransientModel):
     carbs_kg = fields.Float(string="kg Carbs", required=False, digits=(4, 4))
     azucares_kg = fields.Float(string="kg Azúcares", required=False,
                                  digits=(4, 4))
+    azucares_anadidos_kg = fields.Float(string="kg Azúcares añadidos", required=False,
+                               digits=(4, 4))
+    otros_carbs_kg = fields.Float(string="kg Azúcares añadidos", required=False,
+                                        digits=(4, 4))
     sodio_mg = fields.Float(string="mg Sodio", required=False, digits=(4, 4))
-
 
     # permite seleccionar el ingrediente limitante.
     @api.onchange('producto')
@@ -100,18 +115,25 @@ class ContenidoEnergetico(models.TransientModel):
                         'pct_proteina': ingrediente.product_id.x_pct_proteinas,
                         'pct_grasas_tot': ingrediente.product_id.x_pct_grasas_totales,
                         'pct_grasas_sat': ingrediente.product_id.x_pct_grasas_saturadas,
+                        'pct_grpoli_sat': ingrediente.product_id.x_pct_grasas_poliinstauradas,
+                        'pct_grmono_sat': ingrediente.product_id.x_pct_grasas_monoinsaturadas,
                         'pct_grasas_trans': ingrediente.product_id.x_mgkg_grasas_trans,
                         'pct_humedad': ingrediente.product_id.x_pct_humedad,
                         'pct_carbs': ingrediente.product_id.x_pct_hidratos_de_carbono,
                         'pct_azucares': ingrediente.product_id.x_pct_azucares,
+                        'pct_azucares_anadidos': ingrediente.product_id.x_pct_azucares_anadidos,
                         'mg_sodio': ingrediente.product_id.x_mg_sodio,
                         'proteina_kg': (ingrediente.product_id.x_pct_proteinas / 100) * (self.cantidad * (ingrediente.x_porcentaje / 100)),
                         'grasa_kg': (ingrediente.product_id.x_pct_grasas_totales / 100) * (self.cantidad * (ingrediente.x_porcentaje / 100)),
                         'grasa_sat_kg': (ingrediente.product_id.x_pct_grasas_saturadas / 100) * (self.cantidad * (ingrediente.x_porcentaje / 100)),
+                        'grasa_polisat_kg': (ingrediente.product_id.x_pct_grpoli_sat / 100) * (self.cantidad * (ingrediente.x_porcentaje / 100)),
+                        'grasa_monosat_kg': (ingrediente.product_id.x_pct_grmono_sat / 100) * (self.cantidad * (ingrediente.x_porcentaje / 100)),
                         'grasa_trans_kg':ingrediente.product_id.x_mgkg_grasas_trans * 10 * (self.cantidad * (ingrediente.x_porcentaje / 100)),
                         'humedad_kg': (ingrediente.product_id.x_pct_humedad / 100) * (self.cantidad * (ingrediente.x_porcentaje / 100)),
                         'carbs_kg': (ingrediente.product_id.x_pct_hidratos_de_carbono / 100) * (self.cantidad * (ingrediente.x_porcentaje / 100)),
                         'azucares_kg': (ingrediente.product_id.x_pct_azucares / 100) * (self.cantidad * (ingrediente.x_porcentaje / 100)),
+                        'azucares_anadidos_kg': (ingrediente.product_id.x_pct_azucares / 100) * (
+                                                   self.cantidad * (ingrediente.x_porcentaje / 100)),
                         'sodio_mg': ingrediente.product_id.x_mg_sodio * 10 * (self.cantidad * (ingrediente.x_porcentaje / 100))
 
                     })
@@ -125,18 +147,24 @@ class ContenidoEnergetico(models.TransientModel):
                         'pct_proteina': ingrediente.product_id.x_pct_proteinas,
                         'pct_grasas_tot': ingrediente.product_id.x_pct_grasas_totales,
                         'pct_grasas_sat': ingrediente.product_id.x_pct_grasas_saturadas,
+                        'pct_grpoli_sat': ingrediente.product_id.x_pct_grasas_poliinstauradas,
+                        'pct_grmono_sat': ingrediente.product_id.x_pct_grasas_monoinsaturadas,
                         'pct_grasas_trans': ingrediente.product_id.x_mgkg_grasas_trans,
                         'pct_humedad': ingrediente.product_id.x_pct_humedad,
                         'pct_carbs': ingrediente.product_id.x_pct_hidratos_de_carbono,
                         'pct_azucares': ingrediente.product_id.x_pct_azucares,
+                        'pct_azucares_anadidos': ingrediente.product_id.x_pct_azucares_anadidos,
                         'mg_sodio': ingrediente.product_id.x_mg_sodio,
                         'proteina_kg': (ingrediente.product_id.x_pct_proteinas / 100) * self.cant_limitante * (ingrediente.product_qty / ncantidad_il),
                         'grasa_kg': (ingrediente.product_id.x_pct_grasas_totales / 100) * self.cant_limitante * (ingrediente.product_qty / ncantidad_il),
                         'grasa_sat_kg': (ingrediente.product_id.x_pct_grasas_saturadas / 100) * self.cant_limitante * (ingrediente.product_qty / ncantidad_il),
+                        'grasa_polisat_kg': (ingrediente.product_id.x_pct_grpoli_sat / 100) * self.cant_limitante * (ingrediente.product_qty / ncantidad_il),
+                        'grasa_monosat_kg': (ingrediente.product_id.x_pct_grmono_sat / 100) * self.cant_limitante * (ingrediente.product_qty / ncantidad_il),
                         'grasa_trans_kg': ingrediente.product_id.x_mgkg_grasas_trans * 10 * self.cant_limitante * (ingrediente.product_qty / ncantidad_il),
                         'humedad_kg': (ingrediente.product_id.x_pct_humedad / 100) * self.cant_limitante * (ingrediente.product_qty / ncantidad_il),
                         'carbs_kg': (ingrediente.product_id.x_pct_hidratos_de_carbono / 100) * self.cant_limitante * (ingrediente.product_qty / ncantidad_il),
                         'azucares_kg': (ingrediente.product_id.x_pct_azucares / 100) * self.cant_limitante * (ingrediente.product_qty / ncantidad_il),
+                        'azucares_anadidos_kg': (ingrediente.product_id.x_pct_azucares / 100) * self.cant_limitante * (ingrediente.product_qty / ncantidad_il),
                         'sodio_mg': ingrediente.product_id.x_mg_sodio * 10 * self.cant_limitante * (ingrediente.product_qty / ncantidad_il)
                     })
 
@@ -192,18 +220,24 @@ class ContenidoEnergetico(models.TransientModel):
                                 'pct_proteina': componente.product_id.x_pct_proteinas,
                                 'pct_grasas_tot': componente.product_id.x_pct_grasas_totales,
                                 'pct_grasas_sat': componente.product_id.x_pct_grasas_saturadas,
+                                'pct_grpoli_sat': ingrediente.product_id.x_pct_grasas_poliinstauradas,
+                                'pct_grmono_sat': ingrediente.product_id.x_pct_grasas_monoinsaturadas,
                                 'pct_grasas_trans': componente.product_id.x_mgkg_grasas_trans,
                                 'pct_humedad': componente.product_id.x_pct_humedad,
                                 'pct_carbs': componente.product_id.x_pct_hidratos_de_carbono,
                                 'pct_azucares': componente.product_id.x_pct_azucares,
+                                'pct_azucares_anadidos': ingrediente.product_id.x_pct_azucares_anadidos,
                                 'mg_sodio': componente.product_id.x_mg_sodio,
                                 'proteina_kg': (componente.product_id.x_pct_proteinas / 100) * (ncantidad_il * (componente.x_porcentaje / 100)),
                                 'grasa_kg': (componente.product_id.x_pct_grasas_totales / 100) * (ncantidad_il * (componente.x_porcentaje / 100)),
                                 'grasa_sat_kg': (componente.product_id.x_pct_grasas_saturadas / 100) * (ncantidad_il * (componente.x_porcentaje / 100)),
+                                'grasa_polisat_kg': (componente.product_id.x_pct_grasas_poliinsaturadas / 100) * (ncantidad_il * (componente.x_porcentaje / 100)),
+                                'grasa_monosat_kg': (componente.product_id.x_pct_grasas_monoinsaturadas / 100) * (ncantidad_il * (componente.x_porcentaje / 100)),
                                 'grasa_trans_kg': (componente.product_id.x_mgkg_grasas_trans / 100) * (ncantidad_il * (componente.x_porcentaje / 100)),
                                 'humedad_kg': (componente.product_id.x_pct_humedad / 100) * (ncantidad_il * (componente.x_porcentaje / 100)),
                                 'carbs_kg': (componente.product_id.x_pct_hidratos_de_carbono / 100) * (ncantidad_il * (componente.x_porcentaje / 100)),
                                 'azucares_kg': (componente.product_id.x_pct_azucares / 100) * (ncantidad_il * (componente.x_porcentaje / 100)),
+                                'azucares_anadidos_kg': (componente.product_id.x_pct_azucares_anadidos / 100) * (ncantidad_il * (componente.x_porcentaje / 100)),
                                 'sodio_mg': componente.product_id.x_mg_sodio * 10 * (ncantidad_il * (componente.x_porcentaje / 100))
 
                             })
@@ -239,18 +273,24 @@ class ContenidoEnergetico(models.TransientModel):
                             'pct_proteina': ingrediente.product_id.x_pct_proteinas,
                             'pct_grasas_tot': ingrediente.product_id.x_pct_grasas_totales,
                             'pct_grasas_sat': ingrediente.product_id.x_pct_grasas_saturadas,
+                            'pct_grpoli_sat': ingrediente.product_id.x_pct_grasas_poliinstauradas,
+                            'pct_grmono_sat': ingrediente.product_id.x_pct_grasas_monoinsaturadas,
                             'pct_grasas_trans': ingrediente.product_id.x_mgkg_grasas_trans,
                             'pct_humedad': ingrediente.product_id.x_pct_humedad,
                             'pct_carbs': ingrediente.product_id.x_pct_hidratos_de_carbono,
                             'pct_azucares': ingrediente.product_id.x_pct_azucares,
+                            'pct_azucares_anadidos': ingrediente.product_id.x_pct_azucares_anadidos,
                             'mg_sodio': ingrediente.product_id.x_mg_sodio,
                             'proteina_kg': (ingrediente.product_id.x_pct_proteinas / 100) * (ncantidad_il * (ingrediente.x_porcentaje / 100)),
                             'grasa_kg': (ingrediente.product_id.x_pct_grasas_totales / 100) * (ncantidad_il * (ingrediente.x_porcentaje / 100)),
                             'grasa_sat_kg': (ingrediente.product_id.x_pct_grasas_saturadas / 100) * (ncantidad_il * (ingrediente.x_porcentaje / 100)),
+                            'grasa_polisat_kg': (ingrediente.product_id.x_pct_grpoli_sat / 100) * (ncantidad_il * (ingrediente.x_porcentaje / 100)),
+                            'grasa_monosat_kg': (ingrediente.product_id.x_pct_grmono_sat / 100) * (ncantidad_il * (ingrediente.x_porcentaje / 100)),
                             'grasa_trans_kg': (ingrediente.product_id.x_mgkg_grasas_trans / 100) * (ncantidad_il * (ingrediente.x_porcentaje / 100)),
                             'humedad_kg': (ingrediente.product_id.x_pct_humedad / 100) * (ncantidad_il * (ingrediente.x_porcentaje / 100)),
                             'carbs_kg': (ingrediente.product_id.x_pct_hidratos_de_carbono / 100) * (ncantidad_il * (ingrediente.x_porcentaje / 100)),
                             'azucares_kg': (ingrediente.product_id.x_pct_azucares / 100) * (ncantidad_il * (ingrediente.x_porcentaje / 100)),
+                            'azucares_anadidos_kg': (ingrediente.product_id.x_pct_azucares / 100) * (ncantidad_il * (ingrediente.x_porcentaje / 100)),
                             'sodio_mg': ingrediente.product_id.x_mg_sodio * 10 * (ncantidad_il * (ingrediente.x_porcentaje / 100))
 
                         })
@@ -273,10 +313,13 @@ class ContenidoEnergetico(models.TransientModel):
                     'pct_proteina': ingrediente.pct_proteina,
                     'pct_grasas_tot': ingrediente.pct_grasas_tot ,
                     'pct_grasas_sat': ingrediente.pct_grasas_sat,
+                    'pct_grpoli_sat': ingrediente.pct_grpoli_sat,
+                    'pct_grmono_sat': ingrediente.pct_grmono_sat,
                     'pct_grasas_trans': ingrediente.pct_grasas_trans,
                     'pct_humedad': ingrediente.pct_humedad,
                     'pct_carbs': ingrediente.pct_carbs,
                     'pct_azucares': ingrediente.pct_azucares,
+                    'pct_azucares_anadidos': ingrediente.pct_azucares_anadidos,
                     'mg_sodio': ingrediente.mg_sodio,
                     'proteina_kg': ingrediente.proteina_kg,
                     'grasa_kg': ingrediente.grasa_kg,
@@ -285,6 +328,7 @@ class ContenidoEnergetico(models.TransientModel):
                     'humedad_kg': ingrediente.humedad_kg,
                     'carbs_kg': ingrediente.carbs_kg,
                     'azucares_kg': ingrediente.azucares_kg,
+                    'azucares_anadidos_kg': ingrediente.azucares_anadidos_kg,
                     'sodio_mg': ingrediente.sodio_mg
                 })
 
