@@ -130,10 +130,8 @@ class ContenidoEnergetico(models.TransientModel):
                         'humedad_kg': (ingrediente.product_id.x_pct_humedad / 100) * (self.cantidad * (ingrediente.x_porcentaje / 100)),
                         'carbs_kg': (ingrediente.product_id.x_pct_hidratos_de_carbono / 100) * (self.cantidad * (ingrediente.x_porcentaje / 100)),
                         'azucares_kg': (ingrediente.product_id.x_pct_azucares / 100) * (self.cantidad * (ingrediente.x_porcentaje / 100)),
-                        'azucares_anadidos_kg': (ingrediente.product_id.x_pct_azucares / 100) * (
-                                                   self.cantidad * (ingrediente.x_porcentaje / 100)),
+                        'azucares_anadidos_kg': (ingrediente.product_id.x_pct_azucares / 100) * (self.cantidad * (ingrediente.x_porcentaje / 100)),
                         'sodio_mg': ingrediente.product_id.x_mg_sodio * 10 * (self.cantidad * (ingrediente.x_porcentaje / 100))
-
                     })
 
             if self.ing_limitante:
@@ -237,7 +235,6 @@ class ContenidoEnergetico(models.TransientModel):
                                 'azucares_kg': (componente.product_id.x_pct_azucares / 100) * (ncantidad_il * (componente.x_porcentaje / 100)),
                                 'azucares_anadidos_kg': (componente.product_id.x_pct_azucares_anadidos / 100) * (ncantidad_il * (componente.x_porcentaje / 100)),
                                 'sodio_mg': componente.product_id.x_mg_sodio * 10 * (ncantidad_il * (componente.x_porcentaje / 100))
-
                             })
 
                         if ncomponente:
@@ -290,7 +287,6 @@ class ContenidoEnergetico(models.TransientModel):
                             'azucares_kg': (ingrediente.product_id.x_pct_azucares / 100) * (ncantidad_il * (ingrediente.x_porcentaje / 100)),
                             'azucares_anadidos_kg': (ingrediente.product_id.x_pct_azucares / 100) * (ncantidad_il * (ingrediente.x_porcentaje / 100)),
                             'sodio_mg': ingrediente.product_id.x_mg_sodio * 10 * (ncantidad_il * (ingrediente.x_porcentaje / 100))
-
                         })
 
                     if ncomponente:
