@@ -81,8 +81,6 @@ class ContenidoEnergetico(models.TransientModel):
                                  digits=(4, 4))
     azucares_anadidos_kg = fields.Float(string="kg Azúcares añadidos", required=False,
                                digits=(4, 4))
-    otros_carbs_kg = fields.Float(string="kg Azúcares añadidos", required=False,
-                                        digits=(4, 4))
     sodio_mg = fields.Float(string="mg Sodio", required=False, digits=(4, 4))
 
     # permite seleccionar el ingrediente limitante.
