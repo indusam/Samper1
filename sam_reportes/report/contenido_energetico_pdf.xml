@@ -135,7 +135,10 @@
 
                             <t t-set="pct_hume" t-value="0"/>
                             <t t-set="pct_tota" t-value="pct_prot + pct_gras + pct_carb"/>
-
+                            <t t-set="pct_tota_desglosado" t-value="pct_prot + pct_gras_poli + pct_gras_mono +
+                                                                    pct_gras_tran + pct_gras_satu +
+                                                                    pct_azucares + pct_azucares_anadidos +
+                                                                    pct_otros_carb"/>
                             <tr>
                                 <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <span t-att-style="style" t-esc="'PROTEINA'"/>
@@ -677,14 +680,14 @@
                                 <th style="text-align:left;color:black!important;">        </th>
                                 <th style="text-align:left;color:black!important;">        </th>
                                 <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_kj)"/>
+                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_kj_desglosado)"/>
                                 </th>
                                 <th style="text-align:left;color:black!important;">        </th>
                                 <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_kc)"/>
+                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_kc_desglosado)"/>
                                 </th>
                                 <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(pct_tota)"/>
+                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(pct_tota_desglosado)"/>
                                 </th>
                             </tr>
 
