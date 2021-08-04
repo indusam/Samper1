@@ -140,7 +140,7 @@
                                                                     pct_azucares + pct_azucares_anadidos +
                                                                     pct_otros_carb"/>
                             <tr>
-                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <span t-att-style="style" t-esc="'PROTEINA'"/>
                                 </th>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -166,7 +166,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <span t-att-style="style" t-esc="'GRASA TOTAL'"/>
                                 </th>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -192,7 +192,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <span t-att-style="style" t-esc="'CARBOHIDRATOS'"/>
                                 </th>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -218,7 +218,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <span t-att-style="style" t-esc="'HUMEDAD'"/>
                                 </th>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -246,7 +246,7 @@
 
                             <!-- Imprime Totales -->
                             <tr>
-                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <span t-att-style="style" t-esc="'PORCION (g)'"/>
                                 </th>
                                 <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -300,14 +300,14 @@
                                 <t t-set="pct_tota" t-value="pct_prot + pct_gras + pct_carb"/>
 
                                 <tr>
-                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <span t-att-style="style" t-esc="pct_merma"/>
                                         <span t-att-style="style" t-esc="tit_merma"/>
                                     </th>
                                 </tr>
 
                                 <tr>
-                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <span t-att-style="style" t-esc="'PROTEINA'"/>
                                     </th>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -333,7 +333,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <span t-att-style="style" t-esc="'GRASA TOTAL'"/>
                                     </th>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -359,7 +359,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <span t-att-style="style" t-esc="'CARBOHIDRATOS'"/>
                                     </th>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -385,7 +385,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <span t-att-style="style" t-esc="'HUMEDAD'"/>
                                     </th>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -412,7 +412,7 @@
                                 </tr>
                                 <!-- Imprime Totales después de merma -->
                                 <tr>
-                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <span t-att-style="style" t-esc="'PORCION (g)'"/>
                                     </th>
                                     <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -436,7 +436,7 @@
                             <!-- Imprime el reporte con DESGLOSE DE GRASAS Y CARBOHIDRATOS -->
                             <br/>
                             <tr>
-                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <span t-att-style="style" t-esc="'PROTEINA'"/>
                                 </th>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -462,7 +462,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <span t-att-style="style" t-esc="'GRASAS SATURADAS'"/>
                                 </th>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -488,7 +488,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <span t-att-style="style" t-esc="'GRASAS POLIINSATURADAS'"/>
                                 </th>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -514,7 +514,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <span t-att-style="style" t-esc="'GRASAS MONOINSATURADAS'"/>
                                 </th>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -540,7 +540,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <span t-att-style="style" t-esc="'GRASAS TRANS'"/>
                                 </th>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -566,7 +566,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <span t-att-style="style" t-esc="'AZÚCARES'"/>
                                 </th>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -592,7 +592,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <span t-att-style="style" t-esc="'AZÚCARES AÑADIDOS'"/>
                                 </th>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -618,7 +618,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <span t-att-style="style" t-esc="'OTROS CARBOHIDRATOS'"/>
                                 </th>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -644,7 +644,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <span t-att-style="style" t-esc="'HUMEDAD'"/>
                                 </th>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -672,7 +672,7 @@
 
                             <!-- Imprime Totales -->
                             <tr>
-                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <span t-att-style="style" t-esc="'PORCION (g)'"/>
                                 </th>
                                 <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -784,7 +784,7 @@
                                 </tr>
 
                                 <tr>
-                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <span t-att-style="style" t-esc="'PROTEINA'"/>
                                     </th>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -810,7 +810,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <span t-att-style="style" t-esc="'GRASAS SATURADAS'"/>
                                     </th>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -836,7 +836,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <span t-att-style="style" t-esc="'GRASAS POLIINSATURADAS'"/>
                                     </th>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -862,7 +862,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <span t-att-style="style" t-esc="'GRASAS MONOINSATURADAS'"/>
                                     </th>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -888,7 +888,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <span t-att-style="style" t-esc="'GRASAS TRANS'"/>
                                     </th>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -914,7 +914,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <span t-att-style="style" t-esc="'AZÚCARES'"/>
                                     </th>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -940,7 +940,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <span t-att-style="style" t-esc="'AZÚCARES AÑADIDOS'"/>
                                     </th>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -966,7 +966,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <span t-att-style="style" t-esc="'OTROS CARBOHIDRATOS'"/>
                                     </th>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -992,7 +992,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <span t-att-style="style" t-esc="'HUMEDAD'"/>
                                     </th>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -1019,7 +1019,7 @@
                                 </tr>
                                 <!-- Imprime Totales después de merma -->
                                 <tr>
-                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <span t-att-style="style" t-esc="'PORCION (g)'"/>
                                     </th>
                                     <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
