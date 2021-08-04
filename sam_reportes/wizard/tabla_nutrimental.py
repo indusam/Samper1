@@ -47,6 +47,10 @@ class TablaNutrimental(models.TransientModel):
                                     digits=(3, 2))
     pct_grasas_sat = fields.Float(string="% Grasas sat", required=False,
                                     digits=(3, 2))
+    pct_grpoli_sat = fields.Float(string="% Grasas polsat", required=False,
+                                  digits=(3, 2))
+    pct_grmono_sat = fields.Float(string="% Grasas monsat", required=False,
+                                  digits=(3, 2))
     pct_grasas_trans = fields.Float(string="% Grasas trans", required=False,
                                       digits=(3, 2))
     pct_humedad = fields.Float(string="% Humedad", required=False,
@@ -54,12 +58,19 @@ class TablaNutrimental(models.TransientModel):
     pct_carbs = fields.Float(string="% Carbs", required=False, digits=(3, 2))
     pct_azucares = fields.Float(string="% Azúcares", required=False,
                                   digits=(3, 2))
+    pct_azucares_anadidos = fields.Float(string="% Azúcares añadidos",
+                                         required=False,
+                                         digits=(3, 2))
     mg_sodio = fields.Float(string="mg Sodio", required=False, digits=(5, 4))
     proteina_kg = fields.Float(string="kg Proteína", required=False,
                                  digits=(4, 4))
     grasa_kg = fields.Float(string="kg Grasa", required=False, digits=(4, 4))
     grasa_sat_kg = fields.Float(string="kg Grasa sat", required=False,
                                   digits=(4, 4))
+    grasa_polisat_kg = fields.Float(string="kg Grasa psat", required=False,
+                                    digits=(4, 4))
+    grasa_monosat_kg = fields.Float(string="kg Grasa msat", required=False,
+                                    digits=(4, 4))
     grasa_trans_kg = fields.Float(string="kg Grasa trans", required=False,
                                     digits=(4, 4))
     humedad_kg = fields.Float(string="kg Humedad", required=False,
@@ -67,6 +78,9 @@ class TablaNutrimental(models.TransientModel):
     carbs_kg = fields.Float(string="kg Carbs", required=False, digits=(4, 4))
     azucares_kg = fields.Float(string="kg Azúcares", required=False,
                                  digits=(4, 4))
+    azucares_anadidos_kg = fields.Float(string="kg Azúcares añadidos",
+                                        required=False,
+                                        digits=(4, 4))
     sodio_mg = fields.Float(string="mg Sodio", required=False, digits=(4, 4))
 
 
