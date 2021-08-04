@@ -300,7 +300,7 @@
                                 <t t-set="pct_tota" t-value="pct_prot + pct_gras + pct_carb"/>
 
                                 <tr>
-                                    <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <span t-att-style="style" t-esc="pct_merma"/>
                                         <span t-att-style="style" t-esc="tit_merma"/>
                                     </th>
@@ -432,9 +432,12 @@
                                     </th>
                                 </tr>
                             </t>
-                            <br/>
                             <!-- Imprime el reporte con DESGLOSE DE GRASAS Y CARBOHIDRATOS -->
-                            <br/>
+                            <tr>
+                               <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <span t-att-style="style" t-esc="'DESGLOSE DE GRASAS Y CARBOHIDRATOS'"/>
+                                </th>
+                            </tr>
                             <tr>
                                 <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <span t-att-style="style" t-esc="'PROTEINA'"/>
