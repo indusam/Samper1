@@ -814,10 +814,10 @@
                                         <span t-att-style="style" t-esc="'GRASAS SATURADAS'"/>
                                     </th>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.4f}'.format(tpct_gras_satu_merma)"/>
+                                        <t t-esc="'{0:,.4f}'.format(tot_gras_satu_merma)"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.1f}'.format(tpct_gras_satu_merma)"/>
+                                        <t t-esc="'{0:,.1f}'.format(tot_gras_satu_merma)"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="' (37) '"/>
@@ -840,10 +840,10 @@
                                         <span t-att-style="style" t-esc="'GRASAS POLIINSATURADAS'"/>
                                     </th>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.4f}'.format(tpct_gras_poli_merma)"/>
+                                        <t t-esc="'{0:,.4f}'.format(tot_gras_poli_merma)"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.1f}'.format(tpct_gras_poli_merma)"/>
+                                        <t t-esc="'{0:,.1f}'.format(tot_gras_poli_merma)"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="' (37) '"/>
@@ -866,10 +866,10 @@
                                         <span t-att-style="style" t-esc="'GRASAS MONOINSATURADAS'"/>
                                     </th>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.4f}'.format(tpct_gras_mono_merma)"/>
+                                        <t t-esc="'{0:,.4f}'.format(tot_gras_mono_merma)"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.1f}'.format(tpct_gras_mono_merma)"/>
+                                        <t t-esc="'{0:,.1f}'.format(tot_gras_mono_merma)"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="' (37) '"/>
@@ -892,10 +892,10 @@
                                         <span t-att-style="style" t-esc="'GRASAS TRANS'"/>
                                     </th>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.4f}'.format(tpct_gras_tran_merma)"/>
+                                        <t t-esc="'{0:,.4f}'.format(tot_gras_tran_merma)"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.1f}'.format(tpct_gras_tran_merma)"/>
+                                        <t t-esc="'{0:,.1f}'.format(tot_gras_tran_merma)"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="' (37) '"/>
@@ -918,10 +918,10 @@
                                         <span t-att-style="style" t-esc="'AZÚCARES'"/>
                                     </th>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.4f}'.format(tpct_azucares_merma)"/>
+                                        <t t-esc="'{0:,.4f}'.format(tot_azucares_merma)"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.1f}'.format(tpct_azucares_merma)"/>
+                                        <t t-esc="'{0:,.1f}'.format(tot_azucares_merma)"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="' (17) '"/>
@@ -944,10 +944,10 @@
                                         <span t-att-style="style" t-esc="'AZÚCARES AÑADIDOS'"/>
                                     </th>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.4f}'.format(tpct_azucares_anadidos_merma)"/>
+                                        <t t-esc="'{0:,.4f}'.format(tot_azucares_anadidos_merma)"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.1f}'.format(tpct_azucares_anadidos_merma)"/>
+                                        <t t-esc="'{0:,.1f}'.format(tot_azucares_anadidos_merma)"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="' (17) '"/>
@@ -970,10 +970,10 @@
                                         <span t-att-style="style" t-esc="'OTROS CARBOHIDRATOS'"/>
                                     </th>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.4f}'.format(tpct_otros_carb)"/>
+                                        <t t-esc="'{0:,.4f}'.format(tot_otros_carb)"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.1f}'.format(tpct_otros_carb)"/>
+                                        <t t-esc="'{0:,.1f}'.format(tot_otros_carb)"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="' (17) '"/>
