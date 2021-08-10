@@ -576,7 +576,7 @@
                                 <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <span t-att-style="style" t-esc="'GRASAS TOTALES'"/>
                                 </th>
-                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                <td style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <t t-esc="'{0:,.2f}'.format(total_grasas)"/>
                                 </td>
                             </tr>
@@ -662,7 +662,7 @@
                                 <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <span t-att-style="style" t-esc="'CARBOHIDRATOS TOTALES'"/>
                                 </th>
-                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                <td style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <t t-esc="'{0:,.2f}'.format(total_carboh)"/>
                                 </td>
                             </tr>
@@ -799,6 +799,15 @@
                                                                     pct_gras_tran + pct_gras_satu +
                                                                     pct_azucares + pct_azucares_anadidos +
                                                                     pct_otros_carb"/>
+
+                                <t t-set="total_grasas_merma" t-value="tot_gras_poli_merma +
+                                                                 tot_gras_mono_merma +
+                                                                 tot_gras_tran_merma +
+                                                                 tot_gras_satu_merma "/>
+                                <t t-set="total_carboh_merma" t-value="tot_azucares_merma +
+                                                                 tot_azucares_anadidos_merma +
+                                                                 tot_otros_carb_merma"/>
+
                                 <tr>
                                     <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <span t-att-style="style" t-esc="pct_merma"/>
@@ -937,6 +946,14 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <span t-att-style="style" t-esc="'GRASAS TOTALES'"/>
+                                    </th>
+                                    <td style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="'{0:,.2f}'.format(total_grasas_merma)"/>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <span t-att-style="style" t-esc="'AZÚCARES'"/>
                                     </th>
@@ -1012,6 +1029,14 @@
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="'{0:,.2f}'.format(pct_otros_carb)"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <span t-att-style="style" t-esc="'CARBOHIDRATOS TOTALES'"/>
+                                    </th>
+                                    <td style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="'{0:,.2f}'.format(total_carboh_merma)"/>
                                     </td>
                                 </tr>
                                 <tr>
