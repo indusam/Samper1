@@ -476,7 +476,7 @@
                                     <t t-esc="'{0:,.4f}'.format(tpct_gras_satu)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <t t-esc="'{0:,.1f}'.format(tpct_gras_satu)"/>
+                                    <t t-esc="'{0:,.3f}'.format(tpct_gras_satu)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <t t-esc="' (37) '"/>
@@ -502,7 +502,7 @@
                                     <t t-esc="'{0:,.4f}'.format(tpct_gras_poli)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <t t-esc="'{0:,.1f}'.format(tpct_gras_poli)"/>
+                                    <t t-esc="'{0:,.3}'.format(tpct_gras_poli)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <t t-esc="' (37) '"/>
@@ -528,7 +528,7 @@
                                     <t t-esc="'{0:,.4f}'.format(tpct_gras_mono)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <t t-esc="'{0:,.1f}'.format(tpct_gras_mono)"/>
+                                    <t t-esc="'{0:,.3f}'.format(tpct_gras_mono)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <t t-esc="' (37) '"/>
@@ -554,7 +554,7 @@
                                     <t t-esc="'{0:,.4f}'.format(tpct_gras_tran)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <t t-esc="'{0:,.1f}'.format(tpct_gras_tran)"/>
+                                    <t t-esc="'{0:,.3f}'.format(tpct_gras_tran)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <t t-esc="' (37) '"/>
@@ -577,7 +577,7 @@
                                     <span t-att-style="style" t-esc="'GRASAS TOTALES'"/>
                                 </th>
                                 <td style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <t t-esc="'{0:,.2f}'.format(total_grasas)"/>
+                                    <t t-esc="'{0:,.4f}'.format(total_grasas)"/>
                                 </td>
                             </tr>
                             <tr>
