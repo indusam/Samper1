@@ -436,7 +436,7 @@
                                     </th>
                                 </tr>
                             </t>
-                            <!-- Imprime el reporte con DESGLOSE DE GRASAS Y CARBOHIDRATOS -->
+                            <!-- IMPRIME EL REPORTE CON  DESGLOSE DE GRASAS Y CARBOHIDRATOS -->
                             <tr>
                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <span t-att-style="style" t-esc="'DESGLOSE DE GRASAS Y CARBOHIDRATOS'"/>
@@ -450,7 +450,7 @@
                                     <t t-esc="'{0:,.4f}'.format(tpct_prot)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <t t-esc="'{0:,.1f}'.format(tpct_prot)"/>
+                                    <t t-esc="'{0:,.3f}'.format(tpct_prot)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <t t-esc="' (17) '"/>
