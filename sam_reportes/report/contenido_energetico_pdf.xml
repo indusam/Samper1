@@ -121,7 +121,7 @@
                                                                                 tot_kj_azucares_anadidos +
                                                                                 tot_kj_otros_carb" />
 
-                            <t t-set="pct_prot" t-value="(tot_kc_prot / tot_kc_desglosado) * 100"/>
+                            <t t-set="pct_prot" t-value="(tot_kc_prot / tot_kc) * 100"/>
                             <t t-set="pct_gras" t-value="(tot_kc_gras / tot_kc) * 100"/>
                             <t t-set="pct_gras_poli" t-value="(tot_kc_gras_poli / tot_kc_desglosado) * 100"/>
                             <t t-set="pct_gras_mono" t-value="(tot_kc_gras_mono / tot_kc_desglosado) * 100"/>
