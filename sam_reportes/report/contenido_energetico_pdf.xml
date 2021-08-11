@@ -77,28 +77,28 @@
                             <t t-set="tpct_hume" t-value="(tot_hume / tot_cantidad) *  100"/>
 
                             <!-- Calcula energía -->
-                            <t t-set="tot_kj_prot" t-value="round(tot_proteina,1) * 17" />
-                            <t t-set="tot_kc_prot" t-value="round(tot_proteina,1) * 4" />
+                            <t t-set="tot_kj_prot" t-value="round(tot_proteina,3) * 17" />
+                            <t t-set="tot_kc_prot" t-value="round(tot_proteina,3) * 4" />
 
-                            <t t-set="tot_kj_gras" t-value="round(tot_gras,1) * 37" />
-                            <t t-set="tot_kc_gras" t-value="round(tot_gras,1) * 9" />
-                            <t t-set="tot_kj_gras_poli" t-value="round(tot_gras_poli,1) * 37" />
-                            <t t-set="tot_kc_gras_poli" t-value="round(tot_gras_poli,1) * 9" />
-                            <t t-set="tot_kj_gras_mono" t-value="round(tot_gras_mono,1) * 37" />
-                            <t t-set="tot_kc_gras_mono" t-value="round(tot_gras_mono,1) * 9" />
-                            <t t-set="tot_kj_gras_tran" t-value="round(tot_gras_tran,1) * 37" />
-                            <t t-set="tot_kc_gras_tran" t-value="round(tot_gras_tran,1) * 9" />
-                            <t t-set="tot_kj_gras_satu" t-value="round(tot_gras_satu,1) * 37" />
-                            <t t-set="tot_kc_gras_satu" t-value="round(tot_gras_satu,1) * 9" />
+                            <t t-set="tot_kj_gras" t-value="round(tot_gras,3) * 37" />
+                            <t t-set="tot_kc_gras" t-value="round(tot_gras,3) * 9" />
+                            <t t-set="tot_kj_gras_poli" t-value="round(tot_gras_poli,3) * 37" />
+                            <t t-set="tot_kc_gras_poli" t-value="round(tot_gras_poli,3) * 9" />
+                            <t t-set="tot_kj_gras_mono" t-value="round(tot_gras_mono,3) * 37" />
+                            <t t-set="tot_kc_gras_mono" t-value="round(tot_gras_mono,3) * 9" />
+                            <t t-set="tot_kj_gras_tran" t-value="round(tot_gras_tran,3) * 37" />
+                            <t t-set="tot_kc_gras_tran" t-value="round(tot_gras_tran,3) * 9" />
+                            <t t-set="tot_kj_gras_satu" t-value="round(tot_gras_satu,3) * 37" />
+                            <t t-set="tot_kc_gras_satu" t-value="round(tot_gras_satu,3) * 9" />
 
-                            <t t-set="tot_kj_carb" t-value="round(tot_carb,1) * 17" />
-                            <t t-set="tot_kc_carb" t-value="round(tot_carb,1) * 4" />
-                            <t t-set="tot_kj_azucares" t-value="round(tot_azucares,1) * 17" />
-                            <t t-set="tot_kc_azucares" t-value="round(tot_azucares,1) * 4" />
-                            <t t-set="tot_kj_azucares_anadidos" t-value="round(tot_azucares_anadidos,1) * 17" />
-                            <t t-set="tot_kc_azucares_anadidos" t-value="round(tot_azucares_anadidos,1) * 4" />
-                            <t t-set="tot_kj_otros_carb" t-value="round(tot_otros_carb,1) * 17" />
-                            <t t-set="tot_kc_otros_carb" t-value="round(tot_otros_carb,1) * 4" />
+                            <t t-set="tot_kj_carb" t-value="round(tot_carb,3) * 17" />
+                            <t t-set="tot_kc_carb" t-value="round(tot_carb,3) * 4" />
+                            <t t-set="tot_kj_azucares" t-value="round(tot_azucares,3) * 17" />
+                            <t t-set="tot_kc_azucares" t-value="round(tot_azucares,3) * 4" />
+                            <t t-set="tot_kj_azucares_anadidos" t-value="round(tot_azucares_anadidos,3) * 17" />
+                            <t t-set="tot_kc_azucares_anadidos" t-value="round(tot_azucares_anadidos,3) * 4" />
+                            <t t-set="tot_kj_otros_carb" t-value="round(tot_otros_carb,3) * 17" />
+                            <t t-set="tot_kc_otros_carb" t-value="round(tot_otros_carb,3) * 4" />
 
                             <t t-set="tot_kj_hume" t-value="0" />
                             <t t-set="tot_kc_hume" t-value="0" />
@@ -283,14 +283,14 @@
                                 <t t-set="tot_hume_merma" t-value="(tot_hume /tot_cant_merma) * 100"/>
 
                                 <!-- Calcula energía después de merma-->
-                                <t t-set="tot_kj_prot" t-value="round(tot_prot_merma,1) * 17" />
-                                <t t-set="tot_kc_prot" t-value="round(tot_prot_merma,1) * 4" />
+                                <t t-set="tot_kj_prot" t-value="round(tot_prot_merma,3) * 17" />
+                                <t t-set="tot_kc_prot" t-value="round(tot_prot_merma,3) * 4" />
 
-                                <t t-set="tot_kj_gras" t-value="round(tot_gras_merma,1) * 37" />
-                                <t t-set="tot_kc_gras" t-value="round(tot_gras_merma,1) * 9" />
+                                <t t-set="tot_kj_gras" t-value="round(tot_gras_merma,3) * 37" />
+                                <t t-set="tot_kc_gras" t-value="round(tot_gras_merma,3) * 9" />
 
-                                <t t-set="tot_kj_carb" t-value="round(tot_carb_merma,1) * 17" />
-                                <t t-set="tot_kc_carb" t-value="round(tot_carb_merma,1) * 4" />
+                                <t t-set="tot_kj_carb" t-value="round(tot_carb_merma,3) * 17" />
+                                <t t-set="tot_kc_carb" t-value="round(tot_carb_merma,3) * 4" />
                                 <t t-set="tot_kj_hume" t-value="0" />
                                 <t t-set="tot_kc_hume" t-value="0" />
 
@@ -588,7 +588,7 @@
                                     <t t-esc="'{0:,.4f}'.format(tpct_azucares)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <t t-esc="'{0:,.1f}'.format(tpct_azucares)"/>
+                                    <t t-esc="'{0:,.3f}'.format(tpct_azucares)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <t t-esc="' (17) '"/>
@@ -614,7 +614,7 @@
                                     <t t-esc="'{0:,.4f}'.format(tpct_azucares_anadidos)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <t t-esc="'{0:,.1f}'.format(tpct_azucares_anadidos)"/>
+                                    <t t-esc="'{0:,.3f}'.format(tpct_azucares_anadidos)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <t t-esc="' (17) '"/>
@@ -640,7 +640,7 @@
                                     <t t-esc="'{0:,.4f}'.format(tpct_otros_carb)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <t t-esc="'{0:,.1f}'.format(tpct_otros_carb)"/>
+                                    <t t-esc="'{0:,.3f}'.format(tpct_otros_carb)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <t t-esc="' (17) '"/>
@@ -663,7 +663,7 @@
                                     <span t-att-style="style" t-esc="'CARBOHIDRATOS TOTALES'"/>
                                 </th>
                                 <td style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <t t-esc="'{0:,.2f}'.format(total_carboh)"/>
+                                    <t t-esc="'{0:,.4f}'.format(total_carboh)"/>
                                 </td>
                             </tr>
                             <tr>
@@ -674,7 +674,7 @@
                                     <t t-esc="'{0:,.4f}'.format(tpct_hume)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <t t-esc="'{0:,.1f}'.format(tpct_hume)"/>
+                                    <t t-esc="'{0:,.3f}'.format(tpct_hume)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <t t-esc="' (0) '"/>
@@ -738,28 +738,28 @@
                                 <t t-set="tot_hume_merma" t-value="(tot_hume /tot_cant_merma) * 100"/>
 
                                 <!-- Calcula energía después de merma-->
-                                <t t-set="tot_kj_prot" t-value="round(tot_prot_merma,1) * 17" />
-                                <t t-set="tot_kc_prot" t-value="round(tot_prot_merma,1) * 4" />
+                                <t t-set="tot_kj_prot" t-value="round(tot_prot_merma,3) * 17" />
+                                <t t-set="tot_kc_prot" t-value="round(tot_prot_merma,3) * 4" />
 
-                                <t t-set="tot_kj_gras" t-value="round(tot_gras_merma,1) * 37" />
-                                <t t-set="tot_kc_gras" t-value="round(tot_gras_merma,1) * 9" />
-                                <t t-set="tot_kj_gras_poli" t-value="round(tot_gras_poli_merma,1) * 37" />
-                                <t t-set="tot_kc_gras_poli" t-value="round(tot_gras_poli_merma,1) * 9" />
-                                <t t-set="tot_kj_gras_mono" t-value="round(tot_gras_mono_merma,1) * 37" />
-                                <t t-set="tot_kc_gras_mono" t-value="round(tot_gras_mono_merma,1) * 9" />
-                                <t t-set="tot_kj_gras_tran" t-value="round(tot_gras_tran_merma,1) * 37" />
-                                <t t-set="tot_kc_gras_tran" t-value="round(tot_gras_tran_merma,1) * 9" />
-                                <t t-set="tot_kj_gras_satu" t-value="round(tot_gras_satu_merma,1) * 37" />
-                                <t t-set="tot_kc_gras_satu" t-value="round(tot_gras_satu_merma,1) * 9" />
+                                <t t-set="tot_kj_gras" t-value="round(tot_gras_merma,3) * 37" />
+                                <t t-set="tot_kc_gras" t-value="round(tot_gras_merma,3) * 9" />
+                                <t t-set="tot_kj_gras_poli" t-value="round(tot_gras_poli_merma,3) * 37" />
+                                <t t-set="tot_kc_gras_poli" t-value="round(tot_gras_poli_merma,3) * 9" />
+                                <t t-set="tot_kj_gras_mono" t-value="round(tot_gras_mono_merma,3) * 37" />
+                                <t t-set="tot_kc_gras_mono" t-value="round(tot_gras_mono_merma,3) * 9" />
+                                <t t-set="tot_kj_gras_tran" t-value="round(tot_gras_tran_merma,3) * 37" />
+                                <t t-set="tot_kc_gras_tran" t-value="round(tot_gras_tran_merma,3) * 9" />
+                                <t t-set="tot_kj_gras_satu" t-value="round(tot_gras_satu_merma,3) * 37" />
+                                <t t-set="tot_kc_gras_satu" t-value="round(tot_gras_satu_merma,3) * 9" />
 
-                                <t t-set="tot_kj_carb" t-value="round(tot_carb_merma,1) * 17" />
-                                <t t-set="tot_kc_carb" t-value="round(tot_carb_merma,1) * 4" />
-                                <t t-set="tot_kj_azucares" t-value="round(tot_azucares_merma,1) * 17" />
-                                <t t-set="tot_kc_azucares" t-value="round(tot_azucares_merma,1) * 4" />
-                                <t t-set="tot_kj_azucares_anadidos" t-value="round(tot_azucares_anadidos_merma,1) * 17" />
-                                <t t-set="tot_kc_azucares_anadidos" t-value="round(tot_azucares_anadidos_merma,1) * 4" />
-                                <t t-set="tot_kj_otros_carb" t-value="round(tot_otros_carb_merma,1) * 17" />
-                                <t t-set="tot_kc_otros_carb" t-value="round(tot_otros_carb_merma,1) * 4" />
+                                <t t-set="tot_kj_carb" t-value="round(tot_carb_merma,3) * 17" />
+                                <t t-set="tot_kc_carb" t-value="round(tot_carb_merma,3) * 4" />
+                                <t t-set="tot_kj_azucares" t-value="round(tot_azucares_merma,3) * 17" />
+                                <t t-set="tot_kc_azucares" t-value="round(tot_azucares_merma,3) * 4" />
+                                <t t-set="tot_kj_azucares_anadidos" t-value="round(tot_azucares_anadidos_merma,3) * 17" />
+                                <t t-set="tot_kc_azucares_anadidos" t-value="round(tot_azucares_anadidos_merma,3) * 4" />
+                                <t t-set="tot_kj_otros_carb" t-value="round(tot_otros_carb_merma,3) * 17" />
+                                <t t-set="tot_kc_otros_carb" t-value="round(tot_otros_carb_merma,3) * 4" />
 
                                 <t t-set="tot_kj_hume" t-value="0" />
                                 <t t-set="tot_kc_hume" t-value="0" />
@@ -823,7 +823,7 @@
                                         <t t-esc="'{0:,.4f}'.format(tot_prot_merma)"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.1f}'.format(tot_prot_merma)"/>
+                                        <t t-esc="'{0:,.3f}'.format(tot_prot_merma)"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="' (17) '"/>
@@ -849,7 +849,7 @@
                                         <t t-esc="'{0:,.4f}'.format(tot_gras_satu_merma)"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.1f}'.format(tot_gras_satu_merma)"/>
+                                        <t t-esc="'{0:,.3f}'.format(tot_gras_satu_merma)"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="' (37) '"/>
@@ -875,7 +875,7 @@
                                         <t t-esc="'{0:,.4f}'.format(tot_gras_poli_merma)"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.1f}'.format(tot_gras_poli_merma)"/>
+                                        <t t-esc="'{0:,.3f}'.format(tot_gras_poli_merma)"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="' (37) '"/>
@@ -901,7 +901,7 @@
                                         <t t-esc="'{0:,.4f}'.format(tot_gras_mono_merma)"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.1f}'.format(tot_gras_mono_merma)"/>
+                                        <t t-esc="'{0:,.3f}'.format(tot_gras_mono_merma)"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="' (37) '"/>
@@ -927,7 +927,7 @@
                                         <t t-esc="'{0:,.4f}'.format(tot_gras_tran_merma)"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.1f}'.format(tot_gras_tran_merma)"/>
+                                        <t t-esc="'{0:,.3f}'.format(tot_gras_tran_merma)"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="' (37) '"/>
@@ -961,7 +961,7 @@
                                         <t t-esc="'{0:,.4f}'.format(tot_azucares_merma)"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.1f}'.format(tot_azucares_merma)"/>
+                                        <t t-esc="'{0:,.3f}'.format(tot_azucares_merma)"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="' (17) '"/>
@@ -987,7 +987,7 @@
                                         <t t-esc="'{0:,.4f}'.format(tot_azucares_anadidos_merma)"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.1f}'.format(tot_azucares_anadidos_merma)"/>
+                                        <t t-esc="'{0:,.3f}'.format(tot_azucares_anadidos_merma)"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="' (17) '"/>
@@ -1013,7 +1013,7 @@
                                         <t t-esc="'{0:,.4f}'.format(tot_otros_carb)"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.1f}'.format(tot_otros_carb)"/>
+                                        <t t-esc="'{0:,.3f}'.format(tot_otros_carb)"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="' (17) '"/>
@@ -1036,7 +1036,7 @@
                                         <span t-att-style="style" t-esc="'CARBOHIDRATOS TOTALES'"/>
                                     </th>
                                     <td style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.2f}'.format(total_carboh_merma)"/>
+                                        <t t-esc="'{0:,.4f}'.format(total_carboh_merma)"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -1047,7 +1047,7 @@
                                         <t t-esc="'{0:,.4f}'.format(tot_hume_merma)"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.1f}'.format(tot_hume_merma)"/>
+                                        <t t-esc="'{0:,.3f}'.format(tot_hume_merma)"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="' (0) '"/>
