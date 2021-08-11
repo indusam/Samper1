@@ -121,17 +121,17 @@
                                                                                 tot_kj_azucares_anadidos +
                                                                                 tot_kj_otros_carb" />
 
-                            <t t-set="pct_prot" t-value="(tot_kc_prot / tot_kc) * 100"/>
+                            <t t-set="pct_prot" t-value="(tot_kc_prot / tot_kc_desglosado) * 100"/>
                             <t t-set="pct_gras" t-value="(tot_kc_gras / tot_kc) * 100"/>
-                            <t t-set="pct_gras_poli" t-value="(tot_kc_gras_poli / tot_kc) * 100"/>
-                            <t t-set="pct_gras_mono" t-value="(tot_kc_gras_mono / tot_kc) * 100"/>
-                            <t t-set="pct_gras_tran" t-value="(tot_kc_gras_tran / tot_kc) * 100"/>
-                            <t t-set="pct_gras_satu" t-value="(tot_kc_gras_satu / tot_kc) * 100"/>
+                            <t t-set="pct_gras_poli" t-value="(tot_kc_gras_poli / tot_kc_desglosado) * 100"/>
+                            <t t-set="pct_gras_mono" t-value="(tot_kc_gras_mono / tot_kc_desglosado) * 100"/>
+                            <t t-set="pct_gras_tran" t-value="(tot_kc_gras_tran / tot_kc_desglosado) * 100"/>
+                            <t t-set="pct_gras_satu" t-value="(tot_kc_gras_satu / tot_kc_desglosado) * 100"/>
 
                             <t t-set="pct_carb" t-value="(tot_kc_carb / tot_kc) * 100"/>
-                            <t t-set="pct_azucares" t-value="(tot_kc_azucares / tot_kc) * 100"/>
-                            <t t-set="pct_azucares_anadidos" t-value="(tot_kc_azucares_anadidos / tot_kc) * 100"/>
-                            <t t-set="pct_otros_carb" t-value="(tot_kc_otros_carb / tot_kc) * 100"/>
+                            <t t-set="pct_azucares" t-value="(tot_kc_azucares / tot_kc_desglosado) * 100"/>
+                            <t t-set="pct_azucares_anadidos" t-value="(tot_kc_azucares_anadidos / tot_kc_desglosado) * 100"/>
+                            <t t-set="pct_otros_carb" t-value="(tot_kc_otros_carb / tot_kc_desglosado) * 100"/>
 
                             <t t-set="pct_hume" t-value="0"/>
                             <t t-set="pct_tota" t-value="pct_prot + pct_gras + pct_carb"/>
@@ -254,19 +254,19 @@
                                     <span t-att-style="style" t-esc="'PORCION (g)'"/>
                                 </th>
                                 <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_cantidad)"/>
+                                    <span t-att-style="style" t-esc="'{0:,.2f}'.format(tot_cantidad)"/>
                                 </th>
                                 <th style="text-align:left;color:black!important;">        </th>
                                 <th style="text-align:left;color:black!important;">        </th>
                                 <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_kj)"/>
+                                    <span t-att-style="style" t-esc="'{0:,.2f}'.format(tot_kj)"/>
                                 </th>
                                 <th style="text-align:left;color:black!important;">        </th>
                                 <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_kc)"/>
+                                    <span t-att-style="style" t-esc="'{0:,.2f}'.format(tot_kc)"/>
                                 </th>
                                 <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(pct_tota)"/>
+                                    <span t-att-style="style" t-esc="'{0:,.2f}'.format(pct_tota)"/>
                                 </th>
                             </tr>
 
@@ -420,19 +420,19 @@
                                         <span t-att-style="style" t-esc="'PORCION (g)'"/>
                                     </th>
                                     <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_cantidad)"/>
+                                        <span t-att-style="style" t-esc="'{0:,.2f}'.format(tot_cantidad)"/>
                                     </th>
                                     <th style="text-align:left;color:black!important;">        </th>
                                     <th style="text-align:left;color:black!important;">        </th>
                                     <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_kj)"/>
+                                        <span t-att-style="style" t-esc="'{0:,.2f}'.format(tot_kj)"/>
                                     </th>
                                     <th style="text-align:left;color:black!important;">        </th>
                                     <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_kc)"/>
+                                        <span t-att-style="style" t-esc="'{0:,.2f}'.format(tot_kc)"/>
                                     </th>
                                     <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <span t-att-style="style" t-esc="'{0:,.4f}'.format(pct_tota)"/>
+                                        <span t-att-style="style" t-esc="'{0:,.2f}'.format(pct_tota)"/>
                                     </th>
                                 </tr>
                             </t>
@@ -577,7 +577,7 @@
                                     <span t-att-style="style" t-esc="'GRASAS TOTALES'"/>
                                 </th>
                                 <td style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <t t-esc="'{0:,.4f}'.format(total_grasas)"/>
+                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(total_grasas)"/>
                                 </td>
                             </tr>
                             <tr>
@@ -663,7 +663,7 @@
                                     <span t-att-style="style" t-esc="'CARBOHIDRATOS TOTALES'"/>
                                 </th>
                                 <td style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <t t-esc="'{0:,.4f}'.format(total_carboh)"/>
+                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(total_carboh)"/>
                                 </td>
                             </tr>
                             <tr>
@@ -782,16 +782,16 @@
                                                                                 tot_kj_azucares_anadidos +
                                                                                 tot_kj_otros_carb" />
 
-                                <t t-set="pct_prot" t-value="(tot_kc_prot / tot_kc) * 100"/>
-                                <t t-set="pct_gras" t-value="(tot_kc_gras / tot_kc) * 100"/>
-                                <t t-set="pct_gras_poli" t-value="(tot_kc_gras_poli / tot_kc) * 100"/>
-                                <t t-set="pct_gras_mono" t-value="(tot_kc_gras_mono / tot_kc) * 100"/>
-                                <t t-set="pct_gras_tran" t-value="(tot_kc_gras_tran / tot_kc) * 100"/>
-                                <t t-set="pct_gras_satu" t-value="(tot_kc_gras_satu / tot_kc) * 100"/>
-                                <t t-set="pct_carb" t-value="(tot_kc_carb / tot_kc) * 100"/>
-                                <t t-set="pct_azucares" t-value="(tot_kc_azucares / tot_kc) * 100"/>
-                                <t t-set="pct_azucares_anadidos" t-value="(tot_kc_azucares_anadidos / tot_kc) * 100"/>
-                                <t t-set="pct_otros_carb" t-value="(tot_kc_otros_carb / tot_kc) * 100"/>
+                                <t t-set="pct_prot" t-value="(tot_kc_prot / tot_kc_desglosado) * 100"/>
+                                <t t-set="pct_gras" t-value="(tot_kc_gras / tot_kc_desglosado) * 100"/>
+                                <t t-set="pct_gras_poli" t-value="(tot_kc_gras_poli / tot_kc_desglosado) * 100"/>
+                                <t t-set="pct_gras_mono" t-value="(tot_kc_gras_mono / tot_kc_desglosado) * 100"/>
+                                <t t-set="pct_gras_tran" t-value="(tot_kc_gras_tran / tot_kc_desglosado) * 100"/>
+                                <t t-set="pct_gras_satu" t-value="(tot_kc_gras_satu / tot_kc_desglosado) * 100"/>
+                                <t t-set="pct_carb" t-value="(tot_kc_carb / tot_kc_desglosado) * 100"/>
+                                <t t-set="pct_azucares" t-value="(tot_kc_azucares / tot_kc_desglosado) * 100"/>
+                                <t t-set="pct_azucares_anadidos" t-value="(tot_kc_azucares_anadidos / tot_kc_desglosado) * 100"/>
+                                <t t-set="pct_otros_carb" t-value="(tot_kc_otros_carb / tot_kc_desglosado) * 100"/>
 
                                 <t t-set="pct_hume" t-value="0"/>
                                 <t t-set="pct_tota" t-value="pct_prot + pct_gras + pct_carb"/>
@@ -950,7 +950,7 @@
                                         <span t-att-style="style" t-esc="'GRASAS TOTALES'"/>
                                     </th>
                                     <td style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.2f}'.format(total_grasas_merma)"/>
+                                        <span t-att-style="style" t-esc="'{0:,.4f}'.format(total_grasas_merma)"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -1036,7 +1036,7 @@
                                         <span t-att-style="style" t-esc="'CARBOHIDRATOS TOTALES'"/>
                                     </th>
                                     <td style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.4f}'.format(total_carboh_merma)"/>
+                                        <span t-att-style="style" t-esc="'{0:,.4f}'.format(total_carboh_merma)"/>
                                     </td>
                                 </tr>
                                 <tr>
