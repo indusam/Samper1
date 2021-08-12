@@ -438,6 +438,8 @@
                                 </tr>
                             </t>
                             <!-- IMPRIME EL REPORTE CON  DESGLOSE DE GRASAS Y CARBOHIDRATOS -->
+                            <t t-set="tot_kj_prot" t-value="round(tot_prot,3) * 17" />
+                            <t t-set="tot_kc_prot" t-value="round(tot_prot,3) * 4" />
                             <tr>
                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <span t-att-style="style" t-esc="'DESGLOSE DE GRASAS Y CARBOHIDRATOS'"/>
