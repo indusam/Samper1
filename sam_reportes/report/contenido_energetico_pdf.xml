@@ -79,6 +79,8 @@
                             <!-- Calcula energía -->
                             <t t-set="tot_kj_prot" t-value="round(tot_proteina,3) * 17" />
                             <t t-set="tot_kc_prot" t-value="round(tot_proteina,3) * 4" />
+                            <t t-set="tot_kj_prot_desglosado" t-value="round(tot_proteina,3) * 17" />
+                            <t t-set="tot_kc_prot_desglosado" t-value="round(tot_proteina,3) * 4" />
 
                             <t t-set="tot_kj_gras" t-value="round(tot_gras,3) * 37" />
                             <t t-set="tot_kc_gras" t-value="round(tot_gras,3) * 9" />
@@ -299,6 +301,7 @@
                                 <t t-set="tot_kj" t-value="tot_kj_prot + tot_kj_gras + tot_kj_carb" />
 
                                 <t t-set="pct_prot" t-value="(tot_kc_prot / tot_kc) * 100"/>
+                                <t t-set="pct_prot_desglosado" t-value="(tot_kc_prot_desglosado / tot_kc) * 100"/>
                                 <t t-set="pct_gras" t-value="(tot_kc_gras / tot_kc) * 100"/>
                                 <t t-set="pct_carb" t-value="(tot_kc_carb / tot_kc) * 100"/>
                                 <t t-set="pct_hume" t-value="0"/>
@@ -438,8 +441,6 @@
                                 </tr>
                             </t>
                             <!-- IMPRIME EL REPORTE CON  DESGLOSE DE GRASAS Y CARBOHIDRATOS -->
-                            <t t-set="tot_kj_prot" t-value="round(tot_prot,3) * 17" />
-                            <t t-set="tot_kc_prot" t-value="round(tot_prot,3) * 4" />
                             <tr>
                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <span t-att-style="style" t-esc="'DESGLOSE DE GRASAS Y CARBOHIDRATOS'"/>
@@ -459,13 +460,13 @@
                                     <t t-esc="' (17) '"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <t t-esc="'{0:,.2f}'.format(tot_kj_prot)"/>
+                                    <t t-esc="'{0:,.2f}'.format(tot_kj_prot_desglosado)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <t t-esc="' (4) '"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <t t-esc="'{0:,.2f}'.format(tot_kc_prot)"/>
+                                    <t t-esc="'{0:,.2f}'.format(tot_kc_prot_desglosado)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <t t-esc="'{0:,.2f}'.format(pct_prot_desglosado)"/>
