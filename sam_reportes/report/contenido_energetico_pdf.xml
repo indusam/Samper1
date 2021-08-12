@@ -466,7 +466,7 @@
                                     <t t-esc="'{0:,.2f}'.format(tot_kc_prot)"/>
                                 </td>
                                 <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <t t-esc="'{0:,.2f}'.format(pct_prot_desgloado)"/>
+                                    <t t-esc="'{0:,.2f}'.format(pct_prot_desglosado)"/>
                                 </td>
                             </tr>
                             <tr>
