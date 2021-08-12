@@ -619,6 +619,8 @@
                                                                                 tot_kj_otros_carb" />
 
                                 <t t-set="pct_prot" t-value="(tot_kc_prot / tot_kc) * 100"/>
+                                <t t-set="pct_prot_desglosado" t-value="(tot_kc_prot / tot_kc_desglosado) * 100"/>
+
                                 <t t-set="pct_gras" t-value="(tot_kc_gras / tot_kc) * 100"/>
                                 <t t-set="pct_gras_poli" t-value="(tot_kc_gras_poli / tot_kc_desglosado) * 100"/>
                                 <t t-set="pct_gras_mono" t-value="(tot_kc_gras_mono / tot_kc_desglosado) * 100"/>
@@ -631,7 +633,7 @@
 
                                 <t t-set="pct_hume" t-value="0"/>
                                 <t t-set="pct_tota" t-value="pct_prot + pct_gras + pct_carb"/>
-                                <t t-set="pct_tota_desglosado" t-value="pct_prot + pct_gras_poli + pct_gras_mono +
+                                <t t-set="pct_tota_desglosado" t-value="pct_prot_desglosado + pct_gras_poli + pct_gras_mono +
                                                                     pct_gras_tran + pct_gras_satu +
                                                                     pct_azucares + pct_azucares_anadidos +
                                                                     pct_otros_carb"/>
@@ -805,7 +807,7 @@
                                         <t t-esc="'{0:,.2f}'.format(tot_kc_prot)"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.2f}'.format(pct_prot)"/>
+                                        <t t-esc="'{0:,.2f}'.format(pct_prot_desglosado)"/>
                                     </td>
                                 </tr>
                                 <tr>
