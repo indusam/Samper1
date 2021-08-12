@@ -950,9 +950,9 @@
                                     <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <span t-att-style="style" t-esc="'GRASAS TOTALES'"/>
                                     </th>
-                                    <td style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <span t-att-style="style" t-esc="'{0:,.4f}'.format(total_grasas_merma)"/>
-                                    </td>
+                                    </th>
                                 </tr>
                                 <tr>
                                     <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -1036,9 +1036,9 @@
                                     <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <span t-att-style="style" t-esc="'CARBOHIDRATOS TOTALES'"/>
                                     </th>
-                                    <td style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <span t-att-style="style" t-esc="'{0:,.4f}'.format(total_carboh_merma)"/>
-                                    </td>
+                                    </th>
                                 </tr>
                                 <tr>
                                     <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -1077,14 +1077,14 @@
                                     <th style="text-align:left;color:black!important;">        </th>
                                     <th style="text-align:left;color:black!important;">        </th>
                                     <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_kj_desglosado)"/>
+                                        <span t-att-style="style" t-esc="'{0:,.2f}'.format(tot_kj_desglosado)"/>
                                     </th>
                                     <th style="text-align:left;color:black!important;">        </th>
                                     <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_kc_desglosado)"/>
+                                        <span t-att-style="style" t-esc="'{0:,.2f}'.format(tot_kc_desglosado)"/>
                                     </th>
                                     <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <span t-att-style="style" t-esc="'{0:,.4f}'.format(pct_tota_desglosado)"/>
+                                        <span t-att-style="style" t-esc="'{0:,.2f}'.format(pct_tota_desglosado)"/>
                                     </th>
                                 </tr>
                             </t>
