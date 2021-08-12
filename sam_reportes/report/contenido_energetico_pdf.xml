@@ -251,7 +251,7 @@
                                 </td>
                             </tr>
 
-                            <!-- Imprime Totales -->
+                            <!-- Imprime Totales antes de merma-->
                             <tr>
                                 <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <span t-att-style="style" t-esc="'PORCION (g)'"/>
@@ -272,185 +272,7 @@
                                     <span t-att-style="style" t-esc="'{0:,.2f}'.format(pct_tota)"/>
                                 </th>
                             </tr>
-                            <!-- IMPRIME EL DESGLOSE DE GRASAS Y CARBOHIDRATOS -->
-
-
-
-
-
-
-
-
-
-
-                            <!-- Calcula e imprime merma -->
-                            <t t-if="pct_merma > 0" >
-                                <t t-set="tit_merma" t-value="'% Merma'"/>
-                                <t t-set="tot_cant_merma" t-value="tot_cantidad * ((100 - pct_merma) / 100 )"/>
-                                <t t-set="tcantmerma" t-value="tot_cantidad - tot_cant_merma"/>
-                                <t t-set="tot_hume" t-value="tpct_hume - tcantmerma"/>
-
-                                <t t-set="tot_prot_merma" t-value="(tot_proteina / tot_cant_merma) * 100"/>
-                                <t t-set="tot_gras_merma" t-value="(tot_gras / tot_cant_merma) * 100"/>
-                                <t t-set="tot_carb_merma" t-value="(tot_carb / tot_cant_merma) * 100"/>
-                                <t t-set="tot_hume_merma" t-value="(tot_hume /tot_cant_merma) * 100"/>
-
-                                <!-- Calcula energía después de merma-->
-                                <t t-set="tot_kj_prot" t-value="round(tot_prot_merma,3) * 17" />
-                                <t t-set="tot_kc_prot" t-value="round(tot_prot_merma,3) * 4" />
-
-                                <t t-set="tot_kj_gras" t-value="round(tot_gras_merma,3) * 37" />
-                                <t t-set="tot_kc_gras" t-value="round(tot_gras_merma,3) * 9" />
-
-                                <t t-set="tot_kj_carb" t-value="round(tot_carb_merma,3) * 17" />
-                                <t t-set="tot_kc_carb" t-value="round(tot_carb_merma,3) * 4" />
-                                <t t-set="tot_kj_hume" t-value="0" />
-                                <t t-set="tot_kc_hume" t-value="0" />
-
-                                <t t-set="tot_kc" t-value="tot_kc_prot + tot_kc_gras + tot_kc_carb" />
-                                <t t-set="tot_kj" t-value="tot_kj_prot + tot_kj_gras + tot_kj_carb" />
-
-                                <t t-set="pct_prot" t-value="(tot_kc_prot / tot_kc) * 100"/>
-                                <t t-set="pct_prot_desglosado" t-value="(tot_kc_prot_desglosado / tot_kc) * 100"/>
-                                <t t-set="pct_gras" t-value="(tot_kc_gras / tot_kc) * 100"/>
-                                <t t-set="pct_carb" t-value="(tot_kc_carb / tot_kc) * 100"/>
-                                <t t-set="pct_hume" t-value="0"/>
-                                <t t-set="pct_tota" t-value="pct_prot + pct_gras + pct_carb"/>
-
-                                <tr>
-                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <span t-att-style="style" t-esc="pct_merma"/>
-                                        <span t-att-style="style" t-esc="tit_merma"/>
-                                    </th>
-                                </tr>
-
-                                <tr>
-                                    <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <span t-att-style="style" t-esc="'PROTEINA'"/>
-                                    </th>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.4f}'.format(tot_prot_merma)"/>
-                                    </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.1f}'.format(tot_prot_merma)"/>
-                                    </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="' (17) '"/>
-                                    </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.2f}'.format(tot_kj_prot)"/>
-                                    </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="' (4) '"/>
-                                    </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.2f}'.format(tot_kc_prot)"/>
-                                    </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.2f}'.format(pct_prot)"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <span t-att-style="style" t-esc="'GRASA TOTAL'"/>
-                                    </th>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.4f}'.format(tot_gras_merma)"/>
-                                    </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.1f}'.format(tot_gras_merma)"/>
-                                    </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="' (37) '"/>
-                                    </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.2f}'.format(tot_kj_gras)"/>
-                                    </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="' (9) '"/>
-                                    </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.2f}'.format(tot_kc_gras)"/>
-                                    </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.2f}'.format(pct_gras)"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <span t-att-style="style" t-esc="'CARBOHIDRATOS'"/>
-                                    </th>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.4f}'.format(tot_carb_merma)"/>
-                                    </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.1f}'.format(tot_carb_merma)"/>
-                                    </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="' (17) '"/>
-                                    </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.2f}'.format(tot_kj_carb)"/>
-                                    </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="' (4) '"/>
-                                    </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.2f}'.format(tot_kc_carb)"/>
-                                    </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.2f}'.format(pct_carb)"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <span t-att-style="style" t-esc="'HUMEDAD'"/>
-                                    </th>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.4f}'.format(tot_hume_merma)"/>
-                                    </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.1f}'.format(tot_hume_merma)"/>
-                                    </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="' (0) '"/>
-                                    </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.2f}'.format(tot_kj_hume)"/>
-                                    </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="' (0) '"/>
-                                    </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.2f}'.format(tot_kc_hume)"/>
-                                    </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.2f}'.format(pct_hume)"/>
-                                    </td>
-                                </tr>
-                                <!-- Imprime Totales después de merma -->
-                                <tr>
-                                    <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <span t-att-style="style" t-esc="'PORCION (g)'"/>
-                                    </th>
-                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <span t-att-style="style" t-esc="'{0:,.2f}'.format(tot_cantidad)"/>
-                                    </th>
-                                    <th style="text-align:left;color:black!important;">        </th>
-                                    <th style="text-align:left;color:black!important;">        </th>
-                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <span t-att-style="style" t-esc="'{0:,.2f}'.format(tot_kj)"/>
-                                    </th>
-                                    <th style="text-align:left;color:black!important;">        </th>
-                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <span t-att-style="style" t-esc="'{0:,.2f}'.format(tot_kc)"/>
-                                    </th>
-                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <span t-att-style="style" t-esc="'{0:,.2f}'.format(pct_tota)"/>
-                                    </th>
-                                </tr>
-                            </t>
-                            <!-- IMPRIME EL REPORTE CON  DESGLOSE DE GRASAS Y CARBOHIDRATOS -->
+                            <!-- IMPRIME EL DESGLOSE DE GRASAS Y CARBOHIDRATOS ANTES DE MERMA -->
                             <tr>
                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <span t-att-style="style" t-esc="'DESGLOSE DE GRASAS Y CARBOHIDRATOS'"/>
@@ -730,7 +552,6 @@
                             </tr>
 
                             <!-- Calcula e imprime merma -->
-
                             <t t-if="pct_merma > 0" >
                                 <t t-set="tit_merma" t-value="'% Merma'"/>
                                 <t t-set="tot_cant_merma" t-value="tot_cantidad * ((100 - pct_merma) / 100 )"/>
@@ -738,18 +559,8 @@
                                 <t t-set="tot_hume" t-value="tpct_hume - tcantmerma"/>
 
                                 <t t-set="tot_prot_merma" t-value="(tot_proteina / tot_cant_merma) * 100"/>
-
                                 <t t-set="tot_gras_merma" t-value="(tot_gras / tot_cant_merma) * 100"/>
-                                <t t-set="tot_gras_poli_merma" t-value="(tot_gras_poli / tot_cant_merma) * 100"/>
-                                <t t-set="tot_gras_mono_merma" t-value="(tot_gras_mono / tot_cant_merma) * 100"/>
-                                <t t-set="tot_gras_satu_merma" t-value="(tot_gras_satu / tot_cant_merma) * 100"/>
-                                <t t-set="tot_gras_tran_merma" t-value="(tot_gras_tran / tot_cant_merma) * 100"/>
-
                                 <t t-set="tot_carb_merma" t-value="(tot_carb / tot_cant_merma) * 100"/>
-                                <t t-set="tot_azucares_merma" t-value="(tot_azucares / tot_cant_merma) * 100"/>
-                                <t t-set="tot_azucares_anadidos_merma" t-value="(tot_azucares_anadidos / tot_cant_merma) * 100"/>
-                                <t t-set="tot_otros_carb_merma" t-value="(tot_otros_carb / tot_cant_merma) * 100"/>
-
                                 <t t-set="tot_hume_merma" t-value="(tot_hume /tot_cant_merma) * 100"/>
 
                                 <!-- Calcula energía después de merma-->
@@ -758,70 +569,21 @@
 
                                 <t t-set="tot_kj_gras" t-value="round(tot_gras_merma,3) * 37" />
                                 <t t-set="tot_kc_gras" t-value="round(tot_gras_merma,3) * 9" />
-                                <t t-set="tot_kj_gras_poli" t-value="round(tot_gras_poli_merma,3) * 37" />
-                                <t t-set="tot_kc_gras_poli" t-value="round(tot_gras_poli_merma,3) * 9" />
-                                <t t-set="tot_kj_gras_mono" t-value="round(tot_gras_mono_merma,3) * 37" />
-                                <t t-set="tot_kc_gras_mono" t-value="round(tot_gras_mono_merma,3) * 9" />
-                                <t t-set="tot_kj_gras_tran" t-value="round(tot_gras_tran_merma,3) * 37" />
-                                <t t-set="tot_kc_gras_tran" t-value="round(tot_gras_tran_merma,3) * 9" />
-                                <t t-set="tot_kj_gras_satu" t-value="round(tot_gras_satu_merma,3) * 37" />
-                                <t t-set="tot_kc_gras_satu" t-value="round(tot_gras_satu_merma,3) * 9" />
 
                                 <t t-set="tot_kj_carb" t-value="round(tot_carb_merma,3) * 17" />
                                 <t t-set="tot_kc_carb" t-value="round(tot_carb_merma,3) * 4" />
-                                <t t-set="tot_kj_azucares" t-value="round(tot_azucares_merma,3) * 17" />
-                                <t t-set="tot_kc_azucares" t-value="round(tot_azucares_merma,3) * 4" />
-                                <t t-set="tot_kj_azucares_anadidos" t-value="round(tot_azucares_anadidos_merma,3) * 17" />
-                                <t t-set="tot_kc_azucares_anadidos" t-value="round(tot_azucares_anadidos_merma,3) * 4" />
-                                <t t-set="tot_kj_otros_carb" t-value="round(tot_otros_carb_merma,3) * 17" />
-                                <t t-set="tot_kc_otros_carb" t-value="round(tot_otros_carb_merma,3) * 4" />
-
                                 <t t-set="tot_kj_hume" t-value="0" />
                                 <t t-set="tot_kc_hume" t-value="0" />
 
                                 <t t-set="tot_kc" t-value="tot_kc_prot + tot_kc_gras + tot_kc_carb" />
                                 <t t-set="tot_kj" t-value="tot_kj_prot + tot_kj_gras + tot_kj_carb" />
-                                <t t-set="tot_kc_desglosado" t-value="tot_kc_prot + tot_kc_gras_poli +
-                                                                                tot_kc_gras_mono +
-                                                                                tot_kc_gras_tran +
-                                                                                tot_kc_gras_satu +
-                                                                                tot_kc_azucares +
-                                                                                tot_kc_azucares_anadidos +
-                                                                                tot_kc_otros_carb" />
 
-                                <t t-set="tot_kj_desglosado" t-value="tot_kj_prot + tot_kj_gras_poli +
-                                                                                tot_kj_gras_mono +
-                                                                                tot_kj_gras_tran +
-                                                                                tot_kj_gras_satu +
-                                                                                tot_kj_azucares +
-                                                                                tot_kj_azucares_anadidos +
-                                                                                tot_kj_otros_carb" />
-
-                                <t t-set="pct_prot" t-value="(tot_kc_prot / tot_kc_desglosado) * 100"/>
-                                <t t-set="pct_gras" t-value="(tot_kc_gras / tot_kc_desglosado) * 100"/>
-                                <t t-set="pct_gras_poli" t-value="(tot_kc_gras_poli / tot_kc_desglosado) * 100"/>
-                                <t t-set="pct_gras_mono" t-value="(tot_kc_gras_mono / tot_kc_desglosado) * 100"/>
-                                <t t-set="pct_gras_tran" t-value="(tot_kc_gras_tran / tot_kc_desglosado) * 100"/>
-                                <t t-set="pct_gras_satu" t-value="(tot_kc_gras_satu / tot_kc_desglosado) * 100"/>
-                                <t t-set="pct_carb" t-value="(tot_kc_carb / tot_kc_desglosado) * 100"/>
-                                <t t-set="pct_azucares" t-value="(tot_kc_azucares / tot_kc_desglosado) * 100"/>
-                                <t t-set="pct_azucares_anadidos" t-value="(tot_kc_azucares_anadidos / tot_kc_desglosado) * 100"/>
-                                <t t-set="pct_otros_carb" t-value="(tot_kc_otros_carb / tot_kc_desglosado) * 100"/>
-
+                                <t t-set="pct_prot" t-value="(tot_kc_prot / tot_kc) * 100"/>
+                                <t t-set="pct_prot_desglosado" t-value="(tot_kc_prot_desglosado / tot_kc) * 100"/>
+                                <t t-set="pct_gras" t-value="(tot_kc_gras / tot_kc) * 100"/>
+                                <t t-set="pct_carb" t-value="(tot_kc_carb / tot_kc) * 100"/>
                                 <t t-set="pct_hume" t-value="0"/>
                                 <t t-set="pct_tota" t-value="pct_prot + pct_gras + pct_carb"/>
-                                <t t-set="pct_tota_desglosado" t-value="pct_prot + pct_gras_poli + pct_gras_mono +
-                                                                    pct_gras_tran + pct_gras_satu +
-                                                                    pct_azucares + pct_azucares_anadidos +
-                                                                    pct_otros_carb"/>
-
-                                <t t-set="total_grasas_merma" t-value="tot_gras_poli_merma +
-                                                                 tot_gras_mono_merma +
-                                                                 tot_gras_tran_merma +
-                                                                 tot_gras_satu_merma "/>
-                                <t t-set="total_carboh_merma" t-value="tot_azucares_merma +
-                                                                 tot_azucares_anadidos_merma +
-                                                                 tot_otros_carb_merma"/>
 
                                 <tr>
                                     <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -955,9 +717,16 @@
                                         <span t-att-style="style" t-esc="'{0:,.2f}'.format(pct_tota)"/>
                                     </th>
                                 </tr>
+                                <!-- IMPRIME EL REPORTE CON DESGLOSE DE GRASAS Y CARBOHIDRATOS DESPUES DE MERMA -->
                                 <tr>
                                     <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <span t-att-style="style" t-esc="'DESGLOSE DE GRASAS Y CARBOHIDRATOS'"/>
+                                        <span t-att-style="style" t-esc="'DESGLOSE DE GRASAS Y CARBOHIDRATOS DESPUES DE MERMA'"/>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <span t-att-style="style" t-esc="pct_merma"/>
+                                        <span t-att-style="style" t-esc="tit_merma"/>
                                     </th>
                                 </tr>
                                 <tr>
@@ -1210,7 +979,7 @@
                                         <t t-esc="'{0:,.2f}'.format(pct_hume)"/>
                                     </td>
                                 </tr>
-                                <!-- Imprime Totales después de merma -->
+                                <!-- Imprime Totales del desglose después de merma -->
                                 <tr>
                                     <th style="text-align:left;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <span t-att-style="style" t-esc="'PORCION (g)'"/>
