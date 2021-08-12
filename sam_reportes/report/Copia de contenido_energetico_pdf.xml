@@ -272,16 +272,6 @@
                                     <span t-att-style="style" t-esc="'{0:,.2f}'.format(pct_tota)"/>
                                 </th>
                             </tr>
-                            <!-- IMPRIME EL DESGLOSE DE GRASAS Y CARBOHIDRATOS -->
-
-
-
-
-
-
-
-
-
 
                             <!-- Calcula e imprime merma -->
                             <t t-if="pct_merma > 0" >
@@ -730,7 +720,6 @@
                             </tr>
 
                             <!-- Calcula e imprime merma -->
-
                             <t t-if="pct_merma > 0" >
                                 <t t-set="tit_merma" t-value="'% Merma'"/>
                                 <t t-set="tot_cant_merma" t-value="tot_cantidad * ((100 - pct_merma) / 100 )"/>
