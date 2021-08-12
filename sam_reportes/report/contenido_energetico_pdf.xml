@@ -553,7 +553,7 @@
 
                             <!-- Calcula e imprime merma -->
                             <t t-if="pct_merma > 0" >
-                                <t t-set="tit_merma" t-value="'% Merma'"/>
+                                <t t-set="tit_merma" t-value="'% MERMA'"/>
                                 <t t-set="tot_cant_merma" t-value="tot_cantidad * ((100 - pct_merma) / 100 )"/>
                                 <t t-set="tcantmerma" t-value="tot_cantidad - tot_cant_merma"/>
                                 <t t-set="tot_hume" t-value="tpct_hume - tcantmerma"/>
@@ -618,13 +618,13 @@
                                                                                 tot_kj_azucares_anadidos +
                                                                                 tot_kj_otros_carb" />
 
-                                <t t-set="pct_prot" t-value="(tot_kc_prot / tot_kc_desglosado) * 100"/>
-                                <t t-set="pct_gras" t-value="(tot_kc_gras / tot_kc_desglosado) * 100"/>
+                                <t t-set="pct_prot" t-value="(tot_kc_prot / tot_kc) * 100"/>
+                                <t t-set="pct_gras" t-value="(tot_kc_gras / tot_kc) * 100"/>
                                 <t t-set="pct_gras_poli" t-value="(tot_kc_gras_poli / tot_kc_desglosado) * 100"/>
                                 <t t-set="pct_gras_mono" t-value="(tot_kc_gras_mono / tot_kc_desglosado) * 100"/>
                                 <t t-set="pct_gras_tran" t-value="(tot_kc_gras_tran / tot_kc_desglosado) * 100"/>
                                 <t t-set="pct_gras_satu" t-value="(tot_kc_gras_satu / tot_kc_desglosado) * 100"/>
-                                <t t-set="pct_carb" t-value="(tot_kc_carb / tot_kc_desglosado) * 100"/>
+                                <t t-set="pct_carb" t-value="(tot_kc_carb / tot_kc) * 100"/>
                                 <t t-set="pct_azucares" t-value="(tot_kc_azucares / tot_kc_desglosado) * 100"/>
                                 <t t-set="pct_azucares_anadidos" t-value="(tot_kc_azucares_anadidos / tot_kc_desglosado) * 100"/>
                                 <t t-set="pct_otros_carb" t-value="(tot_kc_otros_carb / tot_kc_desglosado) * 100"/>
@@ -780,12 +780,6 @@
                                 <tr>
                                     <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <span t-att-style="style" t-esc="'DESGLOSE DE GRASAS Y CARBOHIDRATOS DESPUES DE MERMA'"/>
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <span t-att-style="style" t-esc="pct_merma"/>
-                                        <span t-att-style="style" t-esc="tit_merma"/>
                                     </th>
                                 </tr>
                                 <tr>
