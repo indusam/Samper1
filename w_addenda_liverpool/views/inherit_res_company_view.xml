@@ -1,0 +1,14 @@
+<odoo>
+  <data>
+    <record id="w_inherit_res_company_view_add_fields_for_addendas_liverpool" model="ir.ui.view">
+        <field name="name">w.inherit.res.company.view.add.fields.for.addendas.liverpool</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='currency_id']" position="after">
+                <field name="global_localitation_number"/>
+            </xpath>
+        </field>
+      </record>
+  </data>
+</odoo>

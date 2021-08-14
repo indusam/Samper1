@@ -1,0 +1,17 @@
+<odoo>
+  <data>
+    <record id="w_inherit_res_partner_view_add_fields_for_addendas_liverpool" model="ir.ui.view">
+        <field name="name">w.inherit.res.partner.view.add.fields.for.addendas.liverpool</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="generate_addenda_liverpool"/>
+                <field name="global_localitation_number" attrs="{'invisible': [('generate_addenda_liverpool', '=', False)]}"/>
+                <field name="person_order_department" attrs="{'invisible': [('generate_addenda_liverpool', '=', False)]}"/>
+                <field name="supplier_identification" attrs="{'invisible': [('generate_addenda_liverpool', '=', False)]}"/>
+            </xpath>
+        </field>
+      </record>
+  </data>
+</odoo>
