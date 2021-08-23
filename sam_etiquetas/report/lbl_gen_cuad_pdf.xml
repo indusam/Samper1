@@ -17,9 +17,7 @@
                         <t t-foreach="docs" t-as="doc">
                         <texto>Ingredientes: <t t-esc="doc.product_id.x_cod_ingredientes"/></texto>
                             <br/>
-                            <br/>
                         <texto>Lote: <t t-esc="doc.name"/></texto>
-                            <br/>
                             <br/>
                         <texto>Caducidad: <t t-esc="doc.life_date"/></texto>
                         </t>
