@@ -16,6 +16,7 @@
                     <tbody>
                         <t t-foreach="docs" t-as="doc">
                             <t t-esc="doc.product_id.x_cod_ingredientes"/>
+                            <br/>
                             <t t-esc="doc.name"/>
                         </t>
                     </tbody>
