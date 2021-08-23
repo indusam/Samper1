@@ -26,6 +26,8 @@
                             <br/>
                             <br/>
                             <texto>Puede contener: <t t-esc="doc.product_id.x_leyenda_precautoria"/></texto>
+                            <br/>
+                            <span t-field="doc.product_id.barcode"/>
                         </t>
                     </tbody>
                 </div>
