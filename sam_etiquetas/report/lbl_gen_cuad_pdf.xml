@@ -8,9 +8,6 @@
                     <div style="text-align:left;color:black!important;">
                         <strong>
                             <h5>
-                                <span t-esc="docs.product_id.x_name"/>
-                                
-
                             </h5>
                         </strong>
                     </div>
