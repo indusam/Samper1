@@ -15,7 +15,7 @@
                     <br/>
                     <tbody>
                         <t t-foreach="docs" t-as="doc">
-                            <texto>Ingredientes: <t t-esc="doc.product_id.x_cod_ingredientes"/></texto>
+                            <texto>Ingredientes: <br/> <t t-esc="doc.product_id.x_cod_ingredientes"/></texto>
                             <br/>
                             <br/>
                             <texto>Lote: <t t-esc="doc.name"/></texto>
@@ -26,13 +26,11 @@
                             <br/>
                             <br/>
                             <texto>Puede contener: <t t-esc="doc.product_id.x_leyenda_precautoria"/></texto>
-                            <br/>
-                            <div>
-                                <span t-field="doc.product_id.barcode"/>
-                                <attribute name="t-options-widget">"barcode"</attribute>
-                                <attribute name="t-options-width">100</attribute>
-                                <attribute name="t-options-height">40</attribute>
-                            </div>
+                            <br/>    
+                            <span t-field="doc.product_id.barcode"/>
+                            <attribute name="t-options-widget">"barcode"</attribute>
+                            <attribute name="t-options-width">100</attribute>
+                            <attribute name="t-options-height">40</attribute>
                         </t>
                     </tbody>
                 </div>
