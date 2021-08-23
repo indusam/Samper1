@@ -28,6 +28,19 @@
                             <texto>Puede contener: <t t-esc="doc.product_id.x_leyenda_precautoria"/></texto>
                             <br/>
                             <span t-field="doc.product_id.barcode"/>
+                            <xpath expr="/t[1]/div[1]/div[12]/div[4]" position="replace"/>
+                            <xpath expr="/t/div/div[37]/div[1]" position="inside">
+                                <span t-field="doc.product_id.barcode"/>
+                            </xpath>
+                            <xpath expr="/t[1]/div[1]/div[37]/div[1]/span[1]" position="attributes">
+                            <attribute name="t-options-widget">"barcode"</attribute>
+                            </xpath>
+                            <xpath expr="/t[1]/div[1]/div[37]/div[1]/span[1]" position="attributes">
+                            <attribute name="t-options-width">100</attribute>
+                            </xpath>
+                            <xpath expr="/t[1]/div[1]/div[37]/div[1]/span[1]" position="attributes">
+                            <attribute name="t-options-height">40</attribute>
+                            </xpath>
                         </t>
                     </tbody>
                 </div>
