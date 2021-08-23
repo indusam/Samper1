@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="wizard_contenido_energetico_view_form" model="ir.ui.view">
+        <field name="name">wizard.contenido.energetico.view.form</field>
+        <field name="model">wizard.contenido.energetico</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="producto" required="1"/>
+                        <field name="cantidad" />
+                        <field name="pct_merma" required="0"/>
+                        <field name="consolidado" />
+                    </group>
+                </group>
+                <footer>
+                    <button name="imprime_contenido_energetico" type="object" string="Imprimir" class="oe_highlight"/>
+                    <button special="cancel" string="Cancelar"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_contenido_energetico_wizard" model="ir.actions.act_window">
+        <field name="name">Contenido Energético</field>
+        <field name="res_model">wizard.contenido.energetico</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="wizard_contenido_energetico_view_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem
+        id="contenido_energetico_menu"
+        name="Contenido Energético"
+        action="action_contenido_energetico_wizard"
+        parent="studio_customization.samper_informes_9a4c552e-6a2c-49dc-b22f-2c77d1e02fac"
+        groups="base.group_user"
+        sequence="350"/>
+</odoo>
