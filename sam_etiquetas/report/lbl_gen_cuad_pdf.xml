@@ -23,6 +23,8 @@
                             <texto>Caducidad: <t t-esc="doc.life_date"/></texto>
                             <br/>
                             <texto>Venta a granel, pésese en <br/>presencia del consumidor</texto>
+                            <br/>
+                            <t t-esc="doc.product_id.x_leyenda_precautoria"/>
                         </t>
                     </tbody>
                 </div>
