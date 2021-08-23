@@ -91,7 +91,7 @@
     <report
             id="action_lbl_gen_cuad"
             string="Etiqueta genérica cuadrada"
-            model="stock_production_lot"
+            model="stock.production.lot"
             report_type="qweb-pdf"
             file="sam_etiquetas.lbl_gen_cuad_template"
             name="sam_etiquetas.lbl_gen_cuad_template"
