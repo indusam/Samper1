@@ -7,9 +7,9 @@
                     <br/>
                     <div style="text-align:left;color:black!important;">
                         <strong>
-                            <h5>
+                            <h1>
                                 <span style="font-weight:bold;" t-esc="doc.product_id.x_name"/>
-                            </h5>
+                            </h1>
                         </strong>
                     </div>
                     <br/>
@@ -19,6 +19,9 @@
                             <br/>
                             <br/>
                         <texto>Lote: <t t-esc="doc.name"/></texto>
+                            <br/>
+                            <br/>
+                        <texto>Caducidad: <t t-esc="doc.life_date"/></texto>
                         </t>
                     </tbody>
                 </div>
