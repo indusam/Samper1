@@ -8,17 +8,17 @@
                     <div style="text-align:left;color:black!important;">
                         <strong>
                             <h5>
-                                <span t-esc="docs.product_id.x_name"/>
+                                <span style="font-weight:bold;" t-esc="docs.product_id.x_name"/>
                             </h5>
                         </strong>
                     </div>
                     <br/>
                     <tbody>
                         <t t-foreach="docs" t-as="doc">
-                        Ingredientes: <t t-esc="doc.product_id.x_cod_ingredientes"/>
+                        <texto>Ingredientes: <t t-esc="doc.product_id.x_cod_ingredientes"/></texto>
                             <br/>
                             <br/>
-                         <texto>Lote: <t t-esc="doc.name"/></texto>
+                        <texto>Lote: <t t-esc="doc.name"/></texto>
                         </t>
                     </tbody>
                 </div>
