@@ -9,11 +9,6 @@
                         <strong>
                             <h5>
                                 <span t-esc="docs.product_id.x_name"/>
-<<<<<<< HEAD
-=======
-                                
-
->>>>>>> 373c698e8573486409ce388f9713221966b95f79
                             </h5>
                         </strong>
                     </div>
