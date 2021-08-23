@@ -9,8 +9,6 @@
                         <strong>
                             <h5>
                                 <span t-esc="docs.product_id.x_name"/>
-                                <span t-esc="docs.product_id.x_name"/>
-
                             </h5>
                         </strong>
                     </div>
@@ -18,7 +16,9 @@
                     <tbody>
                         <t t-foreach="docs" t-as="doc">
                             <t t-esc="doc.product_id.x_cod_ingredientes"/>
-                            <t t-esc="doc.name"/>
+                            <br/>
+                             lote: <t t-esc="doc.name"/>
+                            <br/>
                         </t>
                     </tbody>
                 </div>
