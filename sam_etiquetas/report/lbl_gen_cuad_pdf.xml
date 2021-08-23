@@ -25,7 +25,7 @@
                             <texto>Venta a granel, pésese en <br/>presencia del consumidor</texto>
                             <br/>
                             <br/>
-                            <texto>Puede contener: <t style="font-weight:bold;" t-esc="doc.product_id.x_leyenda_precautoria"/></texto>
+                            <texto>Puede contener: <t span style="font-weight:bold;" t-esc="doc.product_id.x_leyenda_precautoria"/></texto>
                         </t>
                     </tbody>
                 </div>
