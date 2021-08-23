@@ -8,7 +8,7 @@
                     <div style="text-align:left;color:black!important;">
                         <strong>
                             <h1>
-                                <span style="font-weight:bold;" t-esc="doc.product_id.x_name"/>
+                                <span style="font-weight:bold;" t-esc="docs.product_id.x_name"/>
                             </h1>
                         </strong>
                     </div>
