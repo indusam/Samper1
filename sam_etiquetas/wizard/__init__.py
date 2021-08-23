@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Tabla nutrimental, fórmulas, contenido energético, etc.
-# VBueno 1603202113:26
+# Etiquetas samper
+# VBueno 2208202121:17
 
-from . import tabla_nutrimental, formulas, contenido_energetico
+# from . import
