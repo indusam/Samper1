@@ -48,6 +48,7 @@
                                 <detallista:alternatePartyIdentification type="SELLER_ASSIGNED_IDENTIFIER_FOR_A_PARTY"><t t-if="record.partner_id.supplier_identification" t-esc="record.unescape_characters(record.partner_id.supplier_identification)"/></detallista:alternatePartyIdentification>
                             </detallista:seller>
                             <t t-set="line_counts" t-value="0"/>
+                            <t t-set="uom_addenda" t-value="kg"/>
                             <t t-foreach="record.invoice_line_ids.filtered(lambda inv: not inv.display_type)" t-as="line">
                                 <t t-set="line_counts" t-value="line_counts + 1"/>
                                 <detallista:lineItem t-att-number="line_counts" type="SimpleInvoiceLineItemType">
@@ -58,7 +59,8 @@
                                         <detallista:tradeItemDescriptionInformation language="ES">
                                             <detallista:longText><t t-if="line.product_id.name" t-esc="record.unescape_characters(line.product_id.name)"/></detallista:longText>
                                         </detallista:tradeItemDescriptionInformation>
-                                        <detallista:invoicedQuantity t-att-unitOfMeasure="line.product_uom_id.name"><t t-esc="line.quantity"/></detallista:invoicedQuantity>
+                                        <!-- <detallista:invoicedQuantity t-att-unitOfMeasure="line.product_uom_id.name"><t t-esc="line.quantity"/></detallista:invoicedQuantity> -->
+                                        <detallista:invoicedQuantity t-att-unitOfMeasure="uom_addenda"><t t-esc="line.quantity"/></detallista:invoicedQuantity>
                                         <detallista:grossPrice>
                                             <detallista:Amount><t t-esc="line.get_price_gross()"/></detallista:Amount>
                                         </detallista:grossPrice>
