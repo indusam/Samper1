@@ -9,7 +9,7 @@ class SaleOrder(models.Model):
     @api.onchange('partner_id')
     def cliente_bloqueado(self):
         if self.partner_id.x_studio_cliente_bloqueado:
-            raise UserError('CLIENTE BLOQUEADO: ', self.x_studio_motivo_de_bloqueo)
+            raise UserError('CLIENTE BLOQUEADO: ', self.partner_id.x_studio_motivo_de_bloqueo)
 
 
 
