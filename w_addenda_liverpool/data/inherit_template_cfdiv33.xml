@@ -48,7 +48,6 @@
                                 <detallista:alternatePartyIdentification type="SELLER_ASSIGNED_IDENTIFIER_FOR_A_PARTY"><t t-if="record.partner_id.supplier_identification" t-esc="record.unescape_characters(record.partner_id.supplier_identification)"/></detallista:alternatePartyIdentification>
                             </detallista:seller>
                             <t t-set="line_counts" t-value="0"/>
-                            <t t-set="uom_addenda" t-value="kg"/>
                             <t t-foreach="record.invoice_line_ids.filtered(lambda inv: not inv.display_type)" t-as="line">
                                 <t t-set="line_counts" t-value="line_counts + 1"/>
                                 <detallista:lineItem t-att-number="line_counts" type="SimpleInvoiceLineItemType">
