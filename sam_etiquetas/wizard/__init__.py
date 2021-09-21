@@ -3,4 +3,4 @@
 # Etiquetas samper
 # VBueno 2208202121:17
 
-# from . import
+from . import lbl_varios_lotes
