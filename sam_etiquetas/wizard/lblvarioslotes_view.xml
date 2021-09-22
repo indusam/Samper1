@@ -43,7 +43,7 @@
         id="label_menu"
         name="Etiquetas"
         action="action_lblvarioslotes_wizard"
-        parent="sam_reportes.formula_menu"
+        parent="mrp.menu_mrp_production_report"
         groups="base.group_user"
-        sequence="350"/>
+        sequence="20"/>
 </odoo>
