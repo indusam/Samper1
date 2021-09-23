@@ -45,7 +45,7 @@ class LblVariosLotes(models.TransientModel):
                 'producto': self.lote1.product_id.name,
                 'lote': self.lote1.name,
                 'elaboracion': self.lote1.create_date,
-                'caducidad': self.lote1.caducidad
+                'caducidad': self.lote1.life_date
                 })
 
         data = {'ids': self.ids,
