@@ -42,9 +42,9 @@ class LblVariosLotes(models.TransientModel):
 
         if self.lote1:
             vals.append({
-                'lote': self.lote1.name,
                 'producto': self.lote1.product_id.name,
-                'elaboracion': self.lote1.elaboracion,
+                'lote': self.lote1.name,
+                'elaboracion': self.lote1.create_date,
                 'caducidad': self.lote1.caducidad
                 })
 
