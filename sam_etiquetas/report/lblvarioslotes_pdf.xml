@@ -42,31 +42,31 @@
                             <t t-set="tot_pct_formula" t-value="0"/>
 
                             <t t-foreach="vals" t-as="doc">
-                                <tr>
-                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="doc['componente']"/>
-                                    </td>
-                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="doc['cod_prov']"/>
-                                    </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.4f}'.format(doc['cant_comp'])"/>
-                                    </td>
-                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="doc['unidad']"/>
-                                    </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.4f}'.format(doc['pct_formula'])"/>
-                                    </td>
-                                    <!--
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.2f}'.format(doc['pct_categoria'])"/>
-                                    </td>
-                                    -->
-                                    <!-- Suma totales -->
-                                    <t t-set="tot_cantidad" t-value="tot_cantidad + doc['cant_comp']"/>
-                                    <t t-set="tot_pct_formula" t-value="tot_pct_formula + doc['pct_formula']"/>
-                                </tr>
+<!--                                <tr>-->
+<!--                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">-->
+<!--                                        <t t-esc="doc['componente']"/>-->
+<!--                                    </td>-->
+<!--                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">-->
+<!--                                        <t t-esc="doc['cod_prov']"/>-->
+<!--                                    </td>-->
+<!--                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">-->
+<!--                                        <t t-esc="'{0:,.4f}'.format(doc['cant_comp'])"/>-->
+<!--                                    </td>-->
+<!--                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">-->
+<!--                                        <t t-esc="doc['unidad']"/>-->
+<!--                                    </td>-->
+<!--                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">-->
+<!--                                        <t t-esc="'{0:,.4f}'.format(doc['pct_formula'])"/>-->
+<!--                                    </td>-->
+<!--                                    &lt;!&ndash;-->
+<!--                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">-->
+<!--                                        <t t-esc="'{0:,.2f}'.format(doc['pct_categoria'])"/>-->
+<!--                                    </td>-->
+<!--                                    &ndash;&gt;-->
+<!--                                    &lt;!&ndash; Suma totales &ndash;&gt;-->
+<!--                                    <t t-set="tot_cantidad" t-value="tot_cantidad + doc['cant_comp']"/>-->
+<!--                                    <t t-set="tot_pct_formula" t-value="tot_pct_formula + doc['pct_formula']"/>-->
+<!--                                </tr>-->
                             </t>
                             <!-- Imprime Totales -->
                             <tr>
