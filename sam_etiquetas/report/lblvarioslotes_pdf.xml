@@ -38,8 +38,8 @@
 <!--                        </thead>-->
                         <tbody>
                             <!-- declara totales -->
-                            <t t-set="tot_cantidad" t-value="0"/>
-                            <t t-set="tot_pct_formula" t-value="0"/>
+<!--                            <t t-set="tot_cantidad" t-value="0"/>-->
+<!--                            <t t-set="tot_pct_formula" t-value="0"/>-->
 
                             <t t-foreach="vals" t-as="doc">
 <!--                                <tr>-->
