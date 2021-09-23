@@ -32,6 +32,6 @@
     'depends': ['base', 'mrp', ],
     'data': [
         'report/lblvarioslotes_pdf.xml',
-        'views/lblvarioslotes_view.xml',
+        'views/lblvarioslotes_reporte.xml',
     ],
 }
