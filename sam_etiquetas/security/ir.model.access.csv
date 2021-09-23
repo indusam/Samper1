@@ -1,2 +1,2 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_sam_formulas_sam_formulas,sam_formulas.sam_formulas,model_sam_formulas_sam_formulas,base.group_user,1,1,1,1
+access_sam_etiquetas_sam_etiquetas,sam_etiquetas.sam_etiquetas,model_sam_etiquetas_sam_etiquetas,base.group_user,1,1,1,1
