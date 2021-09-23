@@ -32,10 +32,10 @@ class LblVariosLotes(models.TransientModel):
     # consolidado = fields.Boolean(string="Fórmula consolidada",  )
 
     # permite seleccionar el ingrediente limitante.
-    # @api.onchange('lote1')
-    # def onchange_lote1(self):
-    #     if self.lote1.x_cod_especie != self.x_cod_especie:
-    #         raise UserError('El lote no pertenece a la especie indicada')
+    @api.onchange('lote1')
+    def onchange_lote1(self):
+        if self.lote1.x_cod_especie != self.x_cod_especie:
+            raise UserError('El lote no pertenece a la especie indicada')
 
     def imprimelblvarioslotes(self):
         vals = []
