@@ -14,14 +14,14 @@
 <!--                                    Cantidad: <span t-esc="cantidad"/> kgs.-->
 <!--                                </h5>-->
 <!--                            </t>-->
-                            <t t-if="cant_limitante > 0">
-                                <h5>
-                                    Fórmula:   <span t-esc="codigo"/> - <span t-esc="producto"/>
-                                    <br/>
-                                    Ingrediente limitante: <span t-esc="nombre_il"/>
-                                    Cantidad: <span t-esc="cant_limitante"/> kgs.
-                                </h5>
-                            </t>
+<!--                            <t t-if="cant_limitante > 0">-->
+<!--                                <h5>-->
+<!--                                    Fórmula:   <span t-esc="codigo"/> - <span t-esc="producto"/>-->
+<!--                                    <br/>-->
+<!--                                    Ingrediente limitante: <span t-esc="nombre_il"/>-->
+<!--                                    Cantidad: <span t-esc="cant_limitante"/> kgs.-->
+<!--                                </h5>-->
+<!--                            </t>-->
                         </strong>
                     </div>
                     <br/>
