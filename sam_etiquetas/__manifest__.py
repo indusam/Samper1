@@ -33,5 +33,6 @@
     'data': [
         'report/lblvarioslotes_pdf.xml',
         'views/lblvarioslotes_reporte.xml',
+        'wizard/lblvarioslotes_view.xml',
     ],
 }
