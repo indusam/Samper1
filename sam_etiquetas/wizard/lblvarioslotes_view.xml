@@ -7,7 +7,7 @@
             <form>
                 <group>
                     <group>
-                        <field name="especie" required="1"/>
+                        <field name="especies" required="1"/>
                         <field name="lote1" required="1"/>
                         <field name="lote2" required="0"/>
                         <field name="lote3" required="0"/>
