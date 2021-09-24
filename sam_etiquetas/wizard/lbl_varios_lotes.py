@@ -22,8 +22,8 @@ class LblVariosLotes(models.TransientModel):
     lote3 = fields.Many2one('stock.production.lot', string="Lote 3")
     lote4 = fields.Many2one('stock.production.lot', string="Lote 4")
     lote5 = fields.Many2one('stock.production.lot', string="Lote 5")
-    especie = fields.Selection(string="Especie", selection=[('ave', 'Ave'), ('res', 'Res'),('cerdo', 'Cerdo'),
-                                                            ('cerdo_res', 'Cerdo y Res')], required=True, )
+    especie = fields.Selection(string="Especie", selection=[('ave', 'AVE'), ('res', 'RES'),('cerdo', 'CERDO'),
+                                                            ('cerdo_res', 'CERDO Y RES')], required=True, )
     cantidad = fields.Integer(string="Cantidad")
 
     # producto = fields.Many2one('mrp.bom', string="Producto")
