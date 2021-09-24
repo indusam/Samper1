@@ -34,7 +34,7 @@ class LblVariosLotes(models.TransientModel):
     # permite seleccionar el ingrediente limitante.
     @api.onchange('lote1')
     def onchange_lote1(self):
-        if self.lote1.product_id.x_cod_especie != self.lote1.product_id:
+        if self.lote1.product_id.x_cod_especie != product_id.x_cod_especie:
             raise UserError('El lote no pertenece a la especie indicada')
 
     def imprimelblvarioslotes(self):
