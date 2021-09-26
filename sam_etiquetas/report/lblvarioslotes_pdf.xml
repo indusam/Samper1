@@ -26,7 +26,6 @@
 <!--                            </t>-->
                         </strong>
                     </div>
-                    <br/>
                     <table class="table table-condensed">
                         <thead>
                             <tr >
@@ -37,7 +36,6 @@
                             </tr>
                         </thead>
                         <tbody>
-
                             <t t-foreach="vals" t-as="doc">
                                 <tr>
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -56,10 +54,10 @@
                             </t>
                         </tbody>
                     </table>
-                    <p style="text-align:center;"><span t-esc="especie"/></p>
-                    <p style="text-align:center;">Consérvese en refrigeración entre 2 y 4°C</p>
-                    <p style="text-align:center;">INSPECCIONADO Y APROBADO TIF 544</p>
-                    <p style="text-align:center;">SAGARPA MÉXICO</p>
+                    <p style="text-align:center;font-size:10px;"><span t-esc="especie"/></p>
+                    <p style="text-align:center;font-size:10px;">Consérvese en refrigeración entre 2 y 4°C</p>
+                    <p style="text-align:center;font-size:10px;">INSPECCIONADO Y APROBADO TIF 544</p>
+                    <p style="text-align:center;font-size:10px;">SAGARPA MÉXICO</p>
                 </div>
             </t>
         </t>
