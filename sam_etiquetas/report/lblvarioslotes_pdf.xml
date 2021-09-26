@@ -7,7 +7,7 @@
                     <br/>
                     <div style="text-align:left;color:black!important;">
                         <strong>
-                            <h1>INDUSTRIAS ALIMENTICIAS SAM S.A. DE C.V.</h1>
+                            <h5>INDUSTRIAS ALIMENTICIAS SAM S.A. DE C.V.</h5>
 <!--                            <t t-if="cantidad > 0">-->
 <!--                                <h5>-->
 <!--                                    Fórmula:   <span t-esc="codigo"/> - <span t-esc="producto"/>-->
