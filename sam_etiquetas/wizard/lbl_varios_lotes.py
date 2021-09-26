@@ -24,14 +24,6 @@ class LblVariosLotes(models.TransientModel):
     lote5 = fields.Many2one('stock.production.lot', string="Lote 5")
     especies = fields.Selection(string="Especie", selection=[('ave', 'AVE'), ('res', 'RES'), ('cerdo', 'CERDO'),
                                                              ('cerdo_res', 'CERDO Y RES')], required=True)
-    # cantidad = fields.Integer(string="Cantidad")
-
-    # producto = fields.Many2one('mrp.bom', string="Producto")
-    # cantidad = fields.Float(string="Cantidad")
-    # ing_limitante = fields.Many2one('mrp.bom.line',string="Ingrediente limitante")
-    # cant_limitante = fields.Float(string="Cantidad limitante")
-    # consolidado = fields.Boolean(string="Fórmula consolidada",  )
-
     # permite seleccionar el ingrediente limitante.
     @api.onchange('lote1')
     def onchange_lote1(self):
@@ -41,7 +33,40 @@ class LblVariosLotes(models.TransientModel):
     def imprimelblvarioslotes(self):
         vals = []
 
+
         if self.lote1:
+            vals.append({
+                'producto': self.lote1.product_id.name,
+                'lote': self.lote1.name,
+                'elaboracion': self.lote1.create_date,
+                'caducidad': self.lote1.life_date
+                })
+
+        if self.lote2:
+            vals.append({
+                'producto': self.lote1.product_id.name,
+                'lote': self.lote1.name,
+                'elaboracion': self.lote1.create_date,
+                'caducidad': self.lote1.life_date
+                })
+
+        if self.lote3:
+            vals.append({
+                'producto': self.lote1.product_id.name,
+                'lote': self.lote1.name,
+                'elaboracion': self.lote1.create_date,
+                'caducidad': self.lote1.life_date
+                })
+
+        if self.lote4:
+            vals.append({
+                'producto': self.lote1.product_id.name,
+                'lote': self.lote1.name,
+                'elaboracion': self.lote1.create_date,
+                'caducidad': self.lote1.life_date
+                })
+
+        if self.lote5:
             vals.append({
                 'producto': self.lote1.product_id.name,
                 'lote': self.lote1.name,
