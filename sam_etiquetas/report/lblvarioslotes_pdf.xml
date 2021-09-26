@@ -30,10 +30,10 @@
                     <table class="table table-condensed">
                         <thead>
                             <tr >
-                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">PRODUCTO</th>
-                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">LOTE</th>
-                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">ELAB.</th>
-                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">CAD.</th>
+                                <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:15px;font-weight:bold;">PRODUCTO</th>
+                                <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:15px;font-weight:bold;">LOTE</th>
+                                <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:15px;font-weight:bold;">ELABORACIÓN</th>
+                                <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:15px;font-weight:bold;">CADUCIDAD.</th>
                             </tr>
                         </thead>
                         <tbody>
