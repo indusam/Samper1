@@ -95,7 +95,8 @@ class LblVariosLotes(models.TransientModel):
 
         data = {'ids': self.ids,
                 'model': self._name,
-                'vals': vals
+                'vals': vals,
+                'Especie': self.x_cod_especie
                 }
 
         return self.env.ref('sam_etiquetas.lblvarioslotes_reporte').report_action(self, data=data)
