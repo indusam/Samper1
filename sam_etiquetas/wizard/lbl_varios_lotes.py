@@ -59,7 +59,6 @@ class LblVariosLotes(models.TransientModel):
                 'lote': self.lote1.name,
                 'elaboracion': self.lote1.create_date,
                 'caducidad': self.lote1.life_date,
-                'especies': self.lote1.product_id.x_cod_especie
             })
 
         if self.lote2:
@@ -68,7 +67,6 @@ class LblVariosLotes(models.TransientModel):
                 'lote': self.lote2.name,
                 'elaboracion': self.lote2.create_date,
                 'caducidad': self.lote2.life_date,
-                'especies': self.lote2.product_id.x_cod_especie
                 })
 
         if self.lote3:
@@ -77,7 +75,6 @@ class LblVariosLotes(models.TransientModel):
                 'lote': self.lote3.name,
                 'elaboracion': self.lote3.create_date,
                 'caducidad': self.lote3.life_date,
-                'especies': self.lote3.product_id.x_cod_especie
             })
 
         if self.lote4:
@@ -86,7 +83,6 @@ class LblVariosLotes(models.TransientModel):
                 'lote': self.lote4.name,
                 'elaboracion': self.lote4.create_date,
                 'caducidad': self.lote4.life_date,
-                'especies': self.lote4.product_id.x_cod_especie
             })
 
         if self.lote5:
@@ -95,11 +91,11 @@ class LblVariosLotes(models.TransientModel):
                 'lote': self.lote5.name,
                 'elaboracion': self.lote5.create_date,
                 'caducidad': self.lote5.life_date,
-                'especies': self.lote5.product_id.x_cod_especie
             })
 
         data = {'ids': self.ids,
                 'model': self._name,
+                'especie': self.especies,
                 'vals': vals,
                 }
 

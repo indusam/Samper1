@@ -57,6 +57,7 @@
                             </t>
                         </tbody>
                     </table>
+                    <p style="text-align:center;"><span t-esc="especie"/></p>
                     <p style="text-align:center;">Consérvese en refrigeración entre 2 y 4°C</p>
                     <p style="text-align:center;">INSPECCIONADO Y APROBADO TIF 544</p>
                     <p style="text-align:center;">SAGARPA MÉXICO</p>
