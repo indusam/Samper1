@@ -33,7 +33,6 @@ class LblVariosLotes(models.TransientModel):
     def imprimelblvarioslotes(self):
         vals = []
 
-
         if self.lote1:
             vals.append({
                 'producto': self.lote1.product_id.name,
@@ -44,44 +43,39 @@ class LblVariosLotes(models.TransientModel):
 
         if self.lote2:
             vals.append({
-                'producto': self.lote1.product_id.name,
-                'lote': self.lote1.name,
-                'elaboracion': self.lote1.create_date,
-                'caducidad': self.lote1.life_date
+                'producto': self.lote2.product_id.name,
+                'lote': self.lote2.name,
+                'elaboracion': self.lote2.create_date,
+                'caducidad': self.lote2.life_date
                 })
 
         if self.lote3:
             vals.append({
-                'producto': self.lote1.product_id.name,
-                'lote': self.lote1.name,
-                'elaboracion': self.lote1.create_date,
-                'caducidad': self.lote1.life_date
+                'producto': self.lote3.product_id.name,
+                'lote': self.lote3.name,
+                'elaboracion': self.lote3.create_date,
+                'caducidad': self.lote3.life_date
                 })
 
         if self.lote4:
             vals.append({
-                'producto': self.lote1.product_id.name,
-                'lote': self.lote1.name,
-                'elaboracion': self.lote1.create_date,
-                'caducidad': self.lote1.life_date
+                'producto': self.lote4.product_id.name,
+                'lote': self.lote4.name,
+                'elaboracion': self.lote4.create_date,
+                'caducidad': self.lote4.life_date
                 })
 
         if self.lote5:
             vals.append({
-                'producto': self.lote1.product_id.name,
-                'lote': self.lote1.name,
-                'elaboracion': self.lote1.create_date,
-                'caducidad': self.lote1.life_date
+                'producto': self.lote5.product_id.name,
+                'lote': self.lote5.name,
+                'elaboracion': self.lote5.create_date,
+                'caducidad': self.lote5.life_date
                 })
 
         data = {'ids': self.ids,
                 'model': self._name,
-                'vals': vals,
-                'lote1': self.lote1,
-                'lote2': self.lote2,
-                'lote3': self.lote3,
-                'lote4': self.lote4,
-                'lote5': self.lote5
+                'vals': vals
                 }
 
         return self.env.ref('sam_etiquetas.lblvarioslotes_reporte').report_action(self, data=data)
