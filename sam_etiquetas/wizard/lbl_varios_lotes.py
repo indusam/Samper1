@@ -30,6 +30,26 @@ class LblVariosLotes(models.TransientModel):
         if self.especies != self.lote1.product_id.x_cod_especie:
             raise UserError('El lote no pertenece a la especie indicada')
 
+    @api.onchange('lote2')
+    def onchange_lote2(self):
+        if self.especies != self.lote2.product_id.x_cod_especie:
+            raise UserError('El lote no pertenece a la especie indicada')
+
+    @api.onchange('lote3')
+    def onchange_lote3(self):
+        if self.especies != self.lote3.product_id.x_cod_especie:
+            raise UserError('El lote no pertenece a la especie indicada')
+
+    @api.onchange('lote4')
+    def onchange_lote4(self):
+        if self.especies != self.lote4.product_id.x_cod_especie:
+            raise UserError('El lote no pertenece a la especie indicada')
+
+    @api.onchange('lote5')
+    def onchange_lote5(self):
+        if self.especies != self.lote5.product_id.x_cod_especie:
+            raise UserError('El lote no pertenece a la especie indicada')
+
     def imprimelblvarioslotes(self):
         vals = []
 
