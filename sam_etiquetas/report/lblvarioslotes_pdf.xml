@@ -8,7 +8,7 @@
                     <div style="text-align:left;color:black!important;">
                         <strong>
                             <h6 style="text-align:center;">INDUSTRIAS ALIMENTICIAS SAM S.A. DE C.V.</h6>
-                            <p style="text-align: center;">Cuvier 107, Col. Nueva Anzures, CP.11590, Del. Miguel Hidalgo, México</p>
+                            <p style="text-align: center;">Cuvier 107, Col. Nueva Anzures, CP.11590, Del. Miguel Hidalgo, CDMX</p>
 <!--                            <t t-if="cantidad > 0">-->
 <!--                                <h5>-->
 <!--                                    Fórmula:   <span t-esc="codigo"/> - <span t-esc="producto"/>-->
@@ -54,10 +54,10 @@
                             </t>
                         </tbody>
                     </table>
-                    <p style="text-align:center;font-size:10px;"><span t-esc="especie"/></p>
-                    <p style="text-align:center;font-size:10px;">Consérvese en refrigeración entre 2 y 4°C</p>
-                    <p style="text-align:center;font-size:10px;">INSPECCIONADO Y APROBADO TIF 544</p>
-                    <p style="text-align:center;font-size:10px;">SAGARPA MÉXICO</p>
+                    <p style="text-align:center;font-size:12px;font-weight:bold;"><span t-esc="especie"/></p>
+                    <p style="text-align:center;font-size:12px;font-weight:bold;">Consérvese en refrigeración entre 2 y 4°C</p>
+                    <p style="text-align:center;font-size:12px;font-weight:bold;">INSPECCIONADO Y APROBADO TIF 544</p>
+                    <p style="text-align:center;font-size:12px;font-weight:bold;">SAGARPA MÉXICO</p>
                 </div>
             </t>
         </t>
