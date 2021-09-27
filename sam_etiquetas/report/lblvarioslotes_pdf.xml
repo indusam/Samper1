@@ -32,8 +32,7 @@
                                 <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px;font-weight:bold;">PRODUCTO</th>
                                 <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px;font-weight:bold;">LOTE</th>
                                 <th style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px;font-weight:bold;">ELABORACIÓN</th>
-                                <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px;font-weight:bold;">
-                                    <span t-field="o.date" widget="date" t-field-options="{'format': 'dd/MM/yyyy'}"/>CADUCIDAD</th>
+                                <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px;font-weight:bold;"><span t-fields="o.date" widget="date" t-fields-options="{'format': 'dd/MM/yyyy'}"/>CADUCIDAD</th>
                             </tr>
                         </thead>
                         <tbody>
