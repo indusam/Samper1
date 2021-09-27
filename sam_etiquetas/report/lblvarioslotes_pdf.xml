@@ -32,8 +32,11 @@
                                 <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px;font-weight:bold;">PRODUCTO</th>
                                 <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px;font-weight:bold;">LOTE</th>
                                 <th style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px;font-weight:bold;">ELABORACIÓN</th>
-                                <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px;font-weight:bold;">CADUCIDAD
-                                <attribute name="t-options-widget">"date"</attribute></th>
+                                <xpath expr="/t[1]/div[1]/div[4]/div[2]/span[2]" position="attributes">
+                                    <attribute name="t-options-widget">"date"</attribute>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px;font-weight:bold;">CADUCIDAD</th>
+                                </xpath>
+
                             </tr>
                         </thead>
                         <tbody>
