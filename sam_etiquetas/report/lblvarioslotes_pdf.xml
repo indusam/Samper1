@@ -45,7 +45,9 @@
                                         <t t-esc="doc['lote']"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="doc['elaboracion']"/>
+                                        <t t-esc="doc['elaboracion']" widget="date" options="{'format': 'dd/MM/yyyy'}"/>
+                                        <!-- <field name="o.date" widget="date" options="{'format': 'dd/MM/yyyy'}"/>
+                                        <t t-esc="'{0:,.4f}'.format(doc['pct_formula'])"/> -->
                                     </td>
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="doc['caducidad']"/>
