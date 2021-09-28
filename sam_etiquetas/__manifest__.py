@@ -31,6 +31,8 @@
     'license': 'AGPL-3',
     'depends': ['base', 'mrp', ],
     'data': [
-        'report/lbl_gen_cuad_pdf.xml',
+        'report/lblvarioslotes_pdf.xml',
+        'views/lblvarioslotes_reporte.xml',
+        'wizard/lblvarioslotes_view.xml',
     ],
 }

@@ -39,6 +39,5 @@
         'wizard/contenido_energetico_view.xml',
         'report/contenido_energetico_pdf.xml',
         'report/tabla_nutrimental_pdf.xml',
-        'report/lbl_gen_cuad_pdf.xml',
     ],
 }
