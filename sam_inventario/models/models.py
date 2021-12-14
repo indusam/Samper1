@@ -3,10 +3,10 @@
 from odoo import models, fields, api
 
 # muestra la existencia del almacen de origen en los traslados
-class StockPicking(models.Model):
-    _inherit = 'stock.picking'
+class StockMoveLine(models.Model):
+    _inherit = 'stock.move.line'
 
-    x_exis_origen = fields.Float(string='Exis')
+    x_exis_origen = fields.Float(string='Exis Origen')
 
     @api.onchange('product_id')
     def onchange_x_exis_origen(self):
