@@ -3,8 +3,8 @@
 from odoo import models, fields, api
 
 # muestra la existencia del almacen de origen en los traslados
-class StockMoveLine(models.Model):
-    _inherit = 'stock.move.line'
+class StockMove(models.Model):
+    _inherit = 'stock.move'
 
     x_exis_origen = fields.Float(string='Exis Origen')
 
