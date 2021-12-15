@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
+from odoo.exceptions import UserError
 
 # muestra la existencia del almacen de origen en los traslados
 class StockMove(models.Model):
@@ -13,5 +14,8 @@ class StockMove(models.Model):
         if self.product_id:
             nexis = self.env['stock.quant'].search([('product_id.id', '=', self.product_id.id), 
                                                     ('location_id.id', '=', self.location_id.id)],limit=1).on_hand
+            
+            raise UserError('Existencia en almacen origen: %s' % nexis)
+
             if nexis > 0:         
                 self.x_exis_origen = nexis
