@@ -15,9 +15,5 @@ class StockMove(models.Model):
             nexis = self.env['stock.quant'].search([('product_id.id', '=', self.product_id.id), 
                                                     ('location_id.id', '=', self.location_id.id)],limit=1).quantity
 
-            # raise UserError('self.location id:' + str(self.location_id.id)+ ' product_id:' + str(self.product_id.id))
-
-            raise UserError('nexis:' + str(nexis))
-
             if nexis > 0:         
                 self.x_exis_origen = nexis
