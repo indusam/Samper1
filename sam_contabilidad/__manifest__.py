@@ -1,26 +1,25 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "sam_contabilidad",
+    'name': "sam_ventas",
 
     'summary': """
-        Personalización de Odoo para Industrias Alimenticias SAM SA de CV""",
+        Adecuaciones al módulo de ventas de Samper""",
 
     'description': """
-        Campos, vistas, reportes, etc. propios de Samper.
-        Adecuaciones al módulo de contabilidad para Samper.
+        Modificaciones al módulo de ventas para Samper: vendedores, comisiones, piezas en el inventario, etc.
     """,
 
-    'author': "vbueno",
+    'author': "VBueno",
     'website': "http://www.samper.mx",
 
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/13.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
-    'category': 'mrp',
+    'category': 'Sales',
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'mrp'],
+    'depends': ['base', 'sale'],
 
     # always loaded
     'data': [
