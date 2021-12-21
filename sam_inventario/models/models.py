@@ -17,3 +17,5 @@ class StockMove(models.Model):
 
             if nexis > 0:         
                 self.x_exis_origen = nexis
+            
+            self.name = 'Nuevo' # la descripcion es obligatoria
