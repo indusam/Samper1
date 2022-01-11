@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Formulario para impresión de antiguedad de saldos detalle.
+    vbueno 1011202116:08
+-->
+<odoo>
+    <record id="report_wizard_ant_saldos_detalle_view_form" model="ir.ui.view">
+        <field name="name">report.wizard.ant.saldos..detalle.view.form</field>
+        <field name="model">ant.saldos.detalle.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="fecha_corte"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="imprime_antiguedad_saldos_detalle" type="object" string="Imprimir" class="oe_highlight"/>
+                    <button special="cancel" string="Cancelar"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_ant_saldos_detalle_wizard" model="ir.actions.act_window">
+        <field name="name">Antiguedad de saldos detalle</field>
+        <field name="res_model">ant.saldos.detalle.wizard</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="report_wizard_ant_saldos_detalle_view_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem
+        id="ant_saldos_detalle_menu"
+        name="Antiguedad de saldos detalle"
+        action="action_ant_saldos_detalle_wizard"
+        parent="account.menu_finance_receivables"
+        groups="base.group_user"
+        sequence="226"/>
+</odoo>

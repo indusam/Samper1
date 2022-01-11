@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="ant_saldos_detalle_reporte" model="ir.actions.report">
+            <field name="name">Antiguedad de saldos detalle</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">sam_reportes.ant_saldos_detalle_template</field>
+        </record>
+    </data>
+</odoo>
