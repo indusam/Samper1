@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <data>
-        <record id="ant_saldos_detalle_reporte" model="ir.actions.report">
+        <record id="saldos_clientes_reporte" model="ir.actions.report">
             <field name="name">Saldos de Clientes</field>
             <field name="model">account.move</field>
             <field name="report_type">qweb-pdf</field>
