@@ -32,15 +32,15 @@ class SaldosClientes(models.TransientModel):
 
         # Recorre los clientes.
         if clientes:
-            for cliente in clientes:
- 
+            for cliente in clientes: 
                 # Guarda los valores en vals.
-                vals.append({
-                    'cliente': cliente.name,
-                    'nombre_comercial': cliente.x_nombre_comercial,
-                    'total_facturado': cliente.total_invoiced, 
-                    'total_adeudado': cliente.total_due,
-                    'total_vencido': cliente.total_overdue})
+                if cliente.total_due > 0:
+                    vals.append({
+                        'cliente': cliente.name,
+                        'nombre_comercial': cliente.x_nombre_comercial,
+                        'total_facturado': cliente.total_invoiced, 
+                        'total_adeudado': cliente.total_due,
+                        'total_vencido': cliente.total_overdue})
 
 
         data = {'ids': self.ids,
