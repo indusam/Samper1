@@ -38,7 +38,7 @@
         'wizard/tabla_nutrimental_view.xml',
         'wizard/formulas_view.xml',
         'wizard/contenido_energetico_view.xml',
-        'wizard/saldos_clientes.xml',
+        'wizard/saldos_clientes_view.xml',
         'report/saldos_clientes_pdf.xml',
         'report/contenido_energetico_pdf.xml',
         'report/tabla_nutrimental_pdf.xml'
