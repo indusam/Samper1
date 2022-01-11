@@ -36,7 +36,7 @@ class SaldosClientes(models.TransientModel):
  
                 # Guarda los valores en vals.
                 vals.append({
-                    'cliente': cliente.id.name,
+                    'cliente': cliente.name,
                     'nombre_comercial': cliente.x_nombre_comercial,
                     'total_facturado': cliente.total_invoiced, 
                     'total_adeudado': cliente.total_due,
