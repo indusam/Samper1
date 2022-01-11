@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="saldos_clientes_reporte" model="ir.actions.report">
+            <field name="name">Saldos de Clientes</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">sam_reportes.saldos_clientes_template</field>
+        </record>
+    </data>
+</odoo>

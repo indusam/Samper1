@@ -29,15 +29,18 @@
     'maintainer': 'Industrias Alimenticias SAM SA de CV',
     'website': 'http://www.samper.mx',
     'license': 'AGPL-3',
-    'depends': ['base', 'mrp'],
+    'depends': ['base', 'mrp','account'],
     'data': [
+        'views/saldos_clientes_reporte.xml',
         'views/tabla_nutrimental_reporte.xml',
         'views/formulas_reporte.xml',
         'views/contenido_energetico_reporte.xml',
         'wizard/tabla_nutrimental_view.xml',
         'wizard/formulas_view.xml',
         'wizard/contenido_energetico_view.xml',
+        'wizard/saldos_clientes_view.xml',
+        'report/saldos_clientes_pdf.xml',
         'report/contenido_energetico_pdf.xml',
-        'report/tabla_nutrimental_pdf.xml',
+        'report/tabla_nutrimental_pdf.xml'
     ],
 }

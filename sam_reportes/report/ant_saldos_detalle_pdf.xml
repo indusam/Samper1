@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="ant_saldos_detalle_template">
+
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <br/>
+                    <div style="text-align:left;color:black!important;">
+                        <strong>
+                            <h5>
+                                <span t-esc="compania"/>
+                                <br/>
+                                Antiguedad de saldos detalle
+                                <br/>
+                                Fecha: <span t-esc="fecha" />
+                                <br/>
+                                Fecha de corte: <span t-esc="corte" />                                
+                            </h5>
+                        </strong>
+                    </div>
+                    <br/>
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr >
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Cliente</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Factura</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Fecha</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Total</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Saldo</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px;">Por vencer</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px;">30 días</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">60 días</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">90 días</th>
+                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px;">+90 días</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Crea variables para totales -->
+                            <t t-set="total_facturado" t-value="0.00" />
+                            <t t-set="total_deuda" t-value="0.00" />
+                            <t t-set="total_por_vencer" t-value="0.00" />
+                            <t t-set="total_30" t-value="0.00" />
+                            <t t-set="total_60" t-value="0.00" />
+                            <t t-set="total_90" t-value="0.00" />
+                            <t t-set="total_mas_90" t-value="0.00" />    
+
+                            <t t-foreach="vals" t-as="doc">
+                                <tr>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="doc['empresa']"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="doc['factura']"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="doc['fecha']"/>
+                                    </td>
+                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="'{0:,.2f}'.format(doc['ntotal'])"/>
+                                    </td>
+                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="'{0:,.2f}'.format(doc['ndeuda'])"/>
+                                    </td>
+                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="'{0:,.2f}'.format(doc['no_vencido'])"/>
+                                    </td>
+                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="'{0:,.2f}'.format(doc['n30d'])"/>
+                                    </td>
+                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="'{0:,.2f}'.format(doc['n60d'])"/>
+                                    </td>
+                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="'{0:,.2f}'.format(doc['n90d'])"/>
+                                    </td>
+                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="'{0:,.2f}'.format(doc['nmas90'])"/>
+                                    </td>
+                                    <!-- Suma los totales -->
+                                    <t t-set="total_facturado" t-value="total_facturado + doc['ntotal']" />
+                                    <t t-set="total_deuda" t-value="total_deuda + doc['ndeuda']" />
+                                    <t t-set="total_por_vencer" t-value="total_por_vencer + doc['no_vencido']" />
+                                    <t t-set="total_30" t-value="total_30 + doc['n30d']" />
+                                    <t t-set="total_60" t-value="total_60 + doc['n60d']" />
+                                    <t t-set="total_90" t-value="total_90 + doc['n90d']" />
+                                    <t t-set="total_mas_90" t-value="total_mas_90 + doc['nmas90']" />   
+                                </tr>
+                            </t>
+                            <!-- Imprime los totales -->
+                            <tr>
+                                <td style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <strong>Totales</strong>
+                                </td>
+                                <td style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <strong> </strong>
+                                </td>
+                                <td style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <strong> </strong>
+                                </td>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <strong><t t-esc="'{0:,.2f}'.format(total_facturado)"/></strong>
+                                </td>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <strong><t t-esc="'{0:,.2f}'.format(total_deuda)"/></strong>
+                                </td>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <strong><t t-esc="'{0:,.2f}'.format(total_por_vencer)"/></strong>
+                                </td>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <strong><t t-esc="'{0:,.2f}'.format(total_30)"/></strong>
+                                </td>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <strong><t t-esc="'{0:,.2f}'.format(total_60)"/></strong>
+                                </td>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <strong><t t-esc="'{0:,.2f}'.format(total_90)"/></strong>
+                                </td>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <strong><t t-esc="'{0:,.2f}'.format(total_mas_90)"/></strong>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <!-- esto aplica cuando se imprime desde el menú "Imprimir" al seleccionar registros.
+    <report
+            id="action_custom_report_lista_de_precios5"
+            string="Lista de precios 5"
+            model="product.template"
+            report_type="qweb-pdf"
+            file="gr_listasdeprecios.lp5_template"
+            name="gr_listasdeprecios.lp5_template"
+    />
+    -->
+</odoo>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Formulario para impresión de saldos de clientes.
+    vbueno 1011202116:08
+-->
+<odoo>
+    <record id="report_wizard_saldos_clientes_view_form" model="ir.ui.view">
+        <field name="name">report.wizard.saldos.clientes.view.form</field>
+        <field name="model">saldos.clientes.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <!-- <field name="fecha_corte"/> -->
+                    </group>
+                </group>
+                <footer>
+                    <button name="imprime_saldos_clientes" type="object" string="Imprimir" class="oe_highlight"/>
+                    <button special="cancel" string="Cancelar"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_saldos_clientes_wizard" model="ir.actions.act_window">
+        <field name="name">Saldos de clientes</field>
+        <field name="res_model">saldos.clientes.wizard</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="report_wizard_saldos_clientes_view_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem
+        id="saldos_clientes_menu"
+        name="Saldos de clientes"
+        action="action_saldos_clientes_wizard"
+        parent="account.menu_finance_receivables"
+        groups="base.group_user"
+        sequence="226"/>
+</odoo>
