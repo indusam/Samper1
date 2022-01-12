@@ -45,7 +45,7 @@ class AntiguedadSaldosDetalle(models.TransientModel):
                 n30d = n60d = n90d = nmas90 = no_vencido = 0
 
                 # Calcula los días de vencimiento.
-                ndias = (self.fecha_corte - factura.x_fecha_vencimiento).days
+                ndias = (self.fecha_corte - factura.invoice_date_due).days
                 
                 # Si ndias > 0 la factura está vencida.
                 if ndias > 0:
