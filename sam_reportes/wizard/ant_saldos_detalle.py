@@ -25,7 +25,7 @@ class AntiguedadSaldosDetalle(models.TransientModel):
     def imprime_antiguedad_saldos_detalle(self):
         
         vals = []
-        if not cliente:
+        if not self.cliente:
             # Obtiene las facturas con saldo de todos los clientes.
             facturas = self.env['account.move'].search([('l10n_mx_edi_pac_status', '=', 'signed'), 
                         ('type', '=', 'out_invoice'), ('amount_residual','>',0),
@@ -78,7 +78,7 @@ class AntiguedadSaldosDetalle(models.TransientModel):
 
         cnombrecliente = ''
         if self.cliente:
-            cnombrecliente = self.cliente
+            cnombrecliente = self.cliente.name
 
         data = {'ids': self.ids,
                     'model': self._name,
