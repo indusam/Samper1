@@ -19,17 +19,23 @@ class AntiguedadSaldosDetalle(models.TransientModel):
 
     dfinal = datetime.date.today()
     fecha_corte = fields.Date(string="Fecha Corte", default=dfinal)
+    cliente = fields.Many2one('res.partner', string="Cliente")
     
     # Calcula e imprime la antiguedad de saldos de clientes.
     def imprime_antiguedad_saldos_detalle(self):
         
         vals = []
-        # Obtiene las facturas con saldo.
-        facturas = self.env['account.move'].search([('l10n_mx_edi_pac_status', '=', 'signed'), 
-                    ('type', '=', 'out_invoice'), ('amount_residual','>',0),
-                     ('invoice_date', '<=', self.fecha_corte)])
+        if not cliente:
+            # Obtiene las facturas con saldo de todos los clientes.
+            facturas = self.env['account.move'].search([('l10n_mx_edi_pac_status', '=', 'signed'), 
+                        ('type', '=', 'out_invoice'), ('amount_residual','>',0),
+                        ('invoice_date', '<=', self.fecha_corte)])
+        else:
+            # Obtiene las facturas con saldo de un cliente.
+            facturas = self.env['account.move'].search([('l10n_mx_edi_pac_status', '=', 'signed'), 
+                        ('type', '=', 'out_invoice'), ('amount_residual','>',0),
+                        ('invoice_date', '<=', self.fecha_corte), ('partner_id', '=', self.cliente.id)])                
     
-
         # Recorre las facturas.
         
         if facturas:
@@ -70,14 +76,18 @@ class AntiguedadSaldosDetalle(models.TransientModel):
                     'nmas90': nmas90, 
                     'no_vencido': no_vencido})
 
+        cnombrecliente = ''
+        if self.cliente:
+            cnombrecliente = self.cliente
 
         data = {'ids': self.ids,
-                'model': self._name,
-                'vals': vals,
-                'fecha': datetime.date.today(),
-                'corte': self.fecha_corte,
-                'compania': self.env.company.name,
-                }
+                    'model': self._name,
+                    'vals': vals,
+                    'fecha': datetime.date.today(),
+                    'corte': self.fecha_corte,
+                    'cliente': cnombrecliente
+                    }
+
 
         return self.env.ref(
             'sam_reportes.ant_saldos_detalle_reporte').report_action(self, data=data)
