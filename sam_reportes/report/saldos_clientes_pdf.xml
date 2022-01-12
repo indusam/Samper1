@@ -13,9 +13,7 @@
                                 <br/>
                                 Saldos de clientes
                                 <br/>
-                                Fecha: <span t-esc="fecha" />
-                                <br/>
-                                Fecha de corte: <span t-esc="corte" />                                
+                                Fecha: <span t-esc="fecha" />                            
                             </h5>
                         </strong>
                     </div>
