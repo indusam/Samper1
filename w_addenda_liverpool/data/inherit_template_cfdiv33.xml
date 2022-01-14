@@ -1,5 +1,5 @@
-<!-- Comentario -->
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Comentario -->
 <odoo>
     <data>
         <template id="w_extend_cfdiv33_addenda_liverpool" inherit_id="l10n_mx_edi.cfdiv33">
