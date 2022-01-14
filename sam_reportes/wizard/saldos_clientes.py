@@ -25,7 +25,7 @@ class SaldosClientes(models.TransientModel):
         
         vals = []
         # Obtiene los clientes con saldo.
-        clientes = self.env['res.partner'].search([('total_due', '!=', 0)])
+        clientes = self.env['res.partner'].search([('total_due', '>', 0)])
         
         if not clientes:
             raise UserError('No hay clientes con saldo.')
