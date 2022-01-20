@@ -2,13 +2,11 @@
 #
 # Module written to Odoo, Open Source Management Solution
 #
-# Copyright (c) 2021 Wedoo - http://www.wedoo.tech/
+# Copyright (c) 2017 Telematel - http://www.telematel.com/
 # All Rights Reserved.
 #
 # Developer(s): Alan Guzmán
 #               (age@wedoo.tech)
-#               Andy Torres
-#               (atu@wedoo.tech)
 ########################################################################
 #
 # This program is free software: you can redistribute it and/or modify
@@ -27,12 +25,12 @@
 ########################################################################
 
 {
-    'name': 'WEDOO | Addendas liverpool',
-    'author': 'WEDOO ©',
+    'name': 'TELEMATEL | Addendas liverpool',
+    'author': 'TELEMATEL ©',
     'category': 'Account',
     'sequence': 50,
     'summary': "Addenda liverpool",
-    'website': 'https://www.wedoo.tech',
+    'website': 'https://www.telematel.com',
     'version': '1.0',
     'description': """
 Addendas liverpool
