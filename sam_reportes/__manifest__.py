@@ -44,6 +44,7 @@
         'report/saldos_clientes_pdf.xml',
         'report/contenido_energetico_pdf.xml',
         'report/tabla_nutrimental_pdf.xml',
+        'report/formulas_pdf.xml',
         'report/ant_saldos_detalle_pdf.xml'
     ],
 }
