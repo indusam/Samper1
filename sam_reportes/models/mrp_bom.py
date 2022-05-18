@@ -20,7 +20,7 @@
 #    If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
+""" 
 from datetime import datetime
 from odoo import fields, models
 from odoo.tools.safe_eval import safe_eval
@@ -230,3 +230,4 @@ class MrpBom(models.Model):
             dict_products.update({product: self._get_meses_contado(
                 self.with_context(lang=self.partner_id.lang), product, 'contado')})
         return sorted(dict_products.items(), key=lambda kv: (kv[1], kv[0]))
+"""
