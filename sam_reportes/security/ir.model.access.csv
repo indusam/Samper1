@@ -1,2 +1,2 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_sam_reportes_sam_reportes,sam_reportes.sam_reportes,model_sam_reportes_sam_reportes,base.group_user,1,1,1,1
+access_sam_reportes,sam_reportes,model_sam_reportes,base.group_user,1,1,1,1
