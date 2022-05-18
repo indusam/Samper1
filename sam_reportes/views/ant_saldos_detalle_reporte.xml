@@ -7,13 +7,5 @@
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">sam_reportes.ant_saldos_detalle_template</field>
         </record>
-        
-        <menuitem
-        id="ant_saldos_detalle_menu"
-        name="Antiguedad de saldos detalle"
-        action="action_ant_saldos_detalle_wizard"
-        parent="account.menu_finance_receivables"
-        groups="base.group_user"
-        sequence="12"/>
     </data>
 </odoo>
