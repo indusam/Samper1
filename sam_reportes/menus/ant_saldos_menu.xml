@@ -1,8 +1,0 @@
-<odoo>
-    <menuitem
-            id="ant_saldos_detalle_menu"
-            name="Antiguedad de saldos detalle"
-            action="action_ant_saldos_detalle_wizard"
-            parent="account.menu_finance_receivables"
-            sequence="12"/>
-</odoo>

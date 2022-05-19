@@ -31,7 +31,6 @@
     'license': 'AGPL-3',
     'depends': ['base', 'mrp','account'],
     'data': [
-        'menus/ant_saldos_menu.xml',
         'views/saldos_clientes_reporte.xml',
         'views/tabla_nutrimental_reporte.xml',
         'views/formulas_reporte.xml',
