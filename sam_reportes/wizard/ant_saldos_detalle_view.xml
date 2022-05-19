@@ -37,5 +37,5 @@
         action="action_ant_saldos_detalle_wizard"
         parent="account.menu_finance_receivables"
         groups="base.group_user"
-        sequence="226"/>
+        sequence="12"/>
 </odoo>

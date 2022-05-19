@@ -36,5 +36,5 @@
         action="action_saldos_clientes_wizard"
         parent="account.menu_finance_receivables"
         groups="base.group_user"
-        sequence="226"/>
+        sequence="10"/>
 </odoo>

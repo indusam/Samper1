@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "sam_ventas",
+    'name': "sam_contabildad",
 
     'summary': """
-        Adecuaciones al módulo de ventas de Samper""",
+        Adecuaciones al módulo de contabilidad de Samper""",
 
     'description': """
-        Modificaciones al módulo de ventas para Samper: vendedores, comisiones, piezas en el inventario, etc.
+        Modificaciones al módulo de contabiliadad para Samper: vendedores, comisiones, piezas en el inventario, etc.
     """,
 
     'author': "VBueno",
@@ -15,11 +15,11 @@
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/13.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
-    'category': 'Sales',
+    'category': 'Account',
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'sale'],
+    'depends': ['base', 'account'],
 
     # always loaded
     'data': [
