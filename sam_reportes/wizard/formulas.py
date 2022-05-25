@@ -34,6 +34,7 @@ class Formulas(models.TransientModel):
     unidad = fields.Char(string="Unidad")
     pct_formula = fields.Float(string="% Fórmula", digits=(6, 2))
     pct_categoria = fields.Float(string="% Grupo", digits=(6, 2))
+    pct_merma = fields.Float(string="% Merma", digits=(6, 2))
     x_orden = fields.Integer(string="Orden", required=False, )
 
 
