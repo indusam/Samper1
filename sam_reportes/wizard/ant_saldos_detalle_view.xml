@@ -30,7 +30,7 @@
         <field name="view_id" ref="report_wizard_ant_saldos_detalle_view_form"/>
         <field name="target">new</field>
     </record>
-
+  
     <menuitem
         id="ant_saldos_detalle_menu"
         name="Antiguedad de saldos detalle"
@@ -38,4 +38,5 @@
         parent="account.menu_finance_receivables"
         groups="base.group_user"
         sequence="12"/>
+   
 </odoo>
