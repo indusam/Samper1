@@ -54,7 +54,8 @@
                                         <detallista:tradeItemDescriptionInformation language="ES">
                                             <detallista:longText><t t-if="line.product_id.name" t-esc="record.unescape_characters(line.product_id.name)"/></detallista:longText>
                                         </detallista:tradeItemDescriptionInformation>
-                                        <detallista:invoicedQuantity t-att-unitOfMeasure="line.product_uom_id.name"><t t-esc="line.quantity"/></detallista:invoicedQuantity>
+                                        <detallista:invoicedQuantity t-att-unitOfMeasure="line.product_id.x_uom_addenda"><t t-esc="line.quantity"/></detallista:invoicedQuantity>
+                                        <!-- <detallista:invoicedQuantity t-att-unitOfMeasure="line.product_uom_id.name"><t t-esc="line.quantity"/></detallista:invoicedQuantity> -->
                                         <detallista:grossPrice>
                                             <detallista:Amount><t t-esc="line.get_price_gross()"/></detallista:Amount>
                                         </detallista:grossPrice>
