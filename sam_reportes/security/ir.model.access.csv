@@ -3,3 +3,4 @@ access.ant.saldos.detalle,access_ant_saldos_detalle_wizard,sam_reportes.model_an
 access.saldos.clientes,access_saldos_clientes_wizard,sam_reportes.model_saldos_clientes_wizard,base.group_user,1,1,1,1
 access.wizard.contenido.energetico,access_wizard_contenido_energetico,sam_reportes.model_wizard_contenido_energetico,base.group_user,1,1,1,1
 access.wizard.formulas,access_wizard_formulas,sam_reportes.model_wizard_formulas,base.group_user,1,1,1,1
+access.wizard.tabla.nutrimental,access_wizard_tabla_nutrimental,sam_reportes.model_wizard_tabla_nutrimental,base.group_user,1,1,1,1
