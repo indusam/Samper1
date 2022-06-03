@@ -1,2 +1,2 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access.ant.saldos.detalle,access_ant_saldos_detalle_wizard,sam_reportes.ant_saldos_detalle_wizard,base.group_user,1,1,1,1
+access.ant.saldos.detalle,access_ant_saldos_detalle_wizard,sam_reportes.model_ant_saldos_detalle_wizard,base.group_user,1,1,1,1
