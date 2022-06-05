@@ -14,7 +14,7 @@ _logger = logging.getLogger(__name__)
 
 class LblVariosLotes(models.TransientModel):
 
-    _name = 'wizard.lbl_varios_lotes'
+    _name = 'wizard.lbl.varios.lotes'
     _description = 'Etiqueta con varios lotes'
 
     lote1 = fields.Many2one('stock.production.lot', string="Lote 1")

@@ -31,6 +31,7 @@
     'license': 'AGPL-3',
     'depends': ['base', 'mrp', ],
     'data': [
+        'security/ir.model.access.csv',
         'report/lblvarioslotes_pdf.xml',
         'views/lblvarioslotes_reporte.xml',
         'wizard/lblvarioslotes_view.xml',

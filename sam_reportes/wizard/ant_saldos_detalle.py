@@ -27,13 +27,13 @@ class AntiguedadSaldosDetalle(models.TransientModel):
         vals = []
         if not self.cliente:
             # Obtiene las facturas con saldo de todos los clientes.
-            facturas = self.env['account.move'].search([('l10n_mx_edi_pac_status', '=', 'signed'), 
-                        ('type', '=', 'out_invoice'), ('amount_residual','>',0),
+            facturas = self.env['account.move'].search([('state', '=', 'posted'), 
+                        ('move_type', '=', 'out_invoice'), ('amount_residual','>',0),
                         ('invoice_date', '<=', self.fecha_corte)])
         else:
             # Obtiene las facturas con saldo de un cliente.
-            facturas = self.env['account.move'].search([('l10n_mx_edi_pac_status', '=', 'signed'), 
-                        ('type', '=', 'out_invoice'), ('amount_residual','>',0),
+            facturas = self.env['account.move'].search([('state', '=', 'posted'), 
+                        ('move_type', '=', 'out_invoice'), ('amount_residual','>',0),
                         ('invoice_date', '<=', self.fecha_corte), ('partner_id', '=', self.cliente.id)])                
     
         # Recorre las facturas.

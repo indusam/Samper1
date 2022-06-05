@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="wizard_lblvarioslotes_view_form" model="ir.ui.view">
-        <field name="model">wizard.lbl_varios_lotes</field>
-        <field name="name">wizard.lbl_varios_lotes.view.form</field>
+        <field name="model">wizard.lbl.varios.lotes</field>
+        <field name="name">wizard.lbl.varios.lotes.view.form</field>
         <field name="arch" type="xml">
             <form>
                 <group>
@@ -32,7 +32,7 @@
 
     <record id="action_lblvarioslotes_wizard" model="ir.actions.act_window">
         <field name="name">Etiqueta varios lotes</field>
-        <field name="res_model">wizard.lbl_varios_lotes</field>
+        <field name="res_model">wizard.lbl.varios.lotes</field>
         <field name="type">ir.actions.act_window</field>
         <field name="view_mode">form</field>
         <field name="view_id" ref="wizard_lblvarioslotes_view_form"/>

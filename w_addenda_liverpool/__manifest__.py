@@ -50,6 +50,7 @@ Also a template is added for render the addenda.
         'l10n_mx_edi'
     ],
     'data': [
+        'security/ir.model.access.csv',
         'data/inherit_template_cfdiv33.xml',
         'views/inherit_res_partner_view.xml',
         'views/inherit_res_company_view.xml',
