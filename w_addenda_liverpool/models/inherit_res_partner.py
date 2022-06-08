@@ -2,11 +2,11 @@
 #
 # Module written to Odoo, Open Source Management Solution
 #
-# Copyright (c) 2017 Wedoo - http://www.wedoo.tech/
+# Copyright (c) 2022 Birtum - http://www.birtum.com/
 # All Rights Reserved.
 #
-# Developer(s): Alan Guzmán
-#               (age@wedoo.tech)
+# Developer(s): Eddy Luis Pérez Vila
+#               (epv@birtum.com)
 ########################################################################
 #
 # This program is free software: you can redistribute it and/or modify
@@ -45,5 +45,5 @@ class ResPartner(models.Model):
              'identification is assigned to the provider'
     )
     generate_addenda_liverpool = fields.Boolean(
-        string='Generate addenda liverpool',
-        help='Check this field if require generate addenda liverpool')
+        string='Generate addenda Liverpool',
+        help='Check this field if require generate addenda Liverpool')
