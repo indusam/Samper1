@@ -1,4 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access.account.move,access_account_move,w_addenda_liverpool.model_account_move,base.group_user,1,1,1,1
-access.res.partner,access_res_partner,w_addenda_liverpool.model_res_partner,base.group_user,1,1,1,1
-access.res.company,access_res_company,w_addenda_liverpool.model_res_company,base.group_user,1,1,1,1
