@@ -8,8 +8,6 @@
                         <div style="text-align:left;color:black!important;">
                             <strong>
                                 <h5>
-                                    <span t-esc="compania"/>
-                                    <br/>
                                     Saldos de clientes
                                     <br/>
                                     Fecha: <span t-esc="fecha" />                            
