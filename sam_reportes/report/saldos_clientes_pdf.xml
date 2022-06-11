@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="saldos_clientes_template">
-
         <t t-call="web.html_container">
-            <t t-call="web.external_layout_standard">
+            <t t-call="web.basic_layout">
                 <div class="page">
-                    <br/>
+
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>
+
+<!-- 
+                       <br/>
                     <div style="text-align:left;color:black!important;">
                         <strong>
                             <h5>
@@ -80,18 +88,4 @@
                         </tbody>
                     </table>
                 </div>
-            </t>
-        </t>
-    </template>
-
-    <!-- esto aplica cuando se imprime desde el menú "Imprimir" al seleccionar registros.
-    <report
-            id="action_custom_report_lista_de_precios5"
-            string="Lista de precios 5"
-            model="product.template"
-            report_type="qweb-pdf"
-            file="gr_listasdeprecios.lp5_template"
-            name="gr_listasdeprecios.lp5_template"
-    />
-    -->
-</odoo>
+-->
