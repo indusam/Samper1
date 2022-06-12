@@ -4,18 +4,28 @@
         <t t-call="web.html_container">
             <t t-call="web.external_layout">
                 <div class="page">
-                    <br/>
-                        <div style="text-align:left;color:black!important;">
-                            <strong>
-                                <h5>
-                                    Saldos de clientes
-                                    <br/>
-                                    Fecha: <span t-esc="fecha" />                            
-                                </h5>
-                            </strong>
-                        </div>
+                    <div style="text-align:left;color:black!important;">
+                        <strong>
+                            <h5>
+                                Saldos de clientes
+                                <br/>
+                                Fecha: <span t-esc="fecha" />                            
+                            </h5>
+                        </strong>
+                    </div>
                     <br/>
                 </div>
+                <table class="table table-condensed">
+                    <thead>
+                        <tr >
+                            <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Cliente</th>
+                            <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Nombre Comercial</th>
+                            <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Total Facturado</th>
+                            <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Total Adeudado</th>
+                             <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Total Vencido</th>
+                        </tr>
+                    </thead>
+                <table/>    
             </t>
         </t>
     </template>
