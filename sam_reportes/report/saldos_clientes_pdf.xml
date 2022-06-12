@@ -25,6 +25,56 @@
                              <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Total Vencido</th>
                         </tr>
                     </thead>
+                    <tbody>
+                        <!-- Crea variables para totales -->
+                        <t t-set="ntotal_facturado" t-value="0.00" />
+                        <t t-set="ntotal_deuda" t-value="0.00" />
+                        <t t-set="ntotal_vencido" t-value="0.00" />
+
+                        <t t-foreach="vals" t-as="doc">
+                            <tr>
+                                <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="doc['cliente']"/>
+                                </td>
+                                <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="doc['nombre_comercial']"/>
+                                </td>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="'{0:,.2f}'.format(doc['total_facturado'])"/>
+                                </td>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="'{0:,.2f}'.format(doc['total_adeudado'])"/>
+                                </td>
+                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="'{0:,.2f}'.format(doc['total_vencido'])"/>
+                                </td>
+                                    
+                                <!-- Suma los totales -->
+                                <t t-set="ntotal_facturado" t-value="ntotal_facturado + doc['total_facturado']" />
+                                <t t-set="ntotal_deuda" t-value="ntotal_deuda + doc['total_adeudado']" />
+                                <t t-set="ntotal_vencido" t-value="ntotal_vencido + doc['total_vencido']" />
+                                    
+                            </tr>
+                        </t>
+                        <!-- Imprime los totales -->
+                        <tr>
+                            <td style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                <strong>Totales</strong>
+                            </td>
+                            <td style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                <strong> </strong>
+                            </td>  
+                            <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                <strong><t t-esc="'{0:,.2f}'.format(ntotal_facturado)"/></strong>
+                            </td>
+                            <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                <strong><t t-esc="'{0:,.2f}'.format(ntotal_deuda)"/></strong>
+                            </td>
+                            <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                <strong><t t-esc="'{0:,.2f}'.format(ntotal_vencido)"/></strong>
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>    
             </t>
         </t>
