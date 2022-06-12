@@ -16,14 +16,6 @@
                     <br/>
                 </div>
                 <table class="table table-condensed">
-
-                </table>    
-            </t>
-        </t>
-    </template>
-</odoo>
-
-<!--
                     <thead>
                         <tr >
                             <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Cliente</th>
@@ -33,5 +25,14 @@
                             <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Total Vencido</th>
                         </tr>
                     </thead>
+                    <tbody>
+                    </tbody>    
+                </table>    
+            </t>
+        </t>
+    </template>
+</odoo>
 
+<!--
+    
 -->
