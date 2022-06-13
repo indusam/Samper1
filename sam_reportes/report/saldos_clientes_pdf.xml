@@ -30,7 +30,7 @@
                         <t t-set="ntotal_facturado" t-value="0.00" />
                         <t t-set="ntotal_deuda" t-value="0.00" />
                         <t t-set="ntotal_vencido" t-value="0.00" />
-                        <t t-foreach="saldos" t-as="doc">
+                        <t t-foreach="saldos_data" t-as="doc">
                             <!-- 
                             <tr>
                                 <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
