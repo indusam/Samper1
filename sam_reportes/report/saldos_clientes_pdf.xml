@@ -31,11 +31,13 @@
                         <t t-set="ntotal_deuda" t-value="0.00" />
                         <t t-set="ntotal_vencido" t-value="0.00" />
                         <t t-foreach="vals" t-as="doc">
+                            <!-- 
                             <tr>
                                 <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <t t-esc="doc['cliente']"/>
                                 </td>
-                            </tr>    
+                            </tr>
+                            -->   
                         </t>    
                     </tbody>
                 </table>    
