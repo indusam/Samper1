@@ -46,8 +46,8 @@ class SaldosClientes(models.TransientModel):
         data = {'ids': self.ids,
                 'model': self._name,
                 'vals': vals,
-                'fecha': datetime.date.today(),
-                'compania': self.env.company.name
+                'fecha': datetime.date.today()
+                #'compania': self.env.company.name
                 }
 
         return self.env.ref(
