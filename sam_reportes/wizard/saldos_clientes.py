@@ -49,8 +49,8 @@ class SaldosClientes(models.TransientModel):
         #         'compania': self.env.company.name
         #        }
         #return self.env['report'].get_action(self, 'saldos_clientes.saldos_clientes_report', data=data)
-        data = {'data': self.read()[0],
+        saldos_data = {'saldos_data': self.read()[0],
                 'saldos': saldos_de_clientes}
 
         return self.env.ref(
-            'sam_reportes.saldos_clientes_reporte').report_action(self, data=data)
+            'sam_reportes.saldos_clientes_reporte').report_action(self, data=saldos_data)
