@@ -25,17 +25,10 @@
         <field name="name">Saldos de clientes</field>
         <field name="res_model">saldos.clientes.wizard</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">form</field>
         <field name="view_id" ref="report_wizard_saldos_clientes_view_form"/>
         <field name="target">new</field>
     </record>
-
-    <record id="saldos_clientes_reporte" model="ir.actions.report">
-            <field name="name">Saldos de Clientes</field>
-            <field name="model">account.move</field>
-            <field name="report_type">qweb-pdf</field>
-            <field name="report_name">sam_reportes.saldos_clientes_template</field>
-    </record>   
 
 
     <menuitem
