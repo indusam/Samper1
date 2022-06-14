@@ -40,19 +40,15 @@ class SaldosClientes(models.TransientModel):
                     'total_adeudado': cliente.total_due,
                     'total_vencido': cliente.total_overdue
                      }
+            
             saldos_de_clientes.append(vals)
 
-        #data = {'ids': self.ids,
-        #        'model': self._name,
-        #        'vals': vals,
-        #        'fecha': datetime.date.today(),
-        #         'compania': self.env.company.name
-        #        }
-        #return self.env['report'].get_action(self, 'saldos_clientes.saldos_clientes_report', data=data)
-        
-        saldos_data = {'saldos_data': self.read()[0],
-                       'saldos': saldos_de_clientes}
-        
-        return self.env.ref(
-            'sam_reportes.saldos_clientes_reporte').report_action(self, data=saldos_data)
+        data = {'ids': self.ids,
+                'model': self._name,
+                'vals': vals,
+                'fecha': datetime.date.today(),
+                'compania': self.env.company.name
+                }
+                
+        return self.env['report'].get_action(self, 'saldos_clientes.saldos_clientes_report', data=data)
         
