@@ -30,6 +30,14 @@
         <field name="target">new</field>
     </record>
 
+    <record id="saldos_clientes_reporte" model="ir.actions.report">
+            <field name="name">Saldos de Clientes</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">sam_reportes.saldos_clientes_template</field>
+    </record>   
+
+
     <menuitem
         id="saldos_clientes_menu"
         name="Saldos de clientes"
