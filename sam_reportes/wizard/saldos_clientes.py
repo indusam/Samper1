@@ -49,6 +49,7 @@ class SaldosClientes(models.TransientModel):
                 'fecha': datetime.date.today(),
                 'compania': self.env.company.name
                 }
-                
-        return self.env['report'].get_action(self, 'saldos_clientes.saldos_clientes_report', data=data)
+
+        # return self.env['report'].get_action(self, 'saldos_clientes.saldos_clientes_report', data=data)
+        return self.env.ref('saldos_clientes.saldos_clientes_report').report_action(self,data=data)
         
