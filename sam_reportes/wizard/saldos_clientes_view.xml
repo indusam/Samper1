@@ -25,10 +25,11 @@
         <field name="name">Saldos de clientes</field>
         <field name="res_model">saldos.clientes.wizard</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">form</field>
         <field name="view_id" ref="report_wizard_saldos_clientes_view_form"/>
         <field name="target">new</field>
     </record>
+
 
     <menuitem
         id="saldos_clientes_menu"

@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="saldos_clientes_template">
-
         <t t-call="web.html_container">
-            <t t-call="	web.external_layout">
+            <t t-call="web.basic_layout">
                 <div class="page">
-                    <br/>
                     <div style="text-align:left;color:black!important;">
                         <strong>
                             <h5>
-                                <span t-esc="compania"/>
-                                <br/>
                                 Saldos de clientes
                                 <br/>
                                 Fecha: <span t-esc="fecha" />                            
@@ -18,80 +14,38 @@
                         </strong>
                     </div>
                     <br/>
-                    <table class="table table-condensed">
-                        <thead>
-                            <tr >
-                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Cliente</th>
-                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Nombre Comercial</th>
-                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Total Facturado</th>
-                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Total Adeudado</th>
-                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Total Vencido</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Crea variables para totales -->
-                            <t t-set="ntotal_facturado" t-value="0.00" />
-                            <t t-set="ntotal_deuda" t-value="0.00" />
-                            <t t-set="ntotal_vencido" t-value="0.00" />
-
-                            <t t-foreach="vals" t-as="doc">
-                                <tr>
-                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="doc['cliente']"/>
-                                    </td>
-                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="doc['nombre_comercial']"/>
-                                    </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.2f}'.format(doc['total_facturado'])"/>
-                                    </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.2f}'.format(doc['total_adeudado'])"/>
-                                    </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.2f}'.format(doc['total_vencido'])"/>
-                                    </td>
-                                    
-                                    <!-- Suma los totales -->
-                                    <t t-set="ntotal_facturado" t-value="ntotal_facturado + doc['total_facturado']" />
-                                    <t t-set="ntotal_deuda" t-value="ntotal_deuda + doc['total_adeudado']" />
-                                    <t t-set="ntotal_vencido" t-value="ntotal_vencido + doc['total_vencido']" />
-                                    
-                                </tr>
-                            </t>
-                            <!-- Imprime los totales -->
-                            <tr>
-                                <td style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <strong>Totales</strong>
-                                </td>
-                                <td style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <strong> </strong>
-                                </td>  
-                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <strong><t t-esc="'{0:,.2f}'.format(ntotal_facturado)"/></strong>
-                                </td>
-                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <strong><t t-esc="'{0:,.2f}'.format(ntotal_deuda)"/></strong>
-                                </td>
-                                <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <strong><t t-esc="'{0:,.2f}'.format(ntotal_vencido)"/></strong>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
+                <table class="table table-condensed">
+                    <thead>
+                        <tr >
+                            <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Cliente</th>
+                            <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Nombre Comercial</th>
+                            <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Total Facturado</th>
+                            <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Total Adeudado</th>
+                            <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Total Vencido</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Crea variables para totales -->
+                        <t t-set="ntotal_facturado" t-value="0.00" />
+                        <t t-set="ntotal_deuda" t-value="0.00" />
+                        <t t-set="ntotal_vencido" t-value="0.00" />
+                        <t t-foreach="clientes" t-as="o">
+                            <!-- 
+                            <tr>
+                                <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="doc['cliente']"/>
+                                </td>
+                            </tr>
+                            -->   
+                        </t>    
+                    </tbody>
+                </table>    
             </t>
         </t>
     </template>
-
-    <!-- esto aplica cuando se imprime desde el menú "Imprimir" al seleccionar registros.
-    <report
-            id="action_custom_report_lista_de_precios5"
-            string="Lista de precios 5"
-            model="product.template"
-            report_type="qweb-pdf"
-            file="gr_listasdeprecios.lp5_template"
-            name="gr_listasdeprecios.lp5_template"
-    />
-    -->
 </odoo>
+
+<!--
+    
+-->
