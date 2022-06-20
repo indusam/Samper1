@@ -13,8 +13,8 @@
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">sam_reportes.saldos_clientes_template</field>
             <field name="report_file">sam_reportes.saldos_clientes_template</field>
-            <!-- <field name="bindig_model_id" ref="model_saldos_clientes_wizard"/>
-            <field name="bindig_type">report</field> -->
+            <field name="bindig_model_id" ref="saldos.model_saldos_clientes_wizard"/>
+            <field name="bindig_type">report</field>
         </record>
     </data>
 </odoo>
