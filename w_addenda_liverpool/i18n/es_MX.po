@@ -4,44 +4,42 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 15.0+e\n"
+"Project-Id-Version: Odoo Server 13.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-08 14:52+0000\n"
-"PO-Revision-Date: 2022-06-08 10:55-0400\n"
+"POT-Creation-Date: 2020-04-02 00:21+0000\n"
+"PO-Revision-Date: 2020-04-02 00:21+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-"Language: es_MX\n"
-"X-Generator: Poedit 3.0\n"
 
 #. module: w_addenda_liverpool
-#: model_terms:ir.ui.view,arch_db:w_addenda_liverpool.addenda_liverpool
+#: model_terms:ir.ui.view,arch_db:w_addenda_liverpool.w_extend_cfdiv33_addenda_liverpool
 msgid "0.00"
 msgstr ""
 
 #. module: w_addenda_liverpool
-#: model_terms:ir.ui.view,arch_db:w_addenda_liverpool.w_inherit_account_move_view_add_fields_to_addenda_liverpool
-msgid "Addenda Liverpool"
+#: model_terms:ir.ui.view,arch_db:w_addenda_liverpool.w_inherit_account_invoice_view_add_fields_for_liverpool_addendas
+msgid "Addenda liverpool"
 msgstr ""
 
 #. module: w_addenda_liverpool
-#: model_terms:ir.ui.view,arch_db:w_addenda_liverpool.addenda_liverpool
+#: model_terms:ir.ui.view,arch_db:w_addenda_liverpool.w_extend_cfdiv33_addenda_liverpool
 msgid "CREDIT_NOTE"
 msgstr ""
 
 #. module: w_addenda_liverpool
 #: model:ir.model.fields,help:w_addenda_liverpool.field_res_partner__generate_addenda_liverpool
 #: model:ir.model.fields,help:w_addenda_liverpool.field_res_users__generate_addenda_liverpool
-msgid "Check this field if require generate addenda Liverpool"
-msgstr "Marque este campo si es necesario generar la addenda liverpool"
+msgid "Check this field if require generate addenda liverpool"
+msgstr "Marcar este campo si requiere generar addenda liverpool"
 
 #. module: w_addenda_liverpool
 #: model:ir.model,name:w_addenda_liverpool.model_res_company
 msgid "Companies"
-msgstr "Empresas"
+msgstr "Compañías"
 
 #. module: w_addenda_liverpool
 #: model:ir.model,name:w_addenda_liverpool.model_res_partner
@@ -49,59 +47,46 @@ msgid "Contact"
 msgstr "Contacto"
 
 #. module: w_addenda_liverpool
-#: model:ir.model.fields,field_description:w_addenda_liverpool.field_account_bank_statement_line__date_delivery
 #: model:ir.model.fields,field_description:w_addenda_liverpool.field_account_move__date_delivery
-#: model:ir.model.fields,field_description:w_addenda_liverpool.field_account_payment__date_delivery
 msgid "Date delivery"
-msgstr "Fecha de entrega"
+msgstr "Fecha del pedimento"
 
 #. module: w_addenda_liverpool
-#: model:ir.model.fields,field_description:w_addenda_liverpool.field_account_bank_statement_line__delivery_folio
 #: model:ir.model.fields,field_description:w_addenda_liverpool.field_account_move__delivery_folio
-#: model:ir.model.fields,field_description:w_addenda_liverpool.field_account_payment__delivery_folio
 msgid "Delivery folio"
 msgstr "Folio de entrega"
 
 #. module: w_addenda_liverpool
-#: model:ir.model.fields,help:w_addenda_liverpool.field_account_bank_statement_line__require_addenda_liverpool
-#: model:ir.model.fields,help:w_addenda_liverpool.field_account_move__require_addenda_liverpool
-#: model:ir.model.fields,help:w_addenda_liverpool.field_account_payment__require_addenda_liverpool
-msgid "Field used to show or hide the fields create for the Liverpool addenda"
-msgstr ""
-
-#. module: w_addenda_liverpool
 #: model:ir.model.fields,field_description:w_addenda_liverpool.field_res_partner__generate_addenda_liverpool
 #: model:ir.model.fields,field_description:w_addenda_liverpool.field_res_users__generate_addenda_liverpool
-msgid "Generate addenda Liverpool"
-msgstr "Generar addenda Liverpool"
+msgid "Generate addenda liverpool"
+msgstr "Generar addenda liverpool"
 
 #. module: w_addenda_liverpool
 #: model:ir.model.fields,field_description:w_addenda_liverpool.field_res_company__global_localitation_number
 #: model:ir.model.fields,field_description:w_addenda_liverpool.field_res_partner__global_localitation_number
 #: model:ir.model.fields,field_description:w_addenda_liverpool.field_res_users__global_localitation_number
 msgid "Global localitation number(GLN)"
-msgstr ""
+msgstr "Número global de localización (GLN)"
 
 #. module: w_addenda_liverpool
-#: model_terms:ir.ui.view,arch_db:w_addenda_liverpool.addenda_liverpool
+#: model_terms:ir.ui.view,arch_db:w_addenda_liverpool.w_extend_cfdiv33_addenda_liverpool
 msgid "INVOICE"
 msgstr ""
 
 #. module: w_addenda_liverpool
-#: model:ir.model.fields,help:w_addenda_liverpool.field_account_bank_statement_line__purchase_order_liv
 #: model:ir.model.fields,help:w_addenda_liverpool.field_account_move__purchase_order_liv
-#: model:ir.model.fields,help:w_addenda_liverpool.field_account_payment__purchase_order_liv
 msgid ""
 "If the invoice is for the liverpool customer, indicate the number of the "
 "purchase order."
 msgstr ""
-"Si la factura es del cliente Liverpool, indica el número de la orden de "
-"compra."
+"Si la factura es para el cliente de Liverpool, indique el número de orden de"
+" compra."
 
 #. module: w_addenda_liverpool
 #: model:ir.model,name:w_addenda_liverpool.model_account_move
-msgid "Journal Entry"
-msgstr "Asiento de diario"
+msgid "Journal Entries"
+msgstr "Asientos contables"
 
 #. module: w_addenda_liverpool
 #: model:ir.model,name:w_addenda_liverpool.model_account_move_line
@@ -109,28 +94,50 @@ msgid "Journal Item"
 msgstr "Apunte contable"
 
 #. module: w_addenda_liverpool
+#: code:addons/w_addenda_liverpool/models/inherit_account_invoice.py:0
+#, python-format
+msgid "No PAC credentials specified."
+msgstr "No se especificaron credenciales de PAC."
+
+#. module: w_addenda_liverpool
+#: code:addons/w_addenda_liverpool/models/inherit_account_invoice.py:0
+#, python-format
+msgid "No PAC specified."
+msgstr "PAC no especificado"
+
+#. module: w_addenda_liverpool
+#: code:addons/w_addenda_liverpool/models/inherit_account_invoice.py:0
+#, python-format
+msgid "No valid certificate found"
+msgstr "No se ha encontrado ningún certificado válido"
+
+#. module: w_addenda_liverpool
+#: code:addons/w_addenda_liverpool/models/inherit_account_invoice.py:0
+#, python-format
+msgid "Please check your configuration: "
+msgstr "Compruebe su configuración: "
+
+#. module: w_addenda_liverpool
 #: model:ir.model.fields,field_description:w_addenda_liverpool.field_res_partner__person_order_department
 #: model:ir.model.fields,field_description:w_addenda_liverpool.field_res_users__person_order_department
 msgid "Purchase contact"
-msgstr ""
+msgstr "Contacto de compras"
 
 #. module: w_addenda_liverpool
-#: model:ir.model.fields,field_description:w_addenda_liverpool.field_account_bank_statement_line__purchase_order_liv
 #: model:ir.model.fields,field_description:w_addenda_liverpool.field_account_move__purchase_order_liv
-#: model:ir.model.fields,field_description:w_addenda_liverpool.field_account_payment__purchase_order_liv
 msgid "Purchase order liverpool"
-msgstr ""
+msgstr "Orden de compra(comprador)"
 
 #. module: w_addenda_liverpool
 #: model:ir.model.fields,help:w_addenda_liverpool.field_res_company__global_localitation_number
 msgid "Specifies the global location number (GLN) for vendor."
-msgstr ""
+msgstr "Especifica el número de ubicación global (GLN) para el proveedor."
 
 #. module: w_addenda_liverpool
 #: model:ir.model.fields,help:w_addenda_liverpool.field_res_partner__global_localitation_number
 #: model:ir.model.fields,help:w_addenda_liverpool.field_res_users__global_localitation_number
 msgid "Specifies the global location number (GLN) of the buyer."
-msgstr ""
+msgstr "Especifica el número de ubicación global (GLN) del comprador."
 
 #. module: w_addenda_liverpool
 #: model:ir.model.fields,help:w_addenda_liverpool.field_res_partner__supplier_identification
@@ -139,42 +146,48 @@ msgid ""
 "Specify the code to identify what type of secondary identification is "
 "assigned to the provider"
 msgstr ""
-"Especifica el código para identificar qué tipo de identificación secundaria "
-"está asignada al proveedor"
+"Especifique el código para identificar qué tipo de identificación secundaria"
+" es asignado al proveedor"
 
 #. module: w_addenda_liverpool
-#: model:ir.model.fields,help:w_addenda_liverpool.field_account_bank_statement_line__date_delivery
 #: model:ir.model.fields,help:w_addenda_liverpool.field_account_move__date_delivery
-#: model:ir.model.fields,help:w_addenda_liverpool.field_account_payment__date_delivery
 msgid "Specify the date the no was assigned. of receipt sheet"
-msgstr "Especifica la fecha de entrega"
+msgstr "Especifique la fecha en que se asignó el no. de la hoja de recibo"
 
 #. module: w_addenda_liverpool
-#: model:ir.model.fields,help:w_addenda_liverpool.field_account_bank_statement_line__delivery_folio
 #: model:ir.model.fields,help:w_addenda_liverpool.field_account_move__delivery_folio
-#: model:ir.model.fields,help:w_addenda_liverpool.field_account_payment__delivery_folio
 msgid ""
 "Specify the folio number. Number issued by the buyer when he receives the "
 "merchandise that is billed"
 msgstr ""
-"Especifica el número de folio. Número emitido por el comprador cuando "
-"recibe la mercancía facurada"
+"Especifique el número de publicación. Número emitido por el comprador cuando"
+" recibe el mercancía que se factura"
 
 #. module: w_addenda_liverpool
 #: model:ir.model.fields,field_description:w_addenda_liverpool.field_res_partner__supplier_identification
 #: model:ir.model.fields,field_description:w_addenda_liverpool.field_res_users__supplier_identification
 msgid "Supplier identification"
-msgstr "Identificación de proveedor"
+msgstr "Identificación del proveedor"
 
 #. module: w_addenda_liverpool
-#: model:ir.model.fields,field_description:w_addenda_liverpool.field_account_bank_statement_line__require_addenda_liverpool
-#: model:ir.model.fields,field_description:w_addenda_liverpool.field_account_move__require_addenda_liverpool
-#: model:ir.model.fields,field_description:w_addenda_liverpool.field_account_payment__require_addenda_liverpool
-msgid "Use Addenda Liverpool"
-msgstr "Utilizar addenda Liverpool"
+#: code:addons/w_addenda_liverpool/models/inherit_account_invoice.py:0
+#, python-format
+msgid "The cfdi generated is not valid"
+msgstr "El cfdi generado no es válido"
+
+#. module: w_addenda_liverpool
+#: code:addons/w_addenda_liverpool/models/inherit_account_invoice.py:0
+#, python-format
+msgid "The xsd file to validate the XML structure was not found"
+msgstr "El archivo XSD que valida la estructura del XML no fue encontrado"
+
+#. module: w_addenda_liverpool
+#: model:ir.model.fields,field_description:w_addenda_liverpool.field_account_move__use_addenda
+msgid "Use Addenda"
+msgstr ""
 
 #. module: w_addenda_liverpool
 #: model:ir.model.fields,help:w_addenda_liverpool.field_res_partner__person_order_department
 #: model:ir.model.fields,help:w_addenda_liverpool.field_res_users__person_order_department
 msgid "specify purchase contact information"
-msgstr "Especifica información del contacto de compra."
+msgstr "Especificar información de contacto de compra"

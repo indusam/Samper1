@@ -2,11 +2,11 @@
 #
 # Module written to Odoo, Open Source Management Solution
 #
-# Copyright (c) 2022 Birtum - http://www.birtum.com/
+# Copyright (c) 2017 Wedoo - http://www.wedoo.tech/
 # All Rights Reserved.
 #
-# Developer(s): Eddy Luis Pérez Vila
-#               (epv@birtum.com)
+# Developer(s): Alan Guzmán
+#               (age@wedoo.tech)
 ########################################################################
 #
 # This program is free software: you can redistribute it and/or modify

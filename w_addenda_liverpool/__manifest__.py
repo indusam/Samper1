@@ -2,11 +2,13 @@
 #
 # Module written to Odoo, Open Source Management Solution
 #
-# Copyright (c) 2022 Birtum - http://www.birtum.com/
+# Copyright (c) 2021 Wedoo - http://www.wedoo.tech/
 # All Rights Reserved.
 #
-# Developer(s): Eddy Luis Pérez Vila
-#               (epv@birtum.com)
+# Developer(s): Alan Guzmán
+#               (age@wedoo.tech)
+#               Andy Torres
+#               (atu@wedoo.tech)
 ########################################################################
 #
 # This program is free software: you can redistribute it and/or modify
@@ -25,29 +27,34 @@
 ########################################################################
 
 {
-    'name': 'Birtum | Addenda Liverpool',
-    'author': 'Birtum ©',
+    'name': 'WEDOO | Addendas liverpool',
+    'author': 'WEDOO ©',
     'category': 'Account',
     'sequence': 50,
-    'summary': "Addenda Liverpool",
-    'website': 'http://www.birtum.com/',
-    'version': '15.0',
+    'summary': "Addenda liverpool",
+    'website': 'https://www.wedoo.tech',
+    'version': '1.0',
     'description': """
-Addenda Liverpool
+Addendas liverpool
 ===============================================================
-This module adds the Liverpool addenda in signed invoices
+This module adds the liverpool addendum in signed invoices, the following 
+features are adds:
+- inheritance of the account.move model, required fields are added.
+- inheritance of the res.company model, required fields are added.
+- inheritance of the res.partner model, required fields are added.
+Also a template is added for render the addenda.
     """,
     'depends': [
         'base',
         'account',
-        'account_accountant',
         'l10n_mx_edi'
     ],
     'data': [
-        'data/addenda_liverpool.xml',
+        'security/ir.model.access.csv',
+        'data/inherit_template_cfdiv33.xml',
         'views/inherit_res_partner_view.xml',
         'views/inherit_res_company_view.xml',
-        'views/inherit_account_move_view.xml'
+        'views/inherit_account_invoice_view.xml'
     ],
     'demo': [],
     'qweb': [],
