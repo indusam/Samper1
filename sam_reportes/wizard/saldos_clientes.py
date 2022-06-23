@@ -44,9 +44,10 @@ class SaldosClientes(models.TransientModel):
             saldos.append(vals)
 
         data = {'form_data': self.read()[0],
+                'fecha': self.fecha,
                 'clientes': saldos}
 
-        return self.env.ref('saldos_clientes.saldos_clientes_reporte').report_action(self,data=data)
+        return self.env.ref('sam_reportes.saldos_clientes_reporte').report_action(self,data=data)
 
         
 
