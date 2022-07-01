@@ -35,11 +35,19 @@
                             <tr>
                                 <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <t t-esc="line['name']"/>
-                                    <t t-esc="line['x_nombre_comercial']"/>
-                                    <t t-esc="line['total_invoiced']"/>
-                                    <t t-esc="line['total_due']"/>
-                                    <t t-esc="line['total_overdue']"/>
                                 </td>
+                                <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="line['x_nombre_comercial']"/>
+                                </td>
+                                <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="line['total_invoiced']"/>
+                                </td>
+                               <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="line['total_due']"/>
+                                </td>
+                               <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="line['total_overdue']"/>
+                                </td>                                   
                             </tr>
                         </t>  
  
