@@ -47,7 +47,7 @@ class SaldosClientes(models.TransientModel):
                 'fecha': self.fecha,
                 'clientes': saldos}
 
-        return self.env.ref('sam_reportes.saldos_clientes_reporte').report_action(self,data=data)
+        return self.env.ref('sam_reportes.saldos_clientes_reporte').report_action(self, data=data)
 
         
 
