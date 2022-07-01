@@ -9,7 +9,7 @@
                             <h5>
                                 Saldos de clientes
                                 <br/>
-                                Fecha: <span t-esc=form_data['fecha'] />                            
+                                Fecha: <span t-esc="form_data['fecha']" />                            
                             </h5>
                         </strong>
                     </div>
