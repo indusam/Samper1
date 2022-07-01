@@ -30,15 +30,17 @@
                         <t t-set="ntotal_facturado" t-value="0.00" />
                         <t t-set="ntotal_deuda" t-value="0.00" />
                         <t t-set="ntotal_vencido" t-value="0.00" /> 
+                        <!-- 
                         <t t-foreach="clientes" t-as="o"> 
-                            <!-- 
+                            
                             <tr>
                                 <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <t t-esc="o['cliente']"/>
                                 </td>
                             </tr>
-                            -->
-                        </t>     
+
+                        </t>  
+                        -->   
                     </tbody> 
                 </table>    
             </t>
