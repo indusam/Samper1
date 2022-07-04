@@ -57,26 +57,22 @@ class AccountMove(models.Model):
     )
     require_addenda_liverpool = fields.Boolean(help="Field used to show or hide the fields create for the Liverpool addenda",
         string="Use Addenda Liverpool",
-        default=False)
+        compute='_compute_require_addenda_liverpool',
+        store=True)
 
-    @api.onchange('partner_id')
-    def _onchange_partner_id(self):
-        addenda_liverpool_id = self.env.ref('w_addenda_liverpool.addenda_liverpool').id
+    @api.depends('partner_id', 'partner_id.generate_addenda_liverpool')
+    def _compute_require_addenda_liverpool(self):
         for move in self:
-            if move.partner_id.l10n_mx_edi_addenda.id == addenda_liverpool_id or move.partner_id.commercial_partner_id.l10n_mx_edi_addenda.id == addenda_liverpool_id:
-                move.require_addenda_liverpool = True
-            else: 
-                move.require_addenda_liverpool = False
-        return super(AccountMove, self)._onchange_partner_id()
+            move.require_addenda_liverpool = move.partner_id.generate_addenda_liverpool
 
-    def read(self, fields=None, load='_classic_read'):   
-        addenda_liverpool_id = self.env.ref('w_addenda_liverpool.addenda_liverpool').id
-        for invoice in self: 
-            if invoice.partner_id.l10n_mx_edi_addenda.id == addenda_liverpool_id:
-                invoice.require_addenda_liverpool = True
-            else:
-                invoice.require_addenda_liverpool = False
-        return super(AccountMove, self).read(fields=fields, load=load)
+    # def read(self, fields=None, load='_classic_read'):
+    #     addenda_liverpool_id = self.env.ref('w_addenda_liverpool.addenda_liverpool').id
+    #     for invoice in self:
+    #         if invoice.partner_id.l10n_mx_edi_addenda.id == addenda_liverpool_id:
+    #             invoice.require_addenda_liverpool = True
+    #         else:
+    #             invoice.require_addenda_liverpool = False
+    #     return super(AccountMove, self).read(fields=fields, load=load)
 
 
     def unescape_characters(self, value):
