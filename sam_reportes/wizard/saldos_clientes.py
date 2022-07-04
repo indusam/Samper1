@@ -26,8 +26,6 @@ class SaldosClientes(models.TransientModel):
         # domain = [('total_due', '>', 0)]
         saldos = self.env['res.partner'].search([('credit', '>', 0)])
 
-        raise UserError(saldos)    
-
         clientes = []
         for cliente in saldos:
             vals = {
