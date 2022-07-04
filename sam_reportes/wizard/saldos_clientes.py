@@ -37,10 +37,12 @@ class SaldosClientes(models.TransientModel):
 
             clientes.append(vals)
 
+        raise UserError(clientes)
+
         data = {'form_data': self.read()[0],
                 'fecha': self.fecha,
                 'clientes': clientes}
-
+   
         return self.env.ref('sam_reportes.saldos_clientes_reporte').report_action(self, data=data)
 
 
