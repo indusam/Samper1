@@ -24,7 +24,7 @@ class SaldosClientes(models.TransientModel):
     def imprime_saldos_clientes(self):
         
         # domain = [('total_due', '>', 0)]
-        saldos = self.env['res.partner'].search([('total_due', '>', 0)])
+        saldos = self.env['res.partner'].search([('total_due', '!=', 0)])
         clientes = []
         for cliente in saldos:
             vals = {
@@ -32,12 +32,10 @@ class SaldosClientes(models.TransientModel):
                 'x_nombre_comercial': cliente.x_nombre_comercial,
                 'total_invoiced': cliente.total_invoiced,
                 'total_due': cliente.total_due,
-                'total_overdue': cliente.total_overdue,
+                'total_overdue': cliente.total_overdue
             } 
 
             clientes.append(vals)
-
-        raise UserError(clientes)
 
         data = {'form_data': self.read()[0],
                 'fecha': self.fecha,
