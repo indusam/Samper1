@@ -82,10 +82,11 @@ class AntiguedadSaldosDetalle(models.TransientModel):
         cnombrecliente = ''
         if self.cliente:
             cnombrecliente = self.cliente.name
+ 
 
         data = {'ids': self.ids,
                     'model': self._name,
-                    'vals': detalle,
+                    'detalle': detalle,
                     'fecha': datetime.date.today(),
                     'corte': self.fecha_corte,
                     'cliente': cnombrecliente

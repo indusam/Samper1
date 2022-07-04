@@ -45,7 +45,7 @@
                             <t t-set="total_90" t-value="0.00" />
                             <t t-set="total_mas_90" t-value="0.00" />    
 
-                            <t t-foreach="vals" t-as="doc">
+                            <t t-foreach="detalle" t-as="doc">
                                 <tr>
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="doc['empresa']"/>
