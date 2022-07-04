@@ -29,7 +29,7 @@ class SaldosClientes(models.TransientModel):
         clientes = []
         for cliente in saldos:
             vals = {
-                'name': cliente.name,
+                'nombre_cliente': cliente.name,
                 'x_nombre_comercial': cliente.x_nombre_comercial,
                 'total_invoiced': cliente.total_invoiced,
                 'total_due': cliente.total_due,
