@@ -24,9 +24,7 @@ class SaldosClientes(models.TransientModel):
     def imprime_saldos_clientes(self):
         
         domain = [('total_due', '>', 0)]
-        raise UserError(domain)
-        
-        clientes = self.env['res.partner'].search_read(domain)
+        clientes = self.env['res.partner'].search(domain)
 
         data = {'form_data': self.read()[0],
                 'fecha': self.fecha,
