@@ -41,6 +41,7 @@ class AntiguedadSaldosDetalle(models.TransientModel):
         if facturas:
             # Ordena facturas por cliente.
             facturas = facturas.sorted(key=lambda r: r.partner_id.name)
+            detalle = []
             for factura in facturas:
                 n30d = n60d = n90d = nmas90 = no_vencido = 0
 
@@ -64,7 +65,7 @@ class AntiguedadSaldosDetalle(models.TransientModel):
                     no_vencido = factura.amount_residual
 
                 # Guarda los valores en vals.
-                vals.append({
+                vals = {
                     'empresa': factura.partner_id.name,
                     'factura': factura.name,
                     'fecha': factura.invoice_date, 
@@ -74,7 +75,9 @@ class AntiguedadSaldosDetalle(models.TransientModel):
                     'n60d': n60d, 
                     'n90d': n90d, 
                     'nmas90': nmas90, 
-                    'no_vencido': no_vencido})
+                    'no_vencido': no_vencido}
+
+                detalle.append(vals)
 
         cnombrecliente = ''
         if self.cliente:
@@ -82,7 +85,7 @@ class AntiguedadSaldosDetalle(models.TransientModel):
 
         data = {'ids': self.ids,
                     'model': self._name,
-                    'vals': vals,
+                    'vals': detalle,
                     'fecha': datetime.date.today(),
                     'corte': self.fecha_corte,
                     'cliente': cnombrecliente
