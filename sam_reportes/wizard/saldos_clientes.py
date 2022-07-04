@@ -25,6 +25,7 @@ class SaldosClientes(models.TransientModel):
         
         domain = [('total_due', '>', 0)]
         clientes = self.env['res.partner'].search(domain)
+        raise UserError(clientes)
 
         data = {'form_data': self.read()[0],
                 'fecha': self.fecha,
