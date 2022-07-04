@@ -23,9 +23,19 @@ class SaldosClientes(models.TransientModel):
     # Selecciona e imprime los saldos de los clientes.
     def imprime_saldos_clientes(self):
         
-        domain = [('total_due', '>', 0)]
-        clientes = self.env['res.partner'].search(domain)
-        raise UserError(clientes)
+        # domain = [('total_due', '>', 0)]
+        saldos = self.env['res.partner'].search([('total_due', '>', 0)])
+        clientes = []
+        for cliente in saldos:
+            vals = {
+                'name': cliente.name,
+                'x_nombre_comercial': cliente.x_nombre_comercial,
+                'total_invoiced': cliente.total_invoiced,
+                'total_due': cliente.total_due,
+                'total_overdue': cliente.total_overdue,
+            } 
+
+            clientes.append(vals)
 
         data = {'form_data': self.read()[0],
                 'fecha': self.fecha,
