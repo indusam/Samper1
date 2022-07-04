@@ -23,31 +23,37 @@ class SaldosClientes(models.TransientModel):
     # Selecciona e imprime los saldos de los clientes.
     def imprime_saldos_clientes(self):
         
-        saldos = []
-        # Obtiene los clientes con saldo.
-        clientes = self.env['res.partner'].search([('total_due', '>', 0)])
-        
-        if not clientes:
-            raise UserError('No hay clientes con saldo.')
+        clientes = self.env['res.partner'].search_read([('total_due', '>', 0)])
 
-        # Recorre los clientes.
-        for cliente in clientes: 
-            # Guarda los valores en vals.
-            vals = {
-                    'cliente': cliente.name,
-                    'nombre_comercial': cliente.x_nombre_comercial,
-                    'total_facturado': cliente.total_invoiced, 
-                    'total_adeudado': cliente.total_due,
-                    'total_vencido': cliente.total_overdue
-                     }
-            
-            saldos.append(vals)
+        raise UserError(clientes)
 
         data = {'form_data': self.read()[0],
                 'fecha': self.fecha,
-                'clientes': saldos}
+                'clientes': clientes}
 
-        return self.env.ref('sam_reportes.saldos_clientes_reporte').report_action(self,data=data)
+        return self.env.ref('sam_reportes.saldos_clientes_reporte').report_action(self, data=data)
+
+
+
+        # saldos = []
+        # # Obtiene los clientes con saldo.
+        # clientes = self.env['res.partner'].search([('total_due', '>', 0)])
+        
+        # if not clientes:
+        #     raise UserError('No hay clientes con saldo.')
+
+        # # Recorre los clientes.
+        # for cliente in clientes: 
+        #     # Guarda los valores en vals.
+        #     vals = {
+        #             'cliente': cliente.name,
+        #             'nombre_comercial': cliente.x_nombre_comercial,
+        #             'total_facturado': cliente.total_invoiced, 
+        #             'total_adeudado': cliente.total_due,
+        #             'total_vencido': cliente.total_overdue
+        #              }
+            
+        #     saldos.append(vals)
 
         
 
