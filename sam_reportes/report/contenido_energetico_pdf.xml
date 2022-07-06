@@ -48,7 +48,7 @@
                             <t t-set="tot_hume" t-value="0"/>
                             <t t-set="tot_cantidad" t-value="cantidad"/>
 
-                            <t t-foreach="vals" t-as="doc">
+                            <t t-foreach="vals" t-as="line">
                                 <t t-set="tot_proteina" t-value="tot_proteina + line['proteina_kg']"/>
                                 <t t-set="tot_gras" t-value="tot_gras + line['grasa_kg']"/>
                                 <t t-set="tot_gras_poli" t-value="tot_gras_poli + line['grasa_polisat_kg']"/>
