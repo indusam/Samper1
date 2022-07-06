@@ -44,13 +44,13 @@
                             <t t-set="total_60" t-value="0.00" />
                             <t t-set="total_90" t-value="0.00" />
                             <t t-set="total_mas_90" t-value="0.00" />    
-                            <!-- 
+                        
                             <t t-foreach="detalle" t-as="doc">
                                 <tr>
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="doc['empresa']"/>
                                     </td>
-                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <!--                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="doc['factura']"/>
                                     </td>
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -85,9 +85,10 @@
                                     <t t-set="total_60" t-value="total_60 + doc['n60d']" />
                                     <t t-set="total_90" t-value="total_90 + doc['n90d']" />
                                     <t t-set="total_mas_90" t-value="total_mas_90 + doc['nmas90']" />   
+                                    -->
                                 </tr>
                             </t>
-                            
+                            <!-- 
                             <tr>
                                 <td style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <strong>Totales</strong>

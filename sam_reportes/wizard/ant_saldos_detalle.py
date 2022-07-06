@@ -66,16 +66,16 @@ class AntiguedadSaldosDetalle(models.TransientModel):
 
                 # Guarda los valores en vals.
                 vals = {
-                    'empresa': factura.partner_id.name,
-                    'factura': factura.name,
-                    'fecha': factura.invoice_date, 
-                    'ntotal': factura.amount_total,
-                    'ndeuda': factura.amount_residual, 
-                    'n30d': n30d, 
-                    'n60d': n60d, 
-                    'n90d': n90d, 
-                    'nmas90': nmas90, 
-                    'no_vencido': no_vencido}
+                    'empresa': factura.partner_id.name}
+                    # 'factura': factura.name,
+                    # 'fecha': factura.invoice_date, 
+                    # 'ntotal': factura.amount_total,
+                    # 'ndeuda': factura.amount_residual, 
+                    # 'n30d': n30d, 
+                    # 'n60d': n60d, 
+                    # 'n90d': n90d, 
+                    # 'nmas90': nmas90, 
+                    # 'no_vencido': no_vencido}
 
                 detalle.append(vals)
 
@@ -92,5 +92,4 @@ class AntiguedadSaldosDetalle(models.TransientModel):
                     }
 
 
-        return self.env.ref(
-            'sam_reportes.ant_saldos_detalle_reporte').report_action(self, data=data)
+        return self.env.ref('sam_reportes.ant_saldos_detalle_reporte').report_action(self, data=data)
