@@ -45,46 +45,47 @@
                             <t t-set="total_90" t-value="0.00" />
                             <t t-set="total_mas_90" t-value="0.00" />    
 
-                            <t t-foreach="vals" t-as="doc">
+                            <t t-foreach="detalle" t-as="line">
                                 <tr>
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="doc['empresa']"/>
+                                        <t t-esc="line['empresa']"/>
                                     </td>
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="doc['factura']"/>
+                                        <t t-esc="line['factura']"/>
                                     </td>
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="doc['fecha']"/>
+                                        <t t-esc="line['fecha']"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.2f}'.format(doc['ntotal'])"/>
+                                        <t t-esc="'{0:,.2f}'.format(line['ntotal'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.2f}'.format(doc['ndeuda'])"/>
+                                        <t t-esc="'{0:,.2f}'.format(line['ndeuda'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.2f}'.format(doc['no_vencido'])"/>
+                                        <t t-esc="'{0:,.2f}'.format(line['no_vencido'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.2f}'.format(doc['n30d'])"/>
+                                        <t t-esc="'{0:,.2f}'.format(line['n30d'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.2f}'.format(doc['n60d'])"/>
+                                        <t t-esc="'{0:,.2f}'.format(line['n60d'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.2f}'.format(doc['n90d'])"/>
+                                        <t t-esc="'{0:,.2f}'.format(line['n90d'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.2f}'.format(doc['nmas90'])"/>
+                                        <t t-esc="'{0:,.2f}'.format(line['nmas90'])"/>
                                     </td>
                                     <!-- Suma los totales -->
-                                    <t t-set="total_facturado" t-value="total_facturado + doc['ntotal']" />
-                                    <t t-set="total_deuda" t-value="total_deuda + doc['ndeuda']" />
-                                    <t t-set="total_por_vencer" t-value="total_por_vencer + doc['no_vencido']" />
-                                    <t t-set="total_30" t-value="total_30 + doc['n30d']" />
-                                    <t t-set="total_60" t-value="total_60 + doc['n60d']" />
-                                    <t t-set="total_90" t-value="total_90 + doc['n90d']" />
-                                    <t t-set="total_mas_90" t-value="total_mas_90 + doc['nmas90']" />   
+                                    <t t-set="total_facturado" t-value="total_facturado + line['ntotal']" />
+                                    <t t-set="total_deuda" t-value="total_deuda + line['ndeuda']" />
+                                    <t t-set="total_por_vencer" t-value="total_por_vencer + line['no_vencido']" />
+                                    <t t-set="total_30" t-value="total_30 + line['n30d']" />
+                                    <t t-set="total_60" t-value="total_60 + line['n60d']" />
+                                    <t t-set="total_90" t-value="total_90 + line['n90d']" />
+                                    <t t-set="total_mas_90" t-value="total_mas_90 + line['nmas90']" />   
+                                   
                                 </tr>
                             </t>
                             <!-- Imprime los totales -->
@@ -120,6 +121,7 @@
                                     <strong><t t-esc="'{0:,.2f}'.format(total_mas_90)"/></strong>
                                 </td>
                             </tr>
+                            
                         </tbody>
                     </table>
                 </div>

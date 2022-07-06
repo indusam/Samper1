@@ -61,73 +61,73 @@
                             <t t-set="tot_azucares" t-value="0"/>
                             <t t-set="tot_sodio" t-value="0"/>
 
-                            <t t-foreach="vals" t-as="doc">
+                            <t t-foreach="vals" t-as="line">
                                 <tr>
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="doc['componente']"/>
+                                        <t t-esc="line['componente']"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.4f}'.format(doc['cant_comp'])"/>
+                                        <t t-esc="'{0:,.4f}'.format(line['cant_comp'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.2f}'.format(doc['pct_humedad'])"/>
+                                        <t t-esc="'{0:,.2f}'.format(line['pct_humedad'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.2f}'.format(doc['pct_proteina'])"/>
+                                        <t t-esc="'{0:,.2f}'.format(line['pct_proteina'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.2f}'.format(int(doc['pct_grasas_tot']))"/>
+                                        <t t-esc="'{0:,.2f}'.format(int(line['pct_grasas_tot']))"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.2f}'.format(doc['pct_grasas_sat'])"/>
+                                        <t t-esc="'{0:,.2f}'.format(line['pct_grasas_sat'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.2f}'.format(doc['pct_grasas_trans'])"/>
+                                        <t t-esc="'{0:,.2f}'.format(line['pct_grasas_trans'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.2f}'.format(doc['pct_carbs'])"/>
+                                        <t t-esc="'{0:,.2f}'.format(line['pct_carbs'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.2f}'.format(doc['pct_azucares'])"/>
+                                        <t t-esc="'{0:,.2f}'.format(line['pct_azucares'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.4f}'.format(doc['mg_sodio'])"/>
+                                        <t t-esc="'{0:,.4f}'.format(line['mg_sodio'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.4f}'.format(doc['humedad_kg'])"/>
+                                        <t t-esc="'{0:,.4f}'.format(line['humedad_kg'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.4f}'.format(doc['proteina_kg'])"/>
+                                        <t t-esc="'{0:,.4f}'.format(line['proteina_kg'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.4f}'.format(doc['grasa_kg'])"/>
+                                        <t t-esc="'{0:,.4f}'.format(line['grasa_kg'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.4f}'.format(doc['grasa_sat_kg'])"/>
+                                        <t t-esc="'{0:,.4f}'.format(line['grasa_sat_kg'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.4f}'.format(doc['grasa_trans_kg'])"/>
+                                        <t t-esc="'{0:,.4f}'.format(line['grasa_trans_kg'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.4f}'.format(doc['carbs_kg'])"/>
+                                        <t t-esc="'{0:,.4f}'.format(line['carbs_kg'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.4f}'.format(doc['azucares_kg'])"/>
+                                        <t t-esc="'{0:,.4f}'.format(line['azucares_kg'])"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.4f}'.format(doc['sodio_mg'])"/>
+                                        <t t-esc="'{0:,.4f}'.format(line['sodio_mg'])"/>
                                     </td>
 
                                     <!-- Suma totales -->
-                                    <t t-set="tot_cantidad" t-value="tot_cantidad + doc['cant_comp']"/>
-                                    <t t-set="tot_proteina" t-value="tot_proteina + doc['proteina_kg']"/>
-                                    <t t-set="tot_grasa" t-value="tot_grasa + doc['grasa_kg']"/>
-                                    <t t-set="tot_grasa_sat" t-value="tot_grasa_sat + doc['grasa_sat_kg']"/>
-                                    <t t-set="tot_grasa_trans" t-value="tot_grasa_trans + doc['grasa_trans_kg']"/>
-                                    <t t-set="tot_humedad" t-value="tot_humedad + doc['humedad_kg']"/>
-                                    <t t-set="tot_carbs" t-value="tot_carbs + doc['carbs_kg']"/>
-                                    <t t-set="tot_azucares" t-value="tot_azucares + doc['azucares_kg']"/>
-                                    <t t-set="tot_sodio" t-value="tot_sodio + doc['sodio_mg']"/>
+                                    <t t-set="tot_cantidad" t-value="tot_cantidad + line['cant_comp']"/>
+                                    <t t-set="tot_proteina" t-value="tot_proteina + line['proteina_kg']"/>
+                                    <t t-set="tot_grasa" t-value="tot_grasa + line['grasa_kg']"/>
+                                    <t t-set="tot_grasa_sat" t-value="tot_grasa_sat + line['grasa_sat_kg']"/>
+                                    <t t-set="tot_grasa_trans" t-value="tot_grasa_trans + line['grasa_trans_kg']"/>
+                                    <t t-set="tot_humedad" t-value="tot_humedad + line['humedad_kg']"/>
+                                    <t t-set="tot_carbs" t-value="tot_carbs + line['carbs_kg']"/>
+                                    <t t-set="tot_azucares" t-value="tot_azucares + line['azucares_kg']"/>
+                                    <t t-set="tot_sodio" t-value="tot_sodio + line['sodio_mg']"/>
 
                                 </tr>
                             </t>
