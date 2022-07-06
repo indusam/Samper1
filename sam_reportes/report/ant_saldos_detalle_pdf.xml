@@ -44,7 +44,7 @@
                             <t t-set="total_60" t-value="0.00" />
                             <t t-set="total_90" t-value="0.00" />
                             <t t-set="total_mas_90" t-value="0.00" />    
-
+                            <!-- 
                             <t t-foreach="detalle" t-as="doc">
                                 <tr>
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -77,7 +77,7 @@
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="'{0:,.2f}'.format(doc['nmas90'])"/>
                                     </td>
-                                    <!-- Suma los totales -->
+                                   
                                     <t t-set="total_facturado" t-value="total_facturado + doc['ntotal']" />
                                     <t t-set="total_deuda" t-value="total_deuda + doc['ndeuda']" />
                                     <t t-set="total_por_vencer" t-value="total_por_vencer + doc['no_vencido']" />
@@ -87,7 +87,7 @@
                                     <t t-set="total_mas_90" t-value="total_mas_90 + doc['nmas90']" />   
                                 </tr>
                             </t>
-                            <!-- Imprime los totales -->
+                            
                             <tr>
                                 <td style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <strong>Totales</strong>
@@ -120,6 +120,7 @@
                                     <strong><t t-esc="'{0:,.2f}'.format(total_mas_90)"/></strong>
                                 </td>
                             </tr>
+                            -->
                         </tbody>
                     </table>
                 </div>
