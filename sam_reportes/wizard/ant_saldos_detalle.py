@@ -83,8 +83,6 @@ class AntiguedadSaldosDetalle(models.TransientModel):
         if self.cliente:
             cnombrecliente = self.cliente.name
  
-        raise UserError(detalle)
-
         data = {'ids': self.ids,
                     'model': self._name,
                     'detalle': detalle,
