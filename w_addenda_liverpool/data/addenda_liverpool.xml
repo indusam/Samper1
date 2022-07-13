@@ -161,6 +161,7 @@
                             <t t-set="line_counts" t-value="0"/>
                             <t t-foreach="record.invoice_line_ids.filtered(lambda inv: not inv.display_type)" t-as="line">
                                 <t t-set="line_counts" t-value="line_counts + 1"/>
+                                <t t-set="unidad_medida" t-value="kg"/>
                                 <detallista:lineItem t-att-number="line_counts" type="SimpleInvoiceLineItemType">
                                     <detallista:tradeItemIdentification>
                                         <detallista:gtin><t t-esc="line.product_id.barcode"/></detallista:gtin>
@@ -169,7 +170,8 @@
                                     <detallista:tradeItemDescriptionInformation language="ES">
                                         <detallista:longText><t t-if="line.product_id.name" t-esc="record.unescape_characters(line.product_id.name)"/></detallista:longText>
                                     </detallista:tradeItemDescriptionInformation>
-                                    <detallista:invoicedQuantity t-att-unitOfMeasure="line.product_uom_id.name"><t t-esc="line.get_quantity()"/></detallista:invoicedQuantity>
+                                    <!-- <detallista:invoicedQuantity t-att-unitOfMeasure="line.product_uom_id.name"><t t-esc="line.get_quantity()"/></detallista:invoicedQuantity> -->
+                                    <detallista:invoicedQuantity t-att-unitOfMeasure="unidad_medida"><t t-esc="line.get_quantity()"/></detallista:invoicedQuantity>
                                     <detallista:grossPrice>
                                         <detallista:Amount><t t-esc="line.get_price_gross()"/></detallista:Amount>
                                     </detallista:grossPrice>
