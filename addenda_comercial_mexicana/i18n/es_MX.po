@@ -77,7 +77,7 @@ msgstr "Número de localización global(GLN)"
 #. module: addenda_comercial_mexicana
 #: model_terms:ir.ui.view,arch_db:addenda_comercial_mexicana.mexican_commercial_addenda
 msgid "INVOICE"
-msgstr "FACTURA"
+msgstr "INVOICE"
 
 #. module: addenda_comercial_mexicana
 #: model:ir.model,name:addenda_comercial_mexicana.model_account_move
@@ -132,4 +132,4 @@ msgstr "Esta información es dada por el proveedor"
 #. module: addenda_comercial_mexicana
 #: model_terms:ir.ui.view,arch_db:addenda_comercial_mexicana.mexican_commercial_addenda
 msgid "VAT"
-msgstr "RFC"
+msgstr "VAT"
