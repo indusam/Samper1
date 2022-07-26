@@ -12,7 +12,6 @@ from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
 
-
 class AntiguedadSaldosDetalle(models.TransientModel):
     _name = 'ant.saldos.detalle.wizard'
     _description = 'Antiguedad de saldos detalle'
@@ -36,10 +35,9 @@ class AntiguedadSaldosDetalle(models.TransientModel):
                         ('move_type', '=', 'out_invoice'), ('amount_residual','>',0),
                         ('invoice_date', '<=', self.fecha_corte), ('partner_id', '=', self.cliente.id)])                
     
-        # Recorre las facturas.
-        
+        # Recorre las facturas.        
         if facturas:
-            # Ordena facturas por cliente.
+            # Ordena facturas por cliente. 25-07-2022
             facturas = facturas.sorted(key=lambda r: r.partner_id.name)
             detalle = []
             for factura in facturas:
