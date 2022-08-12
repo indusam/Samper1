@@ -35,6 +35,7 @@
         'views/saldos_clientes_reporte.xml',
         'views/tabla_nutrimental_reporte.xml',
         'views/formulas_reporte.xml',
+        'views/formula_base_carnicos_reporte.xml',
         'views/contenido_energetico_reporte.xml',
         'views/ant_saldos_detalle_reporte.xml',
         'wizard/tabla_nutrimental_view.xml',
@@ -42,10 +43,12 @@
         'wizard/contenido_energetico_view.xml',
         'wizard/saldos_clientes_view.xml',
         'wizard/ant_saldos_detalle_view.xml',
+        'wizard/formula_base_carnicos_view.xml',
         'report/saldos_clientes_pdf.xml',
         'report/contenido_energetico_pdf.xml',
         'report/tabla_nutrimental_pdf.xml',
         'report/formulas_pdf.xml',
+        'report/formula_base_carnicos_pdf.xml',
         'report/ant_saldos_detalle_pdf.xml'
     ],
 }

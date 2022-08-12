@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="wizard_formulas_view_form" model="ir.ui.view">
+        <field name="model">wizard.formula.base.carnicos</field>
+        <field name="name">wizard.formula.base.carnicos.view.form</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="producto" required="1"/>
+                        <field name="cantidad" required="1"/>
+                        <field name="consolidado" />
+                    </group>
+                    <!--  Esto no se usa en la formula de base de carnicos     
+                    <group>
+                        <field name="ing_limitante" attrs="{'invisible': [('cantidad','>',0)]}"/>
+                        <field name="cant_limitante" attrs="{'invisible': [('cantidad','>',0)]}"/>
+                    </group>
+                    -->    
+                </group>
+                <footer>
+                    <button name="imprime_formula_base_carnicos" type="object" string="Imprimir" class="oe_highlight"/>
+                    <button special="cancel" string="Cancelar"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_formula_base_carnicos_wizard" model="ir.actions.act_window">
+        <field name="name">Fórmula base cárnicos</field>
+        <field name="res_model">wizard.formula.base.carnicos</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="wizard_formula_base_carnicos_view_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem
+        id="formula_menu"
+        name="Fórmula base cárnicos"
+        action="action_formulas_wizard"
+        parent="studio_customization.samper_informes_9a4c552e-6a2c-49dc-b22f-2c77d1e02fac"
+        groups="base.group_user"
+        sequence="360"/>
+</odoo>
