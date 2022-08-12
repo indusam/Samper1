@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="formula_base_carnicos_reporte" model="ir.actions.report">
+            <field name="name">Fórmula base cárnicos</field>
+            <field name="model">mrp.bom</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">sam_reportes.formula_base_carnicos_template</field>
+        </record>
+    </data>
+</odoo>
