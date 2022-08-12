@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="wizard_formulas_view_form" model="ir.ui.view">
+    <record id="wizard_formula_base_carnicos_view_form" model="ir.ui.view">
         <field name="model">wizard.formula.base.carnicos</field>
         <field name="name">wizard.formula.base.carnicos.view.form</field>
         <field name="arch" type="xml">
