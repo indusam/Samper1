@@ -73,10 +73,8 @@ class FormulaBaseCarnicos(models.TransientModel):
         if not self.consolidado:
 
             if self.ing_limitante:
-
-                raise UserError('la cantidad limitante es: ' + self.ing_limitante.product_id.name +' '+str(self.cant_limitante))   
-
                 ncantidad_il = self.cant_limitante
+                raise UserError('El ingrediente limitante es: ' + self.ing_limitante.product_id.name + ' con cantidad: ' + str(ncantidad_il))
                 for ingrediente in ingredientes:
                     codprov = self.env['product.supplierinfo'].search(
                         [('product_tmpl_id.id', '=', ingrediente.product_id.product_tmpl_id.id)], limit=1
