@@ -80,6 +80,8 @@ class FormulaBaseCarnicos(models.TransientModel):
                         [('product_tmpl_id.id', '=', ingrediente.product_id.product_tmpl_id.id)], limit=1
                     ).product_name
 
+                    raise UserError('El componente es: ' + ingrediente.product_id.name + ' con cantidad: ' + str(self.cant_limitante * (ingrediente.product_qty / ncantidad_il))    
+
                     vals.append({
                         'componente': ingrediente.product_id.name,
                         'cod_prov': codprov,
@@ -88,8 +90,6 @@ class FormulaBaseCarnicos(models.TransientModel):
                         'pct_formula': ingrediente.x_porcentaje,
                         'pct_categoria': ingrediente.x_porcentaje_categoria
                         })
-
-                    raise UserError('El compnente es: ' + vals['componente'] + ' con cantidad: ' + str(vals['cant_comp'])    
 
         # Se consolida la fórmula.
         if self.consolidado:
