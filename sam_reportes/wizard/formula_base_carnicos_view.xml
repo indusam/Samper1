@@ -39,7 +39,7 @@
         id="formula_base_carnicos_menu"
         name="Fórmula base cárnicos"
         action="action_formula_base_carnicos_wizard"
-        parent="sam_reportes.formula_menu"                           
+        parent="studio_customization.samper_informes_9a4c552e-6a2c-49dc-b22f-2c77d1e02fac"                           
         groups="base.group_user"
         sequence="300"/>
 </odoo>
