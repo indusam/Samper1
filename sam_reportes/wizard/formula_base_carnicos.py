@@ -66,7 +66,6 @@ class FormulaBaseCarnicos(models.TransientModel):
             if 'CÁRNICOS' in ingrediente.product_id.categ_id.name:
                 self.ing_limitante = ingrediente
                 self.cant_limitante = self.cantidad * ingrediente.x_porcentaje_categoria / 100
-                # raise UserError('la cantidad limitante es: ' + self.ing_limitante.product_id.name + ' '+str(ncantlimit)+' '+str(self.cant_limitante)+' '+str(ingrediente.x_porcentaje_categoria))   
                 break
 
         # Guarda los datos de la fórmula en el modelo transient.               
@@ -75,7 +74,7 @@ class FormulaBaseCarnicos(models.TransientModel):
 
             if self.ing_limitante:
 
-                     
+                raise UserError('la cantidad limitante es: ' + self.ing_limitante.product_id.name + ' '+str(ncantlimit)+' '+str(self.cant_limitante)+' '+str(ingrediente.x_porcentaje_categoria))   
 
                 ncantidad_il = self.cant_limitante
                 for ingrediente in ingredientes:
