@@ -39,7 +39,9 @@
         id="formula_menu"
         name="Fórmula base cárnicos"
         action="action_formula_base_carnicos_wizard"
-        parent="studio_customization.samper_informes_9a4c552e-6a2c-49dc-b22f-2c77d1e02fac"
+        parent="studio_customization.samper_d32851f4-172c-4fe7-9295-34039452d34c"       
+        sequence="10"                               
         groups="base.group_user"
         sequence="360"/>
 </odoo>
+<!-- parent="studio_customization.samper_informes_9a4c552e-6a2c-49dc-b22f-2c77d1e02fac" -->
