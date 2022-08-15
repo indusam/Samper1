@@ -49,6 +49,8 @@ class FormulaBaseCarnicos(models.TransientModel):
         for ingrediente in ingredientes:
             if 'CÁRNICOS' in ingrediente.product_id.categ_id.name:
                 total_carnicos += ingrediente.product_qty
+        
+        raise UserError('total cárnicos: ' + str(self.total_carnicos))   
 
         if total_carnicos == 0:
             raise UserError('No hay ingredientes cárnicos en la fórmula')
