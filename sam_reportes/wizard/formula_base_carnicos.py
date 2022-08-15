@@ -47,7 +47,7 @@ class FormulaBaseCarnicos(models.TransientModel):
         total_carnicos = 0
         ingredientes = self.env['mrp.bom.line'].search([('bom_id', '=', self.producto.id)])
         for ingrediente in ingredientes:
-            if 'CARNICOS' in ingrediente.product_id.categ_id.name:
+            if 'CÁRNICOS' in ingrediente.product_id.categ_id.name:
                 total_carnicos += ingrediente.product_qty
 
         if total_carnicos == 0:
@@ -56,12 +56,12 @@ class FormulaBaseCarnicos(models.TransientModel):
 
         # calcula el porcentaje del grupo de carnicos en la formula.
         for ingrediente in ingredientes:
-            if 'CARNICOS' in ingrediente.product_id.categ_id.name:
+            if 'CÁRNICOS' in ingrediente.product_id.categ_id.name:
                 ingrediente.write({'x_porcentaje_categoria':(ingrediente.product_qty / total_carnicos) * 100})
 
         # recorre los ingredientes de la fórmula, el primer ingrediente cárnicos es el ingrediente limitante.
         for ingrediente in ingredientes:
-            if 'CARNICOS' in ingrediente.product_id.categ_id.name:
+            if 'CÁRNICOS' in ingrediente.product_id.categ_id.name:
                 self.ing_limitante = ingrediente
                 self.cant_limitante = total_carnicos * ingrediente.x_porcentaje_categoria / 100
                 break
