@@ -50,7 +50,6 @@ class FormulaBaseCarnicos(models.TransientModel):
             if 'CÁRNICOS' in ingrediente.product_id.categ_id.name:
                 total_carnicos += ingrediente.product_qty
         
-        raise UserError('total cárnicos: ' + str(total_carnicos))   
 
         if total_carnicos == 0:
             raise UserError('No hay ingredientes cárnicos en la fórmula')
@@ -60,6 +59,8 @@ class FormulaBaseCarnicos(models.TransientModel):
         for ingrediente in ingredientes:
             if 'CÁRNICOS' in ingrediente.product_id.categ_id.name:
                 ingrediente.write({'x_porcentaje_categoria':(ingrediente.product_qty / total_carnicos) * 100})
+                raise UserError('% categoría: ' + str(ingrediente.x_porcentaje_categoria))     
+
 
         # recorre los ingredientes de la fórmula, el primer ingrediente cárnicos es el ingrediente limitante.
         for ingrediente in ingredientes:
