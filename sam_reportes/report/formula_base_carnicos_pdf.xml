@@ -10,6 +10,7 @@
                             <t t-if="cantidad > 0">
                                 <h5>
                                     Fórmula base carnicos:   <span t-esc="codigo"/> - <span t-esc="producto"/>
+                                    <br/>
                                     Cantidad limitante: <span t-esc="cant_limitante"/> kgs.
                                 </h5>
                             </t>
