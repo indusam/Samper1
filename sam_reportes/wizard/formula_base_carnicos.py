@@ -80,7 +80,7 @@ class FormulaBaseCarnicos(models.TransientModel):
                         [('product_tmpl_id.id', '=', ingrediente.product_id.product_tmpl_id.id)], limit=1
                     ).product_name
 
-                    raise UserError('El componente es: ' + ingrediente.product_id.name + ' con cantidad: ' + str(self.cant_limitante * (ingrediente.product_qty / ncantidad_il)))    
+                    # raise UserError('El componente es: ' + ingrediente.product_id.name + ' con cantidad: ' + str(self.cant_limitante * (ingrediente.product_qty / ncantidad_il)))    
 
                     vals.append({
                         'componente': ingrediente.product_id.name,
