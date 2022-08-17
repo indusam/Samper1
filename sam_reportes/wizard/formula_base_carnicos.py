@@ -98,6 +98,7 @@ class FormulaBaseCarnicos(models.TransientModel):
             for ingrediente in ingredientes:
                 total_cantidad += self.cant_limitante * (ingrediente.product_qty / ncantidad_il)
 
+            raise UserError(total_cantidad)
 
             for ingrediente in ingredientes:
                 # verifica que el ingrediente se fabrique.
@@ -110,7 +111,7 @@ class FormulaBaseCarnicos(models.TransientModel):
                         break
 
                 if subf == 1:
-                    ncant_limitante = total_cantidad* (ingrediente.x_porcentaje / 100)
+                    ncant_limitante = total_cantidad * (ingrediente.x_porcentaje / 100)
 
                     bom_pf = self.env['mrp.bom'].search([(
                         'product_tmpl_id','=',ingrediente.product_tmpl_id.id)]).id
