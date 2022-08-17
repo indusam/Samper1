@@ -98,7 +98,6 @@ class FormulaBaseCarnicos(models.TransientModel):
             for ingrediente in ingredientes:
                 total_cantidad += self.cant_limitante * (ingrediente.product_qty / ncantidad_il)
 
-            raise UserError(total_cantidad)
 
             for ingrediente in ingredientes:
                 # verifica que el ingrediente se fabrique.
@@ -159,7 +158,7 @@ class FormulaBaseCarnicos(models.TransientModel):
                             ncomponente.write({'cant_tot':(ncant_limitante * (componente.x_porcentaje / 100)) + ncant})
 
                 if subf == 0:
-                    ncant_limitante = self.cantidad * (
+                    ncant_limitante = self.total_cantidad * (
                                 ingrediente.x_porcentaje / 100)
 
                     ncomponente = self.env['wizard.formulas'].search(
