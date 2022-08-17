@@ -74,13 +74,10 @@ class FormulaBaseCarnicos(models.TransientModel):
 
             if self.ing_limitante:
                 ncantidad_il = self.ing_limitante.product_qty
-                # raise UserError('El ingrediente limitante es: ' + self.ing_limitante.product_id.name + ' con cantidad: ' + str(ncantidad_il))
                 for ingrediente in ingredientes:
                     codprov = self.env['product.supplierinfo'].search(
                         [('product_tmpl_id.id', '=', ingrediente.product_id.product_tmpl_id.id)], limit=1
                     ).product_name
-
-                    # raise UserError('El componente es: ' + ingrediente.product_id.name + ' con cantidad: ' + str(self.cant_limitante * (ingrediente.product_qty / ncantidad_il)))    
 
                     vals.append({
                         'componente': ingrediente.product_id.name,
@@ -95,6 +92,13 @@ class FormulaBaseCarnicos(models.TransientModel):
         if self.consolidado:
             nsecuencia = self.env['ir.sequence'].next_by_code('formulas.consolidadas')
 
+            # obtiene el total de la cantidad de la fórmula con los ingredientes carnicos.
+            total_cantidad = 0
+            ncantidad_il = self.ing_limitante.product_qty
+            for ingrediente in ingredientes:
+                total_cantidad += self.cant_limitante * (ingrediente.product_qty / ncantidad_il)
+
+
             for ingrediente in ingredientes:
                 # verifica que el ingrediente se fabrique.
                 # las rutas pueden incluir comprar, fabricar, vender, etc.
@@ -106,7 +110,7 @@ class FormulaBaseCarnicos(models.TransientModel):
                         break
 
                 if subf == 1:
-                    ncant_limitante = self.cantidad * (ingrediente.x_porcentaje / 100)
+                    ncant_limitante = total_cantidad* (ingrediente.x_porcentaje / 100)
 
                     bom_pf = self.env['mrp.bom'].search([(
                         'product_tmpl_id','=',ingrediente.product_tmpl_id.id)]).id
