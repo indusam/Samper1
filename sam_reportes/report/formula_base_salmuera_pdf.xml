@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="formula_base_carnicos_template">
+    <template id="formula_base_salmuera_template">
         <t t-call="web.html_container">
             <t t-call="web.external_layout">
                 <div class="page">
@@ -9,7 +9,7 @@
                         <strong>
                             <t t-if="cantidad > 0">
                                 <h5>
-                                    Fórmula base cárnicos:   <span t-esc="codigo"/> - <span t-esc="producto"/>
+                                    Fórmula base salmuera:   <span t-esc="codigo"/> - <span t-esc="producto"/>
                                     <br/>
                                     Cantidad limitante: <span t-esc="cant_limitante"/> kgs.
                                 </h5>
