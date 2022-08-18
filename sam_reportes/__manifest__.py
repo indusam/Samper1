@@ -36,6 +36,7 @@
         'views/tabla_nutrimental_reporte.xml',
         'views/formulas_reporte.xml',
         'views/formula_base_carnicos_reporte.xml',
+        'views/formula_base_salmuera_reporte.xml',
         'views/contenido_energetico_reporte.xml',
         'views/ant_saldos_detalle_reporte.xml',
         'wizard/tabla_nutrimental_view.xml',
