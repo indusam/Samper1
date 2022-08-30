@@ -36,21 +36,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <t t-foreach="vals" t-as="doc">
+                            <t t-foreach="vals" t-as="line">
                                 <tr>
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="doc['producto']"/>
+                                        <t t-esc="line['producto']"/>
                                     </td>
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="doc['lote']"/>
+                                        <t t-esc="line['lote']"/>
                                     </td>
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="doc['elaboracion']" widget="date" options="{'format': 'dd/MM/yyyy'}"/>
+                                        <t t-esc="line['elaboracion']" widget="date" options="{'format': 'dd/MM/yyyy'}"/>
                                         <!-- <field name="o.date" widget="date" options="{'format': 'dd/MM/yyyy'}"/>
                                         <t t-esc="'{0:,.4f}'.format(doc['pct_formula'])"/> -->
                                     </td>
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="doc['caducidad']"/>
+                                        <t t-esc="line['caducidad']"/>
                                     </td>
                                 </tr>
                             </t>
