@@ -58,7 +58,7 @@ class LblVariosLotes(models.TransientModel):
                 'producto': self.lote1.product_id.name,
                 'lote': self.lote1.name,
                 'elaboracion': self.lote1.create_date,
-                'caducidad': self.lote1.life_date,
+                'caducidad': self.lote1.expiration_date,
             })
 
         if self.lote2:
@@ -66,7 +66,7 @@ class LblVariosLotes(models.TransientModel):
                 'producto': self.lote2.product_id.name,
                 'lote': self.lote2.name,
                 'elaboracion': self.lote2.create_date,
-                'caducidad': self.lote2.life_date,
+                'caducidad': self.lote2.expiration_date,
                 })
 
         if self.lote3:
@@ -74,7 +74,7 @@ class LblVariosLotes(models.TransientModel):
                 'producto': self.lote3.product_id.name,
                 'lote': self.lote3.name,
                 'elaboracion': self.lote3.create_date,
-                'caducidad': self.lote3.life_date,
+                'caducidad': self.lote3.expiration_date,
             })
 
         if self.lote4:
@@ -82,7 +82,7 @@ class LblVariosLotes(models.TransientModel):
                 'producto': self.lote4.product_id.name,
                 'lote': self.lote4.name,
                 'elaboracion': self.lote4.create_date,
-                'caducidad': self.lote4.life_date,
+                'caducidad': self.lote4.expiration_date,
             })
 
         if self.lote5:
@@ -90,7 +90,7 @@ class LblVariosLotes(models.TransientModel):
                 'producto': self.lote5.product_id.name,
                 'lote': self.lote5.name,
                 'elaboracion': self.lote5.create_date,
-                'caducidad': self.lote5.life_date,
+                'caducidad': self.lote5.expiration_date,
             })
 
         data = {'ids': self.ids,
