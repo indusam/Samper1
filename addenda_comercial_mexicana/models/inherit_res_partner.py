@@ -31,7 +31,7 @@ class ResPartner(models.Model):
 
     global_localitation_number = fields.Char(
         string='Global localitation number(GLN)',
-        help='Specifies the global location number (GLN) of the buyer.',
+        help='Specifies the global location number (GLN) of the buyer CM.',
         copy=False,
         size=13
     )
@@ -39,6 +39,7 @@ class ResPartner(models.Model):
         string='Generate Mexican Commercial Addenda',
         compute='_compute_is_mexican_commercial_addenda',
         help='Check this field if require generate Mexican Commercial Addenda')
+
 
     @api.depends('l10n_mx_edi_addenda', 'commercial_partner_id.l10n_mx_edi_addenda')
     def _compute_is_mexican_commercial_addenda(self):
