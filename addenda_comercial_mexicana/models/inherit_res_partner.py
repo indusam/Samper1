@@ -40,6 +40,8 @@ class ResPartner(models.Model):
         compute='_compute_is_mexican_commercial_addenda',
         help='Check this field if require generate Mexican Commercial Addenda')
 
+    test = fields.Boolean(string='Test')
+
 
     @api.depends('l10n_mx_edi_addenda', 'commercial_partner_id.l10n_mx_edi_addenda')
     def _compute_is_mexican_commercial_addenda(self):

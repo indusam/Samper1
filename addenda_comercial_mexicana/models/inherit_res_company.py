@@ -40,3 +40,4 @@ class ResCompany(models.Model):
         help="This information is given by supplier",
         size=8
     )
+
