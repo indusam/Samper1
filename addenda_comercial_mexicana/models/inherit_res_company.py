@@ -30,7 +30,7 @@ class ResCompany(models.Model):
     _inherit = 'res.company'
 
     global_localitation_number = fields.Char(
-        string='Global localitation number (GLN/CM)',
+        string='Global localitation number (GLN)',
         help='Specifies the global location number (GLN) for vendor.',
         copy=False,
         size=13
