@@ -39,6 +39,7 @@
         'views/formula_base_salmuera_reporte.xml',
         'views/contenido_energetico_reporte.xml',
         'views/ant_saldos_detalle_reporte.xml',
+        'views/reportes.xml'
         'wizard/tabla_nutrimental_view.xml',
         'wizard/formulas_view.xml',
         'wizard/contenido_energetico_view.xml',
