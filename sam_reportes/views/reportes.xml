@@ -7,7 +7,7 @@
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">sam_reportes.certificado_calidad_template</field>
             <field name="report_file">sam_reportes.certificado_calidad_template</field>
-            <field name="binding_model_id"> ref="model_x_certificados_calidad"</field>
+            <!-- <field name="binding_model_id"> ref="model_x_certificados_calidad"</field> -->
             <field name="binding_type">report</field>
         </record>
     </data>
