@@ -4,7 +4,7 @@
         <!-- Agrega el reporte al menú "imprimir" del modelo-->
         <record id="certificado_calidad_reporte" model="ir.actions.report">
             <field name="name">Certificado de calidad</field>
-            <field name="model">x_certificados_calidad</field>
+            <field name="model">x.certificados.calidad</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">sam_reportes.certificado_calidad_template</field>
             <field name="report_file">sam_reportes.certificado_calidad_template</field>
