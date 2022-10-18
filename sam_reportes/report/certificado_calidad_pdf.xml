@@ -33,8 +33,11 @@
                                                         <span t-field="o.x_name"/>
                                                     </td>
                                                     <td>
+                                                        <span>                  </span>
+                                                    </td>
+                                                    <td>
                                                         <span>
-                                                            <strong>            Especie / T.E.</strong>
+                                                            <strong>Especie / T.E.</strong>
                                                         </span>
                                                     </td>
                                                     <td>
