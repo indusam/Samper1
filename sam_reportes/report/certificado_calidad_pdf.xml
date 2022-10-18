@@ -19,7 +19,7 @@
                                 <div class="col-xs-8">
                                     <table class="table table-condensed" style="border: 3px solid black !important;">
                                         <tr> 
-                                            <td width="50%">                                           
+                                            <td width="75%">                                           
                                                 <table>
                                                     <tr>
                                                         <td>
@@ -101,7 +101,7 @@
                                                     </tr>
                                                 </table>
                                             </td>    
-                                            <td width="50%">
+                                            <td width="25%">
                                                 <table>
                                                     <tr>
                                                         <td>
