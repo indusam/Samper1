@@ -33,9 +33,6 @@
                                                         <span t-field="o.x_name"/>
                                                     </td>
                                                     <td>
-                                                        <span>                  </span>
-                                                    </td>
-                                                    <td>
                                                         <span>
                                                             <strong>Especie / T.E.</strong>
                                                         </span>
@@ -54,14 +51,19 @@
                             </div>
 
                         </div>
-                        <!-- 
-                        <strong>Certificado No. : </strong> <span t-field="o.x_name" />                     <strong>Especie / T.E.  : </strong> <span t-field="o.x_studio_especie" />
+
+                        <strong>Certificado No. : </strong> <span t-field="o.x_name" />                     <strong>    Especie / T.E.  : </strong> <span t-field="o.x_studio_especie" />
+                        <br/>
                         <strong>Fecha           : </strong> <span t-field="o.x_studio_fecha" />             <strong>Lote            : </strong> <span t-field="o.x_studio_lote" />
+                        <br/>
                         <strong>Producto        : </strong> <span t-field="o.x_studio_producto" />          <strong>Elaboración     : </strong> <span t-field="o.x_studio_elaboracion" />
+                        <br/>
                         <strong>Codigo          : </strong> <span t-field="o.x_studio_codigo" />            <strong>Caducidad       : </strong> <span t-field="o.x_studio_caducidad" />
+                        <br/>
                         <strong>Lote pieza      : </strong> <span t-field="o.x_studio_lote_pieza" />
+                        <br/>
                         <strong>Fecha Análisis  : </strong> <span t-field="o.x_studio_fecha_analisis" />
-                        -->
+
                         <br/>
                     </div>
                 </t>
