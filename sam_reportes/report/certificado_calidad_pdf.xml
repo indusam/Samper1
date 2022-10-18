@@ -12,7 +12,7 @@
                                     Certificado de calidad
                                 </h2>
                                 <br/>
-                                Certificado No.: <span t-field="o.name" />
+                                Certificado No.: <span t-field="o.x_name" />
                             </strong>
                         </div>
                         <br/>
