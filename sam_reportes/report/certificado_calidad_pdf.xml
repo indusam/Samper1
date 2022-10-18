@@ -56,7 +56,7 @@
                                                         <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
                                                             <span>:</span>
                                                         </td>
-                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                                             <span t-field="o.x_studio_producto"/>
                                                         </td>
                                                     </tr>
@@ -84,19 +84,6 @@
                                                         </td>
                                                         <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
                                                             <span t-field="o.x_studio_lote_pieza"/>
-                                                        </td>
-                                                    </tr>
-                                                     <tr>
-                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
-                                                            <span>
-                                                                <strong>Fecha de análisis de la pieza</strong>
-                                                            </span>
-                                                        </td>
-                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
-                                                            <span>:</span>
-                                                        </td>
-                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
-                                                            <span t-field="o.x_studio_fecha_analisis"/>
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -153,6 +140,19 @@
                                                         </td>
                                                         <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
                                                             <span t-field="o.x_studio_caducidad"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                                            <span>
+                                                                <strong>Fecha de análisis de la pieza</strong>
+                                                            </span>
+                                                        </td>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                            <span>:</span>
+                                                        </td>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                            <span t-field="o.x_studio_fecha_analisis"/>
                                                         </td>
                                                     </tr>
                                                 </table>
