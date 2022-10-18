@@ -22,7 +22,7 @@
                                             <td width="75%">                                           
                                                 <table>
                                                     <tr>
-                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
                                                             <span>
                                                                 <strong>Certificado No.</strong>
                                                             </span>
@@ -30,72 +30,72 @@
                                                         <td>
                                                             <span>:</span>
                                                         </td>
-                                                        <td>
+                                                         <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
                                                             <span t-field="o.x_name"/>
                                                         </td>   
                                                     </tr>
                                                      <tr>
-                                                        <td>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
                                                             <span>
                                                                 <strong>Fecha</strong>
                                                             </span>
                                                         </td>
-                                                        <td>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
                                                             <span>:</span>
                                                         </td>
-                                                        <td>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
                                                             <span t-field="o.x_studio_fecha"/>
                                                         </td>   
                                                     </tr>
                                                      <tr>
-                                                        <td>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
                                                             <span>
                                                                 <strong>Producto</strong>
                                                             </span>
                                                         </td>
-                                                        <td>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
                                                             <span>:</span>
                                                         </td>
-                                                        <td>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
                                                             <span t-field="o.x_studio_producto"/>
                                                         </td>
                                                     </tr>
                                                      <tr>
-                                                        <td>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
                                                             <span>
                                                                 <strong>Código</strong>
                                                             </span>
                                                         </td>
-                                                        <td>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
                                                             <span>:</span>
                                                         </td>
-                                                        <td>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
                                                             <span t-field="o.x_studio_codigo"/>
                                                         </td>
                                                     </tr>
                                                      <tr>
-                                                        <td>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
                                                             <span>
                                                                 <strong>Lote pieza</strong>
                                                             </span>
                                                         </td>
-                                                        <td>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
                                                             <span>:</span>
                                                         </td>
-                                                        <td>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
                                                             <span t-field="o.x_studio_lote_pieza"/>
                                                         </td>
                                                     </tr>
                                                      <tr>
-                                                        <td>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
                                                             <span>
                                                                 <strong>Fecha de análisis de la pieza</strong>
                                                             </span>
                                                         </td>
-                                                        <td>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
                                                             <span>:</span>
                                                         </td>
-                                                        <td>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
                                                             <span t-field="o.x_studio_fecha_analisis"/>
                                                         </td>
                                                     </tr>
