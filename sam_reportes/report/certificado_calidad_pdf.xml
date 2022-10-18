@@ -51,7 +51,7 @@
                             </div>
 
                         </div>
-
+                        <!-- 
                         <strong>Certificado No. : </strong> <span t-field="o.x_name" />                     <strong>    Especie / T.E.  : </strong> <span t-field="o.x_studio_especie" />
                         <br/>
                         <strong>Fecha           : </strong> <span t-field="o.x_studio_fecha" />             <strong>Lote            : </strong> <span t-field="o.x_studio_lote" />
@@ -63,7 +63,7 @@
                         <strong>Lote pieza      : </strong> <span t-field="o.x_studio_lote_pieza" />
                         <br/>
                         <strong>Fecha Análisis  : </strong> <span t-field="o.x_studio_fecha_analisis" />
-
+                        -->
                         <br/>
                     </div>
                 </t>
