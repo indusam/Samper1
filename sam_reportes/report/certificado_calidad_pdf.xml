@@ -177,6 +177,14 @@
                                     <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Resultado</th>
                                 </tr>
                             </thead>
+                            <tbody>
+                            <tr>
+                                <th style="text-align:left;color:black!important;">Olor</th>
+                                <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                    <t t-esc="o.x_studio_olor"/>
+                                </td>
+                            </tr>
+                            </tbody>
                         </table>      
                         <br/>
                     </div>
