@@ -223,7 +223,7 @@
                                 <tr>
                                     <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Mesófilos Aerobios (UFC / g)</th>
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="o.x_studio_meso_aereo_minimo"/>
+                                        <t t-esc="o.x_studio_meso_aero_minimo"/>
                                     </td>
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="o.x_studio_meso_aero_maximo"/>
