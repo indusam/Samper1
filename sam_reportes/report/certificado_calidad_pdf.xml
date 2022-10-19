@@ -160,6 +160,53 @@
                                 </div>    
                             </div>
                         </div>
+                        <table class="table table-condensed">
+                            <tr>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                <span>
+                                                    <strong>DESCRIPCION</strong>
+                                                </span>
+                                            </td>
+                                            <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                <span>:</span>
+                                            </td>
+                                            <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                <span t-field="o.x_studio_descripcion"/>
+                                            </td>   
+                                        </tr>
+                                         <tr>
+                                            <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                <span>
+                                                    <strong>EMPAQUE</strong>
+                                                </span>
+                                            </td>
+                                            <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                <span>:</span>
+                                            </td>
+                                            <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                <span t-field="o.x_studio_empaque"/>
+                                            </td>                                               
+                                        </tr>
+                                         <tr>
+                                            <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                <span>
+                                                    <strong>ALMACENAMIENTO</strong>
+                                                </span>
+                                            </td>
+                                            <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                <span>:</span>
+                                            </td>
+                                            <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                <span t-field="o.x_studio_almacenamiento"/>
+                                            </td>   
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
                         <div style="text-align:center;color:black!important;">
                             <strong>
                                 <h6>
