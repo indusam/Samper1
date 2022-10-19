@@ -478,7 +478,7 @@
                                 <br/>
                                 ________________________________
                                 <br/>
-                                <span t-esc="o.x_studio_responsable.name"/> 
+                                <span t-esc="o.x_studio_responsable"/> 
                                 <br/>
                                 Gerente Aseguramiento de Calidad
                                 <br/>
