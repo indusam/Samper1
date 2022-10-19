@@ -313,6 +313,119 @@
 
                             </tbody>
                         </table>
+                        <div style="text-align:center;color:black!important;">
+                            <strong>
+                                <h6>
+                                    ANALISIS FISICOQUIMICOS
+                                </h6>
+                                <br/>
+                            </strong>
+                        </div>      
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr >
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">DETERMINACION</th>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">MINIMO</th>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">MAXIMO</th>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">RESULTADO</th>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">METODO</th>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">REFERENCIA</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">ph a 20 C</th>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_ph_20_minimo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_ph_20_maximo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_ph_a_20_resultado"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_ph_a_20_metodo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_ph_a_20_referencia"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Estaño (mg/kg)</th>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_est_min"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_est_max"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_est_res"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_est_met"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_est_refe"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Nitritos (mg/kg)</th>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_nit_minimo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_nit_maximo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_nitritos_res"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_nitritos_metodo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_nitritos_referencia"/>
+                                    </td>
+                                </tr>
+                                 <tr>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Plomo (mg/kg)</th>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_plo_minimo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_plo_maximo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_plomo_resultado"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_plomo_metodo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_plomo_referencia"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Cadmio (mg/kg)</th>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_cad_minimo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_cad_maximo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_cadmio_resultado"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_cadmio_metodo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_cadmio_referencia"/>
+                                    </td>
+                                </tr>        
+
+                            </tbody>
+                        </table>
                         <br/>
                     </div>
                 </t>
