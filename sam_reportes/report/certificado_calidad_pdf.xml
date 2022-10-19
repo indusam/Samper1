@@ -162,9 +162,9 @@
                         </div>
                         <div style="text-align:center;color:black!important;">
                             <strong>
-                                <h5>
+                                <h6>
                                     ANALISIS SENSORIALES
-                                </h5>
+                                </h6>
                                 <br/>
                             </strong>
                         </div>
@@ -202,9 +202,9 @@
                         </table>
                         <div style="text-align:center;color:black!important;">
                             <strong>
-                                <h5>
+                                <h6>
                                     ANALISIS MICROBIOLOGICOS
-                                </h5>
+                                </h56>
                                 <br/>
                             </strong>
                         </div>      
@@ -237,7 +237,79 @@
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="o.x_studio_mesofilos_aerobios_referencia"/>
                                     </td>
-                                </tr> 
+                                </tr>
+                                <tr>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Escherichia Coli (NMP / g)</th>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_esche_coli_minimo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_esche_coli_maximo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_escherichia_coli_resultado"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_escherichia_coli_metodo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_escherichia_coli_referencia"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Salmonella sp (25 g de muestra)</th>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_salmo_sp_minimo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_salmo_sp_maximo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_salmonella_sp_resultado"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_salmonella_sp_metodo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_salmonella_sp_referencia"/>
+                                    </td>
+                                </tr>
+                                 <tr>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Lysteria Monocitogenes / 25g</th>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_ly_mo_minimo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_ly_mo_maximo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_lysteria_monocito_resultado"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_lysteria_monocito_metodo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_lysteria_monocito_referencia"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">E. Coli 0157:H7</th>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_e_coli_0157_h7_minimo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_e_coli_0157_h7_maximo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_e_coli_0157_h7_res"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_e_coli_0157_h7_met"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_e_coli_0157_h7_ref"/>
+                                    </td>
+                                </tr>        
 
                             </tbody>
                         </table>
