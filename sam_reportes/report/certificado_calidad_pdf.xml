@@ -476,6 +476,9 @@
                         <div style="text-align:center;color:black!important;">
                             <strong>
                                 ________________________________
+                                <br/>
+                                <span t-esc="o.x_studio_responsable"/> 
+                                <br/>
                                 Gerente Aseguramiento de Calidad
                                 <br/>
                             </strong>
