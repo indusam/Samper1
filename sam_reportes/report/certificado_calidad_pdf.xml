@@ -5,13 +5,11 @@
             <t t-foreach="docs" t-as="o">       
                 <t t-call="web.external_layout">    
                     <div class="page">
-                        <br/>
                         <div style="text-align:center;color:black!important;">
                             <strong>
                                 <h2>
                                     Certificado de calidad
                                 </h2>
-                                <br/>
                             </strong>
                         </div>
                         <div class="oe_structure">
@@ -178,24 +176,28 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Olor</th>
-                                <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <t t-esc="o.x_studio_olor"/>
-                                </td>
-                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Color</th>
-                                <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <t t-esc="o.x_studio_color"/>
-                                </td>
-                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Sabor</th>
-                                <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <t t-esc="o.x_studio_sabor"/>
-                                </td>
-                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Textura</th>
-                                <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <t t-esc="o.x_studio_textura"/>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Olor</th>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_olor"/>
+                                    </td>
+                                </tr> 
+                                <tr>   
+                                    <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Color</th>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_color"/>
+                                    </td>
+                                </tr>    
+                                    <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Sabor</th>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_sabor"/>
+                                    </td>
+                                <tr>    
+                                    <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Textura</th>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_textura"/>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>      
                         <br/>
