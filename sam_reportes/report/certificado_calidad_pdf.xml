@@ -475,6 +475,8 @@
                         </table>
                         <div style="text-align:center;color:black!important;">
                             <strong>
+                                <br>
+                                <br>
                                 ________________________________
                                 <br/>
                                 <span t-esc="o.x_studio_responsable"/> 
