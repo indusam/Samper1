@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="certificado_calidad_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">       
+                <t t-call="web.external_layout">    
+                    <div class="page">
+                        <div style="text-align:center;color:black!important;">
+                            <strong>
+                                <h4>
+                                    Certificado de calidad
+                                </h4>
+                            </strong>
+                        </div>
+                        <div class="oe_structure">
+                            <div class="row">
+                                <div class="col-xs-8">
+                                    <table class="table table-condensed">
+                                        <tr> 
+                                            <td width="70%">                                           
+                                                <table>
+                                                    <tr>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                            <span>
+                                                                <strong>Certificado No.</strong>
+                                                            </span>
+                                                        </td>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                            <span>:</span>
+                                                        </td>
+                                                         <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                            <span t-field="o.x_name"/>
+                                                        </td>   
+                                                    </tr>
+                                                     <tr>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                            <span>
+                                                                <strong>Fecha</strong>
+                                                            </span>
+                                                        </td>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                            <span>:</span>
+                                                        </td>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                            <span t-field="o.x_studio_fecha"/>
+                                                        </td>   
+                                                    </tr>
+                                                     <tr>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                            <span>
+                                                                <strong>Producto</strong>
+                                                            </span>
+                                                        </td>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                            <span>:</span>
+                                                        </td>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                                            <span t-field="o.x_studio_producto"/>
+                                                        </td>
+                                                    </tr>
+                                                     <tr>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                            <span>
+                                                                <strong>Código</strong>
+                                                            </span>
+                                                        </td>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                            <span>:</span>
+                                                        </td>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                            <span t-field="o.x_studio_codigo"/>
+                                                        </td>
+                                                    </tr>
+                                                     <tr>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                            <span>
+                                                                <strong>Lote pieza</strong>
+                                                            </span>
+                                                        </td>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                            <span>:</span>
+                                                        </td>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                            <span t-field="o.x_studio_lote_pieza"/>
+                                                        </td>
+                                                    </tr>
+                                                     <tr>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                                            <span>
+                                                                <strong>Fecha de análisis de la pieza</strong>
+                                                            </span>
+                                                        </td>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                            <span>:</span>
+                                                        </td>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                            <span t-field="o.x_studio_fecha_analisis"/>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>    
+                                            <td width="30%">
+                                                <table>
+                                                    <tr>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                            <span>
+                                                                <strong>Especie/T.E.</strong>
+                                                            </span>
+                                                        </td>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                            <span>:</span>
+                                                        </td>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                            <span t-field="o.x_studio_especie"/>
+                                                        </td>
+                                                    </tr>
+                                                     <tr>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                            <span>
+                                                                <strong>Lote</strong>
+                                                            </span>
+                                                        </td>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                            <span>:</span>
+                                                        </td>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                            <span t-field="o.x_studio_lote"/>
+                                                        </td>
+                                                    </tr>
+                                                     <tr>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                            <span>
+                                                                <strong>Elaboración</strong>
+                                                            </span>
+                                                        </td>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                            <span>:</span>
+                                                        </td>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                            <span t-field="o.x_studio_elaboracion"/>
+                                                        </td>
+                                                    </tr>
+                                                     <tr>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                            <span>
+                                                                <strong>Caducidad</strong>
+                                                            </span>
+                                                        </td>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                            <span>:</span>
+                                                        </td>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                            <span t-field="o.x_studio_caducidad"/>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>                                    
+                                        </tr>
+                                    </table>
+                                </div>    
+                            </div>
+                        </div>
+                        <table class="table table-condensed">
+                            <tr>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                <span>
+                                                    <strong>DESCRIPCION</strong>
+                                                </span>
+                                            </td>
+                                            <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                <span>:</span>
+                                            </td>
+                                            <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                <span t-field="o.x_studio_descripcion"/>
+                                            </td>   
+                                        </tr>
+                                         <tr>
+                                            <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                <span>
+                                                    <strong>EMPAQUE</strong>
+                                                </span>
+                                            </td>
+                                            <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                <span>:</span>
+                                            </td>
+                                            <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                <span t-field="o.x_studio_empaque"/>
+                                            </td>                                               
+                                        </tr>
+                                        <tr>
+                                            <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                <span>
+                                                    <strong>ALMACENAMIENTO</strong>
+                                                </span>
+                                            </td>
+                                            <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                <span>:</span>
+                                            </td>
+                                            <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                <span t-field="o.x_studio_almacenamiento"/>
+                                            </td>   
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <div style="text-align:center;color:black!important;">
+                            <strong>
+                                <h6>
+                                    ANALISIS SENSORIALES
+                                </h6>
+                                <br/>
+                            </strong>
+                        </div>
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr >
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">DETERMINACION</th>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">RESULTADO</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Olor</th>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_olor"/>
+                                    </td>
+                                </tr> 
+                                <tr>   
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Color</th>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_color"/>
+                                    </td>
+                                </tr>    
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Sabor</th>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_sabor"/>
+                                    </td>
+                                <tr>    
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Textura</th>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_textura"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div style="text-align:center;color:black!important;">
+                            <strong>
+                                <h6>
+                                    ANALISIS MICROBIOLOGICOS
+                                </h6>
+                                <br/>
+                            </strong>
+                        </div>      
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr >
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">DETERMINACION</th>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">MINIMO</th>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">MAXIMO</th>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">RESULTADO</th>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">METODO</th>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">REFERENCIA</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Mesófilos Aerobios (UFC / g)</th>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_meso_aero_minimo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_meso_aero_maximo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_mesofilos_aerobios_resultado"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_mesofilos_aerobios_metodo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_mesofilos_aerobios_referencia"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Escherichia Coli (NMP / g)</th>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_esche_coli_minimo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_esche_coli_maximo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_escherichia_coli_resultado"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_escherichia_coli_metodo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_escherichia_coli_referencia"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Salmonella sp (25 g de muestra)</th>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_salmo_sp_minimo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_salmo_sp_maximo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_salmonella_sp_resultado"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_salmonella_sp_metodo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_salmonella_sp_referencia"/>
+                                    </td>
+                                </tr>
+                                 <tr>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Lysteria Monocitogenes / 25g</th>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_ly_mo_minimo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_ly_mo_maximo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_lysteria_monocito_resultado"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_lysteria_monocito_metodo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_lysteria_monocito_referencia"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">E. Coli 0157:H7</th>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_e_coli_0157_h7_minimo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_e_coli_0157_h7_maximo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_e_coli_0157_h7_res"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_e_coli_0157_h7_met"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_e_coli_0157_h7_ref"/>
+                                    </td>
+                                </tr>        
+
+                            </tbody>
+                        </table>
+                        <div style="text-align:center;color:black!important;">
+                            <strong>
+                                <h6>
+                                    ANALISIS FISICOQUIMICOS
+                                </h6>
+                                <br/>
+                            </strong>
+                        </div>      
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr >
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">DETERMINACION</th>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">MINIMO</th>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">MAXIMO</th>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">RESULTADO</th>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">METODO</th>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">REFERENCIA</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">ph a 20 C</th>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_ph_20_minimo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_ph_20_maximo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_ph_a_20_resultado"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_ph_a_20_metodo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_ph_a_20_referencia"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Estaño (mg/kg)</th>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_est_min"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_est_max"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_est_res"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_est_met"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_esta_refe"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Nitritos (mg/kg)</th>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_nit_minimo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_nit_maximo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_nitritos_res"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_nitritos_metodo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_nitritos_referencia"/>
+                                    </td>
+                                </tr>
+                                 <tr>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Plomo (mg/kg)</th>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_plo_minimo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_plo_maximo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_plomo_resultado"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_plomo_metodo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_plomo_referencia"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Cadmio (mg/kg)</th>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_cad_minimo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_cad_maximo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_cadmio_resultado"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_cadmio_metodo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_cadmio_referencia"/>
+                                    </td>
+                                </tr>        
+                            </tbody>
+                        </table>
+                        <div style="text-align:center;color:black!important;">
+                            <strong>
+                                <br/>
+                                ________________________________
+                                <br/>
+                                <span t-esc="o.x_studio_responsable"/> 
+                                <br/>
+                                Gerente Aseguramiento de Calidad
+                                <br/>
+                            </strong>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>                
+    </template>
+</odoo>
