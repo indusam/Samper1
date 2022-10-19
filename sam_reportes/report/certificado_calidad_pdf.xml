@@ -170,6 +170,14 @@
                                 <br/>
                             </strong>
                         </div>
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr >
+                                    <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Determinación</th>
+                                    <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Resultado</th>
+                                </tr>
+                            </thead>
+                        </table>      
                         <br/>
                     </div>
                 </t>
