@@ -366,7 +366,7 @@
                                         <t t-esc="o.x_studio_est_met"/>
                                     </td>
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="o.x_studio_est_refe"/>
+                                        <t t-esc="o.x_studio_esta_refe"/>
                                     </td>
                                 </tr>
                                 <tr>
