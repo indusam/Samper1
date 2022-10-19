@@ -163,7 +163,7 @@
                         <div style="text-align:center;color:black!important;">
                             <strong>
                                 <h5>
-                                    Análisis sensoriales
+                                    ANALISIS SENSORIALES
                                 </h5>
                                 <br/>
                             </strong>
@@ -171,8 +171,8 @@
                         <table class="table table-condensed">
                             <thead>
                                 <tr >
-                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Determinación</th>
-                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Resultado</th>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">DETERMINACION</th>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">RESULTADO</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -199,7 +199,48 @@
                                     </td>
                                 </tr>
                             </tbody>
-                        </table>      
+                        </table>
+                        <div style="text-align:center;color:black!important;">
+                            <strong>
+                                <h5>
+                                    ANALISIS MICROBIOLOGICOS
+                                </h5>
+                                <br/>
+                            </strong>
+                        </div>      
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr >
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">DETERMINACION</th>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">MINIMO</th>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">MAXIMO</th>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">RESULTADO</th>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">METODO</th>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">REFERENCIA</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Mesófilos Aerobios (UFC / g)</th>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_meso_aereo_minimo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_meso_aero_maximo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_mesofilos_aerobios_resultado"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_mesofilos_aerobios_metodo"/>
+                                    </td>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_studio_mesofilos_aerobios_referencia"/>
+                                    </td>
+                                </tr> 
+
+                            </tbody>
+                        </table>
                         <br/>
                     </div>
                 </t>
