@@ -470,7 +470,6 @@
                                         <t t-esc="o.x_studio_cadmio_referencia"/>
                                     </td>
                                 </tr>        
-
                             </tbody>
                         </table>
                         <div style="text-align:center;color:black!important;">
@@ -484,7 +483,6 @@
                                 <br/>
                             </strong>
                         </div>
-                        <br/>
                     </div>
                 </t>
             </t>
