@@ -171,29 +171,29 @@
                         <table class="table table-condensed">
                             <thead>
                                 <tr >
-                                    <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Determinación</th>
-                                    <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Resultado</th>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Determinación</th>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Resultado</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Olor</th>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Olor</th>
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="o.x_studio_olor"/>
                                     </td>
                                 </tr> 
                                 <tr>   
-                                    <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Color</th>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Color</th>
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="o.x_studio_color"/>
                                     </td>
                                 </tr>    
-                                    <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Sabor</th>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Sabor</th>
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="o.x_studio_sabor"/>
                                     </td>
                                 <tr>    
-                                    <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Textura</th>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Textura</th>
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="o.x_studio_textura"/>
                                     </td>
