@@ -190,7 +190,7 @@
                                                 <span t-field="o.x_studio_empaque"/>
                                             </td>                                               
                                         </tr>
-                                         <tr>
+                                        <tr>
                                             <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
                                                 <span>
                                                     <strong>ALMACENAMIENTO</strong>
@@ -473,6 +473,13 @@
 
                             </tbody>
                         </table>
+                        <div style="text-align:center;color:black!important;">
+                            <strong>
+                                ________________________________
+                                Gerente Aseguramiento de Calidad
+                                <br/>
+                            </strong>
+                        </div>
                         <br/>
                     </div>
                 </t>
