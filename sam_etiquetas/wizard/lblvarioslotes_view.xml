@@ -41,7 +41,7 @@
 
     <menuitem
         id="label_menu"
-        name="Etiquetas"
+        name="Etiqueta varios lotes"
         action="action_lblvarioslotes_wizard"
         parent="mrp.menu_mrp_production_report"
         groups="base.group_user"
