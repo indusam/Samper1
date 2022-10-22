@@ -167,7 +167,7 @@
                                         <tr>
                                             <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
                                                 <span>
-                                                    <strong>DESCRIPCION</strong>
+                                                    <strong>DESCRIPCIÓN</strong>
                                                 </span>
                                             </td>
                                             <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
@@ -210,7 +210,7 @@
                         <div style="text-align:center;color:black!important;">
                             <strong>
                                 <h6>
-                                    ANALISIS SENSORIALES
+                                    ANÁLISIS SENSORIALES
                                 </h6>
                                 <br/>
                             </strong>
@@ -218,7 +218,7 @@
                         <table class="table table-condensed">
                             <thead>
                                 <tr >
-                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">DETERMINACION</th>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">DETERMINACIÓN</th>
                                     <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">RESULTADO</th>
                                 </tr>
                             </thead>
@@ -250,7 +250,7 @@
                         <div style="text-align:center;color:black!important;">
                             <strong>
                                 <h6>
-                                    ANALISIS MICROBIOLOGICOS
+                                    ANÁLISIS MICROBIOLOGICOS
                                 </h6>
                                 <br/>
                             </strong>
@@ -258,11 +258,11 @@
                         <table class="table table-condensed">
                             <thead>
                                 <tr >
-                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">DETERMINACION</th>
-                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">MINIMO</th>
-                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">MAXIMO</th>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">DETERMINACIÓN</th>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">MÍNIMO</th>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">MÁXIMO</th>
                                     <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">RESULTADO</th>
-                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">METODO</th>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">MÉTODO</th>
                                     <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">REFERENCIA</th>
                                 </tr>
                             </thead>
@@ -363,7 +363,7 @@
                         <div style="text-align:center;color:black!important;">
                             <strong>
                                 <h6>
-                                    ANALISIS FISICOQUIMICOS
+                                    ANÁLISIS FISICOQUÍMICOS
                                 </h6>
                                 <br/>
                             </strong>
@@ -371,11 +371,11 @@
                         <table class="table table-condensed">
                             <thead>
                                 <tr >
-                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">DETERMINACION</th>
-                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">MINIMO</th>
-                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">MAXIMO</th>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">DETERMINACIÓN</th>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">MÍNIMO</th>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">MÁXIMO</th>
                                     <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">RESULTADO</th>
-                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">METODO</th>
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">MÉTODO</th>
                                     <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">REFERENCIA</th>
                                 </tr>
                             </thead>
