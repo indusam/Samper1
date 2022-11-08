@@ -469,7 +469,27 @@
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="o.x_studio_cadmio_referencia"/>
                                     </td>
-                                </tr>        
+                                </tr>
+                                <t t-if="len(o.x_studio_humedad_min) > 0">        
+                                    <tr>
+                                        <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Humedad (%)</th>
+                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                            <t t-esc="o.x_studio_humedad_min"/>
+                                        </td>
+                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                            <t t-esc="o.x_studio_humedad_max"/>
+                                        </td>
+                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                            <t t-esc="o.x_studio_humedad_res"/>
+                                        </td>
+                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                            <t t-esc="o.x_studio_humedad_met"/>
+                                        </td>
+                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                            <t t-esc="o.x_studio_humedad_ref"/>
+                                        </td>
+                                    </tr>
+                                </t>        
                             </tbody>
                         </table>
                         <div style="text-align:center;color:black!important;">
