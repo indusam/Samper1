@@ -470,7 +470,7 @@
                                         <t t-esc="o.x_studio_cadmio_referencia"/>
                                     </td>
                                 </tr>
-                                <t t-if="len(o.x_studio_humedad_min) > 0">        
+                                <t t-if="o.x_studio_humedad_min">        
                                     <tr>
                                         <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Humedad (%)</th>
                                         <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
