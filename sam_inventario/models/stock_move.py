@@ -8,6 +8,9 @@ class StockMove(models.Model):
     _inherit = 'stock.move'
 
     x_exis_origen = fields.Float(string='Exis Origen')
+    x_merma_pct = fields.Float(string='% Merma',
+                               digits=(3, 4),
+                               compute='calcula_merma')
 
     @api.onchange('product_id')
     def onchange_product_id(self):
@@ -19,3 +22,9 @@ class StockMove(models.Model):
                 self.x_exis_origen = nexis
             
             self.name = 'Nuevo' # la descripcion es obligatoria
+
+
+    @api.depends('quantity_done ', 'x_exis_origen')
+    def calcula_merma(self):
+        if self.x_exis_origen > 0 and self.quantity_done > 0:
+            self.x_merma_pct = 1 - (self.quantity_done / self.x_exis_origen)
