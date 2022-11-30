@@ -28,4 +28,5 @@ class StockMove(models.Model):
     def calcula_merma(self):
         for reg in self:
             if self.x_exis_origen > 0 and self.quantity_done > 0:
-                reg['x_merma_pct'] = 1 - (self.quantity_done / self.x_exis_origen)
+                merma = 1 - (self.quantity_done / self.x_exis_origen)
+                reg['x_merma_pct'] = merma
