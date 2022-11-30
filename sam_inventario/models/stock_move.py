@@ -24,7 +24,7 @@ class StockMove(models.Model):
             self.name = 'Nuevo' # la descripcion es obligatoria
 
 
-    @api.depends('quantity_done ', 'x_exis_origen')
+    @api.depends('quantity_done', 'x_exis_origen')
     def calcula_merma(self):
         if self.x_exis_origen > 0 and self.quantity_done > 0:
             self.x_merma_pct = 1 - (self.quantity_done / self.x_exis_origen)
