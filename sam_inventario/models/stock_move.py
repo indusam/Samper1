@@ -8,13 +8,14 @@ class StockMove(models.Model):
     _inherit = 'stock.move'
 
     x_exis_origen = fields.Float(string='Exis Origen')
+    x_merma_pct = fields.Float(string='% Merma',
+                               digits=(3, 4))
 
     @api.onchange('product_id')
     def onchange_product_id(self):
         if self.product_id:
             nexis = self.env['stock.quant'].search([('product_id.id', '=', self.product_id.id), 
                                                     ('location_id.id', '=', self.location_id.id)],limit=1).quantity
-
             if nexis > 0:         
                 self.x_exis_origen = nexis
             

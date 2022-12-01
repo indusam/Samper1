@@ -6,16 +6,17 @@ from odoo import models, fields, api
 class AccountMove(models.Model):
     _inherit = 'account.move'
 
+    x_comision = fields.Float(string='Comisión',
+                             required=False,
+                             compute='calcula_comision')
+    x_vendedor = fields.Many2one("res.partner", string='Vendedor')
+
+
     @api.depends('amount_tax', 'amount_total', 'x_vendedor')
     def calcula_comision(self):
         nimporte = self.amount_total - self.amount_tax
         n_pct_comision = self.env['res.partner'].search([('id', '=', self.x_vendedor.id)], limit=1).x_pct_comision
         self.x_comision = nimporte * (n_pct_comision / 100)
-
-    x_comision = fields.Float(string='Comisión',
-                             required=False,
-                             compute='calcula_comision')
-    x_vendedor = fields.Many2one("res.partner", string='Vendedor')
 
     def _get_invoiced_lot_values_samper(self):
         """ Get and prepare data to show a table of invoiced lot on the invoice's report. """
