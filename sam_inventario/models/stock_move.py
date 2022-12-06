@@ -9,7 +9,7 @@ class StockMove(models.Model):
 
     x_exis_origen = fields.Float(string='Exis Origen')
     x_merma_pct = fields.Float(string='% Merma',
-                               digits=(3, 4))
+                               digits=(3, 2))
 
     @api.onchange('product_id')
     def onchange_product_id(self):
