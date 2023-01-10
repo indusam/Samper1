@@ -51,6 +51,9 @@ class Formulas(models.TransientModel):
     def imprime_formula(self):
 
         lconsolidar = False
+
+        raise UserError(lconsolidar)
+        
         lconsolidar = self.consolidado
 
         vals=[]
