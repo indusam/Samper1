@@ -51,9 +51,6 @@ class Formulas(models.TransientModel):
     def imprime_formula(self):
 
         lconsolidar = False
-
-        raise UserError(lconsolidar)
-        
         lconsolidar = self.consolidado
 
         vals=[]
@@ -223,6 +220,6 @@ class Formulas(models.TransientModel):
                 'nombre_il':self.ing_limitante.product_tmpl_id.name,
                 'cant_limitante':self.cant_limitante
                 }
-
+        self.consolidado = False
         return self.env.ref('sam_reportes.formulas_reporte').report_action(self, data=data)
 
