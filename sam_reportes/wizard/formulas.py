@@ -24,7 +24,7 @@ class Formulas(models.TransientModel):
     cantidad = fields.Float(string="Cantidad")
     ing_limitante = fields.Many2one('mrp.bom.line',string="Ingrediente limitante")
     cant_limitante = fields.Float(string="Cantidad limitante")
-    consolidado = fields.Boolean(string="Fórmula consolidada",  )
+    consolidado = fields.Boolean(string="Fórmula consolidada", default=False )
 
     # campos para consolidar
     x_secuencia = fields.Char(string="Número")
@@ -50,11 +50,14 @@ class Formulas(models.TransientModel):
     # imprime formula
     def imprime_formula(self):
 
+        lconsolidar = False
+        lconsolidar = self.consolidado
+
         vals=[]
         ingredientes = self.env['mrp.bom.line'].search(
                         [('bom_id.id', '=', self.producto.id)])
 
-        if not self.consolidado:
+        if not lconsolidar:
 
             if not self.ing_limitante:
                 for ingrediente in ingredientes:
@@ -88,7 +91,7 @@ class Formulas(models.TransientModel):
                         })
 
         # Se consolida la fórmula.
-        if self.consolidado:
+        if lconsolidar:
             nsecuencia = self.env['ir.sequence'].next_by_code('formulas.consolidadas')
 
             for ingrediente in ingredientes:
