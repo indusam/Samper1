@@ -22,7 +22,7 @@ class FormulaBaseSalmuera(models.TransientModel):
     _description = 'Fórmula base salmuera'
 
     producto = fields.Many2one('mrp.bom', string="Producto")
-    cantidad = fields.Float(string="Total Cárnicos")
+    cantidad = fields.Float(string="Total Salmuera")
     ing_limitante = fields.Many2one('mrp.bom.line',string="Ingrediente limitante")
     cant_limitante = fields.Float(string="Cantidad limitante")
     consolidado = fields.Boolean(string="Fórmula consolidada",  )
