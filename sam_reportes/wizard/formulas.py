@@ -91,8 +91,6 @@ class Formulas(models.TransientModel):
         if self.consolidado:
             nsecuencia = self.env['ir.sequence'].next_by_code('formulas.consolidadas')
 
-            raise UserError(nsecuencia)
-            
             for ingrediente in ingredientes:
                 # verifica que el ingrediente se fabrique.
                 # las rutas pueden incluir comprar, fabricar, vender, etc.
@@ -208,6 +206,7 @@ class Formulas(models.TransientModel):
                         'pct_categoria': ingrediente.pct_categoria
                     })
 
+        raise UserError(self.consolidado)
 
         data = {'ids': self.ids,
                 'model':self._name,
@@ -219,6 +218,6 @@ class Formulas(models.TransientModel):
                 'nombre_il':self.ing_limitante.product_tmpl_id.name,
                 'cant_limitante':self.cant_limitante
                 }
-        self.consolidado = True
+
         return self.env.ref('sam_reportes.formulas_reporte').report_action(self, data=data)
 
