@@ -217,6 +217,6 @@ class Formulas(models.TransientModel):
                 'nombre_il':self.ing_limitante.product_tmpl_id.name,
                 'cant_limitante':self.cant_limitante
                 }
-
+        vals = []
         return self.env.ref('sam_reportes.formulas_reporte').report_action(self, data=data)
 
