@@ -50,12 +50,11 @@ class Formulas(models.TransientModel):
     # imprime formula
     def imprime_formula(self):
 
-        vals=[]
         ingredientes = self.env['mrp.bom.line'].search(
                         [('bom_id.id', '=', self.producto.id)])
 
         if not self.consolidado:
-
+            vals = []
             if not self.ing_limitante:
                 for ingrediente in ingredientes:
                     codprov = self.env['product.supplierinfo'].search(
@@ -89,6 +88,7 @@ class Formulas(models.TransientModel):
 
         # Se consolida la fórmula.
         if self.consolidado:
+            vals = []
             nsecuencia = self.env['ir.sequence'].next_by_code('formulas.consolidadas')
 
             for ingrediente in ingredientes:
@@ -206,7 +206,6 @@ class Formulas(models.TransientModel):
                         'pct_categoria': ingrediente.pct_categoria
                     })
 
-        raise UserError(vals)
 
         data = {'ids': self.ids,
                 'model':self._name,
