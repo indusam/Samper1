@@ -97,7 +97,7 @@ class Formulas(models.TransientModel):
                 subf = 0
                 rutas = ingrediente.product_tmpl_id.route_ids
                 for ruta in rutas:
-                    if ruta.id == 5: # 5 == fabricar
+                    if ruta.name == "Fabricar": 
                         subf = 1
                         break
 
