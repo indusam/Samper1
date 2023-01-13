@@ -206,8 +206,6 @@ class Formulas(models.TransientModel):
                         'pct_categoria': ingrediente.pct_categoria
                     })
 
-        raise UserError(self.consolidado)
-
         data = {'ids': self.ids,
                 'model':self._name,
                 'vals':vals,
