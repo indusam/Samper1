@@ -91,6 +91,8 @@ class Formulas(models.TransientModel):
         if self.consolidado:
             nsecuencia = self.env['ir.sequence'].next_by_code('formulas.consolidadas')
 
+            raise UserError(nsecuencia)
+            
             for ingrediente in ingredientes:
                 # verifica que el ingrediente se fabrique.
                 # las rutas pueden incluir comprar, fabricar, vender, etc.
