@@ -50,14 +50,11 @@ class Formulas(models.TransientModel):
     # imprime formula
     def imprime_formula(self):
 
-        lconsolidar = False
-        lconsolidar = self.consolidado
-
         vals=[]
         ingredientes = self.env['mrp.bom.line'].search(
                         [('bom_id.id', '=', self.producto.id)])
 
-        if not lconsolidar:
+        if not self.consolidado:
 
             if not self.ing_limitante:
                 for ingrediente in ingredientes:
@@ -91,7 +88,7 @@ class Formulas(models.TransientModel):
                         })
 
         # Se consolida la fórmula.
-        if lconsolidar:
+        if self.consolidado:
             nsecuencia = self.env['ir.sequence'].next_by_code('formulas.consolidadas')
 
             for ingrediente in ingredientes:
