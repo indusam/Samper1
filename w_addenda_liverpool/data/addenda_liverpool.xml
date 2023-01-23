@@ -25,6 +25,7 @@
                 t-att-Total="format_float(record.amount_total, currency_precision)"
                 t-att-TipoDeComprobante="document_type"
                 t-att-MetodoPago="payment_policy"
+                t-att-Exportacion="l10n_mx_edi_external_trade_type"
                 t-att-LugarExpedicion="issued_address.zip or supplier.zip">
                 <t t-if="origin_uuids">
                     <cfdi:CfdiRelacionados t-att-TipoRelacion="origin_type">
