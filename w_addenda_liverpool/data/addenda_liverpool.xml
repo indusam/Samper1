@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!--This is the addenda liverpool-->
-    <template id="cfdiv40" name="Addenda Liverpool" inherit_id="l10n_mx_edi_40.cfdiv40">
+    <template id="cfdiv33" name="Addenda Liverpool" inherit_id="l10n_mx_edi.cfdiv33">
         <xpath expr="//*[name()='cfdi:Comprobante']" position="replace">
             <cfdi:Comprobante
-                xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd http://www.sat.gob.mx/ComercioExterior11 http://www.sat.gob.mx/sitio_internet/cfd/ComercioExterior11/ComercioExterior11.xsd http://www.sat.gob.mx/detallista http://www.sat.gob.mx/sitio_internet/cfd/detallista/detallista.xsd"
-                xmlns:cfdi="http://www.sat.gob.mx/cfd/4"
+                xsi:schemaLocation="http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv33.xsd http://www.sat.gob.mx/ComercioExterior11 http://www.sat.gob.mx/sitio_internet/cfd/ComercioExterior11/ComercioExterior11.xsd http://www.sat.gob.mx/detallista http://www.sat.gob.mx/sitio_internet/cfd/detallista/detallista.xsd"
+                xmlns:cfdi="http://www.sat.gob.mx/cfd/3"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xmlns:cce11="http://www.sat.gob.mx/ComercioExterior11"
                 xmlns:detallista="http://www.sat.gob.mx/detallista"
-                Version="4.0"
+                Version="3.3"
                 t-att-Fecha="cfdi_date"
                 t-att-Folio="format_string(folio_number, 40)"
                 t-att-Serie="format_string(serie_number, 25)"
@@ -25,7 +25,6 @@
                 t-att-Total="format_float(record.amount_total, currency_precision)"
                 t-att-TipoDeComprobante="document_type"
                 t-att-MetodoPago="payment_policy"
-                t-att-Exportacion="l10n_mx_edi_external_trade_type"
                 t-att-LugarExpedicion="issued_address.zip or supplier.zip">
                 <t t-if="origin_uuids">
                     <cfdi:CfdiRelacionados t-att-TipoRelacion="origin_type">
@@ -42,9 +41,7 @@
                     t-att-Rfc="customer_rfc"
                     t-att-Nombre="format_string(customer.commercial_partner_id.name, 254)"
                     t-att-ResidenciaFiscal="customer_fiscal_residence"
-                    t-att-DomicilioFiscalReceptor="customer.zip if customer.country_id.code == 'MX' else issued_address.zip or supplier.zip"
-                    t-att-RegimenFiscalReceptor="fiscal_regime"
-                    t-att-UsoCFDI="record.l10n_mx_edi_usage if record.l10n_mx_edi_usage != 'P01' else 'S01'"/>
+                    t-att-UsoCFDI="record.l10n_mx_edi_usage"/>
                 <cfdi:Conceptos>
                     <t t-foreach="invoice_line_vals_list" t-as="line_vals">
                         <t t-set="line" t-value="line_vals['line']"/>
