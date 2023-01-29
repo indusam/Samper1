@@ -41,7 +41,6 @@
                 <cfdi:Receptor
                     t-att-Rfc="customer_rfc"
                     t-att-Nombre="format_string(customer.commercial_partner_id.name, 254)"
-                    t-att-ResidenciaFiscal="customer_fiscal_residence"
                     t-att-DomicilioFiscalReceptor="customer.zip if customer.country_id.code == 'MX' else issued_address.zip or supplier.zip"
                     t-att-RegimenFiscalReceptor="fiscal_regime"
                     t-att-UsoCFDI="record.l10n_mx_edi_usage if record.l10n_mx_edi_usage != 'P01' else 'S01'"/>
