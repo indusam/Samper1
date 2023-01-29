@@ -10,6 +10,7 @@
                 xmlns:cce11="http://www.sat.gob.mx/ComercioExterior11"
                 xmlns:detallista="http://www.sat.gob.mx/detallista"
                 Version="4.0"
+                t-att-Exportacion="l10n_mx_edi_external_trade_type"
                 t-att-Fecha="cfdi_date"
                 t-att-Folio="format_string(folio_number, 40)"
                 t-att-Serie="format_string(serie_number, 25)"
