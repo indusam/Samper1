@@ -69,7 +69,6 @@ class Formulas(models.TransientModel):
                                 'pct_categoria': ingrediente.x_porcentaje_categoria
                                  })
 
-            raise UserError(vals)
 
             if self.ing_limitante:
                 ncantidad_il = self.ing_limitante.product_qty
@@ -217,5 +216,5 @@ class Formulas(models.TransientModel):
                     'nombre_il':self.ing_limitante.product_tmpl_id.name,
                     'cant_limitante':self.cant_limitante
                     }
-            self.consolidado = False
+            
             return self.env.ref('sam_reportes.formulas_reporte').report_action(self, data=data)
