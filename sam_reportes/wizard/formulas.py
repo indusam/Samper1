@@ -56,8 +56,6 @@ class Formulas(models.TransientModel):
 
             if not self.ing_limitante:
 
-                raise UserError(ingredientes)
-
                 for ingrediente in ingredientes:
                     codprov = self.env['product.supplierinfo'].search(
                     [('product_tmpl_id.id','=',ingrediente.product_id.product_tmpl_id.id)], limit=1).product_name
@@ -70,6 +68,8 @@ class Formulas(models.TransientModel):
                                 'pct_formula': ingrediente.x_porcentaje,
                                 'pct_categoria': ingrediente.x_porcentaje_categoria
                                  })
+
+            raise UserError(vals)
 
             if self.ing_limitante:
                 ncantidad_il = self.ing_limitante.product_qty
