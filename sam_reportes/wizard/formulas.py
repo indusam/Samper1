@@ -54,6 +54,8 @@ class Formulas(models.TransientModel):
         vals = []
         if not self.consolidado:
 
+            raise UserError('no se consolida')
+
             if not self.ing_limitante:
                 for ingrediente in ingredientes:
                     codprov = self.env['product.supplierinfo'].search(
