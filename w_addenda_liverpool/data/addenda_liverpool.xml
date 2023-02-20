@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!--This is the addenda liverpool-->
-    <template id="cfdiv33" name="Addenda Liverpool" inherit_id="l10n_mx_edi.cfdiv33">
+    <template id="cfdiv33_liverpool" name="Addenda Liverpool" inherit_id="l10n_mx_edi.cfdiv33">
         <xpath expr="//*[name()='cfdi:Comprobante']" position="replace">
             <cfdi:Comprobante
                 xsi:schemaLocation="http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv33.xsd http://www.sat.gob.mx/ComercioExterior11 http://www.sat.gob.mx/sitio_internet/cfd/ComercioExterior11/ComercioExterior11.xsd http://www.sat.gob.mx/detallista http://www.sat.gob.mx/sitio_internet/cfd/detallista/detallista.xsd"

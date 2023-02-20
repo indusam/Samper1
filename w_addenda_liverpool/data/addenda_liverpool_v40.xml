@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!--This is the addenda liverpool-->
-    <template id="cfdiv40" name="Addenda Liverpool" inherit_id="l10n_mx_edi_40.cfdiv40">
+    <template id="cfdiv40_liverpool" name="Addenda Liverpool" inherit_id="l10n_mx_edi_40.cfdiv40">
         <xpath expr="//*[name()='cfdi:Comprobante']" position="replace">
             <cfdi:Comprobante
                 xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd http://www.sat.gob.mx/ComercioExterior11 http://www.sat.gob.mx/sitio_internet/cfd/ComercioExterior11/ComercioExterior11.xsd http://www.sat.gob.mx/detallista http://www.sat.gob.mx/sitio_internet/cfd/detallista/detallista.xsd"
@@ -56,6 +56,7 @@
                             t-att-Descripcion="format_string(line.name, 1000)"
                             t-att-ValorUnitario="format_float(line_vals['gross_price_total_unit'], currency_precision)"
                             t-att-Importe="format_float(line_vals['price_subtotal_before_discount'], currency_precision)"
+                            t-att-ObjetoImp="'01' if tax_objected == '02' and line_vals['price_discount'] == line_vals['price_subtotal_before_discount'] else tax_objected"
                             t-att-Descuento="format_float(line_vals['price_discount'], currency_precision) if not record.currency_id.is_zero(line_vals['price_discount']) else None">
                             <t t-set="tax_detail_transferred" t-value="tax_details_transferred['invoice_line_tax_details'][line]"/>
                             <t t-set="tax_detail_withholding" t-value="tax_details_withholding['invoice_line_tax_details'][line]"/>
@@ -114,6 +115,7 @@
                                     <t t-set="tax" t-value="tax_detail_vals['tax']"/>
                                     <t t-if="tax.l10n_mx_tax_type != 'Exento'">
                                         <cfdi:Traslado
+                                            t-att-Base="format_float(balance_multiplicator * tax_detail_vals['base_amount_currency'], currency_precision)"
                                             t-att-Importe="format_float(balance_multiplicator * tax_detail_vals['tax_amount_currency'], currency_precision)"
                                             t-att-Impuesto="get_tax_cfdi_name(tax_detail_vals)"
                                             t-att-TipoFactor="tax.l10n_mx_tax_type"
