@@ -10,6 +10,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/sam_reportes/security/ir.model.access.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
       </map>
     </option>
   </component>
