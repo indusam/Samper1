@@ -171,7 +171,7 @@
                                     </detallista:tradeItemIdentification>
                                     <detallista:alternateTradeItemIdentification type="SUPPLIER_ASSIGNED"><t t-if="line.product_id.default_code" t-esc="record.unescape_characters(line.product_id.default_code)"/></detallista:alternateTradeItemIdentification>
                                     <detallista:tradeItemDescriptionInformation language="ES">
-                                        <detallista:longText><t t-if="line.product_id.name" t-esc="record.unescape_characters(line.product_id.name)"/></detallista:longText>
+                                        <detallista:longText><t t-if="line.product_id.name" t-esc="record.unescape_characters(line.product_id.name[:35])"/></detallista:longText>
                                     </detallista:tradeItemDescriptionInformation>
                                     <detallista:invoicedQuantity t-att-unitOfMeasure="line.product_uom_id.name"><t t-esc="line.get_quantity()"/></detallista:invoicedQuantity>
                                     <detallista:grossPrice>
