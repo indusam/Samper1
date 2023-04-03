@@ -152,7 +152,7 @@
                                                          <t t-set="fecha_caducidad" t-value="o.x_caducidad.strftime('%d/%m/%Y')"/>
 
                                                         <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
-                                                            <span t-esc="o.fecha_caducidad"/>
+                                                            <span t-esc="fecha_caducidad"/>
                                                             <!-- <span t-field="o.x_caducidad"/> -->
                                                         </td>
                                                     </tr>
