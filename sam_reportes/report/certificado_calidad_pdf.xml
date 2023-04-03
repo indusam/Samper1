@@ -150,7 +150,7 @@
                                                             <span>:</span>
                                                         </td>
                                                         <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
-                                                            <span t-field="o.x_caducidad.strftime('%d/%m/%Y')"/>
+                                                            <span t-field="o.x_caducidad.date()"/>
                                                         </td>
                                                     </tr>
                                                 </table>
