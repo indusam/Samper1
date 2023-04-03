@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="78e11fc7-3e95-436a-9f7c-dadb3685aab0" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sam_reportes/wizard/formula_base_carnicos_view.xml" beforeDir="false" afterPath="$PROJECT_DIR$/sam_reportes/wizard/formula_base_carnicos_view.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sam_reportes/report/certificado_calidad_pdf.xml" beforeDir="false" afterPath="$PROJECT_DIR$/sam_reportes/report/certificado_calidad_pdf.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,9 +27,13 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="1fgKzHFkkGPYLmz9udqgTSbXM2O" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
