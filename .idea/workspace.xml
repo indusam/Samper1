@@ -5,7 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="78e11fc7-3e95-436a-9f7c-dadb3685aab0" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/sam_reportes/report/certificado_calidad_pdf.xml" beforeDir="false" afterPath="$PROJECT_DIR$/sam_reportes/report/certificado_calidad_pdf.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sam_contabilidad/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/sam_contabilidad/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sam_contabilidad/__manifest__.py" beforeDir="false" afterPath="$PROJECT_DIR$/sam_contabilidad/__manifest__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sam_contabilidad/models/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sam_contabilidad/models/account_move.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sam_contabilidad/models/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sam_contabilidad/models/res_partner.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sam_contabilidad/models/sale_order.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sam_contabilidad/security/ir.model.access.csv" beforeDir="false" afterPath="$PROJECT_DIR$/sam_contabilidad/security/ir.model.access.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sam_contabilidad/views/templates.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sam_contabilidad/views/views.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sam_contabilidad/wizard/descarga_archivos.py" beforeDir="false" afterPath="$PROJECT_DIR$/sam_contabilidad/wizard/descarga_archivos.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sam_etiquetas/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sam_etiquetas/__manifest__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sam_etiquetas/models/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sam_etiquetas/report/lblvarioslotes_pdf.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sam_etiquetas/security/ir.model.access.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sam_etiquetas/static/description/icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sam_etiquetas/views/lblvarioslotes_reporte.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sam_etiquetas/wizard/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sam_etiquetas/wizard/lbl_varios_lotes.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sam_etiquetas/wizard/lblvarioslotes_view.xml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
