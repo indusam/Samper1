@@ -5,20 +5,70 @@
 # Descarga masiva de los xml y pdf de cfdi (facturas, notas de crédito, recibos de pago).
 # VBueno 0510202110:13
 
-import datetime
-import logging
-import requests
-import zipfile
 
-from odoo import models, fields, http
-from odoo.exceptions import UserError
-import base64
-import io
-import os
-import mimetypes
-# from werkzeug.utils import redirect
+import logging
+import zipfile
+import datetime
+from io import BytesIO
+
+from odoo import http
+from odoo.http import request
 
 _logger = logging.getLogger(__name__)
+
+class DownloadInvoices(http.Controller):
+    @http.route('/download_invoices', type='http', auth='user')
+    def download_invoices(self, start_date=None, end_date=None, **kw):
+
+        end_date = datetime.date.today()
+        start_date = end_date - datetime.timedelta(days=31)
+
+        if not start_date or not end_date:
+            return "Debe especificar un rango de fechas válido."
+
+        invoices = request.env['account.move'].search([
+            ('type', '=', 'out_invoice'),
+            ('state', '=', 'posted'),
+            ('invoice_date', '>=', start_date),
+            ('invoice_date', '<=', end_date),
+        ])
+
+        if not invoices:
+            return "No se encontraron facturas para el rango de fechas especificado."
+
+        file_name = 'facturas_{}_{}.zip'.format(start_date, end_date)
+
+        # Generar archivo zip
+        zip_file = BytesIO()
+        with zipfile.ZipFile(zip_file, 'w') as my_zip:
+            for invoice in invoices:
+                file_data = invoice._get_report_from_name(
+                    'account.report_invoice_with_payments')
+                file_name = invoice.name.replace('/', '-') + '.pdf'
+                my_zip.writestr(file_name, file_data[0])
+        zip_file.seek(0)
+
+        # Descargar archivo zip
+        headers = [
+            ('Content-Type', 'application/octet-stream'),
+            ('Content-Disposition', 'attachment; filename=%s' % file_name),
+            ('Content-Length', len(zip_file.getvalue())),
+        ]
+
+        return request.make_response(zip_file.getvalue(), headers=headers)
+
+"""
+import datetime
+import requests                       
+import zipfile                        
+                                      
+from odoo import models, fields, http 
+from odoo.exceptions import UserError 
+import base64                         
+import io                             
+import os                             
+import mimetypes    
+# from werkzeug.utils import redirect                     
 
 class DescargaXml(models.TransientModel):
     _name = 'descarga_xml_wizard'
@@ -91,3 +141,5 @@ class DescargaXml(models.TransientModel):
         with urllib.request.urlopen(url) as response, open(archivo, 'wb') as out_file:
             data = response.read()
             out_file.write(data)
+ 
+"""
