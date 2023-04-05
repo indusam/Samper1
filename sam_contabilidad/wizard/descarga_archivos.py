@@ -17,6 +17,10 @@ from odoo.http import request
 _logger = logging.getLogger(__name__)
 
 class DownloadInvoices(http.Controller):
+
+    _name = 'descarga_xml_wizard'
+    _description = 'Descarga XML'
+    
     @http.route('/download_invoices', type='http', auth='user')
     def download_invoices(self, start_date=None, end_date=None, **kw):
 
