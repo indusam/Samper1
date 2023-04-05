@@ -27,7 +27,7 @@
 
     <record id="action_descarga_xml_wizard" model="ir.actions.act_window">
         <field name="name">Descarga XML</field>
-        <field name="res_model">descarga_xml.wizard</field>
+        <field name="res_model">descarga_xml_wizard</field>
         <field name="type">ir.actions.act_window</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="report_wizard_descarga_xml_view_form"/>
