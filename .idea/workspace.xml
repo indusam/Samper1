@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="78e11fc7-3e95-436a-9f7c-dadb3685aab0" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sam_contabilidad/wizard/descarga_archivos.py" beforeDir="false" afterPath="$PROJECT_DIR$/sam_contabilidad/wizard/descarga_archivos.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
