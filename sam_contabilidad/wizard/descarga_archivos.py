@@ -56,8 +56,6 @@ class DescargaXml(models.TransientModel):
             carpeta_temporal = os.path.expanduser('~/Temp/Facturas')
             os.makedirs(carpeta_temporal, exist_ok=True)
 
-            raise UserError('se creó la carpeta')
-
             for archivo in archivos:
 
                 nombre_archivo = archivo.name
