@@ -25,7 +25,7 @@ import zipfile
 _logger = logging.getLogger(__name__)
 
 class DescargaXml(models.TransientModel):
-    _name = 'descarga_xml.wizard'
+    _name = 'descarga_xml_wizard'
     _description = 'Descarga XML'
 
     dfinal = datetime.date.today()
