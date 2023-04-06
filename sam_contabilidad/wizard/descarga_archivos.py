@@ -46,7 +46,7 @@ class DescargaXml(models.TransientModel):
 
         if self.facturas:
             #facturas
-            archivos = self.env['account.move'].search_read([('invoice_date','>=',self.fecha_inicial),
+            archivos = self.env['account.move'].search([('invoice_date','>=',self.fecha_inicial),
                                                              ('invoice_date','<=',self.fecha_final),
                                                              ('l10n_mx_edi_cfdi_uuid','=',True)])
 
