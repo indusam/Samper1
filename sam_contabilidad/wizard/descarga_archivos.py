@@ -50,6 +50,8 @@ class DescargaXml(models.TransientModel):
                                                              ('invoice_date','<=',self.fecha_final),
                                                              ('l10n_mx_edi_cfdi_uuid','=',True)])
 
+        raise UserError(archivos)
+
         if archivos:
 
             # Creamos una carpeta temporal para almacenar los archivos descargados
