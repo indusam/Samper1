@@ -61,7 +61,7 @@ class DescargaXml(models.TransientModel):
                 nombre_archivo = archivo.name
 
                 # Descargamos el archivo XML
-                archivo_xml = archivo.export_as_xml()
+                archivo_xml = archivo._export_as_xml()
                 if archivo_xml:
                     nombre_archivo_xml = f'{nombre_archivo}.xml'
                     ruta_archivo_xml = os.path.join(carpeta_temporal,
@@ -70,7 +70,7 @@ class DescargaXml(models.TransientModel):
                         f.write(base64.b64decode(archivo_xml))
 
                 # Descargamos el archivo PDF
-                archivo_pdf = archivo.get_report_data()[0]
+                archivo_pdf = archivo._get_report_data()[0]
                 if archivo_pdf:
                     nombre_archivo_pdf = f'{nombre_archivo}.pdf'
                     ruta_archivo_pdf = os.path.join(carpeta_temporal,
