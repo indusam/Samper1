@@ -50,13 +50,13 @@ class DescargaXml(models.TransientModel):
                                                              ('invoice_date','<=',self.fecha_final),
                                                              ('l10n_mx_edi_cfdi_uuid','=',True)])
 
-        raise UserError(archivos)
-
         if archivos:
 
             # Creamos una carpeta temporal para almacenar los archivos descargados
             carpeta_temporal = os.path.expanduser('~/Temp/Facturas')
             os.makedirs(carpeta_temporal, exist_ok=True)
+
+            raise UserError('se creó la carpeta')
 
             for archivo in archivos:
 
