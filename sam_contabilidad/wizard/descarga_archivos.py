@@ -62,8 +62,8 @@ class DescargaXml(models.TransientModel):
               raise UserError('No hay registros en ese rango de fechas')
 
           for record in cfdis:
-              if record.datas_fname:
-                  file_name = record.datas_fname
+              if record.name:
+                  file_name = record.name
                   file_content = base64.b64decode(record.datas)
                   with open(file_name, 'wb') as file:
                       file.write(file_content)
