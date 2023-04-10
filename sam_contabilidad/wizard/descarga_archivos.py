@@ -61,8 +61,16 @@ class DescargaXml(models.TransientModel):
           if not cfdis:
               raise UserError('No hay registros en ese rango de fechas')
 
-          for cfdi in cfdis:
-              descarga = self.dl(cfdi)
+          for record in cfdis:
+              if record.datas_fname:
+                  file_name = record.datas_fname
+                  file_content = base64.b64decode(record.datas)
+                  with open(file_name, 'wb') as file:
+                      file.write(file_content)
+
+
+          #for cfdi in cfdis:
+          #    descarga = self.dl(cfdi)
 
     # escribe una funcion para crear un archivo zip
     # con los archivos de un directorio
