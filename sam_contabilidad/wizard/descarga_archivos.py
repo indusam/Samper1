@@ -8,12 +8,17 @@
 import datetime
 import logging
 import requests
+import tempfile
 import zipfile
+
+from odoo import http
+from odoo.http import request
 
 from odoo import models, fields, http
 from odoo.exceptions import UserError
 import base64
 import io
+from io import BytesIO
 import os
 import mimetypes
 # from werkzeug.utils import redirect
@@ -75,12 +80,28 @@ class DescargaXml(models.TransientModel):
         with open(file_path, 'wb') as f:
                 f.write(zip_buffer.read())
 
+        # Crear una respuesta para descargar el archivo zip
+        response = request.make_response(
+            None,
+            headers=[('Content-Type', 'application/zip'), (
+            'Content-Disposition', 'attachment; filename=file_name')]
+        )
+        response.stream.write(zip_file.getvalue())
+        response.stream.flush()
+        response.stream.close()
+
+        # Eliminar el archivo temporal y enviar la respuesta
+        # shutil.rmtree(tmp_dir)
+
+        return response
+
+
         # Regresa el archivo al usuario
-        return {
-                'type': 'ir.actions.act_url',
-                'url': f'file://{file_path}',
-                'target': 'self',
-                }
+        #return {
+        #        'type': 'ir.actions.act_url',
+        #        'url': f'file://{file_path}',
+        #        'target': 'self',
+        #        }
 
 """ 
         root = tk.Tk()
