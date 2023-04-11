@@ -13,7 +13,6 @@ from odoo import models, fields, http
 from odoo.exceptions import UserError
 import io
 import os
-import urllib.request
 
 import requests
 import tempfile
@@ -79,17 +78,12 @@ class DescargaXml(models.TransientModel):
         with open(file_path, 'wb') as f:
                 f.write(zip_buffer.read())
 
-        with urllib.request.urlopen(url) as response, open(archivo,
-                                                           'wb') as out_file:
-            data = response.read()
-            out_file.write(data)
-
         # Regresa el archivo al usuario
-        #return {
-        #        'type': 'ir.actions.act_url',
-        #        'url': f'file://{file_path}',
-        #        'target': 'self',
-        #        }
+        return {
+                'type': 'ir.actions.act_url',
+                'url': f'file://{file_path}',
+                'target': 'self',
+                }
 
 """ 
         root = tk.Tk()
