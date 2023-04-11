@@ -13,8 +13,6 @@ import zipfile
 from odoo import models, fields, http
 from odoo.exceptions import UserError
 import base64
-import tkinter as tk
-from tkinter import filedialog
 import io
 import os
 import mimetypes
@@ -35,24 +33,56 @@ class DescargaXml(models.TransientModel):
     fecha_final = fields.Date(string="Fecha final", required=True, default=dfinal)
 
 
-    def dl(self,archivo):
-
-        action = {
-            'type': 'ir.actions.act_url',
-            'url': "web/content/?model=ir.attachment&id=" + str(
-                archivo.id) + "&filename_field=name&field=datas&download=true&name=" + archivo.name,
-            'target': 'self'
-        }
-
-        return action
-
-
     # Descarga los xml
     def descargaxml(self):
 
         if not self.facturas and not self.pagos and not self.notas_credito:
             raise UserError('Debes seleccionar un tipo de comprobante')
 
+        cfdis = self.env['ir.attachment'].search([('res_model','=','account.move'),
+                                                    ('name','not ilike','RINV'),
+                                                    ('mimetype','=','text/plain'),
+                                                    ('create_date','>=',self.fecha_inicial),
+                                                    ('create_date','<=',self.fecha_final)])
+
+        if not cfdis:
+            raise UserError('No hay registros en ese rango de fechas')
+
+        # Crea un buffer para guardar los archivos en la memoria.
+        zip_buffer = io.BytesIO()
+
+        # Crea el archivo Zip en la memoria
+        with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED,
+                             False) as zip_file:
+            for attachment in cfdis:
+                zip_file.writestr(attachment.name, attachment.datas)
+
+        # Fija la posición del buffer al principio para poder leerlo
+        zip_buffer.seek(0)
+
+        # Genera el nombre del archivo basado en la fecha y hora
+        current_date_time = datetime.now().strftime('%Y-%m-%d %H-%M-%S')
+        file_name = f'attachments_{current_date_time}.zip'
+
+        # Obtiene el directorio home del usuario y crea la carpeta "descarga_archivos" si no existe.
+        home_dir = os.path.expanduser('~')
+        download_dir = os.path.join(home_dir, 'descarga_archivos')
+        if not os.path.exists(download_dir):
+            os.makedirs(download_dir)
+
+        # Construye el directorio del archivo y escribe el Zip en el disco.
+        file_path = os.path.join(download_dir, file_name)
+        with open(file_path, 'wb') as f:
+                f.write(zip_buffer.read())
+
+        # Regresa el archivo al usuario
+        return {
+                'type': 'ir.actions.act_url',
+                'url': f'file://{file_path}',
+                'target': 'self',
+                }
+
+""" 
         root = tk.Tk()
         root.withdraw()
 
@@ -115,9 +145,20 @@ class DescargaXml(models.TransientModel):
             out_file.write(data)
 
 
-""" 
+    def dl(self,archivo):
+
+        action = {
+            'type': 'ir.actions.act_url',
+            'url': "web/content/?model=ir.attachment&id=" + str(
+                archivo.id) + "&filename_field=name&field=datas&download=true&name=" + archivo.name,
+            'target': 'self'
+        }
+
+        return action
 
 
+
+ ---------------------------
           try:
               # import zlib
               compression = zipfile.ZIP_DEFLATED
