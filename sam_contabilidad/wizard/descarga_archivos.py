@@ -14,6 +14,9 @@ from odoo.exceptions import UserError
 import io
 import os
 
+from odoo import http
+from odoo.http import request
+
 import requests
 import tempfile
 import base64
@@ -79,11 +82,20 @@ class DescargaXml(models.TransientModel):
                 f.write(zip_buffer.read())
 
         # Regresa el archivo al usuario
-        return {
-                'type': 'ir.actions.act_url',
-                'url': f'file://{file_path}',
-                'target': 'self',
-                }
+        #return {
+        #        'type': 'ir.actions.act_url',
+        #        'url': f'file://{file_path}',
+        #        'target': 'self',
+        #        }
+
+        # Descargar archivo zip
+        headers = [
+            ('Content-Type', 'application/octet-stream'),
+            ('Content-Disposition', 'attachment; filename=%s' % file_name),
+            ('Content-Length', len(file_name.getvalue())),
+        ]
+
+        return request.make_response(zip_file.getvalue(), headers=headers)
 
 """ 
         root = tk.Tk()
