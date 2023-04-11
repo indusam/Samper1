@@ -61,7 +61,7 @@ class DescargaXml(models.TransientModel):
         zip_buffer.seek(0)
 
         # Genera el nombre del archivo basado en la fecha y hora
-        current_date_time = datetime.now().strftime('%Y-%m-%d %H-%M-%S')
+        current_date_time = datetime.datetime.now().strftime('%Y-%m-%d %H-%M-%S')
         file_name = f'attachments_{current_date_time}.zip'
 
         # Obtiene el directorio home del usuario y crea la carpeta "descarga_archivos" si no existe.
