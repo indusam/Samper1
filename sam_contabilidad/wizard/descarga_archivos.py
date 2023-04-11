@@ -92,7 +92,7 @@ class DescargaXml(models.TransientModel):
         headers = [
             ('Content-Type', 'application/octet-stream'),
             ('Content-Disposition', 'attachment; filename=%s' % file_name),
-            ('Content-Length', len(file_name.getvalue())),
+            ('Content-Length', len(file_name)),
         ]
 
         return request.make_response(zip_file.getvalue(), headers=headers)
