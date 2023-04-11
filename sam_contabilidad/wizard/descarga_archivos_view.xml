@@ -12,9 +12,9 @@
                     <group>
                         <field name="fecha_inicial"/>
                         <field name="fecha_final"/>
-                        <field name="facturas"/>
+                        <!-- <field name="facturas"/>
                         <field name="notas_credito"/>
-                        <field name="pagos"/>
+                        <field name="pagos"/> -->
                     </group>
                 </group>
                 <footer>

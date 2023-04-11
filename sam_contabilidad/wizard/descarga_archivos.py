@@ -13,6 +13,8 @@ import zipfile
 from odoo import models, fields, http
 from odoo.exceptions import UserError
 import base64
+import tkinter as tk
+from tkinter import filedialog
 import io
 import os
 import mimetypes
@@ -51,6 +53,12 @@ class DescargaXml(models.TransientModel):
         if not self.facturas and not self.pagos and not self.notas_credito:
             raise UserError('Debes seleccionar un tipo de comprobante')
 
+        root = tk.Tk()
+        root.withdraw()
+
+        # Seleccionar la carpeta de descarga
+        download_path = filedialog.askdirectory()
+
         if self.facturas:
           cfdis = self.env['ir.attachment'].search([('res_model','=','account.move'),
                                                        ('name','not ilike','RINV'),
@@ -65,9 +73,16 @@ class DescargaXml(models.TransientModel):
               if record.name:
                   file_name = record.name
                   file_content = base64.b64decode(record.datas)
-                  with open(file_name, 'wb') as file:
-                      file.write(file_content)
+                  #with open(file_name, 'wb') as file:
+                  #    file.write(file_content)
+                  with open(os.path.join(download_path, file_name),
+                            'wb') as file: file.write(file_content)
 
+              #with urllib.request.urlopen(url) as response, open(archivo,
+              #                                                   'wb') as out_file:
+              #    data = response.read()
+              #    out_file.write(data)
+            
 
           #for cfdi in cfdis:
           #    descarga = self.dl(cfdi)
