@@ -95,7 +95,7 @@ class DescargaXml(models.TransientModel):
             ('Content-Length', len(file_name)),
         ]
 
-        return request(zip_file.getvalue(), headers=headers)
+        return request(zip_file, headers=headers)
 
 """ 
         root = tk.Tk()
