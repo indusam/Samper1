@@ -53,8 +53,8 @@ class DescargaXml(models.TransientModel):
         if not self.facturas and not self.pagos and not self.notas_credito:
             raise UserError('Debes seleccionar un tipo de comprobante')
 
-        root = tk.Tk()
-        root.withdraw()
+        #root = tk.Tk()
+        #root.withdraw()
 
         # Seleccionar la carpeta de descarga
         download_path = filedialog.askdirectory()
