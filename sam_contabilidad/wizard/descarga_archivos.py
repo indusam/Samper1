@@ -85,7 +85,7 @@ class DescargaXml(models.TransientModel):
         return {
                 'type': 'ir.actions.act_url',
                 'url': f'file://{file_path + "&download=true&name=" + file_name}',
-                'target': 'self',
+                'target': 'new',
                 }
 
 
