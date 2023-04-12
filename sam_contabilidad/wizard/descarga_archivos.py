@@ -82,20 +82,12 @@ class DescargaXml(models.TransientModel):
                 f.write(zip_buffer.read())
 
         # Regresa el archivo al usuario
-        #return {
-        #        'type': 'ir.actions.act_url',
-        #        'url': f'file://{file_path}',
-        #        'target': 'self',
-        #        }
+        return {
+                'type': 'ir.actions.act_url',
+                'url': f'file://{file_path}',
+                'target': 'self',
+                }
 
-        # Descargar archivo zip
-        headers = [
-            ('Content-Type', 'application/octet-stream'),
-            ('Content-Disposition', 'attachment; filename=%s' % file_name),
-            ('Content-Length', len(file_name)),
-        ]
-
-        return request(zip_file, headers=headers)
 
 """ 
         root = tk.Tk()
