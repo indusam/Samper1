@@ -81,11 +81,11 @@ class DescargaXml(models.TransientModel):
         with open(file_path, 'wb') as f:
                 f.write(zip_buffer.read())
 
-        raise UserError(file_path)
         # Regresa el archivo al usuario
         return {
                 'type': 'ir.actions.act_url',
-                'url': f'file://{file_path}',
+                'url' : file_path + "&download=true",
+                # 'url': f'file://{file_path}',
                 'target': 'self',
                 }
 
