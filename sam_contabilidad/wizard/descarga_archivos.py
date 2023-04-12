@@ -13,17 +13,6 @@ from odoo import models, fields, http
 from odoo.exceptions import UserError
 import io
 import os
-from PyQt.QtWidgets import QFileDialog, QMessageBox
-
-from odoo import http
-from odoo.http import request
-
-import requests
-import tempfile
-import base64
-from io import BytesIO
-import mimetypes
-# from werkzeug.utils import redirect
 
 _logger = logging.getLogger(__name__)
 
@@ -82,24 +71,10 @@ class DescargaXml(models.TransientModel):
         with open(file_path, 'wb') as f:
                 f.write(zip_buffer.read())
 
-        # Muestra un diálogo de guardado para que el usuario elija dónde guardar el archivo ZIP
-        file_dialog = QFileDialog()
-        file_dialog.setDefaultSuffix('.zip')
-        file_path, _ = file_dialog.getSaveFileName(
-            None, 'Guardar archivo', 'attachments.zip',
-                  'Archivos ZIP (*.zip)')
-        if file_path:
-            # Escribe el archivo ZIP en el disco
-            with open(file_path, 'wb') as f:
-                    f.write(zip_buffer.getvalue())
-
-            # Muestra un mensaje de éxito
-            #QMessageBox.information(None, 'Descarga completa',
-            #                          f'Se descargó el archivo ZIP en {file_path}')
 
         # Regresa el archivo al usuario
-        #return {
-        #        'type': 'ir.actions.act_url',
-        #        'url': f'https://{file_path + "&download=true"}',
-        #        'target': 'self',
-        #        }
+        return {
+                'type': 'ir.actions.act_url',
+                'url': f'http://{file_path + "&download=true"}',
+                'target': 'self',
+                }
