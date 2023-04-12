@@ -13,7 +13,7 @@ from odoo import models, fields, http
 from odoo.exceptions import UserError
 import io
 import os
-import wx
+from PyQt5.QtWidgets import QFileDialog, QMessageBox
 
 from odoo import http
 from odoo.http import request
@@ -82,22 +82,20 @@ class DescargaXml(models.TransientModel):
         with open(file_path, 'wb') as f:
                 f.write(zip_buffer.read())
 
-        # Abrir el cuadro de diálogo de descarga con wxPython
-        app = wx.App()
-        dialog = wx.FileDialog(None, "Guardar archivo zip",
-                                defaultFile=file_name,
-                                wildcard="Archivo zip (*.zip)|*.zip",
-                                style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT)
-        if dialog.ShowModal() == wx.ID_OK:
-            file_path_local = dialog.GetPath()
-            with open(file_path_local, "wb") as f:
-                f.write(zip_buffer.getvalue())
-                wx.MessageBox(
-                    f"El archivo {file_path_local} se ha guardado correctamente",
-                    "Descarga exitosa",
-                    wx.OK | wx.ICON_INFORMATION)
-            dialog.Destroy()
-            app.MainLoop()
+        # Muestra un diálogo de guardado para que el usuario elija dónde guardar el archivo ZIP
+        file_dialog = QFileDialog()
+        file_dialog.setDefaultSuffix('.zip')
+        file_path, _ = file_dialog.getSaveFileName(
+            None, 'Guardar archivo', 'attachments.zip',
+                  'Archivos ZIP (*.zip)')
+            if file_path:
+                # Escribe el archivo ZIP en el disco
+                with open(file_path, 'wb') as f:
+                    f.write(zip_buffer.getvalue())
+
+                # Muestra un mensaje de éxito
+                QMessageBox.information(None, 'Descarga completa',
+                                        f'Se descargó el archivo ZIP en {file_path}')
 
         # Regresa el archivo al usuario
         #return {
