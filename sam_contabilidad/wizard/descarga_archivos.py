@@ -13,7 +13,7 @@ from odoo import models, fields, http
 from odoo.exceptions import UserError
 import io
 import os
-from PyQt5.QtWidgets import QFileDialog, QMessageBox
+from PyQt.QtWidgets import QFileDialog, QMessageBox
 
 from odoo import http
 from odoo.http import request
