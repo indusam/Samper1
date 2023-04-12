@@ -88,14 +88,14 @@ class DescargaXml(models.TransientModel):
         file_path, _ = file_dialog.getSaveFileName(
             None, 'Guardar archivo', 'attachments.zip',
                   'Archivos ZIP (*.zip)')
-            if file_path:
-                # Escribe el archivo ZIP en el disco
-                with open(file_path, 'wb') as f:
+        if file_path:
+            # Escribe el archivo ZIP en el disco
+            with open(file_path, 'wb') as f:
                     f.write(zip_buffer.getvalue())
 
-                # Muestra un mensaje de éxito
-                QMessageBox.information(None, 'Descarga completa',
-                                        f'Se descargó el archivo ZIP en {file_path}')
+            # Muestra un mensaje de éxito
+             QMessageBox.information(None, 'Descarga completa',
+                                      f'Se descargó el archivo ZIP en {file_path}')
 
         # Regresa el archivo al usuario
         #return {
