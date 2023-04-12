@@ -94,8 +94,8 @@ class DescargaXml(models.TransientModel):
                     f.write(zip_buffer.getvalue())
 
             # Muestra un mensaje de éxito
-             QMessageBox.information(None, 'Descarga completa',
-                                      f'Se descargó el archivo ZIP en {file_path}')
+            #QMessageBox.information(None, 'Descarga completa',
+            #                          f'Se descargó el archivo ZIP en {file_path}')
 
         # Regresa el archivo al usuario
         #return {
