@@ -13,6 +13,7 @@ from odoo import models, fields, http
 from odoo.exceptions import UserError
 import io
 import os
+import wx
 
 from odoo import http
 from odoo.http import request
@@ -81,9 +82,26 @@ class DescargaXml(models.TransientModel):
         with open(file_path, 'wb') as f:
                 f.write(zip_buffer.read())
 
+        # Abrir el cuadro de diálogo de descarga con wxPython
+        app = wx.App()
+        dialog = wx.FileDialog(None, "Guardar archivo zip",
+                                defaultFile=file_name,
+                                wildcard="Archivo zip (*.zip)|*.zip",
+                                style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT)
+        if dialog.ShowModal() == wx.ID_OK:
+            file_path_local = dialog.GetPath()
+            with open(file_path_local, "wb") as f:
+                f.write(zip_buffer.getvalue())
+                wx.MessageBox(
+                    f"El archivo {file_path_local} se ha guardado correctamente",
+                    "Descarga exitosa",
+                    wx.OK | wx.ICON_INFORMATION)
+            dialog.Destroy()
+            app.MainLoop()
+
         # Regresa el archivo al usuario
-        return {
-                'type': 'ir.actions.act_url',
-                'url': f'https://{file_path + "&download=true"}',
-                'target': 'self',
-                }
+        #return {
+        #        'type': 'ir.actions.act_url',
+        #        'url': f'https://{file_path + "&download=true"}',
+        #        'target': 'self',
+        #        }
