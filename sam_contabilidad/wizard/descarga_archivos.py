@@ -84,6 +84,6 @@ class DescargaXml(models.TransientModel):
         # Regresa el archivo al usuario
         return {
                 'type': 'ir.actions.act_url',
-                'url': f'http://{file_path + "&download=true&name=" + file_name}',
+                'url': f'https://{file_path + "&download=true"}',
                 'target': 'self',
                 }
