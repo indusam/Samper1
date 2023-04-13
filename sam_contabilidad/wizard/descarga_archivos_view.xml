@@ -5,16 +5,16 @@
 <odoo>
     <record id="report_wizard_descarga_xml_view_form" model="ir.ui.view">
         <field name="name">report.wizard.descarga.xml.view.form</field>
-        <field name="model">descarga_xml.wizard</field>
+        <field name="model">descarga_xml_wizard</field>
         <field name="arch" type="xml">
             <form>
                 <group>
                     <group>
                         <field name="fecha_inicial"/>
                         <field name="fecha_final"/>
-                        <field name="facturas"/>
+                        <!-- <field name="facturas"/>
                         <field name="notas_credito"/>
-                        <field name="pagos"/>
+                        <field name="pagos"/> -->
                     </group>
                 </group>
                 <footer>
@@ -27,7 +27,7 @@
 
     <record id="action_descarga_xml_wizard" model="ir.actions.act_window">
         <field name="name">Descarga XML</field>
-        <field name="res_model">descarga_xml.wizard</field>
+        <field name="res_model">descarga_xml_wizard</field>
         <field name="type">ir.actions.act_window</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="report_wizard_descarga_xml_view_form"/>
