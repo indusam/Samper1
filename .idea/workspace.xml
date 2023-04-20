@@ -6,15 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="78e11fc7-3e95-436a-9f7c-dadb3685aab0" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sam_contabilidad/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sam_contabilidad/__manifest__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sam_contabilidad/controllers/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sam_contabilidad/controllers/controllers.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sam_contabilidad/demo/demo.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sam_contabilidad/security/ir.model.access.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sam_contabilidad/wizard/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sam_contabilidad/wizard/descarga_archivos.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sam_contabilidad/wizard/descarga_archivos_view.xml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
