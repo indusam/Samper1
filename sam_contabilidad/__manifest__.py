@@ -6,7 +6,7 @@
         Adecuaciones al módulo de contabilidad de Samper""",
 
     'description': """
-        Modificaciones al módulo de contabiliadad para Samper: vendedores, comisiones, piezas en el inventario, etc.
+        Modificaciones al módulo de contabiliadad para Samper.
     """,
 
     'author': "VBueno",
