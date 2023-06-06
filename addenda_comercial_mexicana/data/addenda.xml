@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <template id="mexican_commercial_addenda" name="Mexican Commercial Addenda"><cfdi:Addenda xmlns:cfdi="http://www.sat.gob.mx/cfd/3">
+    <template id="mexican_commercial_addenda" name="Mexican Commercial Addenda"><cfdi:Addenda xmlns:cfdi="http://www.sat.gob.mx/cfd/4">
                 <requestForPayment t-att-DeliveryDate="record.getting_delivery_date()" contentVersion="1.3.1" documentStatus="ORIGINAL" documentStructureVersion="AMC7.1" type="SimpleInvoiceType">
                     <requestForPaymentIdentification>
                     <t t-if="record.move_type in ('out_invoice', 'in_invoice')">
