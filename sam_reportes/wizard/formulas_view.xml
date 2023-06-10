@@ -21,8 +21,8 @@
                         <field name="ing_limitante" attrs="{'invisible': [('cantidad','>',0)]}"/>
                         <field name="cant_limitante" attrs="{'invisible': [('cantidad','>',0)]}"/>
                         -->
-                        <field name="ing_limitante" attrs="{'invisible': [('cantidad','>',0)]}"/>
-                        <field name="cant_limitante" attrs="{'invisible': [('cantidad','>',0)]}"/>
+                        <field name="ing_limitante" />
+                        <field name="cant_limitante" "/>
 
                     </group>
 
