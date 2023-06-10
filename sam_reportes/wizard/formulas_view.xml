@@ -22,13 +22,13 @@
                         <field name="cant_limitante" attrs="{'invisible': [('cantidad','>',0)]}"/>
                         -->
                         <field name="ing_limitante" />
-                        <field name="cant_limitante" "/>
+                        <field name="cant_limitante" />
 
                     </group>
 
                 </group>
                 <footer>
-                    <button name="imprime_formula" type="object" string="Test" class="oe_highlight"/>
+                    <button name="imprime_formula" type="object" string="Imprimir" class="oe_highlight"/>
                     <button special="cancel" string="Cancelar"/>
                 </footer>
             </form>
