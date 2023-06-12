@@ -51,7 +51,8 @@ class Formulas(models.TransientModel):
     #tenga más de una fórmula.
     @api.onchange('consolidado')
     def onchange_consolidado(self):
-        raise UserError('SE CONSOLIDA')
+        if self.consolidado:
+            raise UserError('SE CONSOLIDA')
         return True
 
 
