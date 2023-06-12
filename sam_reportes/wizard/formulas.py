@@ -47,14 +47,20 @@ class Formulas(models.TransientModel):
             return {'domain': {'ing_limitante':
                                    [('bom_id', '=', nlista)]}}
 
+    #permite seleccionar fórmula en caso de que se consolide y algún ingrediente
+    #tenga más de una fórmula.
+    @api.onchange('consolidado')
+    def onchange_consolidado(self):
+        raise UserError('SE CONSOLIDA')
+        return True
+
+
     # imprime formula
     def imprime_formula(self):
 
         vals=[]
         ingredientes = self.env['mrp.bom.line'].search(
                         [('bom_id.id', '=', self.producto.id)])
-
-        #if not self.consolidado:
 
         if not self.ing_limitante:
             for ingrediente in ingredientes:
