@@ -53,7 +53,7 @@ class Formulas(models.TransientModel):
     def onchange_consolidado(self):
         if self.consolidado:
             raise UserError('SE CONSOLIDA')
-        return True
+
 
 
     # imprime formula
