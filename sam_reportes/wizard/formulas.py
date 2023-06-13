@@ -102,11 +102,14 @@ class Formulas(models.TransientModel):
                 # verifica que el ingrediente se fabrique.
                 # las rutas pueden incluir comprar, fabricar, vender, etc.
                 subf = 0
-                rutas = ingrediente.product_tmpl_id.route_ids
-                for ruta in rutas:
-                    if ruta.name == 'Fabricar': # 5 == fabricar
-                        subf = 1
-                        break
+                if ingrediente.bom_count > 0:
+                    subf = 1
+
+                #rutas = ingrediente.product_tmpl_id.route_ids
+                #for ruta in rutas:
+                #    if ruta.name == 'Fabricar': # 5 == fabricar
+                #        subf = 1
+                #        break
 
                 if subf == 1:
                     ncant_limitante = self.cantidad * (ingrediente.x_porcentaje / 100)
