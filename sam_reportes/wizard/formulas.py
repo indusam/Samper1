@@ -49,10 +49,10 @@ class Formulas(models.TransientModel):
 
     #permite seleccionar fórmula en caso de que se consolide y algún ingrediente
     #tenga más de una fórmula.
-    @api.onchange('consolidado')
-    def onchange_consolidado(self):
-        if self.consolidado:
-            raise UserError('SE CONSOLIDA')
+    #@api.onchange('consolidado')
+    #def onchange_consolidado(self):
+    #    if self.consolidado:
+    #        raise UserError('SE CONSOLIDA')
 
 
 
