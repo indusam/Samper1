@@ -97,10 +97,10 @@ class Formulas(models.TransientModel):
             for ingrediente in ingredientes:
                 # verifica que el ingrediente se fabrique.
                 subf = 0
-                if ingrediente.product_tmpl_id.bom_count > 0:
+                if ingrediente.product_id.bom_count > 0:
                     subf = 1
 
-                raise UserError(ingrediente.name+' '+str(subf))
+                raise UserError(ingrediente.product_id.name+' '+str(subf))
 
                 if subf == 1:
                     ncant_limitante = self.cantidad * (ingrediente.x_porcentaje / 100)
