@@ -133,6 +133,8 @@ class Formulas(models.TransientModel):
                             else:
                                 norden = 4
 
+                            raise UserError(componente.name+' '+str(ncant_limitante*(componente.x_porcentaje/100)))
+
                             self.env['wizard.formulas'].create({
                                 'x_secuencia':nsecuencia,
                                 'ingr': componente.product_id.id,
@@ -206,8 +208,6 @@ class Formulas(models.TransientModel):
                         'pct_formula': (ingrediente.cant_tot / self.cantidad) * 100 ,
                         'pct_categoria': ingrediente.pct_categoria
                     })
-
-        raise UserError(vals)
 
         data = {'ids': self.ids,
                 'model':self._name,
