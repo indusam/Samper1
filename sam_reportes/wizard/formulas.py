@@ -62,14 +62,17 @@ class Formulas(models.TransientModel):
         vals=[]
         ingredientes = self.env['mrp.bom.line'].search(
                         [('bom_id.id', '=', self.producto.id)])
-        if not self.consolidado:
-            if not self.ing_limitante:
-                for ingrediente in ingredientes:
-                    codprov = self.env['product.supplierinfo'].search(
+
+        # no se consolida la fórmula
+        #if not self.consolidado:
+
+        if not self.ing_limitante:
+            for ingrediente in ingredientes:
+                codprov = self.env['product.supplierinfo'].search(
                         [('product_tmpl_id.id','=',ingrediente.product_id.product_tmpl_id.id)], limit=1
                         ).product_name
 
-                    vals.append({
+                vals.append({
                         'componente': ingrediente.product_id.name,
                         'cod_prov': codprov,
                         'cant_comp': self.cantidad * (ingrediente.x_porcentaje / 100),
@@ -78,14 +81,14 @@ class Formulas(models.TransientModel):
                         'pct_categoria': ingrediente.x_porcentaje_categoria
                         })
 
-            if self.ing_limitante:
-                ncantidad_il = self.ing_limitante.product_qty
-                for ingrediente in ingredientes:
-                    codprov = self.env['product.supplierinfo'].search(
+        if self.ing_limitante:
+            ncantidad_il = self.ing_limitante.product_qty
+            for ingrediente in ingredientes:
+                codprov = self.env['product.supplierinfo'].search(
                         [('product_tmpl_id.id', '=', ingrediente.product_id.product_tmpl_id.id)], limit=1
                         ).product_name
 
-                    vals.append({
+                vals.append({
                         'componente': ingrediente.product_id.name,
                         'cod_prov': codprov,
                         'cant_comp': self.cant_limitante * (ingrediente.product_qty / ncantidad_il),
@@ -97,37 +100,6 @@ class Formulas(models.TransientModel):
         # Se consolida la fórmula.
         if self.consolidado:
             nsecuencia = self.env['ir.sequence'].next_by_code('formulas.consolidadas')
-
-            if not self.ing_limitante:
-                for ingrediente in ingredientes:
-                    codprov = self.env['product.supplierinfo'].search(
-                        [('product_tmpl_id.id','=',ingrediente.product_id.product_tmpl_id.id)], limit=1
-                        ).product_name
-
-                    vals.append({
-                        'componente': ingrediente.product_id.name,
-                        'cod_prov': codprov,
-                        'cant_comp': self.cantidad * (ingrediente.x_porcentaje / 100),
-                        'unidad': ingrediente.product_id.uom_id.name,
-                        'pct_formula': ingrediente.x_porcentaje,
-                        'pct_categoria': ingrediente.x_porcentaje_categoria
-                        })
-
-            if self.ing_limitante:
-                ncantidad_il = self.ing_limitante.product_qty
-                for ingrediente in ingredientes:
-                    codprov = self.env['product.supplierinfo'].search(
-                        [('product_tmpl_id.id', '=', ingrediente.product_id.product_tmpl_id.id)], limit=1
-                        ).product_name
-
-                    vals.append({
-                        'componente': ingrediente.product_id.name,
-                        'cod_prov': codprov,
-                        'cant_comp': self.cant_limitante * (ingrediente.product_qty / ncantidad_il),
-                        'unidad': ingrediente.product_id.uom_id.name,
-                        'pct_formula': ingrediente.x_porcentaje,
-                        'pct_categoria': ingrediente.x_porcentaje_categoria
-                        })
 
             for ingrediente in ingredientes:
                 # verifica que el ingrediente se fabrique.
