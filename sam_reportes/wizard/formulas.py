@@ -64,15 +64,15 @@ class Formulas(models.TransientModel):
                         [('bom_id.id', '=', self.producto.id)])
 
         # no se consolida la fórmula
-        #if not self.consolidado:
+        if not self.consolidado:
 
-        if not self.ing_limitante:
-            for ingrediente in ingredientes:
-                codprov = self.env['product.supplierinfo'].search(
+            if not self.ing_limitante:
+                for ingrediente in ingredientes:
+                    codprov = self.env['product.supplierinfo'].search(
                         [('product_tmpl_id.id','=',ingrediente.product_id.product_tmpl_id.id)], limit=1
                         ).product_name
 
-                vals.append({
+                    vals.append({
                         'componente': ingrediente.product_id.name,
                         'cod_prov': codprov,
                         'cant_comp': self.cantidad * (ingrediente.x_porcentaje / 100),
@@ -81,14 +81,14 @@ class Formulas(models.TransientModel):
                         'pct_categoria': ingrediente.x_porcentaje_categoria
                         })
 
-        if self.ing_limitante:
-            ncantidad_il = self.ing_limitante.product_qty
-            for ingrediente in ingredientes:
-                codprov = self.env['product.supplierinfo'].search(
+            if self.ing_limitante:
+                ncantidad_il = self.ing_limitante.product_qty
+                for ingrediente in ingredientes:
+                    codprov = self.env['product.supplierinfo'].search(
                         [('product_tmpl_id.id', '=', ingrediente.product_id.product_tmpl_id.id)], limit=1
                         ).product_name
 
-                vals.append({
+                    vals.append({
                         'componente': ingrediente.product_id.name,
                         'cod_prov': codprov,
                         'cant_comp': self.cant_limitante * (ingrediente.product_qty / ncantidad_il),
