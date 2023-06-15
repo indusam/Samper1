@@ -93,7 +93,9 @@ class Formulas(models.TransientModel):
         if self.consolidado:
             vals = []
             nsecuencia = self.env['ir.sequence'].next_by_code('formulas.consolidadas')
-
+            if self.ing_limitante:
+                self.cantidad = ncantidad_il
+                
             for ingrediente in ingredientes:
                 # verifica que el ingrediente se fabrique.
                 subf = 0
