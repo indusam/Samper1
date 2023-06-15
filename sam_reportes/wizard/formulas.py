@@ -95,7 +95,7 @@ class Formulas(models.TransientModel):
             nsecuencia = self.env['ir.sequence'].next_by_code('formulas.consolidadas')
             if self.ing_limitante:
                 self.cantidad = ncantidad_il
-                
+
             for ingrediente in ingredientes:
                 # verifica que el ingrediente se fabrique.
                 subf = 0
@@ -135,9 +135,9 @@ class Formulas(models.TransientModel):
                             else:
                                 norden = 4
 
-                            raise UserError(componente.product_id.name+' \n'+
-                                            'ncant_limitante: '+str(ncant_limitante)+' \n'+
-                                            'componente.x_porcentaje :'+ str(componente.x_porcentaje/100))
+                            #raise UserError(componente.product_id.name+' \n'+
+                            #                'ncant_limitante: '+str(ncant_limitante)+' \n'+
+                            #                'componente.x_porcentaje :'+ str(componente.x_porcentaje/100))
 
                             self.env['wizard.formulas'].create({
                                 'x_secuencia':nsecuencia,
