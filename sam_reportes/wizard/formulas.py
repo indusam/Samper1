@@ -133,7 +133,7 @@ class Formulas(models.TransientModel):
                 # verifica que el ingrediente se fabrique.
                 # las rutas pueden incluir comprar, fabricar, vender, etc.
                 subf = 0
-                if ingrediente.bom_count > 0:
+                if ingrediente.product_tmpl_id.bom_count > 0:
                     subf = 1
 
                 if subf == 1:
