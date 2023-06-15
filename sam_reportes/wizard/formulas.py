@@ -196,8 +196,6 @@ class Formulas(models.TransientModel):
                                   reverse=True)
             bom_ordenada1 = sorted(bom_ordenada, key=lambda l: l.x_orden, reverse=False)
 
-            raise UserError(bom_ordenada1)
-
             for ingrediente in bom_ordenada1:
                 if ingrediente.cant_tot > 0:
                     vals.append({
@@ -209,6 +207,7 @@ class Formulas(models.TransientModel):
                         'pct_categoria': ingrediente.pct_categoria
                     })
 
+        raise UserError(vals)
 
         data = {'ids': self.ids,
                 'model':self._name,
