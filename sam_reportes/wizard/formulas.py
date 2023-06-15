@@ -100,8 +100,6 @@ class Formulas(models.TransientModel):
                 if ingrediente.product_id.bom_count > 0:
                     subf = 1
 
-                raise UserError(ingrediente.product_id.name+' '+str(subf))
-
                 if subf == 1:
                     ncant_limitante = self.cantidad * (ingrediente.x_porcentaje / 100)
 
