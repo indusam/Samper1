@@ -95,11 +95,12 @@ class Formulas(models.TransientModel):
             nsecuencia = self.env['ir.sequence'].next_by_code('formulas.consolidadas')
 
             for ingrediente in ingredientes:
-                raise UserError('Si entra')
                 # verifica que el ingrediente se fabrique.
                 subf = 0
                 if ingrediente.product_tmpl_id.bom_count > 0:
                     subf = 1
+
+                raise UserError(ingrediente.name+' '+str(subf))
 
                 if subf == 1:
                     ncant_limitante = self.cantidad * (ingrediente.x_porcentaje / 100)
