@@ -133,8 +133,8 @@ class Formulas(models.TransientModel):
                             else:
                                 norden = 4
 
-                            raise UserError(componente.product_id.name+' /n'+
-                                            'ncant_limitante: '+str(ncant_limitante)+' /n'+
+                            raise UserError(componente.product_id.name+' \n'+
+                                            'ncant_limitante: '+str(ncant_limitante)+' \n'+
                                             'componente.x_porcentaje :'+ str(componente.x_porcentaje/100))
 
                             self.env['wizard.formulas'].create({
