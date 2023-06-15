@@ -109,8 +109,6 @@ class Formulas(models.TransientModel):
                     subformula = self.env['mrp.bom.line'].search([
                         ('bom_id.id', '=', bom_pf)])
 
-                    raise UserError(subformula)
-
                     if not subformula:
                         subf = 0
 
@@ -193,6 +191,9 @@ class Formulas(models.TransientModel):
                         ncomponente.write({'cant_tot': ncant_tot})
 
             bom_consolidada = self.env['wizard.formulas'].search([('x_secuencia','=',nsecuencia)])
+
+            raise UserError(bom_consolidada)
+
             bom_ordenada = sorted(bom_consolidada, key=lambda l: l.cant_tot,
                                   reverse=True)
             bom_ordenada1 = sorted(bom_ordenada, key=lambda l: l.x_orden, reverse=False)
