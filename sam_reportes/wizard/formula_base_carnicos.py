@@ -79,11 +79,11 @@ class FormulaBaseCarnicos(models.TransientModel):
                         [('product_tmpl_id.id', '=', ingrediente.product_id.product_tmpl_id.id)], limit=1
                     ).product_name
 
-                    if 'ca' in componente.product_id.default_code:
+                    if 'ca' in ingrediente.product_id.default_code:
                         norden = 1
-                    elif 'ad' in componente.product_id.default_code:
+                    elif 'ad' in ingrediente.product_id.default_code:
                         norden = 2
-                    elif 'in' in componente.product_id.default_code:
+                    elif 'in' in ingrediente.product_id.default_code:
                         norden = 3
                     else:
                         norden = 4
