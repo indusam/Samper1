@@ -36,7 +36,7 @@ class FormulaBaseCarnicos(models.TransientModel):
     pct_formula = fields.Float(string="% Fórmula", digits=(6, 2))
     pct_categoria = fields.Float(string="% Grupo", digits=(6, 2))
     pct_merma = fields.Float(string="% Merma", digits=(6, 2))
-    x_orden = fields.Integer(string="Orden", required=False, )
+    x_orden = fields.Char(string="Orden", required=False, )
 
 
 
@@ -80,11 +80,11 @@ class FormulaBaseCarnicos(models.TransientModel):
                     ).product_name
 
                     if 'ca' in ingrediente.product_id.default_code:
-                        norden = 1
+                        norden = '1 Cárnicos'
                     elif 'ad' in ingrediente.product_id.default_code:
-                        norden = 2
+                        norden = '2 Aditivos'
                     elif 'in' in ingrediente.product_id.default_code:
-                        norden = 3
+                        norden = '3 Intermedios'
                     else:
                         norden = 4
 
@@ -144,11 +144,11 @@ class FormulaBaseCarnicos(models.TransientModel):
 
                             norden = 0
                             if 'ca' in componente.product_id.default_code:
-                                norden = 1
+                                norden = '1 Cárnicos'
                             elif 'ad' in componente.product_id.default_code:
-                                norden = 2
+                                norden = '2 Aditivos'
                             elif 'in' in componente.product_id.default_code:
-                                norden = 3
+                                norden = '3 Intermedios'
                             else:
                                 norden = 4
 
