@@ -35,7 +35,7 @@ class Formulas(models.TransientModel):
     pct_formula = fields.Float(string="% Fórmula", digits=(6, 2))
     pct_categoria = fields.Float(string="% Grupo", digits=(6, 2))
     pct_merma = fields.Float(string="% Merma", digits=(6, 2))
-    x_orden = fields.Integer(string="Orden", required=False, )
+    x_orden = fields.Char(string="Orden", required=False, )
 
 
     # permite seleccionar el ingrediente limitante.
@@ -125,13 +125,12 @@ class Formulas(models.TransientModel):
                                   componente.product_id.product_tmpl_id.id)], limit=1
                             ).product_name
 
-                            norden = 0
-                            if 'ca' in componente.product_id.default_code:
-                                norden = 1
-                            elif 'ad' in componente.product_id.default_code:
-                                norden = 2
-                            elif 'in' in componente.product_id.default_code:
-                                norden = 3
+                            if 'ca' in ingrediente.product_id.default_code:
+                                norden = '1 Cárnicos'
+                            elif 'ad' in ingrediente.product_id.default_code:
+                                norden = '2 Aditivos'
+                            elif 'in' in ingrediente.product_id.default_code:
+                                norden = '3 Intermedios'
                             else:
                                 norden = 4
 
@@ -169,13 +168,12 @@ class Formulas(models.TransientModel):
                             [('product_tmpl_id.id', '=', ingrediente.product_id.product_tmpl_id.id)], limit=1
                         ).product_name
 
-                        norden = 0
                         if 'ca' in ingrediente.product_id.default_code:
-                            norden = 1
+                            norden = '1 Cárnicos'
                         elif 'ad' in ingrediente.product_id.default_code:
-                            norden = 2
+                            norden = '2 Aditivos'
                         elif 'in' in ingrediente.product_id.default_code:
-                            norden = 3
+                            norden = '3 Intermedios'
                         else:
                             norden = 4
 
@@ -205,6 +203,7 @@ class Formulas(models.TransientModel):
             for ingrediente in bom_ordenada1:
                 if ingrediente.cant_tot > 0:
                     vals.append({
+                        'orden': ingrediente.x_orden,
                         'componente': ingrediente.ingr.name,
                         'cod_prov': ingrediente.cod_prov,
                         'cant_comp': ingrediente.cant_tot,
