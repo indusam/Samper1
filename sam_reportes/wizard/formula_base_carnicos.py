@@ -203,6 +203,7 @@ class FormulaBaseCarnicos(models.TransientModel):
             for ingrediente in bom_ordenada1:
                 if ingrediente.cant_tot > 0:
                     vals.append({
+                        'x_orden': ingrediente.x_orden,
                         'componente': ingrediente.ingr.name,
                         'cod_prov': ingrediente.cod_prov,
                         'cant_comp': ingrediente.cant_tot,
