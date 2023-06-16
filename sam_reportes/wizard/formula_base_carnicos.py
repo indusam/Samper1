@@ -86,7 +86,7 @@ class FormulaBaseCarnicos(models.TransientModel):
                     elif 'in' in ingrediente.product_id.default_code:
                         norden = '3 Intermedios'
                     else:
-                        norden = 4
+                        norden = '4'
 
                     vals.append({
                         'componente': ingrediente.product_id.name,
@@ -146,7 +146,7 @@ class FormulaBaseCarnicos(models.TransientModel):
                             elif 'in' in ingrediente.product_id.default_code:
                                 norden = '3 Intermedios'
                             else:
-                                norden = 4
+                                norden = '4'
 
                             self.env['wizard.formulas'].create({
                                 'x_secuencia':nsecuencia,
@@ -182,7 +182,7 @@ class FormulaBaseCarnicos(models.TransientModel):
                         elif 'in' in ingrediente.product_id.default_code:
                             norden = '3 Intermedios'
                         else:
-                            norden = 4
+                            norden = '4'
 
                         self.env['wizard.formulas'].create({
                                     'x_secuencia':nsecuencia,

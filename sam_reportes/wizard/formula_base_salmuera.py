@@ -39,7 +39,6 @@ class FormulaBaseSalmuera(models.TransientModel):
     x_orden = fields.Char(string="Orden", required=False, )
 
 
-
     # imprime formula
     def imprime_formula_base_salmuera(self):
 
@@ -49,7 +48,6 @@ class FormulaBaseSalmuera(models.TransientModel):
         for ingrediente in ingredientes:
             if not 'CÁRNICOS' in ingrediente.product_id.categ_id.name:
                 total_salmuera += ingrediente.product_qty
-        
 
         if total_salmuera == 0:
             raise UserError('No hay ingredientes cárnicos en la fórmula')
@@ -86,7 +84,7 @@ class FormulaBaseSalmuera(models.TransientModel):
                     elif 'in' in ingrediente.product_id.default_code:
                         norden = '3 Intermedios'
                     else:
-                        norden = '4 Fórmulas'
+                        norden = '4'
 
                     vals.append({
                         'componente': ingrediente.product_id.name,
@@ -146,7 +144,7 @@ class FormulaBaseSalmuera(models.TransientModel):
                             elif 'in' in ingrediente.product_id.default_code:
                                 norden = '3 Intermedios'
                             else:
-                                norden = '4 Fórmulas'
+                                norden = '4'
 
                             self.env['wizard.formulas'].create({
                                 'x_secuencia':nsecuencia,
@@ -182,7 +180,7 @@ class FormulaBaseSalmuera(models.TransientModel):
                         elif 'in' in ingrediente.product_id.default_code:
                             norden = '3 Intermedios'
                         else:
-                            norden = '4 Fórmulas'
+                            norden = '4'
 
                         self.env['wizard.formulas'].create({
                                     'x_secuencia':nsecuencia,
@@ -208,6 +206,7 @@ class FormulaBaseSalmuera(models.TransientModel):
             for ingrediente in bom_ordenada1:
                 if ingrediente.cant_tot > 0:
                     vals.append({
+                        'orden': ingrediente.x_orden,
                         'componente': ingrediente.ingr.name,
                         'cod_prov': ingrediente.cod_prov,
                         'cant_comp': ingrediente.cant_tot,
