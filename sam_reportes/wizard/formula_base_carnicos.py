@@ -156,7 +156,7 @@ class FormulaBaseCarnicos(models.TransientModel):
                                 'unidad': componente.product_id.uom_id.name,
                                 'pct_formula': componente.x_porcentaje,
                                 'pct_categoria': componente.x_porcentaje_categoria,
-                                'orden': norden
+                                'x_orden': norden
                             })
 
                         if ncomponente:
@@ -192,7 +192,7 @@ class FormulaBaseCarnicos(models.TransientModel):
                                     'unidad': ingrediente.product_id.uom_id.name,
                                     'pct_formula': ingrediente.x_porcentaje,
                                     'pct_categoria': ingrediente.x_porcentaje_categoria,
-                                    'orden': norden
+                                    'x_orden': norden
                         })
 
                     if ncomponente:
