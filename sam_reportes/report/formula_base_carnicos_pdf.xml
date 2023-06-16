@@ -34,11 +34,11 @@
                                     </tr>
                                     <t t-set="tot_gral" t-value="0"/>
                                     <t t-set="pct_gral" t-value="0"/>
-                                    <t t-set="x_orden" t-value="[]"/>
+                                    <t t-set="orden" t-value="[]"/>
                                     <tr t-foreach="vals" t-as="l">
-                                        <t t-set="x_orden" t-value="x_orden + [l['x_orden']]"/>
+                                        <t t-set="orden" t-value="orden + [l['x_orden']]"/>
                                     </tr>
-                                    <t t-foreach="sorted(set(x_orden))" t-as="seccion">
+                                    <t t-foreach="sorted(set(orden))" t-as="seccion">
                                         <t t-set="tot_cantidad" t-value="0"/>
                                         <t t-set="tot_pct_form" t-value="0"/>
                                         <tr>
