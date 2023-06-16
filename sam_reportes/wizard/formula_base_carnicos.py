@@ -113,11 +113,8 @@ class FormulaBaseCarnicos(models.TransientModel):
                 # verifica que el ingrediente se fabrique.
                 # las rutas pueden incluir comprar, fabricar, vender, etc.
                 subf = 0
-                rutas = ingrediente.product_tmpl_id.route_ids
-                for ruta in rutas:
-                    if ruta.id == 5: # 5 == fabricar
-                        subf = 1
-                        break
+                if ingrediente.product_id.bom_count > 0:
+                    subf = 1
 
                 if subf == 1:
                     ncant_limitante = total_cantidad * (ingrediente.x_porcentaje / 100)
@@ -142,12 +139,11 @@ class FormulaBaseCarnicos(models.TransientModel):
                                   componente.product_id.product_tmpl_id.id)], limit=1
                             ).product_name
 
-                            norden = 0
-                            if 'ca' in componente.product_id.default_code:
+                            if 'ca' in ingrediente.product_id.default_code:
                                 norden = '1 Cárnicos'
-                            elif 'ad' in componente.product_id.default_code:
+                            elif 'ad' in ingrediente.product_id.default_code:
                                 norden = '2 Aditivos'
-                            elif 'in' in componente.product_id.default_code:
+                            elif 'in' in ingrediente.product_id.default_code:
                                 norden = '3 Intermedios'
                             else:
                                 norden = 4
@@ -160,7 +156,7 @@ class FormulaBaseCarnicos(models.TransientModel):
                                 'unidad': componente.product_id.uom_id.name,
                                 'pct_formula': componente.x_porcentaje,
                                 'pct_categoria': componente.x_porcentaje_categoria,
-                                'x_orden': norden
+                                'orden': norden
                             })
 
                         if ncomponente:
@@ -179,13 +175,12 @@ class FormulaBaseCarnicos(models.TransientModel):
                             [('product_tmpl_id.id', '=', ingrediente.product_id.product_tmpl_id.id)], limit=1
                         ).product_name
 
-                        #norden = 0
                         if 'ca' in ingrediente.product_id.default_code:
-                            norden = 1
+                            norden = '1 Cárnicos'
                         elif 'ad' in ingrediente.product_id.default_code:
-                            norden = 2
+                            norden = '2 Aditivos'
                         elif 'in' in ingrediente.product_id.default_code:
-                            norden = 3
+                            norden = '3 Intermedios'
                         else:
                             norden = 4
 
@@ -197,7 +192,7 @@ class FormulaBaseCarnicos(models.TransientModel):
                                     'unidad': ingrediente.product_id.uom_id.name,
                                     'pct_formula': ingrediente.x_porcentaje,
                                     'pct_categoria': ingrediente.x_porcentaje_categoria,
-                                    'x_orden': norden
+                                    'orden': norden
                         })
 
                     if ncomponente:
