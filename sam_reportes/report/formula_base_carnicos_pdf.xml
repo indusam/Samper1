@@ -38,7 +38,7 @@
                                     <tr t-foreach="vals" t-as="l">
                                         <t t-set="componente" t-value="componente + [l['componente']]"/>
                                     </tr>
-                                    <t t-foreach="sorted(set(orden))" t-as="seccion">
+                                    <t t-foreach="sorted(set(componente))" t-as="seccion">
                                         <t t-set="tot_cantidad" t-value="0"/>
                                         <t t-set="tot_pct_form" t-value="0"/>
                                         <tr>
