@@ -34,11 +34,11 @@
                                     </tr>
                                     <t t-set="tot_gral" t-value="0"/>
                                     <t t-set="pct_gral" t-value="0"/>
-                                    <t t-set="componente" t-value="[]"/>
+                                    <t t-set="orden1" t-value="[]"/>
                                     <tr t-foreach="vals" t-as="l">
-                                        <t t-set="componente" t-value="componente + [l['componente']]"/>
+                                        <t t-set="orden1" t-value="orden1 + [l['orden']]"/>
                                     </tr>
-                                    <t t-foreach="sorted(set(componente))" t-as="seccion">
+                                    <t t-foreach="sorted(set(orden1))" t-as="seccion">
                                         <t t-set="tot_cantidad" t-value="0"/>
                                         <t t-set="tot_pct_form" t-value="0"/>
                                         <tr>
@@ -46,7 +46,7 @@
                                                 <strong t-esc="seccion"/>
                                             </th>
                                             <tr t-foreach="vals" t-as="table_line">
-                                                <t t-if="table_line['x_orden'] == seccion">
+                                                <t t-if="table_line['orden'] == seccion">
                                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:9px;vertical-align:middle; padding:2px">
                                                         <t t-esc="table_line['componente']"/>
                                                     </td>
