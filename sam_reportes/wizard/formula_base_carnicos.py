@@ -79,13 +79,23 @@ class FormulaBaseCarnicos(models.TransientModel):
                         [('product_tmpl_id.id', '=', ingrediente.product_id.product_tmpl_id.id)], limit=1
                     ).product_name
 
+                    if 'ca' in componente.product_id.default_code:
+                        norden = 1
+                    elif 'ad' in componente.product_id.default_code:
+                        norden = 2
+                    elif 'in' in componente.product_id.default_code:
+                        norden = 3
+                    else:
+                        norden = 4
+
                     vals.append({
                         'componente': ingrediente.product_id.name,
                         'cod_prov': codprov,
                         'cant_comp': self.cant_limitante * (ingrediente.product_qty / ncantidad_il),
                         'unidad': ingrediente.product_id.uom_id.name,
                         'pct_formula': ingrediente.x_porcentaje,
-                        'pct_categoria': ingrediente.x_porcentaje_categoria
+                        'pct_categoria': ingrediente.x_porcentaje_categoria,
+                        'orden': norden
                         })
 
         # Se consolida la fórmula.
@@ -169,7 +179,7 @@ class FormulaBaseCarnicos(models.TransientModel):
                             [('product_tmpl_id.id', '=', ingrediente.product_id.product_tmpl_id.id)], limit=1
                         ).product_name
 
-                        norden = 0
+                        #norden = 0
                         if 'ca' in ingrediente.product_id.default_code:
                             norden = 1
                         elif 'ad' in ingrediente.product_id.default_code:
