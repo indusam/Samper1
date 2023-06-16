@@ -182,7 +182,7 @@ class FormulaBaseSalmuera(models.TransientModel):
                         else:
                             norden = '4'
 
-                        self.env['wizard.formulas'].create({
+                        self.env['wizard.formula.base.salmuera'].create({
                                     'x_secuencia':nsecuencia,
                                     'ingr': ingrediente.product_id.id,
                                     'cod_prov': codprov,
