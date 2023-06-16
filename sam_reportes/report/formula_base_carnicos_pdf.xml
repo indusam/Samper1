@@ -34,9 +34,9 @@
                                     </tr>
                                     <t t-set="tot_gral" t-value="0"/>
                                     <t t-set="pct_gral" t-value="0"/>
-                                    <t t-set="orden" t-value="[]"/>
+                                    <t t-set="componente" t-value="[]"/>
                                     <tr t-foreach="vals" t-as="l">
-                                        <t t-set="orden" t-value="orden + [l['orden']]"/>
+                                        <t t-set="componente" t-value="componente + [l['componente']]"/>
                                     </tr>
                                     <t t-foreach="sorted(set(orden))" t-as="seccion">
                                         <t t-set="tot_cantidad" t-value="0"/>

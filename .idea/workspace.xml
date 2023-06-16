@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="78e11fc7-3e95-436a-9f7c-dadb3685aab0" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/sam_reportes/wizard/formula_base_carnicos.py" beforeDir="false" afterPath="$PROJECT_DIR$/sam_reportes/wizard/formula_base_carnicos.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sam_reportes/report/formula_base_carnicos_pdf.xml" beforeDir="false" afterPath="$PROJECT_DIR$/sam_reportes/report/formula_base_carnicos_pdf.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
