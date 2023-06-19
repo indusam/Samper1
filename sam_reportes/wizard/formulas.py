@@ -35,8 +35,8 @@ class Formulas(models.TransientModel):
     pct_formula = fields.Float(string="% Fórmula", digits=(6, 2))
     pct_categoria = fields.Float(string="% Grupo", digits=(6, 2))
     pct_merma = fields.Float(string="% Merma", digits=(6, 2))
-    #x_orden = fields.Char(string="Orden", required=False, )
-    ordenar_por = fields.Char(string="Orden por", required=False, )
+    x_orden = fields.Int(string="Orden", required=False, )
+
 
     # permite seleccionar el ingrediente limitante.
     @api.onchange('producto')
@@ -126,13 +126,16 @@ class Formulas(models.TransientModel):
                             ).product_name
 
                             if 'ca' in ingrediente.product_id.default_code:
-                                corden = '1 Cárnicos'
+                                norden = 1
+                                #norden = '1 Cárnicos'
                             elif 'ad' in ingrediente.product_id.default_code:
-                                corden = '2 Aditivos'
+                                norden = 2
+                                #norden = '2 Aditivos'
                             elif 'in' in ingrediente.product_id.default_code:
-                                corden = '3 Intermedios'
+                                norden = 3
+                                #norden = '3 Intermedios'
                             else:
-                                corden = '4'
+                                norden = 4
 
                             #raise UserError(componente.product_id.name+' \n'+
                             #                'ncant_limitante: '+str(ncant_limitante)+' \n'+
@@ -146,7 +149,7 @@ class Formulas(models.TransientModel):
                                 'unidad': componente.product_id.uom_id.name,
                                 'pct_formula': componente.x_porcentaje,
                                 'pct_categoria': componente.x_porcentaje_categoria,
-                                'ordenar_por': corden
+                                'x_orden': norden
                             })
 
                         if ncomponente:
@@ -169,13 +172,16 @@ class Formulas(models.TransientModel):
                         ).product_name
 
                         if 'ca' in ingrediente.product_id.default_code:
-                            corden = '1 Cárnicos'
+                            norden = 1
+                            # norden = '1 Cárnicos'
                         elif 'ad' in ingrediente.product_id.default_code:
-                            corden = '2 Aditivos'
+                            norden = 2
+                            # norden = '2 Aditivos'
                         elif 'in' in ingrediente.product_id.default_code:
-                            corden = '3 Intermedios'
+                            norden = 3
+                            # norden = '3 Intermedios'
                         else:
-                            corden = '4'
+                            norden = 4
 
 
                         self.env['wizard.formulas'].create({
@@ -186,7 +192,7 @@ class Formulas(models.TransientModel):
                                     'unidad': ingrediente.product_id.uom_id.name,
                                     'pct_formula': ingrediente.x_porcentaje,
                                     'pct_categoria': ingrediente.x_porcentaje_categoria,
-                                    'ordenar_por': corden
+                                    'x_orden': norden
                         })
 
                     if ncomponente:
@@ -199,12 +205,12 @@ class Formulas(models.TransientModel):
 
             bom_ordenada = sorted(bom_consolidada, key=lambda l: l.cant_tot,
                                   reverse=True)
-            bom_ordenada1 = sorted(bom_ordenada, key=lambda l: l.ordenar_por, reverse=False)
+            bom_ordenada1 = sorted(bom_ordenada, key=lambda l: l.x_orden, reverse=False)
 
             for ingrediente in bom_ordenada1:
                 if ingrediente.cant_tot > 0:
                     vals.append({
-                        'orden': ingrediente.ordenar_por,
+                        'orden': ingrediente.x_orden,
                         'componente': ingrediente.ingr.name,
                         'cod_prov': ingrediente.cod_prov,
                         'cant_comp': ingrediente.cant_tot,
