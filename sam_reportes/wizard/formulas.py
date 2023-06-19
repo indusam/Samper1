@@ -177,6 +177,8 @@ class Formulas(models.TransientModel):
                         else:
                             norden = '4'
 
+                        raise UserError(norden)
+
                         self.env['wizard.formulas'].create({
                                     'x_secuencia':nsecuencia,
                                     'ingr': ingrediente.product_id.id,
