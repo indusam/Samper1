@@ -35,8 +35,8 @@ class Formulas(models.TransientModel):
     pct_formula = fields.Float(string="% Fórmula", digits=(6, 2))
     pct_categoria = fields.Float(string="% Grupo", digits=(6, 2))
     pct_merma = fields.Float(string="% Merma", digits=(6, 2))
-    x_orden = fields.Char(string="Orden", required=False, )
-
+    #x_orden = fields.Char(string="Orden", required=False, )
+    ordenar_por = fields.Char(string="Orden por", required=False, )
 
     # permite seleccionar el ingrediente limitante.
     @api.onchange('producto')
@@ -146,7 +146,7 @@ class Formulas(models.TransientModel):
                                 'unidad': componente.product_id.uom_id.name,
                                 'pct_formula': componente.x_porcentaje,
                                 'pct_categoria': componente.x_porcentaje_categoria,
-                                'x_orden': corden
+                                'ordenar_por': corden
                             })
 
                         if ncomponente:
@@ -186,7 +186,7 @@ class Formulas(models.TransientModel):
                                     'unidad': ingrediente.product_id.uom_id.name,
                                     'pct_formula': ingrediente.x_porcentaje,
                                     'pct_categoria': ingrediente.x_porcentaje_categoria,
-                                    'x_orden': corden
+                                    'ordenar_por': corden
                         })
 
                     if ncomponente:
@@ -199,12 +199,12 @@ class Formulas(models.TransientModel):
 
             bom_ordenada = sorted(bom_consolidada, key=lambda l: l.cant_tot,
                                   reverse=True)
-            bom_ordenada1 = sorted(bom_ordenada, key=lambda l: l.x_orden, reverse=False)
+            bom_ordenada1 = sorted(bom_ordenada, key=lambda l: l.ordenar_por, reverse=False)
 
             for ingrediente in bom_ordenada1:
                 if ingrediente.cant_tot > 0:
                     vals.append({
-                        'orden': ingrediente.x_orden,
+                        'orden': ingrediente.ordenar_por,
                         'componente': ingrediente.ingr.name,
                         'cod_prov': ingrediente.cod_prov,
                         'cant_comp': ingrediente.cant_tot,
