@@ -4,81 +4,95 @@
         <t t-call="web.html_container">
             <t t-call="web.external_layout">
                 <div class="page">
-                    <br/>
                     <div style="text-align:left;color:black!important;">
-                        <strong>
-                            <t t-if="cantidad > 0">
-                                <h5>
-                                    Fórmula base cárnicos:   <span t-esc="codigo"/> - <span t-esc="producto"/>
-                                    <br/>
-                                    Cantidad limitante: <span t-esc="cant_limitante"/> kgs.
-                                </h5>
-                            </t>
-                        </strong>
+                        <div class="row">
+                            <div class="col">
+                                <table width="100%">
+                                    <tr>
+                                        <th class="table-active" colspan="8" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:14px;vertical-align:middle; padding:2px">
+                                          <strong>Fórmula base cárnicos: </strong> <span t-esc="codigo"/> - <span t-esc="producto"/>
+                                          <br/>
+                                          <strong>Cantidad limitante: </strong> <span t-esc="cant_limitante"/> Kgs.
+                                        </th>
+                                    </tr>
+                                     <tr>
+                                        <td class="table-active" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px">
+                                          <strong>Ingrediente</strong>
+                                        </td>
+                                        <td class="table-active" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px">
+                                          <strong>Código</strong>
+                                        </td>
+                                        <td class="table-active" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px">
+                                          <strong>Cantidad</strong>
+                                        </td>
+                                        <td width="18" class="table-active" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px">
+                                          <strong>Unidad</strong>
+                                        </td>
+                                        <td width="15" class="table-active" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px">
+                                          <strong>% Fórmula</strong>
+                                        </td>
+                                    </tr>
+                                    <t t-set="tot_gral" t-value="0"/>
+                                    <t t-set="pct_gral" t-value="0"/>
+                                    <t t-set="orden1" t-value="[]"/>
+                                    <tr t-foreach="vals" t-as="l">
+                                        <t t-set="orden1" t-value="orden1 + [l['orden']]"/>
+                                    </tr>
+                                    <t t-foreach="sorted(set(orden1))" t-as="seccion">
+                                        <t t-set="tot_cantidad" t-value="0"/>
+                                        <t t-set="tot_pct_form" t-value="0"/>
+                                        <tr>
+                                            <th class="table-secondary" colspan="6" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:10px;vertical-align:middle; padding:2px">
+                                                <strong t-esc="seccion"/>
+                                            </th>
+                                            <tr t-foreach="vals" t-as="table_line">
+                                                <t t-if="table_line['orden'] == seccion">
+                                                    <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:9px;vertical-align:middle; padding:2px">
+                                                        <t t-esc="table_line['componente']"/>
+                                                    </td>
+                                                    <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:9px;vertical-align:middle; padding:2px">
+                                                        <t t-esc="table_line['cod_prov']"/>
+                                                    </td>
+                                                    <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:9px;vertical-align:middle; padding:2px" align="right">
+                                                        <t t-esc="'{0:,.4f}'.format(table_line['cant_comp'])"/>
+                                                        <t t-set="tot_cantidad" t-value="tot_cantidad + table_line['cant_comp']"/>
+                                                        <t t-set="tot_gral" t-value="tot_gral + table_line['cant_comp']"/>
+                                                    </td>
+                                                    <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:9px;vertical-align:middle; padding:2px" >
+                                                        <t t-esc="table_line['unidad']"/>
+                                                    </td>
+                                                    <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:9px;vertical-align:middle; padding:2px" align="right">
+                                                        <t t-esc="'{0:,.4f}'.format(table_line['pct_formula'])"/>
+                                                        <t t-set="tot_pct_form" t-value="tot_pct_form + table_line['pct_formula']"/>
+                                                        <t t-set="pct_gral" t-value="pct_gral + table_line['pct_formula']"/>
+                                                    </td>
+                                                </t>
+                                            </tr>
+                                        </tr>
+                                        <tr>
+                                            <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:9px;vertical-align:middle; padding:2px"/>
+                                            <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:9px;vertical-align:middle; padding:2px"/>
+                                            <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:9px;vertical-align:middle;" align="right"><strong t-esc="'{0:,.4f}'.format(tot_cantidad)"/></td>
+                                            <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:9px;vertical-align:middle; padding:2px"/>
+                                            <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:9px;vertical-align:middle;" align="right"><strong t-esc="'{0:,.4f}'.format(tot_pct_form)"/></td>
+                                        </tr>
+                                    </t>
+                                     <tr>
+                                         <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:9px;vertical-align:middle; padding:2px"/>
+                                         <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:9px;vertical-align:middle; padding:2px"/>
+                                         <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:9px;vertical-align:middle;" align="right"><strong t-esc="'{0:,.4f}'.format(tot_gral)"/></td>
+                                         <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:9px;vertical-align:middle; padding:2px"/>
+                                         <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:9px;vertical-align:middle;" align="right"><strong t-esc="'{0:,.4f}'.format(pct_gral)"/></td>
+                                     </tr>
+                                </table>
+                            </div>
+                        </div>
                     </div>
-                    <br/>
-                    <table class="table table-condensed">
-                        <thead>
-                            <tr >
-                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Ingrediente</th>
-                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Código</th>
-                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Cantidad</th>
-                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Unidad</th>
-                                <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px;">% Fórmula</th>
-                                <!-- <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px;">% Grupo</th> -->
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- declara totales -->
-                            <t t-set="tot_cantidad" t-value="0"/>
-                            <t t-set="tot_pct_formula" t-value="0"/>
-
-                            <t t-foreach="vals" t-as="line">
-                                <tr>
-                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="line['componente']"/>
-                                    </td>
-                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="line['cod_prov']"/>
-                                    </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.4f}'.format(line['cant_comp'])"/>
-                                    </td>
-                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="line['unidad']"/>
-                                    </td>
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.4f}'.format(line['pct_formula'])"/>
-                                    </td>
-                                    <!--
-                                    <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                        <t t-esc="'{0:,.2f}'.format(line['pct_categoria'])"/>
-                                    </td>
-                                    -->
-                                    <!-- Suma totales -->
-                                    <t t-set="tot_cantidad" t-value="tot_cantidad + line['cant_comp']"/>
-                                    <t t-set="tot_pct_formula" t-value="tot_pct_formula + line['pct_formula']"/>
-                                </tr>
-                            </t>
-                            <!-- Imprime Totales -->
-                            <tr>
-                                <th style="text-align:left;color:black!important;">        </th>
-                                <th style="text-align:left;color:black!important;">        </th>
-                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_cantidad)"/>
-                                </th>
-                                <th style="text-align:left;color:black!important;">        </th>
-                                <th style="text-align:right;color:black!important;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                    <span t-att-style="style" t-esc="'{0:,.4f}'.format(tot_pct_formula)"/>
-                                </th>
-                            </tr>
-
-                        </tbody>
-                    </table>
                 </div>
             </t>
         </t>
     </template>
+
     <record id="paperformat_custom_tabla_nutrimental_report" model="report.paperformat">
         <field name="name">Tabla Nutrimental Report</field>
         <field name="default" eval="False"/>

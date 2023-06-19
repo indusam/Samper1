@@ -36,8 +36,7 @@ class FormulaBaseSalmuera(models.TransientModel):
     pct_formula = fields.Float(string="% Fórmula", digits=(6, 2))
     pct_categoria = fields.Float(string="% Grupo", digits=(6, 2))
     pct_merma = fields.Float(string="% Merma", digits=(6, 2))
-    x_orden = fields.Integer(string="Orden", required=False, )
-
+    x_orden = fields.Char(string="Orden", required=False, )
 
 
     # imprime formula
@@ -49,7 +48,6 @@ class FormulaBaseSalmuera(models.TransientModel):
         for ingrediente in ingredientes:
             if not 'CÁRNICOS' in ingrediente.product_id.categ_id.name:
                 total_salmuera += ingrediente.product_qty
-        
 
         if total_salmuera == 0:
             raise UserError('No hay ingredientes cárnicos en la fórmula')
@@ -79,13 +77,23 @@ class FormulaBaseSalmuera(models.TransientModel):
                         [('product_tmpl_id.id', '=', ingrediente.product_id.product_tmpl_id.id)], limit=1
                     ).product_name
 
+                    if 'ca' in ingrediente.product_id.default_code:
+                        norden = '1 Cárnicos'
+                    elif 'ad' in ingrediente.product_id.default_code:
+                        norden = '2 Aditivos'
+                    elif 'in' in ingrediente.product_id.default_code:
+                        norden = '3 Intermedios'
+                    else:
+                        norden = '4'
+
                     vals.append({
                         'componente': ingrediente.product_id.name,
                         'cod_prov': codprov,
                         'cant_comp': self.cant_limitante * (ingrediente.product_qty / ncantidad_il),
                         'unidad': ingrediente.product_id.uom_id.name,
                         'pct_formula': ingrediente.x_porcentaje,
-                        'pct_categoria': ingrediente.x_porcentaje_categoria
+                        'pct_categoria': ingrediente.x_porcentaje_categoria,
+                        'orden': norden
                         })
 
         # Se consolida la fórmula.
@@ -103,11 +111,8 @@ class FormulaBaseSalmuera(models.TransientModel):
                 # verifica que el ingrediente se fabrique.
                 # las rutas pueden incluir comprar, fabricar, vender, etc.
                 subf = 0
-                rutas = ingrediente.product_tmpl_id.route_ids
-                for ruta in rutas:
-                    if ruta.id == 5: # 5 == fabricar
-                        subf = 1
-                        break
+                if ingrediente.product_id.bom_count > 0:
+                    subf = 1
 
                 if subf == 1:
                     ncant_limitante = total_cantidad * (ingrediente.x_porcentaje / 100)
@@ -122,7 +127,7 @@ class FormulaBaseSalmuera(models.TransientModel):
                         subf = 0
 
                     for componente in subformula:
-                        ncomponente = self.env['wizard.formulas'].search(
+                        ncomponente = self.env['wizard.formula.base.salmuera'].search(
                                 [('ingr.id','=', componente.product_id.id),
                                  ('x_secuencia','=',nsecuencia)])
 
@@ -132,17 +137,16 @@ class FormulaBaseSalmuera(models.TransientModel):
                                   componente.product_id.product_tmpl_id.id)], limit=1
                             ).product_name
 
-                            norden = 0
-                            if 'ca' in componente.product_id.default_code:
-                                norden = 1
-                            elif 'ad' in componente.product_id.default_code:
-                                norden = 2
-                            elif 'in' in componente.product_id.default_code:
-                                norden = 3
+                            if 'ca' in ingrediente.product_id.default_code:
+                                norden = '1 Cárnicos'
+                            elif 'ad' in ingrediente.product_id.default_code:
+                                norden = '2 Aditivos'
+                            elif 'in' in ingrediente.product_id.default_code:
+                                norden = '3 Intermedios'
                             else:
-                                norden = 4
+                                norden = '4'
 
-                            self.env['wizard.formulas'].create({
+                            self.env['wizard.formula.base.salmuera'].create({
                                 'x_secuencia':nsecuencia,
                                 'ingr': componente.product_id.id,
                                 'cod_prov': codprov,
@@ -160,7 +164,7 @@ class FormulaBaseSalmuera(models.TransientModel):
                 if subf == 0:
                     ncant_limitante = total_cantidad * (ingrediente.x_porcentaje / 100)
 
-                    ncomponente = self.env['wizard.formulas'].search(
+                    ncomponente = self.env['wizard.formula.base.salmuera'].search(
                         [('ingr.id', '=', ingrediente.product_id.id),
                          ('x_secuencia', '=', nsecuencia)])
 
@@ -169,17 +173,16 @@ class FormulaBaseSalmuera(models.TransientModel):
                             [('product_tmpl_id.id', '=', ingrediente.product_id.product_tmpl_id.id)], limit=1
                         ).product_name
 
-                        norden = 0
                         if 'ca' in ingrediente.product_id.default_code:
-                            norden = 1
+                            norden = '1 Cárnicos'
                         elif 'ad' in ingrediente.product_id.default_code:
-                            norden = 2
+                            norden = '2 Aditivos'
                         elif 'in' in ingrediente.product_id.default_code:
-                            norden = 3
+                            norden = '3 Intermedios'
                         else:
-                            norden = 4
+                            norden = '4'
 
-                        self.env['wizard.formulas'].create({
+                        self.env['wizard.formula.base.salmuera'].create({
                                     'x_secuencia':nsecuencia,
                                     'ingr': ingrediente.product_id.id,
                                     'cod_prov': codprov,
@@ -196,13 +199,14 @@ class FormulaBaseSalmuera(models.TransientModel):
                         ncant_tot = ncant + nccomp
                         ncomponente.write({'cant_tot': ncant_tot})
 
-            bom_consolidada = self.env['wizard.formulas'].search([('x_secuencia','=',nsecuencia)])
+            bom_consolidada = self.env['wizard.formula.base.salmuera'].search([('x_secuencia','=',nsecuencia)])
             bom_ordenada = sorted(bom_consolidada, key=lambda l: l.cant_tot,
                                   reverse=True)
             bom_ordenada1 = sorted(bom_ordenada, key=lambda l: l.x_orden, reverse=False)
             for ingrediente in bom_ordenada1:
                 if ingrediente.cant_tot > 0:
                     vals.append({
+                        'orden': ingrediente.x_orden,
                         'componente': ingrediente.ingr.name,
                         'cod_prov': ingrediente.cod_prov,
                         'cant_comp': ingrediente.cant_tot,

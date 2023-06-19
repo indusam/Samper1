@@ -47,6 +47,7 @@ class Formulas(models.TransientModel):
             return {'domain': {'ing_limitante':
                                    [('bom_id', '=', nlista)]}}
 
+
     # imprime formula
     def imprime_formula(self):
 
@@ -54,31 +55,32 @@ class Formulas(models.TransientModel):
         ingredientes = self.env['mrp.bom.line'].search(
                         [('bom_id.id', '=', self.producto.id)])
 
-        if not self.consolidado:
+        # no se consolida la fórmula
+        #if not self.consolidado:
 
-            if not self.ing_limitante:
-                for ingrediente in ingredientes:
-                    codprov = self.env['product.supplierinfo'].search(
+        if not self.ing_limitante:
+            for ingrediente in ingredientes:
+                codprov = self.env['product.supplierinfo'].search(
                         [('product_tmpl_id.id','=',ingrediente.product_id.product_tmpl_id.id)], limit=1
-                    ).product_name
+                        ).product_name
 
-                    vals.append({
+                vals.append({
                         'componente': ingrediente.product_id.name,
                         'cod_prov': codprov,
                         'cant_comp': self.cantidad * (ingrediente.x_porcentaje / 100),
                         'unidad': ingrediente.product_id.uom_id.name,
                         'pct_formula': ingrediente.x_porcentaje,
                         'pct_categoria': ingrediente.x_porcentaje_categoria
-                    })
+                        })
 
-            if self.ing_limitante:
-                ncantidad_il = self.ing_limitante.product_qty
-                for ingrediente in ingredientes:
-                    codprov = self.env['product.supplierinfo'].search(
+        if self.ing_limitante:
+            ncantidad_il = self.ing_limitante.product_qty
+            for ingrediente in ingredientes:
+                codprov = self.env['product.supplierinfo'].search(
                         [('product_tmpl_id.id', '=', ingrediente.product_id.product_tmpl_id.id)], limit=1
-                    ).product_name
+                        ).product_name
 
-                    vals.append({
+                vals.append({
                         'componente': ingrediente.product_id.name,
                         'cod_prov': codprov,
                         'cant_comp': self.cant_limitante * (ingrediente.product_qty / ncantidad_il),
@@ -89,23 +91,22 @@ class Formulas(models.TransientModel):
 
         # Se consolida la fórmula.
         if self.consolidado:
+            vals = []
             nsecuencia = self.env['ir.sequence'].next_by_code('formulas.consolidadas')
+            if self.ing_limitante:
+                self.cantidad = ncantidad_il
 
             for ingrediente in ingredientes:
                 # verifica que el ingrediente se fabrique.
-                # las rutas pueden incluir comprar, fabricar, vender, etc.
                 subf = 0
-                rutas = ingrediente.product_tmpl_id.route_ids
-                for ruta in rutas:
-                    if ruta.name == 'Fabricar': # 5 == fabricar
-                        subf = 1
-                        break
+                if ingrediente.product_id.bom_count > 0:
+                    subf = 1
 
                 if subf == 1:
                     ncant_limitante = self.cantidad * (ingrediente.x_porcentaje / 100)
 
                     bom_pf = self.env['mrp.bom'].search([(
-                        'product_tmpl_id','=',ingrediente.product_tmpl_id.id)]).id
+                        'product_tmpl_id','=',ingrediente.product_tmpl_id.id)], limit=1).id
 
                     subformula = self.env['mrp.bom.line'].search([
                         ('bom_id.id', '=', bom_pf)])
@@ -124,15 +125,21 @@ class Formulas(models.TransientModel):
                                   componente.product_id.product_tmpl_id.id)], limit=1
                             ).product_name
 
-                            norden = 0
-                            if 'ca' in componente.product_id.default_code:
+                            if 'ca' in ingrediente.product_id.default_code:
                                 norden = 1
-                            elif 'ad' in componente.product_id.default_code:
+                                #norden = '1 Cárnicos'
+                            elif 'ad' in ingrediente.product_id.default_code:
                                 norden = 2
-                            elif 'in' in componente.product_id.default_code:
+                                #norden = '2 Aditivos'
+                            elif 'in' in ingrediente.product_id.default_code:
                                 norden = 3
+                                #norden = '3 Intermedios'
                             else:
                                 norden = 4
+
+                            #raise UserError(componente.product_id.name+' \n'+
+                            #                'ncant_limitante: '+str(ncant_limitante)+' \n'+
+                            #                'componente.x_porcentaje :'+ str(componente.x_porcentaje/100))
 
                             self.env['wizard.formulas'].create({
                                 'x_secuencia':nsecuencia,
@@ -164,15 +171,18 @@ class Formulas(models.TransientModel):
                             [('product_tmpl_id.id', '=', ingrediente.product_id.product_tmpl_id.id)], limit=1
                         ).product_name
 
-                        norden = 0
                         if 'ca' in ingrediente.product_id.default_code:
                             norden = 1
+                            # norden = '1 Cárnicos'
                         elif 'ad' in ingrediente.product_id.default_code:
                             norden = 2
+                            # norden = '2 Aditivos'
                         elif 'in' in ingrediente.product_id.default_code:
                             norden = 3
+                            # norden = '3 Intermedios'
                         else:
                             norden = 4
+
 
                         self.env['wizard.formulas'].create({
                                     'x_secuencia':nsecuencia,
@@ -192,12 +202,15 @@ class Formulas(models.TransientModel):
                         ncomponente.write({'cant_tot': ncant_tot})
 
             bom_consolidada = self.env['wizard.formulas'].search([('x_secuencia','=',nsecuencia)])
+
             bom_ordenada = sorted(bom_consolidada, key=lambda l: l.cant_tot,
                                   reverse=True)
             bom_ordenada1 = sorted(bom_ordenada, key=lambda l: l.x_orden, reverse=False)
+
             for ingrediente in bom_ordenada1:
                 if ingrediente.cant_tot > 0:
                     vals.append({
+                        'orden': ingrediente.x_orden,
                         'componente': ingrediente.ingr.name,
                         'cod_prov': ingrediente.cod_prov,
                         'cant_comp': ingrediente.cant_tot,
@@ -205,7 +218,6 @@ class Formulas(models.TransientModel):
                         'pct_formula': (ingrediente.cant_tot / self.cantidad) * 100 ,
                         'pct_categoria': ingrediente.pct_categoria
                     })
-
 
         data = {'ids': self.ids,
                 'model':self._name,
