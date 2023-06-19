@@ -132,7 +132,7 @@ class Formulas(models.TransientModel):
                             elif 'in' in ingrediente.product_id.default_code:
                                 norden = '3 Intermedios'
                             else:
-                                norden = 4
+                                norden = '4'
 
                             #raise UserError(componente.product_id.name+' \n'+
                             #                'ncant_limitante: '+str(ncant_limitante)+' \n'+
@@ -175,7 +175,7 @@ class Formulas(models.TransientModel):
                         elif 'in' in ingrediente.product_id.default_code:
                             norden = '3 Intermedios'
                         else:
-                            norden = 4
+                            norden = '4'
 
                         self.env['wizard.formulas'].create({
                                     'x_secuencia':nsecuencia,
