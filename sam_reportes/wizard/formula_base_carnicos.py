@@ -129,7 +129,7 @@ class FormulaBaseCarnicos(models.TransientModel):
                         subf = 0
 
                     for componente in subformula:
-                        ncomponente = self.env['wizard.formulas'].search(
+                        ncomponente = self.env['wizard.formula.base.carnicos'].search(
                                 [('ingr.id','=', componente.product_id.id),
                                  ('x_secuencia','=',nsecuencia)])
 
@@ -184,7 +184,7 @@ class FormulaBaseCarnicos(models.TransientModel):
                         else:
                             norden = '4'
 
-                        self.env['wizard.formulas'].create({
+                        self.env['wizard.formula.base.carnicos'].create({
                                     'x_secuencia':nsecuencia,
                                     'ingr': ingrediente.product_id.id,
                                     'cod_prov': codprov,
@@ -201,7 +201,7 @@ class FormulaBaseCarnicos(models.TransientModel):
                         ncant_tot = ncant + nccomp
                         ncomponente.write({'cant_tot': ncant_tot})
 
-            bom_consolidada = self.env['wizard.formulas'].search([('x_secuencia','=',nsecuencia)])
+            bom_consolidada = self.env['wizard.formula.base.carnicos'].search([('x_secuencia','=',nsecuencia)])
             bom_ordenada = sorted(bom_consolidada, key=lambda l: l.cant_tot,
                                   reverse=True)
             bom_ordenada1 = sorted(bom_ordenada, key=lambda l: l.x_orden, reverse=False)

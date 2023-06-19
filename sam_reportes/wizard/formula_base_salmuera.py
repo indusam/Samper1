@@ -127,7 +127,7 @@ class FormulaBaseSalmuera(models.TransientModel):
                         subf = 0
 
                     for componente in subformula:
-                        ncomponente = self.env['wizard.formulas'].search(
+                        ncomponente = self.env['wizard.formula.base.salmuera'].search(
                                 [('ingr.id','=', componente.product_id.id),
                                  ('x_secuencia','=',nsecuencia)])
 
@@ -164,7 +164,7 @@ class FormulaBaseSalmuera(models.TransientModel):
                 if subf == 0:
                     ncant_limitante = total_cantidad * (ingrediente.x_porcentaje / 100)
 
-                    ncomponente = self.env['wizard.formulas'].search(
+                    ncomponente = self.env['wizard.formula.base.salmuera'].search(
                         [('ingr.id', '=', ingrediente.product_id.id),
                          ('x_secuencia', '=', nsecuencia)])
 
@@ -199,7 +199,7 @@ class FormulaBaseSalmuera(models.TransientModel):
                         ncant_tot = ncant + nccomp
                         ncomponente.write({'cant_tot': ncant_tot})
 
-            bom_consolidada = self.env['wizard.formulas'].search([('x_secuencia','=',nsecuencia)])
+            bom_consolidada = self.env['wizard.formula.base.salmuera'].search([('x_secuencia','=',nsecuencia)])
             bom_ordenada = sorted(bom_consolidada, key=lambda l: l.cant_tot,
                                   reverse=True)
             bom_ordenada1 = sorted(bom_ordenada, key=lambda l: l.x_orden, reverse=False)
