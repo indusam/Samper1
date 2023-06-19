@@ -126,13 +126,13 @@ class Formulas(models.TransientModel):
                             ).product_name
 
                             if 'ca' in ingrediente.product_id.default_code:
-                                norden = '1 Cárnicos'
+                                corden = '1 Cárnicos'
                             elif 'ad' in ingrediente.product_id.default_code:
-                                norden = '2 Aditivos'
+                                corden = '2 Aditivos'
                             elif 'in' in ingrediente.product_id.default_code:
-                                norden = '3 Intermedios'
+                                corden = '3 Intermedios'
                             else:
-                                norden = '4'
+                                corden = '4'
 
                             #raise UserError(componente.product_id.name+' \n'+
                             #                'ncant_limitante: '+str(ncant_limitante)+' \n'+
@@ -146,7 +146,7 @@ class Formulas(models.TransientModel):
                                 'unidad': componente.product_id.uom_id.name,
                                 'pct_formula': componente.x_porcentaje,
                                 'pct_categoria': componente.x_porcentaje_categoria,
-                                'x_orden': norden
+                                'x_orden': corden
                             })
 
                         if ncomponente:
@@ -169,15 +169,14 @@ class Formulas(models.TransientModel):
                         ).product_name
 
                         if 'ca' in ingrediente.product_id.default_code:
-                            norden = '1 Cárnicos'
+                            corden = '1 Cárnicos'
                         elif 'ad' in ingrediente.product_id.default_code:
-                            norden = '2 Aditivos'
+                            corden = '2 Aditivos'
                         elif 'in' in ingrediente.product_id.default_code:
-                            norden = '3 Intermedios'
+                            corden = '3 Intermedios'
                         else:
-                            norden = '4'
+                            corden = '4'
 
-                        raise UserError(norden)
 
                         self.env['wizard.formulas'].create({
                                     'x_secuencia':nsecuencia,
@@ -187,7 +186,7 @@ class Formulas(models.TransientModel):
                                     'unidad': ingrediente.product_id.uom_id.name,
                                     'pct_formula': ingrediente.x_porcentaje,
                                     'pct_categoria': ingrediente.x_porcentaje_categoria,
-                                    'x_orden': norden
+                                    'x_orden': corden
                         })
 
                     if ncomponente:
