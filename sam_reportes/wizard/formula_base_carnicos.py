@@ -148,7 +148,7 @@ class FormulaBaseCarnicos(models.TransientModel):
                             else:
                                 norden = '4'
 
-                            self.env['wizard.formulas'].create({
+                            self.env['wizard.formula.base.carnicos'].create({
                                 'x_secuencia':nsecuencia,
                                 'ingr': componente.product_id.id,
                                 'cod_prov': codprov,
@@ -166,7 +166,7 @@ class FormulaBaseCarnicos(models.TransientModel):
                 if subf == 0:
                     ncant_limitante = total_cantidad * (ingrediente.x_porcentaje / 100)
 
-                    ncomponente = self.env['wizard.formulas'].search(
+                    ncomponente = self.env['wizard.formula.base.carnicos'].search(
                         [('ingr.id', '=', ingrediente.product_id.id),
                          ('x_secuencia', '=', nsecuencia)])
 
