@@ -80,7 +80,7 @@ class Formulas(models.TransientModel):
                         'unidad': ingrediente.product_id.uom_id.name,
                         'pct_formula': ingrediente.x_porcentaje,
                         'pct_categoria': ingrediente.x_porcentaje_categoria,
-                        'x_orden': norden
+                        'orden': norden
                         })
 
         if self.ing_limitante:
@@ -106,7 +106,7 @@ class Formulas(models.TransientModel):
                         'unidad': ingrediente.product_id.uom_id.name,
                         'pct_formula': ingrediente.x_porcentaje,
                         'pct_categoria': ingrediente.x_porcentaje_categoria,
-                        'x_orden': norden
+                        'orden': norden
                         })
 
         # Se consolida la fórmula.
