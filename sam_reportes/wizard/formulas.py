@@ -36,7 +36,7 @@ class Formulas(models.TransientModel):
     pct_categoria = fields.Float(string="% Grupo", digits=(6, 2))
     pct_merma = fields.Float(string="% Merma", digits=(6, 2))
     x_orden = fields.Integer(string="Orden", required=False, )
-
+    nombre_orden = fields.Char(string="Nombre Orden", required=False)
 
     # permite seleccionar el ingrediente limitante.
     @api.onchange('producto')
@@ -127,15 +127,16 @@ class Formulas(models.TransientModel):
 
                             if 'ca' in ingrediente.product_id.default_code:
                                 norden = 1
-                                #norden = '1 Cárnicos'
+                                cnombre_orden = 'Cárnicos'
                             elif 'ad' in ingrediente.product_id.default_code:
                                 norden = 2
-                                #norden = '2 Aditivos'
+                                cnombre_orden = 'Aditivos'
                             elif 'in' in ingrediente.product_id.default_code:
                                 norden = 3
-                                #norden = '3 Intermedios'
+                                cnombre_orden = 'Intermedios'
                             else:
                                 norden = 4
+                                cnombre_orden = ' '
 
                             #raise UserError(componente.product_id.name+' \n'+
                             #                'ncant_limitante: '+str(ncant_limitante)+' \n'+
@@ -149,7 +150,8 @@ class Formulas(models.TransientModel):
                                 'unidad': componente.product_id.uom_id.name,
                                 'pct_formula': componente.x_porcentaje,
                                 'pct_categoria': componente.x_porcentaje_categoria,
-                                'x_orden': norden
+                                'x_orden': norden,
+                                'nombre_orden': cnombre_orden
                             })
 
                         if ncomponente:
@@ -173,16 +175,16 @@ class Formulas(models.TransientModel):
 
                         if 'ca' in ingrediente.product_id.default_code:
                             norden = 1
-                            # norden = '1 Cárnicos'
+                            cnombre_orden = 'Cárnicos'
                         elif 'ad' in ingrediente.product_id.default_code:
                             norden = 2
-                            # norden = '2 Aditivos'
+                            cnombre_orden = 'Aditivos'
                         elif 'in' in ingrediente.product_id.default_code:
                             norden = 3
-                            # norden = '3 Intermedios'
+                            cnombre_orden = 'Intermedios'
                         else:
                             norden = 4
-
+                            cnombre_orden = ' '
 
                         self.env['wizard.formulas'].create({
                                     'x_secuencia':nsecuencia,
@@ -192,7 +194,8 @@ class Formulas(models.TransientModel):
                                     'unidad': ingrediente.product_id.uom_id.name,
                                     'pct_formula': ingrediente.x_porcentaje,
                                     'pct_categoria': ingrediente.x_porcentaje_categoria,
-                                    'x_orden': norden
+                                    'x_orden': norden,
+                                    'nombre_orden': cnombre_orden
                         })
 
                     if ncomponente:
@@ -211,6 +214,7 @@ class Formulas(models.TransientModel):
                 if ingrediente.cant_tot > 0:
                     vals.append({
                         'orden': ingrediente.x_orden,
+                        'nombre_orden': ingrediente.nombre_orden,
                         'componente': ingrediente.ingr.name,
                         'cod_prov': ingrediente.cod_prov,
                         'cant_comp': ingrediente.cant_tot,
