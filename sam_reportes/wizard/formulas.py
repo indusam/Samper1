@@ -84,6 +84,7 @@ class Formulas(models.TransientModel):
                         })
 
         if self.ing_limitante:
+            self.cantidad = 0
             ncantidad_il = self.ing_limitante.product_qty
             for ingrediente in ingredientes:
                 codprov = self.env['product.supplierinfo'].search(
