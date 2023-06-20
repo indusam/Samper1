@@ -146,11 +146,11 @@ class Formulas(models.TransientModel):
                                   componente.product_id.product_tmpl_id.id)], limit=1
                             ).product_name
 
-                            if 'ca' in ingrediente.product_id.default_code:
+                            if 'ca' in componente.product_id.default_code:
                                 norden = '1 Cárnicos'
-                            elif 'ad' in ingrediente.product_id.default_code:
+                            elif 'ad' in componente.product_id.default_code:
                                 norden = '2 Aditivos'
-                            elif 'in' in ingrediente.product_id.default_code:
+                            elif 'in' in componente.product_id.default_code:
                                 norden = '3 Intermedios'
                             else:
                                 norden = '4 '
@@ -189,11 +189,11 @@ class Formulas(models.TransientModel):
                             [('product_tmpl_id.id', '=', ingrediente.product_id.product_tmpl_id.id)], limit=1
                         ).product_name
 
-                        if 'ca' in ingrediente.product_id.default_code:
+                        if 'ca' in componente.product_id.default_code:
                             norden = '1 Cárnicos'
-                        elif 'ad' in ingrediente.product_id.default_code:
+                        elif 'ad' in componente.product_id.default_code:
                             norden = '2 Aditivos'
-                        elif 'in' in ingrediente.product_id.default_code:
+                        elif 'in' in componente.product_id.default_code:
                             norden = '3 Intermedios'
                         else:
                             norden = '4 '
