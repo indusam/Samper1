@@ -9,7 +9,7 @@
                             <div class="col">
                                 <table width="100%">
                                     <tr>
-                                        <t t-if="cant_limitante = 0">
+                                        <t t-if="cant_limitante == 0">
                                             <th class="table-active" colspan="8" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:14px;vertical-align:middle; padding:2px">
                                               <strong>Fórmula: </strong> <span t-esc="codigo"/> - <span t-esc="producto"/>
                                               <br/>
