@@ -116,7 +116,16 @@ class Formulas(models.TransientModel):
             nsecuencia = self.env['ir.sequence'].next_by_code('formulas.consolidadas')
 
             if self.ing_limitante:
-                self.cantidad = ncantidad_il
+
+                ntotcantidad = 0
+                ncantidad_il = self.ing_limitante.product_qty
+
+                for ingrediente in ingredientes:
+                    ntotcantidad += self.cant_limitante * (
+                                ingrediente.product_qty / ncantidad_il)
+
+                self.cantidad = ntotcantidad
+                              
 
             for ingrediente in ingredientes:
                 # verifica que el ingrediente se fabrique.
