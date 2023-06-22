@@ -114,8 +114,18 @@ class Formulas(models.TransientModel):
         if self.consolidado:
             vals = []
             nsecuencia = self.env['ir.sequence'].next_by_code('formulas.consolidadas')
+
             if self.ing_limitante:
-                self.cantidad = ncantidad_il
+
+                ntotcantidad = 0
+                ncantidad_il = self.ing_limitante.product_qty
+
+                for ingrediente in ingredientes:
+                    ntotcantidad += self.cant_limitante * (
+                                ingrediente.product_qty / ncantidad_il)
+
+                self.cantidad = ntotcantidad
+                              
 
             for ingrediente in ingredientes:
                 # verifica que el ingrediente se fabrique.
@@ -189,11 +199,11 @@ class Formulas(models.TransientModel):
                             [('product_tmpl_id.id', '=', ingrediente.product_id.product_tmpl_id.id)], limit=1
                         ).product_name
 
-                        if 'ca' in componente.product_id.default_code:
+                        if 'ca' in ingrediente.product_id.default_code:
                             norden = '1 Cárnicos'
-                        elif 'ad' in componente.product_id.default_code:
+                        elif 'ad' in ingrediente.product_id.default_code:
                             norden = '2 Aditivos'
-                        elif 'in' in componente.product_id.default_code:
+                        elif 'in' in ingrediente.product_id.default_code:
                             norden = '3 Intermedios'
                         else:
                             norden = '4 '
