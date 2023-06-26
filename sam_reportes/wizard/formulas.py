@@ -125,15 +125,12 @@ class Formulas(models.TransientModel):
                                 ingrediente.product_qty / ncantidad_il)
 
                 self.cantidad = ntotcantidad
-                              
+
 
             for ingrediente in ingredientes:
                 # verifica que el ingrediente se fabrique.
-                subf = 0
                 if ingrediente.product_id.bom_count > 0:
-                    subf = 1
 
-                if subf == 1:
                     ncant_limitante = self.cantidad * (ingrediente.x_porcentaje / 100)
 
                     bom_pf = self.env['mrp.bom'].search([(
@@ -141,9 +138,6 @@ class Formulas(models.TransientModel):
 
                     subformula = self.env['mrp.bom.line'].search([
                         ('bom_id.id', '=', bom_pf)])
-
-                    if not subformula:
-                        subf = 0
 
                     for componente in subformula:
                         ncomponente = self.env['wizard.formulas'].search(
@@ -165,9 +159,6 @@ class Formulas(models.TransientModel):
                             else:
                                 norden = '4 '
 
-                            #raise UserError(componente.product_id.name+' \n'+
-                            #                'ncant_limitante: '+str(ncant_limitante)+' \n'+
-                            #                'componente.x_porcentaje :'+ str(componente.x_porcentaje/100))
 
                             self.env['wizard.formulas'].create({
                                 'x_secuencia':nsecuencia,
@@ -184,9 +175,8 @@ class Formulas(models.TransientModel):
                             ncant = ncomponente.cant_tot
                             ncomponente.write({'cant_tot':(ncant_limitante * (componente.x_porcentaje / 100)) + ncant})
 
-                if subf == 0:
-                    ncant_limitante = self.cantidad * (
-                                ingrediente.x_porcentaje / 100)
+                else:
+                    ncant_limitante = self.cantidad * (ingrediente.x_porcentaje / 100)
 
                     ncomponente = self.env['wizard.formulas'].search(
                         [('ingr.id', '=', ingrediente.product_id.id),
