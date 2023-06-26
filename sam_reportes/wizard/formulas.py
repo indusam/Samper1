@@ -129,7 +129,7 @@ class Formulas(models.TransientModel):
 
             for ingrediente in ingredientes:
                 # verifica que el ingrediente se fabrique.
-                if ingrediente.product_id.bom_count > 0:
+                if ingrediente.product_id.bom_count > 0: #tiene subformula
 
                     ncant_limitante = self.cantidad * (ingrediente.x_porcentaje / 100)
 
@@ -140,6 +140,7 @@ class Formulas(models.TransientModel):
                         ('bom_id.id', '=', bom_pf)])
 
                     for componente_n1 in subformula_n1:
+
                         ncomponente_n1 = self.env['wizard.formulas'].search(
                                 [('ingr.id','=', componente_n1.product_id.id),
                                  ('x_secuencia','=',nsecuencia)])
