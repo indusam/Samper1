@@ -125,68 +125,58 @@ class Formulas(models.TransientModel):
                                 ingrediente.product_qty / ncantidad_il)
 
                 self.cantidad = ntotcantidad
-                              
+
 
             for ingrediente in ingredientes:
                 # verifica que el ingrediente se fabrique.
-                subf = 0
-                if ingrediente.product_id.bom_count > 0:
-                    subf = 1
+                if ingrediente.product_id.bom_count > 0: #tiene subformula
 
-                if subf == 1:
                     ncant_limitante = self.cantidad * (ingrediente.x_porcentaje / 100)
 
                     bom_pf = self.env['mrp.bom'].search([(
                         'product_tmpl_id','=',ingrediente.product_tmpl_id.id)], limit=1).id
 
-                    subformula = self.env['mrp.bom.line'].search([
+                    subformula_n1 = self.env['mrp.bom.line'].search([
                         ('bom_id.id', '=', bom_pf)])
 
-                    if not subformula:
-                        subf = 0
+                    for componente_n1 in subformula_n1:
 
-                    for componente in subformula:
-                        ncomponente = self.env['wizard.formulas'].search(
-                                [('ingr.id','=', componente.product_id.id),
+                        ncomponente_n1 = self.env['wizard.formulas'].search(
+                                [('ingr.id','=', componente_n1.product_id.id),
                                  ('x_secuencia','=',nsecuencia)])
 
-                        if not ncomponente:
+                        if not ncomponente_n1:
                             codprov = self.env['product.supplierinfo'].search(
                                 [('product_tmpl_id.id', '=',
-                                  componente.product_id.product_tmpl_id.id)], limit=1
+                                  componente_n1.product_id.product_tmpl_id.id)], limit=1
                             ).product_name
 
-                            if 'ca' in componente.product_id.default_code:
+                            if 'ca' in componente_n1.product_id.default_code:
                                 norden = '1 Cárnicos'
-                            elif 'ad' in componente.product_id.default_code:
+                            elif 'ad' in componente_n1.product_id.default_code:
                                 norden = '2 Aditivos'
-                            elif 'in' in componente.product_id.default_code:
+                            elif 'in' in componente_n1.product_id.default_code:
                                 norden = '3 Intermedios'
                             else:
                                 norden = '4 '
 
-                            #raise UserError(componente.product_id.name+' \n'+
-                            #                'ncant_limitante: '+str(ncant_limitante)+' \n'+
-                            #                'componente.x_porcentaje :'+ str(componente.x_porcentaje/100))
-
                             self.env['wizard.formulas'].create({
                                 'x_secuencia':nsecuencia,
-                                'ingr': componente.product_id.id,
+                                'ingr': componente_n1.product_id.id,
                                 'cod_prov': codprov,
-                                'cant_tot': ncant_limitante * (componente.x_porcentaje / 100),
-                                'unidad': componente.product_id.uom_id.name,
-                                'pct_formula': componente.x_porcentaje,
-                                'pct_categoria': componente.x_porcentaje_categoria,
+                                'cant_tot': ncant_limitante * (componente_n1.x_porcentaje / 100),
+                                'unidad': componente_n1.product_id.uom_id.name,
+                                'pct_formula': componente_n1.x_porcentaje,
+                                'pct_categoria': componente_n1.x_porcentaje_categoria,
                                 'x_orden': norden
                             })
 
-                        if ncomponente:
-                            ncant = ncomponente.cant_tot
-                            ncomponente.write({'cant_tot':(ncant_limitante * (componente.x_porcentaje / 100)) + ncant})
+                        if ncomponente_n1:
+                            ncant = ncomponente_n1.cant_tot
+                            ncomponente_n1.write({'cant_tot':(ncant_limitante * (componente_n1.x_porcentaje / 100)) + ncant})
 
-                if subf == 0:
-                    ncant_limitante = self.cantidad * (
-                                ingrediente.x_porcentaje / 100)
+                else:
+                    ncant_limitante = self.cantidad * (ingrediente.x_porcentaje / 100)
 
                     ncomponente = self.env['wizard.formulas'].search(
                         [('ingr.id', '=', ingrediente.product_id.id),
