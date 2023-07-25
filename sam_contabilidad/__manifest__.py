@@ -24,7 +24,7 @@
     # always loaded
     'data': [
         'security/ir.model.access.csv',
-        'wizard/descarga_archivos_view.xml',
+        'wizard/borra_pdf_view.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
