@@ -5,12 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="78e11fc7-3e95-436a-9f7c-dadb3685aab0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/sam_contabilidad/wizard/borra_pdf.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sam_contabilidad/wizard/borra_pdf_view.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sam_contabilidad/__manifest__.py" beforeDir="false" afterPath="$PROJECT_DIR$/sam_contabilidad/__manifest__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sam_contabilidad/security/ir.model.access.csv" beforeDir="false" afterPath="$PROJECT_DIR$/sam_contabilidad/security/ir.model.access.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sam_contabilidad/wizard/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/sam_contabilidad/wizard/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sam_contabilidad/wizard/borra_pdf_view.xml" beforeDir="false" afterPath="$PROJECT_DIR$/sam_contabilidad/wizard/borra_pdf_view.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

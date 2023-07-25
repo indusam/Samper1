@@ -36,5 +36,5 @@
         action="action_borra_pdf_wizard"
         parent="account.menu_account_config"
         groups="base.group_user"
-        sequence="550"/>
+        sequence="650"/>
 </odoo>
