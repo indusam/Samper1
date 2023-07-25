@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Formulario para borrar PDFs.
+    vbueno 0110202109:33
+-->
+<odoo>
+    <record id="report_wizard_borra_pdf_view_form" model="ir.ui.view">
+        <field name="name">report.wizard.borra.pdf.view.form</field>
+        <field name="model">borra_pdf.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="corte"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="deletepdf" type="object" string="Borrar" class="oe_highlight"/>
+                    <button special="cancel" string="Cancelar"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_borra_pdf_wizard" model="ir.actions.act_window">
+        <field name="name">Borra PDF</field>
+        <field name="res_model">borra_pdf.wizard</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="report_wizard_borra_pdf_view_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem
+        id="borra_pdf_menu"
+        name="Borra PDF"
+        action="action_borra_pdf_wizard"
+        parent="account.menu_account_config"
+        groups="base.group_user"
+        sequence="650"/>
+</odoo>
