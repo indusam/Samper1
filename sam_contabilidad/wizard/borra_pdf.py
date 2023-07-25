@@ -38,7 +38,7 @@ class BorraPdf(models.TransientModel):
         for archivo in archivos:
 
             # file = '/home/odoo/data/filestore/indusam-samper1-samper-v13-875997/'+archivo.store_fname  # directorio de producción
-            file = '/home/odoo/data/filestore/indusam-samper1-master-8881147/'+archivo.store_fname # directorio de pruebas
+            file = '/home/odoo/data/filestore/indusam-samper1-master-9090991/'+archivo.store_fname # directorio de pruebas
 
             if os.path.exists(file):
                 os.remove(file)
