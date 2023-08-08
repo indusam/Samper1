@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
+from odoo.exceptions import UserError
 
 class StockLot(models.Model):
     _inherit = 'stock.production.lot'
 
     @api.model_create_multi
     def create(self, vals_list):
+        raise UserError('si entra ')
         lots = super(StockLot, self).create(vals_list)
         for lot in lots:
             lot.sequence = self.env['ir.sequence'].next_by_code('lotes.produccion')
