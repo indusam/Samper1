@@ -6,13 +6,12 @@ from odoo.exceptions import UserError
 class StockLot(models.Model):
     _inherit = 'stock.production.lot'
 
-    @api.model_create_multi
-    def create(self, vals_list):
-        raise UserError('si entra ')
-        lots = super(StockLot, self).create(vals_list)
-        for lot in lots:
-            lot.sequence = self.env['ir.sequence'].next_by_code('lotes.produccion')
-        return lots
+    @api.onchange('name')
+    def create(self):
+        cnombre = self.env['ir.sequence'].next_by_code('lotes.produccion')
+        for rec in self:
+            rec.name = cnombre
+
 
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
