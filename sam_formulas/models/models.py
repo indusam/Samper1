@@ -3,15 +3,6 @@
 from odoo import models, fields, api
 from odoo.exceptions import UserError
 
-class StockLot(models.Model):
-    _inherit = 'stock.production.lot'
-
-    @api.onchange('name')
-    def create(self):
-        cnombre = self.env['ir.sequence'].next_by_code('lotes.produccion')
-        for rec in self:
-            rec.name = cnombre
-
 
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
