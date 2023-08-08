@@ -2,6 +2,16 @@
 
 from odoo import models, fields, api
 
+class StockLot(models.Model):
+    _inherit = 'stock.lot'
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        lots = super(StockLot, self).create(vals_list)
+        for lot in lots:
+            lot.sequence = self.env['ir.sequence'].next_by_code('lotes.produccion')
+        return lots
+
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
