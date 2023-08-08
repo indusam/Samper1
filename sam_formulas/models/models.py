@@ -3,7 +3,7 @@
 from odoo import models, fields, api
 
 class StockLot(models.Model):
-    _inherit = 'stock.lot'
+    _inherit = 'stock.production.lot'
 
     @api.model_create_multi
     def create(self, vals_list):
