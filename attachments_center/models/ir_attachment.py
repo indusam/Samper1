@@ -121,7 +121,7 @@ class IrAttachment(models.Model):
                     """Your user's access groups are not included in the list of allowed \n
                     access groups for these attachments, contact your administrator""")
 
-    @api.model_create_multi
+    @api.model_create_multi2
     def create(self, vals):
         res = super(IrAttachment, self).create(vals)
         if res.res_model or res.category_id:
