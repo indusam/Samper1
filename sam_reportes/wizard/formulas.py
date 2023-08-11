@@ -15,6 +15,7 @@ from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
 
+
 class Formulas(models.TransientModel):
 
     _name = 'wizard.formulas'
