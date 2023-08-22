@@ -26,6 +26,7 @@ class Formulas(models.TransientModel):
     ing_limitante = fields.Many2one('mrp.bom.line',string="Ingrediente limitante")
     cant_limitante = fields.Float(string="Cantidad limitante")
     consolidado = fields.Boolean(string="Fórmula consolidada",  )
+    partidas = fields.Int(string="Partidas")
 
     # campos para consolidar
     x_secuencia = fields.Char(string="Número")
