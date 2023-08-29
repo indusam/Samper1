@@ -67,29 +67,55 @@ class Formulas(models.TransientModel):
                     ingrediente.product_qty for ingrediente in ingredientes)
                 self.cantidad = total_ingredientes * self.partidas
 
-            for ingrediente in ingredientes:
-                codprov = self.env['product.supplierinfo'].search(
-                        [('product_tmpl_id.id','=',ingrediente.product_id.product_tmpl_id.id)], limit=1
-                        ).product_name
+                for ingrediente in ingredientes:
+                    codprov = self.env['product.supplierinfo'].search(
+                        [('product_tmpl_id.id', '=',
+                          ingrediente.product_id.product_tmpl_id.id)], limit=1
+                    ).product_name
 
-                if 'ca' in ingrediente.product_id.default_code:
-                    norden = '1 Cárnicos'
-                elif 'ad' in ingrediente.product_id.default_code:
-                    norden = '2 Aditivos'
-                elif 'in' in ingrediente.product_id.default_code:
-                    norden = '3 Intermedios'
-                else:
-                    norden = '4 '
+                    if 'ca' in ingrediente.product_id.default_code:
+                        norden = '1 Cárnicos'
+                    elif 'ad' in ingrediente.product_id.default_code:
+                        norden = '2 Aditivos'
+                    elif 'in' in ingrediente.product_id.default_code:
+                        norden = '3 Intermedios'
+                    else:
+                        norden = '4 '
 
-                vals.append({
+                    vals.append({
                         'componente': ingrediente.product_id.name,
                         'cod_prov': codprov,
-                        'cant_comp': self.cantidad * (ingrediente.x_porcentaje / 100),
+                        'cant_comp': ingrediente.product_qty,
                         'unidad': ingrediente.product_id.uom_id.name,
                         'pct_formula': ingrediente.x_porcentaje,
                         'pct_categoria': ingrediente.x_porcentaje_categoria,
                         'orden': norden
-                        })
+                    })
+
+            if self.partidas == 0:
+                for ingrediente in ingredientes:
+                    codprov = self.env['product.supplierinfo'].search(
+                            [('product_tmpl_id.id','=',ingrediente.product_id.product_tmpl_id.id)], limit=1
+                            ).product_name
+
+                    if 'ca' in ingrediente.product_id.default_code:
+                        norden = '1 Cárnicos'
+                    elif 'ad' in ingrediente.product_id.default_code:
+                        norden = '2 Aditivos'
+                    elif 'in' in ingrediente.product_id.default_code:
+                        norden = '3 Intermedios'
+                    else:
+                        norden = '4 '
+
+                    vals.append({
+                            'componente': ingrediente.product_id.name,
+                            'cod_prov': codprov,
+                            'cant_comp': self.cantidad * (ingrediente.x_porcentaje / 100),
+                            'unidad': ingrediente.product_id.uom_id.name,
+                            'pct_formula': ingrediente.x_porcentaje,
+                            'pct_categoria': ingrediente.x_porcentaje_categoria,
+                            'orden': norden
+                            })
 
         if self.ing_limitante:
             self.cantidad = 0
