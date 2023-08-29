@@ -67,10 +67,10 @@ class Formulas(models.TransientModel):
                     ingrediente.product_qty for ingrediente in ingredientes)
                 self.cantidad = total_ingredientes * self.partidas
 
-            else:
-                total_ingredientes = sum(
-                    ingrediente.product_qty for ingrediente in ingredientes)
-                self.cantidad = total_ingredientes
+            #else:
+            #    total_ingredientes = sum(
+            #        ingrediente.product_qty for ingrediente in ingredientes)
+            #    self.cantidad = total_ingredientes
 
             for ingrediente in ingredientes:
                 codprov = self.env['product.supplierinfo'].search(
