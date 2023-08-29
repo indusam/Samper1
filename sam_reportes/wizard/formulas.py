@@ -71,6 +71,7 @@ class Formulas(models.TransientModel):
             #    total_ingredientes = sum(
             #        ingrediente.product_qty for ingrediente in ingredientes)
             #    self.cantidad = total_ingredientes
+            # test
 
             for ingrediente in ingredientes:
                 codprov = self.env['product.supplierinfo'].search(
