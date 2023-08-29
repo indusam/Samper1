@@ -22,7 +22,7 @@
                                               <br/>
                                               <strong>Ingrediente limitante: </strong> <span t-esc="nombre_il"/>
                                               <br/>
-                                              <strong>Cantidad: </strong> <span t-esc="cant_limitante"/> Kgs.
+                                              <strong>Cantidad: </strong> <span t-esc="'{0:,.4f}'.format(cant_limitante)"/> Kgs.
                                             </th>
                                         </t>
                                     </tr>
