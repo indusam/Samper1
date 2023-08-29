@@ -49,6 +49,7 @@ class Formulas(models.TransientModel):
             return {'domain': {'ing_limitante':
                                    [('bom_id', '=', nlista)]}}
 
+
     # imprime formula
     def imprime_formula(self):
 
@@ -60,17 +61,16 @@ class Formulas(models.TransientModel):
         #if not self.consolidado:
 
         if not self.ing_limitante:
-            lcalcula_cantidad = False
-            total_ingredientes = sum(
-                ingrediente.product_qty for ingrediente in ingredientes)
 
             if self.partidas > 0:
+                total_ingredientes = sum(
+                    ingrediente.product_qty for ingrediente in ingredientes)
                 self.cantidad = total_ingredientes * self.partidas
 
-            else:
-                if self.cantidad / total_ingredientes % 1 != 0:
-                    lcalcula_cantidad =  True
-
+            #else:
+            #    total_ingredientes = sum(
+            #        ingrediente.product_qty for ingrediente in ingredientes)
+            #    self.cantidad = total_ingredientes
 
             for ingrediente in ingredientes:
                 codprov = self.env['product.supplierinfo'].search(
@@ -87,30 +87,16 @@ class Formulas(models.TransientModel):
                 else:
                     norden = '4 '
 
-                if not lcalcula_cantidad:
-                    vals.append({
-                        'componente': ingrediente.product_id.name,
-                        'cod_prov': codprov,
-                        'cant_comp': ingrediente.product_qty * self.partidas,
-                        'unidad': ingrediente.product_id.uom_id.name,
-                        'pct_formula': ingrediente.x_porcentaje,
-                        'pct_categoria': ingrediente.x_porcentaje_categoria,
-                        'orden': norden
-                    })
-                else:
-                    vals.append({
-                        'componente': ingrediente.product_id.name,
-                        'cod_prov': codprov,
-                        'cant_comp': ingrediente.product_qty * self.cantidad * (
-                                    ingrediente.x_porcentaje / 100),
-                        'unidad': ingrediente.product_id.uom_id.name,
-                        'pct_formula': ingrediente.x_porcentaje,
-                        'pct_categoria': ingrediente.x_porcentaje_categoria,
-                        'orden': norden
-                    })
-
-
-
+                vals.append({
+                    'componente': ingrediente.product_id.name,
+                    'cod_prov': codprov,
+                    'cant_comp': ingrediente.product_qty * self.partidas if self.partidas > 0 else self.cantidad * (
+                                ingrediente.x_porcentaje / 100),
+                    'unidad': ingrediente.product_id.uom_id.name,
+                    'pct_formula': ingrediente.x_porcentaje,
+                    'pct_categoria': ingrediente.x_porcentaje_categoria,
+                    'orden': norden
+                })
 
         if self.ing_limitante:
             self.cantidad = 0
