@@ -15,6 +15,7 @@ from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
 
+
 class Formulas(models.TransientModel):
 
     _name = 'wizard.formulas'
@@ -25,6 +26,7 @@ class Formulas(models.TransientModel):
     ing_limitante = fields.Many2one('mrp.bom.line',string="Ingrediente limitante")
     cant_limitante = fields.Float(string="Cantidad limitante")
     consolidado = fields.Boolean(string="Fórmula consolidada",  )
+    partidas = fields.Integer(string="Partidas")
 
     # campos para consolidar
     x_secuencia = fields.Char(string="Número")
@@ -59,6 +61,12 @@ class Formulas(models.TransientModel):
         #if not self.consolidado:
 
         if not self.ing_limitante:
+
+            if self.partidas > 0:
+                total_ingredientes = sum(
+                    ingrediente.product_qty for ingrediente in ingredientes)
+                self.cantidad = total_ingredientes * self.partidas
+
             for ingrediente in ingredientes:
                 codprov = self.env['product.supplierinfo'].search(
                         [('product_tmpl_id.id','=',ingrediente.product_id.product_tmpl_id.id)], limit=1
@@ -232,6 +240,7 @@ class Formulas(models.TransientModel):
                         'pct_formula': (ingrediente.cant_tot / self.cantidad) * 100 ,
                         'pct_categoria': ingrediente.pct_categoria
                     })
+
 
         data = {'ids': self.ids,
                 'model':self._name,

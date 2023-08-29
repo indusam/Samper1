@@ -131,7 +131,7 @@ class Category(models.Model):
             raise ValidationError(_("Error! You cannot create recursive categories."))
         return True
 
-    @api.model
+    @api.model_create_multi
     def create(self,vals):
         res = super(Category, self).create(vals)
         if res and vals.get('model_id'):

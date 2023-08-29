@@ -10,6 +10,7 @@
     """,
 
     'author': "VBueno",
+    'license': 'AGPL-3',
     'website': "http://www.samper.mx",
 
     # Categories can be used to filter modules in modules listing
