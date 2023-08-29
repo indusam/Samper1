@@ -34,9 +34,9 @@ class Formulas(models.TransientModel):
     cod_prov = fields.Char(string="Código Prov", required=False, )
     cant_tot = fields.Float(string="Cant Total", digits=(12, 4))
     unidad = fields.Char(string="Unidad")
-    pct_formula = fields.Float(string="% Fórmula", digits=(6, 2))
-    pct_categoria = fields.Float(string="% Grupo", digits=(6, 2))
-    pct_merma = fields.Float(string="% Merma", digits=(6, 2))
+    pct_formula = fields.Float(string="% Fórmula", digits=(6, 4))
+    pct_categoria = fields.Float(string="% Grupo", digits=(6, 4))
+    pct_merma = fields.Float(string="% Merma", digits=(6, 4))
     x_orden = fields.Char(string="Orden", required=False, )
 
 
