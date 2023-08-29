@@ -3,7 +3,7 @@
 # formulas.py
 # Impresión de la fórmula de un producto..
 # VBueno 2505202111:46
-
+#
 # Impresión de la fórmula de un producto con y sin consolidación.
 # Si una fórmula tiene un ingrediente fórmula, suma las cantidades de los ingr.
 # de ambas fórmulas e imprime el resultado.
@@ -34,9 +34,9 @@ class Formulas(models.TransientModel):
     cod_prov = fields.Char(string="Código Prov", required=False, )
     cant_tot = fields.Float(string="Cant Total", digits=(12, 4))
     unidad = fields.Char(string="Unidad")
-    pct_formula = fields.Float(string="% Fórmula", digits=(6, 2))
-    pct_categoria = fields.Float(string="% Grupo", digits=(6, 2))
-    pct_merma = fields.Float(string="% Merma", digits=(6, 2))
+    pct_formula = fields.Float(string="% Fórmula", digits=(6, 4))
+    pct_categoria = fields.Float(string="% Grupo", digits=(6, 4))
+    pct_merma = fields.Float(string="% Merma", digits=(6, 4))
     x_orden = fields.Char(string="Orden", required=False, )
 
 
@@ -67,10 +67,16 @@ class Formulas(models.TransientModel):
                     ingrediente.product_qty for ingrediente in ingredientes)
                 self.cantidad = total_ingredientes * self.partidas
 
+            #else:
+            #    total_ingredientes = sum(
+            #        ingrediente.product_qty for ingrediente in ingredientes)
+            #    self.cantidad = total_ingredientes
+
             for ingrediente in ingredientes:
                 codprov = self.env['product.supplierinfo'].search(
-                        [('product_tmpl_id.id','=',ingrediente.product_id.product_tmpl_id.id)], limit=1
-                        ).product_name
+                    [('product_tmpl_id', '=',
+                      ingrediente.product_id.product_tmpl_id.id)], limit=1
+                ).product_name
 
                 if 'ca' in ingrediente.product_id.default_code:
                     norden = '1 Cárnicos'
@@ -82,14 +88,15 @@ class Formulas(models.TransientModel):
                     norden = '4 '
 
                 vals.append({
-                        'componente': ingrediente.product_id.name,
-                        'cod_prov': codprov,
-                        'cant_comp': self.cantidad * (ingrediente.x_porcentaje / 100),
-                        'unidad': ingrediente.product_id.uom_id.name,
-                        'pct_formula': ingrediente.x_porcentaje,
-                        'pct_categoria': ingrediente.x_porcentaje_categoria,
-                        'orden': norden
-                        })
+                    'componente': ingrediente.product_id.name,
+                    'cod_prov': codprov,
+                    'cant_comp': ingrediente.product_qty * self.partidas if self.partidas > 0 else self.cantidad * (
+                                ingrediente.x_porcentaje / 100),
+                    'unidad': ingrediente.product_id.uom_id.name,
+                    'pct_formula': ingrediente.x_porcentaje,
+                    'pct_categoria': ingrediente.x_porcentaje_categoria,
+                    'orden': norden
+                })
 
         if self.ing_limitante:
             self.cantidad = 0
