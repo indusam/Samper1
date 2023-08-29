@@ -61,6 +61,12 @@ class Formulas(models.TransientModel):
         #if not self.consolidado:
 
         if not self.ing_limitante:
+
+            if self.partidas > 0:
+                total_ingredientes = sum(
+                    ingrediente.product_qty for ingrediente in ingredientes)
+                self.cantidad = total_ingredientes * self.partidas
+
             for ingrediente in ingredientes:
                 codprov = self.env['product.supplierinfo'].search(
                         [('product_tmpl_id.id','=',ingrediente.product_id.product_tmpl_id.id)], limit=1
