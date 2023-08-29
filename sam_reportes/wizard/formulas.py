@@ -3,7 +3,7 @@
 # formulas.py
 # Impresión de la fórmula de un producto..
 # VBueno 2505202111:46
-# 
+#
 # Impresión de la fórmula de un producto con y sin consolidación.
 # Si una fórmula tiene un ingrediente fórmula, suma las cantidades de los ingr.
 # de ambas fórmulas e imprime el resultado.
@@ -85,7 +85,7 @@ class Formulas(models.TransientModel):
                     vals.append({
                         'componente': ingrediente.product_id.name,
                         'cod_prov': codprov,
-                        'cant_comp': ingrediente.product_qty,
+                        'cant_comp': ingrediente.product_qty * self.partidas,
                         'unidad': ingrediente.product_id.uom_id.name,
                         'pct_formula': ingrediente.x_porcentaje,
                         'pct_categoria': ingrediente.x_porcentaje_categoria,
