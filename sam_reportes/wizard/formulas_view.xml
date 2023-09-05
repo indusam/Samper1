@@ -14,7 +14,7 @@
                         <field name="consolidado" attrs="{'invisible': [('ing_limitante','!=',False)]}"/>
                         -->
                         <field name="partidas" />
-                        <field name="cantidad" /> #attrs="{'invisible': [('partidas','>',0)]}" />
+                        <field name="cantidad" /> 
                         <field name="consolidado" />
                     </group>
 
