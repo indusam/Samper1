@@ -11,7 +11,8 @@
                         <field name="producto" required="1"/>
 
                         <field name="partidas" attrs="{'invisible': [('ing_limitante','!=',False)]}"/>
-                        <field name="cantidad" attrs="{'invisible': [|('ing_limitante','!=',False),('partidas','>',0)]}"/>
+                        <!-- <field name="cantidad" attrs="{'invisible': [('ing_limitante','!=',False),('partidas','>',0)]}"/> -->
+                        <field name="cantidad" attrs="{'invisible': ['|', ('ing_limitante','!=',False), ('partidas','>',0)]}"/>
 
                         <!--
                         <field name="partidas" />
