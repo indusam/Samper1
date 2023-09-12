@@ -263,6 +263,11 @@ class Formulas(models.TransientModel):
                 'nombre_il':self.ing_limitante.product_tmpl_id.name,
                 'cant_limitante':self.cant_limitante
                 }
+        self.cantidad = 0
+        self.cant_limitante = 0
+        self.ing_limitante = ''
+        self.producto = 0
+        self.partidas = 0
 
         return self.env.ref('sam_reportes.formulas_reporte').report_action(self, data=data)
 
