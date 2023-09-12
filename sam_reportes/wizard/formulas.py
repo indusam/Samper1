@@ -53,7 +53,7 @@ class Formulas(models.TransientModel):
     # imprime formula
     def imprime_formula(self):
 
-        if self.ing_limitante and self.cant_limitante <= 0:
+        if not self.ing_limitante and self.cant_limitante <= 0:
             raise UserError('Falta el ingrediente limitante')
 
         vals=[]
