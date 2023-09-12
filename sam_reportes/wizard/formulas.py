@@ -53,9 +53,6 @@ class Formulas(models.TransientModel):
     # imprime formula
     def imprime_formula(self):
 
-        if self.ing_limitante == False and self.cant_limitante <= 0:
-            raise UserError('Falta el ingrediente limitante')
-
         vals=[]
         ingredientes = self.env['mrp.bom.line'].search(
                         [('bom_id.id', '=', self.producto.id)])
