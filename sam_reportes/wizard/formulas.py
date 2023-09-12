@@ -62,6 +62,9 @@ class Formulas(models.TransientModel):
 
         if not self.ing_limitante:
 
+            if self.cant_limitante > 0:
+                raise UserError('Falta el ingrediente limitante')
+
             if self.partidas > 0:
                 total_ingredientes = sum(
                     ingrediente.product_qty for ingrediente in ingredientes)
@@ -260,6 +263,9 @@ class Formulas(models.TransientModel):
                 'nombre_il':self.ing_limitante.product_tmpl_id.name,
                 'cant_limitante':self.cant_limitante
                 }
+
+        #self.env['wizard.formulas'].search([]).unlink()
+        #self.env['wizard.formulas'].create({})
 
         return self.env.ref('sam_reportes.formulas_reporte').report_action(self, data=data)
 
