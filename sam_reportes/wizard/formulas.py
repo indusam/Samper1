@@ -264,18 +264,8 @@ class Formulas(models.TransientModel):
                 'cant_limitante':self.cant_limitante
                 }
 
-        #self.env['wizard.formulas'].search([]).unlink()
-        #self.env['wizard.formulas'].create({})
-
-        model_record = self.env['wizard.formulas'].search([], limit=1)
-        model_record.write({
-            'cantidad': 0,  # Asigna el valor inicial de Field 1 aquí
-            'cant_limitante': 0,
-            'partidas': 0 # Asigna el valor inicial de Field 2 aquí
-            # Agrega más campos y sus valores iniciales si es necesario
-        })
-
-
+        self.env['wizard.formulas'].search([]).unlink()
+        self.env['wizard.formulas'].create({})
 
         return self.env.ref('sam_reportes.formulas_reporte').report_action(self, data=data)
 
