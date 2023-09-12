@@ -62,6 +62,9 @@ class Formulas(models.TransientModel):
 
         if not self.ing_limitante:
 
+            if self.cant_limitante > 0:
+                raise UserError('Falta el ingrediente limitante')
+
             if self.partidas > 0:
                 total_ingredientes = sum(
                     ingrediente.product_qty for ingrediente in ingredientes)
