@@ -50,11 +50,5 @@
         groups="base.group_user"
         sequence="349"/>
 
-    <script type="text/javascript">
-    // Esta función recarga la página después de 3 segundos.
-    setTimeout(function(){
-        window.location.reload();
-    }, 3000); // 3000 milisegundos = 3 segundos
-    </script>
-    
 </odoo>
+ 
