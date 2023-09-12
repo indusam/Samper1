@@ -49,4 +49,12 @@
         parent="studio_customization.samper_informes_9a4c552e-6a2c-49dc-b22f-2c77d1e02fac"
         groups="base.group_user"
         sequence="349"/>
+
+    <script type="text/javascript">
+    // Esta función recarga la página después de 3 segundos.
+    setTimeout(function(){
+        window.location.reload();
+    }, 3000); // 3000 milisegundos = 3 segundos
+    </script>
+    
 </odoo>

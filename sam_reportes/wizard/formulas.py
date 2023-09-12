@@ -264,8 +264,8 @@ class Formulas(models.TransientModel):
                 'cant_limitante':self.cant_limitante
                 }
 
-        self.env['wizard.formulas'].search([]).unlink()
-        self.env['wizard.formulas'].create({})
+        #self.env['wizard.formulas'].search([]).unlink()
+        #self.env['wizard.formulas'].create({})
 
         return self.env.ref('sam_reportes.formulas_reporte').report_action(self, data=data)
 
