@@ -264,7 +264,6 @@ class Formulas(models.TransientModel):
                 'cant_limitante':self.cant_limitante
                 }
         self.cantidad = 0
-        self.cant_limitante = 0
         self.producto = 0
         self.partidas = 0
 
