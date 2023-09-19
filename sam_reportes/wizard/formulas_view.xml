@@ -11,7 +11,8 @@
                         <field name="producto" required="1"/>
 
                         <field name="partidas" attrs="{'invisible': ['|',
-                                                       ('ing_limitante','!=',False), ('cant_limitante','>',0)]}"/>
+                                                       ('cant_limitante','>',0),
+                                                       ('ing_limitante','!=',False)]}"/>
                         <field name="cantidad" attrs="{'invisible': ['|','|',
                                                        ('ing_limitante','!=',False),
                                                        ('partidas','>',0),('cant_limitante','>',0)]}"/>
@@ -31,7 +32,7 @@
                         // Esta función recarga la página después de 3 segundos.
                         setTimeout(function(){
                             window.location.reload();
-                        }, 30000); // 3000 milisegundos = 3 segundos
+                        }, 60000); // 3000 milisegundos = 3 segundos
                     </script>
                     <button special="cancel" string="Cancelar"/>
                 </footer>
