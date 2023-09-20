@@ -50,10 +50,6 @@ class Formulas(models.TransientModel):
                                    [('bom_id', '=', nlista)]}}
 
 
-    def inicializa_valores(self):
-        self.cantidad = self.cant_limitante = self.partidas = self.ing_limitante = self.producto = 0
-        
-
     # imprime formula
     def imprime_formula(self):
 
@@ -268,9 +264,9 @@ class Formulas(models.TransientModel):
                 'cant_limitante':self.cant_limitante
                 }
 
+        self.cantidad = self.cant_limitante = self.partidas = self.ing_limitante = self.producto = 0
         #self.env['wizard.formulas'].search([]).unlink()
         #self.env['wizard.formulas'].create({})
-        self.inicializa_valores()
 
         return self.env.ref('sam_reportes.formulas_reporte').report_action(self, data=data)
 
