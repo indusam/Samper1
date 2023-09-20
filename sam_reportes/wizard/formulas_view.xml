@@ -29,7 +29,6 @@
                 </group>
                 <footer>
                     <button name="reset_form" type="object" string="Reiniciar formulario" class="oe_highlight"/>
-                    <button name="imprime_formula" type="object" string="Imprimir" class="oe_highlight"/>
                     <button special="cancel" string="Cancelar"/>
                 </footer>
             </form>

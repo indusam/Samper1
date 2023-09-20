@@ -49,12 +49,6 @@ class Formulas(models.TransientModel):
             return {'domain': {'ing_limitante':
                                    [('bom_id', '=', nlista)]}}
 
-    def reset_form(self):
-        #self.env['wizard.formulas'].search([]).unlink()
-        #self.env['wizard.formulas'].create({})
-        self.cantidad = 0
-        return self.env.ref('sam_reportes.formulas_reporte')
-        #.report_action(self, data=data)
 
     # imprime formula
     def imprime_formula(self):
