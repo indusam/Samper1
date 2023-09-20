@@ -51,9 +51,8 @@ class Formulas(models.TransientModel):
 
 
     def inicializa_valores(self):
-        self.cantidad = self.cant_limitante = self.partidas = 0
-        self.ing_limitante = self.producto = ''
-
+        self.cantidad = self.cant_limitante = self.partidas = self.ing_limitante = self.producto = 0
+        
 
     # imprime formula
     def imprime_formula(self):
