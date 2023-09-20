@@ -28,25 +28,7 @@
 
                 </group>
                 <footer>
-                    <button name="imprime_formula" type="object" string="Imprimir" class="oe_highlight"/>
-                    <script type="text/javascript">
-                        if (window.printed) {
-                            odoo.log("Código ejecutado");
-                            location.reload(); // Esto recarga la página
-                        } else {
-                            window.printed = true;
-                        }
-                    </script>
-
-                    <!-- 
-                    <script type="text/javascript">
-                        // Esta función recarga la página después de 3 segundos.
-                        setTimeout(function(){
-                            window.location.reload();
-                        }, 60000); // 3000 milisegundos = 3 segundos
-                    </script>
-                    -->
-
+                    <button name="imprime_formula" type="object" string="Imprimir" class="oe_highlight" context="{'reset_form': True}"/>
                     <button special="cancel" string="Cancelar"/>
                 </footer>
             </form>
