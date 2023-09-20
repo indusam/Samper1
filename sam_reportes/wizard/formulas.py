@@ -49,6 +49,10 @@ class Formulas(models.TransientModel):
             return {'domain': {'ing_limitante':
                                    [('bom_id', '=', nlista)]}}
 
+    def reset_form(self):
+        self.env['wizard.formulas'].search([]).unlink()
+        self.env['wizard.formulas'].create({})
+
 
     # imprime formula
     def imprime_formula(self):
@@ -263,9 +267,6 @@ class Formulas(models.TransientModel):
                 'nombre_il':self.ing_limitante.product_tmpl_id.name,
                 'cant_limitante':self.cant_limitante
                 }
-
-        self.env['wizard.formulas'].search([]).unlink()
-        self.env['wizard.formulas'].create({})
 
         return self.env.ref('sam_reportes.formulas_reporte').report_action(self, data=data)
 
