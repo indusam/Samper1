@@ -31,6 +31,7 @@
                     <button name="imprime_formula" type="object" string="Imprimir" class="oe_highlight"/>
                     <script type="text/javascript">
                         if (window.printed) {
+                            console.log("Código ejecutado");
                             location.reload(); // Esto recarga la página
                         } else {
                             window.printed = true;
@@ -45,7 +46,7 @@
                         }, 60000); // 3000 milisegundos = 3 segundos
                     </script>
                     -->
-                    
+
                     <button special="cancel" string="Cancelar"/>
                 </footer>
             </form>
