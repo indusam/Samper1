@@ -52,7 +52,7 @@ class Formulas(models.TransientModel):
     def reset_form(self):
         #self.env['wizard.formulas'].search([]).unlink()
         #self.env['wizard.formulas'].create({})
-        self.producto = 0
+        self.cantidad = 0
 
     # imprime formula
     def imprime_formula(self):
