@@ -28,7 +28,7 @@
 
                 </group>
                 <footer>
-                    <button name="imprime_formula" type="object" string="Imprimir" class="oe_highlight" special="save"/>
+                    <button name="imprime_formula" type="object" string="Imprimir" class="oe_highlight" config="false"/>
                     <button special="cancel" string="Cancelar"/>
                 </footer>
             </form>

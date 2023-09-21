@@ -264,5 +264,6 @@ class Formulas(models.TransientModel):
                 'cant_limitante':self.cant_limitante
                 }
 
-        return self.env.ref('sam_reportes.formulas_reporte').report_action(self, data=data)
-
+        #return self.env.ref('sam_reportes.formulas_reporte').report_action(self, data=data)
+        report = self.env.ref('sam_reportes.formulas_reporte')
+        return report.report_action(self, data=data, config=False)
