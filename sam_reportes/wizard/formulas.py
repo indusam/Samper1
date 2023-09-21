@@ -266,5 +266,5 @@ class Formulas(models.TransientModel):
 
         #return self.env.ref('sam_reportes.formulas_reporte').report_action(self, data=data)
         report = self.env.ref('sam_reportes.formulas_reporte')
-        return report.report_action(self, data=data, config=False)
+        return report.report_action(self, data=data)
         
