@@ -18,6 +18,19 @@ class ProductTemplate(models.Model):
     ], string='Alergenos')
 
 
+class ProductProduct(models.Model):
+    _inherit = 'product.product'
+
+    x_cod_alergenos = fields.Selection([
+        ('no_contiene', 'No contiene'),
+        ('leche_soya', 'Puede contener LECHE y SOYA'),
+        ('leche', 'Contiene LECHE'),
+        ('soya', 'Contiene SOYA'),
+        ('leche_y_soya', 'Contiene LECHE y SOYA'),
+    ], string='Alergenos')
+
+
+
 class ListaMateriales(models.Model):
     _inherit = 'mrp.bom.line'
 
