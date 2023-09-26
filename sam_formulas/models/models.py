@@ -9,26 +9,7 @@ class ProductTemplate(models.Model):
 
     x_presentacion = fields.Many2one("uom.uom", string="Presentacion")
     x_pct_variacion = fields.Float(string='% Variación', digits=(3, 4))
-    x_alergenos = fields.Selection([
-        ('no_contiene', 'No contiene'),
-        ('leche_soya', 'Puede contener LECHE y SOYA'),
-        ('leche', 'Contiene LECHE'),
-        ('soya', 'Contiene SOYA'),
-        ('leche_y_soya', 'Contiene LECHE y SOYA'),
-    ], string='Alergenos')
-
-
-class ProductProduct(models.Model):
-    _inherit = 'product.product'
-
-    x_alergenos = fields.Selection([
-        ('no_contiene', 'No contiene'),
-        ('leche_soya', 'Puede contener LECHE y SOYA'),
-        ('leche', 'Contiene LECHE'),
-        ('soya', 'Contiene SOYA'),
-        ('leche_y_soya', 'Contiene LECHE y SOYA'),
-    ], string='Alergenos')
-
+   
 
 
 class ListaMateriales(models.Model):
