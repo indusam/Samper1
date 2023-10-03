@@ -57,9 +57,6 @@ class Formulas(models.TransientModel):
         ingredientes = self.env['mrp.bom.line'].search(
                         [('bom_id.id', '=', self.producto.id)])
 
-        report = self.env['ir.actions.report']._get_report_from_name('sam_reportes.formulas_reporte')
-                
-
         # no se consolida la fórmula
         #if not self.consolidado:
 
@@ -254,29 +251,8 @@ class Formulas(models.TransientModel):
                         'pct_formula': (ingrediente.cant_tot / self.cantidad) * 100 ,
                         'pct_categoria': ingrediente.pct_categoria
                     })
-        data = {
-        'ids': self.ids,
-        'model': self._name,
-        'vals': vals,
-        'producto': self.producto.product_tmpl_id.name,
-        'codigo': self.producto.product_tmpl_id.default_code,
-        'cantidad': self.cantidad,
-        'ing_limitante': self.ing_limitante,
-        'nombre_il': self.ing_limitante.product_tmpl_id.name,
-        'cant_limitante': self.cant_limitante
-        }
 
-        report = self.env.ref('sam_reportes.formulas_reporte')
-        report.report_action(self, data=data)
-
-        # Cierra el wizard
-        return {'type': 'ir.actions.act_window_close'}
-
-
-
-'''
-
-
+        
         data = {'ids': self.ids,
                 'model':self._name,
                 'vals':vals,
@@ -292,4 +268,3 @@ class Formulas(models.TransientModel):
         report = self.env.ref('sam_reportes.formulas_reporte')
         return report.report_action(self, data=data)
         
-'''
