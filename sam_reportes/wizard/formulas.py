@@ -57,6 +57,9 @@ class Formulas(models.TransientModel):
         ingredientes = self.env['mrp.bom.line'].search(
                         [('bom_id.id', '=', self.producto.id)])
 
+        report = self.env['ir.actions.report']._get_report_from_name('sam_reportes.formulas_reporte')
+                
+
         # no se consolida la fórmula
         #if not self.consolidado:
 
