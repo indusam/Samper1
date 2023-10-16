@@ -150,44 +150,85 @@ class Formulas(models.TransientModel):
                     bom_pf = self.env['mrp.bom'].search([(
                         'product_tmpl_id','=',ingrediente.product_tmpl_id.id)], limit=1).id
 
-                    subformula_n1 = self.env['mrp.bom.line'].search([
-                        ('bom_id.id', '=', bom_pf)])
+                    subformula_n1 = self.env['mrp.bom.line'].search([('bom_id.id', '=', bom_pf)])
 
                     for componente_n1 in subformula_n1:
 
-                        ncomponente_n1 = self.env['wizard.formulas'].search(
+                        if componente_n1.product_id.bom_count > 0:
+                            ncant_limitante_n2 = self.cantidad * (componente_n1.xporcentaje / 100)
+                            bom_pf2 = self.env['mrp.bom'].search([(
+                                        'product_tmpl_id','=',componente_n1.product_tmpl_id.id)], limit=1).id
+                            
+                            subformula_n2 = self.env['mrp.bom.line'].search([('bom_id.id', '=', bom_pf2)])
+
+                            ncomponente_n2 = self.env['wizard.formulas'].search(
                                 [('ingr.id','=', componente_n1.product_id.id),
-                                 ('x_secuencia','=',nsecuencia)])
+                                ('x_secuencia','=',nsecuencia)])
 
-                        if not ncomponente_n1:
-                            codprov = self.env['product.supplierinfo'].search(
-                                [('product_tmpl_id.id', '=',
-                                  componente_n1.product_id.product_tmpl_id.id)], limit=1
-                            ).product_name
+                            if not ncomponente_n2:
+                                codprov = self.env['product.supplierinfo'].search(
+                                    [('product_tmpl_id.id', '=',
+                                    componente_n1.product_id.product_tmpl_id.id)], limit=1
+                                ).product_name
 
-                            if 'ca' in componente_n1.product_id.default_code:
-                                norden = '1 Cárnicos'
-                            elif 'ad' in componente_n1.product_id.default_code:
-                                norden = '2 Aditivos'
-                            elif 'in' in componente_n1.product_id.default_code:
-                                norden = '3 Intermedios'
-                            else:
-                                norden = '4 '
+                                if 'ca' in componente_n1.product_id.default_code:
+                                    norden = '1 Cárnicos'
+                                elif 'ad' in componente_n1.product_id.default_code:
+                                    norden = '2 Aditivos'
+                                elif 'in' in componente_n1.product_id.default_code:
+                                    norden = '3 Intermedios'
+                                else:
+                                    norden = '4 '
 
-                            self.env['wizard.formulas'].create({
-                                'x_secuencia':nsecuencia,
-                                'ingr': componente_n1.product_id.id,
-                                'cod_prov': codprov,
-                                'cant_tot': ncant_limitante * (componente_n1.x_porcentaje / 100),
-                                'unidad': componente_n1.product_id.uom_id.name,
-                                'pct_formula': componente_n1.x_porcentaje,
-                                'pct_categoria': componente_n1.x_porcentaje_categoria,
-                                'x_orden': norden
-                            })
+                                self.env['wizard.formulas'].create({
+                                    'x_secuencia':nsecuencia,
+                                    'ingr': componente_n1.product_id.id,
+                                    'cod_prov': codprov,
+                                    'cant_tot': ncant_limitante * (componente_n1.x_porcentaje / 100),
+                                    'unidad': componente_n1.product_id.uom_id.name,
+                                    'pct_formula': componente_n1.x_porcentaje,
+                                    'pct_categoria': componente_n1.x_porcentaje_categoria,
+                                    'x_orden': norden
+                                })
 
-                        if ncomponente_n1:
-                            ncant = ncomponente_n1.cant_tot
-                            ncomponente_n1.write({'cant_tot':(ncant_limitante * (componente_n1.x_porcentaje / 100)) + ncant})
+                            if ncomponente_n2:
+                                ncant = ncomponente_n2.cant_tot
+                                ncomponente_n2.write({'cant_tot':(ncant_limitante * (componente_n1.x_porcentaje / 100)) + ncant})
+
+                        else:    
+                            ncomponente_n1 = self.env['wizard.formulas'].search(
+                                [('ingr.id','=', componente_n1.product_id.id),
+                                ('x_secuencia','=',nsecuencia)])
+
+                            if not ncomponente_n1:
+                                codprov = self.env['product.supplierinfo'].search(
+                                    [('product_tmpl_id.id', '=',
+                                    componente_n1.product_id.product_tmpl_id.id)], limit=1
+                                ).product_name
+
+                                if 'ca' in componente_n1.product_id.default_code:
+                                    norden = '1 Cárnicos'
+                                elif 'ad' in componente_n1.product_id.default_code:
+                                    norden = '2 Aditivos'
+                                elif 'in' in componente_n1.product_id.default_code:
+                                    norden = '3 Intermedios'
+                                else:
+                                    norden = '4 '
+
+                                self.env['wizard.formulas'].create({
+                                    'x_secuencia':nsecuencia,
+                                    'ingr': componente_n1.product_id.id,
+                                    'cod_prov': codprov,
+                                    'cant_tot': ncant_limitante * (componente_n1.x_porcentaje / 100),
+                                    'unidad': componente_n1.product_id.uom_id.name,
+                                    'pct_formula': componente_n1.x_porcentaje,
+                                    'pct_categoria': componente_n1.x_porcentaje_categoria,
+                                    'x_orden': norden
+                                })
+
+                            if ncomponente_n1:
+                                ncant = ncomponente_n1.cant_tot
+                                ncomponente_n1.write({'cant_tot':(ncant_limitante * (componente_n1.x_porcentaje / 100)) + ncant})
 
                 else:
                     ncant_limitante = self.cantidad * (ingrediente.x_porcentaje / 100)
