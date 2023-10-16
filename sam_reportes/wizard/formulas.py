@@ -155,7 +155,7 @@ class Formulas(models.TransientModel):
                     for componente_n1 in subformula_n1:
 
                         if componente_n1.product_id.bom_count > 0:
-                            ncant_limitante_n2 = self.cantidad * (componente_n1.xporcentaje / 100)
+                            ncant_limitante_n2 = self.cantidad * (componente_n1.x_porcentaje / 100)
                             bom_pf2 = self.env['mrp.bom'].search([(
                                         'product_tmpl_id','=',componente_n1.product_tmpl_id.id)], limit=1).id
                             
