@@ -52,7 +52,7 @@ class Formulas(models.TransientModel):
         else:
             return '4 '
 
-    def consolidate_component(self, componente, ncant_limitante):
+    def consolidate_component(self, componente, ncant_limitante, nsecuencia):
         ncomponente = self.env['wizard.formulas'].search([
             ('ingr.id', '=', componente.product_id.id),
             ('x_secuencia', '=', nsecuencia)])
@@ -113,14 +113,14 @@ class Formulas(models.TransientModel):
                                     ('bom_id.id', '=', bom_pf3)])
 
                                 for componente_n3 in subformula_n3:
-                                    self.consolidate_component(componente_n2, self.cantidad * (componente_n2.x_porcentaje / 100))
+                                    self.consolidate_component(componente_n2, self.cantidad * (componente_n2.x_porcentaje / 100), nsecuencia)
                             else:
-                                self.consolidate_component(componente_n1, self.cantidad * (componente_n1.x_porcentaje / 100))
+                                self.consolidate_component(componente_n1, self.cantidad * (componente_n1.x_porcentaje / 100), nsecuencia)
                     else:
-                        self.consolidate_component(componente_n1, self.cantidad * (componente_n1.x_porcentaje / 100))
+                        self.consolidate_component(componente_n1, self.cantidad * (componente_n1.x_porcentaje / 100), nsecuencia)
             else:
                 ncant_limitante = self.cantidad * (ingrediente.x_porcentaje / 100)
-                self.consolidate_component(ingrediente, ncant_limitante)
+                self.consolidate_component(ingrediente, ncant_limitante, nsecuencia)
 
     @api.onchange('producto')
     def onchange_producto(self):
