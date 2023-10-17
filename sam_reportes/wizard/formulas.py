@@ -79,6 +79,9 @@ class Formulas(models.TransientModel):
 
     def consolidate_formula(self, ingredientes, ncantidad_il, nsecuencia):
         ntotcantidad = 0
+        if ncantidad_il > 0:
+            self.cant_limitante = ncantidad_il
+            
         for ingrediente in ingredientes:
             ntotcantidad += self.cant_limitante * (
                 ingrediente.product_qty / ncantidad_il)
