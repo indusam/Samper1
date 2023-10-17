@@ -175,8 +175,11 @@ class Formulas(models.TransientModel):
 
         if self.consolidado:
             nsecuencia = self.env['ir.sequence'].next_by_code('formulas.consolidadas')
+            ncantidad_il = self.cantidad
+
             if self.ing_limitante:
                 ncantidad_il = self.ing_limitante.product_qty
+           
             self.consolidate_formula(ingredientes, ncantidad_il, nsecuencia)
 
             bom_consolidada = self.env['wizard.formulas'].search([
