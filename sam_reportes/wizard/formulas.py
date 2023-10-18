@@ -51,11 +51,11 @@ class Formulas(models.TransientModel):
 
     def get_orden(self, codigo_producto):
         ordenes = {
-            'ca': '1 Cárnicos test',
-            'ad': '2 Aditivos',
-            'in': '3 Intermedios',
-            'esp': '4 Especias',
-            'fo': '5 Fórmulas'
+            'ca': '1. Cárnicos',
+            'ad': '2. Aditivos',
+            'in': '3. Intermedios',
+            'esp': '4. Especias',
+            'fo': '5. Fórmulas'
         }
 
         # Si el código no coincide con ninguno, se asigna '5 Fórmulas' por defecto.
