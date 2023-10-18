@@ -52,17 +52,14 @@ class Formulas(models.TransientModel):
     def get_orden(self, codigo_producto):
         prefix = codigo_producto[:2]  # Tomar las dos primeras letras
         ordenes = {
-            'ca': '1. Cárnicos test',
+            'ca': '1. Cárnicos',
             'ad': '2. Aditivos',
             'in': '3. Intermedios',
             'fb': '5. Fórmulas',
             'fo': '5. Fórmulas'
         }
 
-        if prefix in ordenes:
-            return ordenes[prefix]
-        else:
-            return '4 Especias'
+        return ordenes.get(prefix, '4. Especias')
 
 
 
