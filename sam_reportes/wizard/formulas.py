@@ -50,17 +50,33 @@ class Formulas(models.TransientModel):
                                    [('bom_id', '=', nlista)]}}
 
     def get_orden(self, codigo_producto):
-        if 'ca' in codigo_producto:
-            orden = '1 Cárnicos test'
-        elif 'ad' in codigo_producto:
-            orden = '2 Aditivos'
-        elif 'in' in codigo_producto:
-            orden = '3 Intermedios'
-        elif ['fo','fb'] in codigo_producto:
-            orden = '5 Fórmulas'
-        else:
-            orden = '4 Especias'
-        return(orden)
+        ordenes = {
+            'ca': '1 Cárnicos test',
+            'ad': '2 Aditivos',
+            'in': '3 Intermedios',
+            'esp': '4 Especias',
+            'fo': '5 Fórmulas'
+        }
+
+        # Si el código no coincide con ninguno, se asigna '5 Fórmulas' por defecto.
+        return ordenes.get(codigo_producto, '5 Fórmulas')
+
+
+    #def get_orden(self, codigo_producto):
+    #    if 'ca' in codigo_producto:
+    #        orden = '1 Cárnicos test'
+    #    elif 'ad' in codigo_producto:
+    #        orden = '2 Aditivos'
+    #    elif 'in' in codigo_producto:
+    #        orden = '3 Intermedios'
+    #    elif 'esp' in codigo_producto:
+    #        orden = '4 Especias'    
+    #    elif 'fo' in codigo_producto:
+    #        orden = '5 Fórmulas'    
+    #    else:
+    #        orden = '5 Fórmulas'
+
+    #    return(orden)
 
     # imprime formula
     def imprime_formula(self):
