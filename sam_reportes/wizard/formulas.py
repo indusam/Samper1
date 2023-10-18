@@ -50,16 +50,20 @@ class Formulas(models.TransientModel):
                                    [('bom_id', '=', nlista)]}}
 
     def get_orden(self, codigo_producto):
+        prefix = codigo_producto[:2]  # Tomar las dos primeras letras
         ordenes = {
-            'ca': '1. Cárnicos',
+            'ca': '1. Cárnicos test',
             'ad': '2. Aditivos',
             'in': '3. Intermedios',
-            'esp': '4. Especias',
+            'fb': '5. Fórmulas',
             'fo': '5. Fórmulas'
         }
 
-        # Si el código no coincide con ninguno, se asigna '5 Fórmulas' por defecto.
-        return ordenes.get(codigo_producto, '5 Fórmulas')
+        if prefix in ordenes:
+            return ordenes[prefix]
+        else:
+            return '4 Especias'
+
 
 
     #def get_orden(self, codigo_producto):
