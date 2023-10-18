@@ -56,9 +56,10 @@ class Formulas(models.TransientModel):
             orden = '2 Aditivos'
         elif 'in' in codigo_producto:
             orden = '3 Intermedios'
+        elif ['fo','fb'] in codigo_producto:
+            orden = '5 Fórmulas'
         else:
-            orden = '4 Fórmulas'
-
+            orden = '4 Especias'
         return(orden)
 
     # imprime formula
