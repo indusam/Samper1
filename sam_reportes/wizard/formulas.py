@@ -94,7 +94,6 @@ class Formulas(models.TransientModel):
                 ).product_name
 
                 norden = self.get_orden(ingrediente.product_id.default_code)
-
                 #if 'ca' in ingrediente.product_id.default_code:
                 #    norden = '1 Cárnicos'
                 #elif 'ad' in ingrediente.product_id.default_code:
@@ -124,7 +123,7 @@ class Formulas(models.TransientModel):
                         ).product_name
 
                 norden = self.get_orden(ingrediente.product_id.default_code)
-                
+
                 #if 'ca' in ingrediente.product_id.default_code:
                 #    norden = '1 Cárnicos'
                 #elif 'ad' in ingrediente.product_id.default_code:
@@ -185,13 +184,13 @@ class Formulas(models.TransientModel):
                                   componente_n1.product_id.product_tmpl_id.id)], limit=1
                             ).product_name
 
-                            norden = self.get_orden(ingrediente.product_id.default_code)
-                
-                            #if 'ca' in ingrediente.product_id.default_code:
+                            norden = self.get_orden(componente_n1.product_id.default_code)
+
+                            #if 'ca' in componente_n1.product_id.default_code:
                             #    norden = '1 Cárnicos'
-                            #elif 'ad' in ingrediente.product_id.default_code:
+                            #elif 'ad' in componente_n1.product_id.default_code:
                             #    norden = '2 Aditivos'
-                            #elif 'in' in ingrediente.product_id.default_code:
+                            #elif 'in' in componente_n1.product_id.default_code:
                             #    norden = '3 Intermedios'
                             #else:
                             #    norden = '4 '
@@ -226,7 +225,7 @@ class Formulas(models.TransientModel):
                         ).product_name
 
                         norden = self.get_orden(ingrediente.product_id.default_code)
-                
+                        
                         #if 'ca' in ingrediente.product_id.default_code:
                         #    norden = '1 Cárnicos'
                         #elif 'ad' in ingrediente.product_id.default_code:
