@@ -51,7 +51,7 @@ class Formulas(models.TransientModel):
 
     def get_orden(self, codigo_producto):
         if 'ca' in codigo_producto:
-            orden = '1 Cárnicos'
+            orden = '1 Cárnicos test'
         elif 'ad' in codigo_producto:
             orden = '2 Aditivos'
         elif 'in' in codigo_producto:
