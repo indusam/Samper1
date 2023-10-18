@@ -49,6 +49,17 @@ class Formulas(models.TransientModel):
             return {'domain': {'ing_limitante':
                                    [('bom_id', '=', nlista)]}}
 
+    def get_orden(self, codigo_producto):
+        if 'ca' in codigo_producto:
+            orden = '1 Cárnicos'
+        elif 'ad' in codigo_producto:
+            orden = '2 Aditivos'
+        elif 'in' in codigo_producto:
+            orden = '3 Intermedios'
+        else:
+            orden = '4 '
+
+        return(orden)
 
     # imprime formula
     def imprime_formula(self):
@@ -82,14 +93,16 @@ class Formulas(models.TransientModel):
                       ingrediente.product_id.product_tmpl_id.id)], limit=1
                 ).product_name
 
-                if 'ca' in ingrediente.product_id.default_code:
-                    norden = '1 Cárnicos'
-                elif 'ad' in ingrediente.product_id.default_code:
-                    norden = '2 Aditivos'
-                elif 'in' in ingrediente.product_id.default_code:
-                    norden = '3 Intermedios'
-                else:
-                    norden = '4 '
+                norden = self.get_orden(ingrediente.product_id.default_code)
+                
+                #if 'ca' in ingrediente.product_id.default_code:
+                #    norden = '1 Cárnicos'
+                #elif 'ad' in ingrediente.product_id.default_code:
+                #    norden = '2 Aditivos'
+                #elif 'in' in ingrediente.product_id.default_code:
+                #    norden = '3 Intermedios'
+                #else:
+                #    norden = '4 '
 
                 vals.append({
                     'componente': ingrediente.product_id.name,
