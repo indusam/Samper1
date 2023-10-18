@@ -57,7 +57,7 @@ class Formulas(models.TransientModel):
         elif 'in' in codigo_producto:
             orden = '3 Intermedios'
         else:
-            orden = '4 '
+            orden = '4 Fórmulas'
 
         return(orden)
 
