@@ -115,7 +115,8 @@ class Formulas(models.TransientModel):
 
             else:
 
-                raise UserError(ingrediente.product_id.name)
+                print(ingrediente.product_id.name)    
+                #raise UserError(ingrediente.product_id.name)
 
                 ncomponente = self.env['wizard.formulas'].search(
                         [('ingr.id', '=', ingrediente.product_id.id),
