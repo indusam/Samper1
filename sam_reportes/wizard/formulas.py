@@ -115,8 +115,8 @@ class Formulas(models.TransientModel):
 
             else:
 
-                print(ingrediente.product_id.name)    
-                #raise UserError(ingrediente.product_id.name)
+                if 'ca' in ingrediente.product_id.default_code:        
+                    raise UserError(ingrediente.product_id.name)
 
                 ncomponente = self.env['wizard.formulas'].search(
                         [('ingr.id', '=', ingrediente.product_id.id),
