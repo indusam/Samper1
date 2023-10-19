@@ -72,17 +72,17 @@ class Formulas(models.TransientModel):
 
         for ingrediente in ingredientes:
 
-                ncant_limitante = nqty * (ingrediente.x_porcentaje / 100)
-                # verifica que el ingrediente se fabrique.
-                if ingrediente.product_id.bom_count > 0: #tiene subformula
+            ncant_limitante = nqty * (ingrediente.x_porcentaje / 100)
+            # verifica que el ingrediente se fabrique.
+            if ingrediente.product_id.bom_count > 0: #tiene subformula
 
-                    bom_pf = self.env['mrp.bom'].search([(
+                bom_pf = self.env['mrp.bom'].search([(
                         'product_tmpl_id','=',ingrediente.product_tmpl_id.id)], limit=1).id
 
-                    subformula = self.env['mrp.bom.line'].search([
+                subformula = self.env['mrp.bom.line'].search([
                         ('bom_id.id', '=', bom_pf)])
 
-                    self.consolida_formula(subformula, ncant_limitante ,secuencia)    
+                self.consolida_formula(subformula, ncant_limitante ,secuencia)    
 
                     #for componente_n1 in subformula_n1:
 
@@ -113,24 +113,20 @@ class Formulas(models.TransientModel):
                     #        ncant = ncomponente_n1.cant_tot
                     #        ncomponente_n1.write({'cant_tot':(ncant_limitante * (componente_n1.x_porcentaje / 100)) + ncant})
 
-                else:
+            else:
 
-                    ncomponente = self.env['wizard.formulas'].search(
+                raise UserError(ingrediente.product_id.name)
+
+                ncomponente = self.env['wizard.formulas'].search(
                         [('ingr.id', '=', ingrediente.product_id.id),
                          ('x_secuencia', '=', secuencia)])
 
-                    # raise UserError(ingrediente.product_id.name)
-
-                    if not ncomponente:
-                        codprov = self.get_codprov(ingrediente.product_id.product_tmpl_id.id)
+                if not ncomponente:
+                    codprov = self.get_codprov(ingrediente.product_id.product_tmpl_id.id)
                         
-                        #codprov = self.env['product.supplierinfo'].search(
-                        #    [('product_tmpl_id.id', '=', ingrediente.product_id.product_tmpl_id.id)], limit=1
-                        #).product_name
-
-                        norden = self.get_orden(ingrediente.product_id.default_code)
+                    norden = self.get_orden(ingrediente.product_id.default_code)
                        
-                        self.env['wizard.formulas'].create({
+                    self.env['wizard.formulas'].create({
                                     'x_secuencia':secuencia,
                                     'ingr': ingrediente.product_id.id,
                                     'cod_prov': codprov,
@@ -141,11 +137,11 @@ class Formulas(models.TransientModel):
                                     'x_orden': norden
                         })
 
-                    if ncomponente:
-                        ncant = ncomponente.cant_tot
-                        nccomp = ncant_limitante
-                        ncant_tot = ncant + nccomp
-                        ncomponente.write({'cant_tot': ncant_tot})       
+                if ncomponente:
+                    ncant = ncomponente.cant_tot
+                    nccomp = ncant_limitante
+                    ncant_tot = ncant + nccomp
+                    ncomponente.write({'cant_tot': ncant_tot})
 
         return    
 
@@ -173,11 +169,6 @@ class Formulas(models.TransientModel):
 
                 codprov = self.get_codprov(ingrediente.product_id.product_tmpl_id.id)    
 
-                #codprov = self.env['product.supplierinfo'].search(
-                #    [('product_tmpl_id', '=',
-                #      ingrediente.product_id.product_tmpl_id.id)], limit=1
-                #).product_name
-
                 norden = self.get_orden(ingrediente.product_id.default_code)
 
                 vals.append({
@@ -197,10 +188,6 @@ class Formulas(models.TransientModel):
             for ingrediente in ingredientes:
 
                 codprov = self.get_codprov(ingrediente.product_id.product_tmpl_id.id)
-
-                #codprov = self.env['product.supplierinfo'].search(
-                #        [('product_tmpl_id.id', '=', ingrediente.product_id.product_tmpl_id.id)], limit=1
-                #        ).product_name
 
                 norden = self.get_orden(ingrediente.product_id.default_code)
 
