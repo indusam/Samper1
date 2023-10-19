@@ -61,6 +61,13 @@ class Formulas(models.TransientModel):
 
         return ordenes.get(prefix, '4. Especias')
 
+    def get_codprov(self, producto):
+        ccodprov = self.env['product.supplierinfo'].search(
+                            [('product_tmpl_id.id', '=', producto)], limit=1
+                        ).product_name
+        return ccodprov
+
+
     def consolida_formula(self, ingredientes, nqty, secuencia):
 
         for ingrediente in ingredientes:
@@ -115,9 +122,11 @@ class Formulas(models.TransientModel):
                     # raise UserError(ingrediente.product_id.name)
 
                     if not ncomponente:
-                        codprov = self.env['product.supplierinfo'].search(
-                            [('product_tmpl_id.id', '=', ingrediente.product_id.product_tmpl_id.id)], limit=1
-                        ).product_name
+                        codprov = self.get_codprov(ingrediente.product_id.product_tmpl_id.id)
+                        
+                        #codprov = self.env['product.supplierinfo'].search(
+                        #    [('product_tmpl_id.id', '=', ingrediente.product_id.product_tmpl_id.id)], limit=1
+                        #).product_name
 
                         norden = self.get_orden(ingrediente.product_id.default_code)
                        
@@ -161,10 +170,13 @@ class Formulas(models.TransientModel):
 
 
             for ingrediente in ingredientes:
-                codprov = self.env['product.supplierinfo'].search(
-                    [('product_tmpl_id', '=',
-                      ingrediente.product_id.product_tmpl_id.id)], limit=1
-                ).product_name
+
+                codprov = self.get_codprov(ingrediente.product_id.product_tmpl_id.id)    
+
+                #codprov = self.env['product.supplierinfo'].search(
+                #    [('product_tmpl_id', '=',
+                #      ingrediente.product_id.product_tmpl_id.id)], limit=1
+                #).product_name
 
                 norden = self.get_orden(ingrediente.product_id.default_code)
 
@@ -183,9 +195,12 @@ class Formulas(models.TransientModel):
             self.cantidad = 0
             ncantidad_il = self.ing_limitante.product_qty
             for ingrediente in ingredientes:
-                codprov = self.env['product.supplierinfo'].search(
-                        [('product_tmpl_id.id', '=', ingrediente.product_id.product_tmpl_id.id)], limit=1
-                        ).product_name
+
+                codprov = self.get_codprov(ingrediente.product_id.product_tmpl_id.id)
+
+                #codprov = self.env['product.supplierinfo'].search(
+                #        [('product_tmpl_id.id', '=', ingrediente.product_id.product_tmpl_id.id)], limit=1
+                #        ).product_name
 
                 norden = self.get_orden(ingrediente.product_id.default_code)
 
