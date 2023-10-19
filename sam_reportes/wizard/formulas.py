@@ -78,14 +78,13 @@ class Formulas(models.TransientModel):
             # verifica que el ingrediente se fabrique.
             if ingrediente.product_id.bom_count > 0: #tiene subformula
 
-                raise UserError(' 2 '+ingrediente.product_id.name+ ' ' +str(ingrediente.product_id.bom_count))   
-
-
                 bom_pf = self.env['mrp.bom'].search([(
                         'product_tmpl_id','=',ingrediente.product_tmpl_id.id)], limit=1).id
 
                 subformula = self.env['mrp.bom.line'].search([
                         ('bom_id.id', '=', bom_pf)])
+
+                raise UserError(subformula)        
 
                 self.consolida_formula(subformula, ncant_limitante ,secuencia)    
 
