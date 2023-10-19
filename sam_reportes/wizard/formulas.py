@@ -70,6 +70,8 @@ class Formulas(models.TransientModel):
 
     def consolida_formula(self, ingredientes, nqty, secuencia):
 
+        raise UserError(ingredientes)
+        
         for ingrediente in ingredientes:
 
             ncant_limitante = nqty * (ingrediente.x_porcentaje / 100)
@@ -115,8 +117,8 @@ class Formulas(models.TransientModel):
 
             else:
 
-                if 'ca' in ingrediente.product_id.default_code:        
-                    raise UserError(ingrediente.product_id.name)
+
+                #raise UserError(ingrediente.product_id.name)
 
                 ncomponente = self.env['wizard.formulas'].search(
                         [('ingr.id', '=', ingrediente.product_id.id),
