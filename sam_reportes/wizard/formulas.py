@@ -75,7 +75,7 @@ class Formulas(models.TransientModel):
                     subformula = self.env['mrp.bom.line'].search([
                         ('bom_id.id', '=', bom_pf)])
 
-                    self.consolida_formula(subformula, ingrediente.product_qty ,secuencia)    
+                    self.consolida_formula(subformula, ncant_limitante ,secuencia)    
 
                     #for componente_n1 in subformula_n1:
 
