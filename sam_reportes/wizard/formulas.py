@@ -115,8 +115,7 @@ class Formulas(models.TransientModel):
                     #        ncant = ncomponente_n1.cant_tot
                     #        ncomponente_n1.write({'cant_tot':(ncant_limitante * (componente_n1.x_porcentaje / 100)) + ncant})
 
-            else:
-
+            if not ingrediente.product_id.bom_count:
 
                 raise UserError(ingrediente.product_id.name)
 
