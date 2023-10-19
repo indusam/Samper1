@@ -72,7 +72,7 @@ class Formulas(models.TransientModel):
 
         for ingrediente in ingredientes:
 
-            raise UserError(ingrediente.product_id.name)    
+            #raise UserError(ingrediente.product_id.name)    
 
             ncant_limitante = nqty * (ingrediente.x_porcentaje / 100)
             # verifica que el ingrediente se fabrique.
@@ -118,7 +118,7 @@ class Formulas(models.TransientModel):
             else:
 
 
-                #raise UserError(ingrediente.product_id.name)
+                raise UserError(ingrediente.product_id.name)
 
                 ncomponente = self.env['wizard.formulas'].search(
                         [('ingr.id', '=', ingrediente.product_id.id),
