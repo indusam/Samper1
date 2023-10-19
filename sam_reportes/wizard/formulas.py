@@ -70,9 +70,9 @@ class Formulas(models.TransientModel):
 
     def consolida_formula(self, ingredientes, nqty, secuencia):
 
-        raise UserError(ingrediente.product_id.name)
-
         for ingrediente in ingredientes:
+
+            raise UserError(ingrediente.product_id.name)    
 
             ncant_limitante = nqty * (ingrediente.x_porcentaje / 100)
             # verifica que el ingrediente se fabrique.
