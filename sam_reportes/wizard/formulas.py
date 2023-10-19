@@ -79,7 +79,7 @@ class Formulas(models.TransientModel):
 
                         ncomponente_n1 = self.env['wizard.formulas'].search(
                                 [('ingr.id','=', componente_n1.product_id.id),
-                                 ('x_secuencia','=',nsecuencia)])
+                                 ('x_secuencia','=',secuencia)])
 
                         if not ncomponente_n1:
                             codprov = self.env['product.supplierinfo'].search(
