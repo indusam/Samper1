@@ -84,12 +84,12 @@ class Formulas(models.TransientModel):
                 bom_pf = self.env['mrp.bom.line'].search(
                         [('bom_id.id', '=',ingrediente.id)])        
 
-                raise UserError(bom_pf)        
+                #raise UserError(bom_pf)        
 
                 subformula = self.env['mrp.bom.line'].search([
                         ('bom_id.id', '=', bom_pf)])
 
-                #raise UserError(subformula)        
+                raise UserError(subformula)        
 
                 self.consolida_formula(subformula, ncant_limitante ,secuencia)    
 
