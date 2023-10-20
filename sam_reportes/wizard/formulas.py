@@ -79,7 +79,7 @@ class Formulas(models.TransientModel):
             if ingrediente.product_id.bom_count > 0: #tiene subformula
 
                 bom_pf = self.env['mrp.bom'].search([(
-                        'product_tmpl_id','=',ingrediente.id)], limit=1).id
+                        'product_tmpl_id','=',ingrediente.product_tmpl_id)], limit=1).id
 
                 raise UserError(bom_pf)        
 
