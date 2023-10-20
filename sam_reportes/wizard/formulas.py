@@ -121,13 +121,14 @@ class Formulas(models.TransientModel):
 
             else:
 
-                #raise UserError(ingrediente.product_id.name)
+                raise UserError(ingrediente.product_id.name)
 
                 ncomponente = self.env['wizard.formulas'].search(
                         [('ingr.id', '=', ingrediente.product_id.id),
-                         ('x_secuencia', '=', secuencia)])
+                         ('x_secuencia', '=', secuencia)])         
 
                 if not ncomponente:
+
                     codprov = self.get_codprov(ingrediente.product_id.product_tmpl_id.id)
                         
                     norden = self.get_orden(ingrediente.product_id.default_code)
