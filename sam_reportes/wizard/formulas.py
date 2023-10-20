@@ -81,6 +81,8 @@ class Formulas(models.TransientModel):
                 bom_pf = self.env['mrp.bom'].search([(
                         'product_tmpl_id','=',ingrediente.product_tmpl_id.id)], limit=1).id
 
+                raise UserError(bom_pf)        
+
                 subformula = self.env['mrp.bom.line'].search([
                         ('bom_id.id', '=', bom_pf)])
 
@@ -117,7 +119,7 @@ class Formulas(models.TransientModel):
                     #        ncant = ncomponente_n1.cant_tot
                     #        ncomponente_n1.write({'cant_tot':(ncant_limitante * (componente_n1.x_porcentaje / 100)) + ncant})
 
-            if ingrediente.product_id.bom_count == 0:
+            else:
 
                 raise UserError(ingrediente.product_id.name)
 
