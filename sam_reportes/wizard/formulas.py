@@ -88,7 +88,7 @@ class Formulas(models.TransientModel):
                 #        ('bom_id.id', '=', bom_pf)])
                 subformula = bom_pf.bom_line_ids
 
-                raise UserError(subformula)        
+                #raise UserError(subformula)        
 
                 self.consolida_formula(subformula, ncant_limitante ,secuencia)    
 
@@ -123,7 +123,7 @@ class Formulas(models.TransientModel):
 
             else:
 
-                raise UserError(ingrediente.product_id.name)
+                #raise UserError(ingrediente.product_id.name)
 
                 ncomponente = self.env['wizard.formulas'].search(
                         [('ingr.id', '=', ingrediente.product_id.id),
