@@ -89,7 +89,7 @@ class Formulas(models.TransientModel):
 
                 # subformula = bom_pf.bom_line_ids
 
-                raise UserError(subformula)        
+                #raise UserError(subformula)        
 
                 self.consolida_formula(subformula, ncant_limitante ,secuencia)    
 
