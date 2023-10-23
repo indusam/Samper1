@@ -82,7 +82,7 @@ class Formulas(models.TransientModel):
                 #        'product_tmpl_id','=',ingrediente.product_tmpl_id.id)], limit=1).id
 
                 bom_pf = self.env['mrp.bom.line'].search(
-                        [('bom_id.id', '=',ingrediente.id)])        
+                        [('bom_id.id', '=',ingrediente.id)]).id       
 
                 #raise UserError(bom_pf)        
 
