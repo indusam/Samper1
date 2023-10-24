@@ -207,10 +207,6 @@ class Formulas(models.TransientModel):
         return  
 
 
-
-
-
-
     # imprime formula
     def imprime_formula(self):
 
