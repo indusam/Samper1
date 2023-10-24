@@ -89,7 +89,7 @@ class Formulas(models.TransientModel):
 
                 #raise UserError(subformula)        
 
-                self.consolida_formula1(subformula, ncant_limitante ,secuencia)    
+                self.consolida_subformula1(subformula, ncant_limitante ,secuencia)    
 
                     #for componente_n1 in subformula_n1:
 
