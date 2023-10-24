@@ -157,7 +157,7 @@ class Formulas(models.TransientModel):
 
         for ingrediente in ingredientes:
 
-            #raise UserError(ingrediente.product_id.name+ ' ' +str(ingrediente.product_id.bom_count))   
+            raise UserError(ingrediente.product_id.name+ ' ' +str(ingrediente.product_id.bom_count))   
 
             ncant_limitante = nqty * (ingrediente.x_porcentaje / 100)
             # verifica que el ingrediente se fabrique.
@@ -208,7 +208,7 @@ class Formulas(models.TransientModel):
 
         for ingrediente in ingredientes:
 
-            raise UserError(ingrediente.product_id.name+ ' ' +str(ingrediente.product_id.bom_count))   
+            #raise UserError(ingrediente.product_id.name+ ' ' +str(ingrediente.product_id.bom_count))   
 
             ncant_limitante = nqty * (ingrediente.x_porcentaje / 100)
             # verifica que el ingrediente se fabrique.
