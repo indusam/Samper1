@@ -171,8 +171,6 @@ class Formulas(models.TransientModel):
                 subformula = self.env['mrp.bom.line'].search([
                         ('bom_id.id', '=', bom_pf)])
 
-                #raise UserError(subformula)        
-
                 self.consolida_subformula2(subformula, ncant_limitante ,secuencia)    
 
             else:
