@@ -94,32 +94,30 @@ class Formulas(models.TransientModel):
                         [('ingr.id', '=', ingrediente.product_id.id),
                          ('x_secuencia', '=', secuencia)])         
 
-                if not ncomponente:
+                    if not ncomponente:
 
-                    codprov = self.get_codprov(ingrediente.product_id.product_tmpl_id.id)
+                        codprov = self.get_codprov(ingrediente.product_id.product_tmpl_id.id)
+                            
+                        norden = self.get_orden(ingrediente.product_id.default_code)
                         
-                    norden = self.get_orden(ingrediente.product_id.default_code)
-                       
-                    self.env['wizard.formulas'].create({
-                                    'x_secuencia':secuencia,
-                                    'ingr': ingrediente.product_id.id,
-                                    'cod_prov': codprov,
-                                    'cant_tot': ncant_limitante,
-                                    'unidad': ingrediente.product_id.uom_id.name,
-                                    'pct_formula': ingrediente.x_porcentaje,
-                                    'pct_categoria': ingrediente.x_porcentaje_categoria,
-                                    'x_orden': norden
-                        })
+                        self.env['wizard.formulas'].create({
+                                        'x_secuencia':secuencia,
+                                        'ingr': ingrediente.product_id.id,
+                                        'cod_prov': codprov,
+                                        'cant_tot': ncant_limitante,
+                                        'unidad': ingrediente.product_id.uom_id.name,
+                                        'pct_formula': ingrediente.x_porcentaje,
+                                        'pct_categoria': ingrediente.x_porcentaje_categoria,
+                                        'x_orden': norden
+                            })
 
-                if ncomponente:
-                    ncant = ncomponente.cant_tot
-                    nccomp = ncant_limitante
-                    ncant_tot = ncant + nccomp
-                    ncomponente.write({'cant_tot': ncant_tot})
+                    if ncomponente:
+                        ncant = ncomponente.cant_tot
+                        nccomp = ncant_limitante
+                        ncant_tot = ncant + nccomp
+                        ncomponente.write({'cant_tot': ncant_tot})
 
             else:
-
-                #raise UserError(ingrediente.product_id.name)
 
                 ncomponente = self.env['wizard.formulas'].search(
                         [('ingr.id', '=', ingrediente.product_id.id),
