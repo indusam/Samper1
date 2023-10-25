@@ -85,11 +85,36 @@ class Formulas(models.TransientModel):
                 subformula = self.env['mrp.bom.line'].search([
                         ('bom_id.id', '=', bom_pf)])
 
-                # subformula = bom_pf.bom_line_ids
+                if subformula:               
+                    self.consolida_formula(subformula, ncant_limitante ,secuencia)
+                        
+                else:
+                    ncomponente = self.env['wizard.formulas'].search(
+                        [('ingr.id', '=', ingrediente.product_id.id),
+                         ('x_secuencia', '=', secuencia)])         
 
-                #raise UserError(subformula)        
+                if not ncomponente:
 
-                self.consolida_subformula1(subformula, ncant_limitante ,secuencia)    
+                    codprov = self.get_codprov(ingrediente.product_id.product_tmpl_id.id)
+                        
+                    norden = self.get_orden(ingrediente.product_id.default_code)
+                       
+                    self.env['wizard.formulas'].create({
+                                    'x_secuencia':secuencia,
+                                    'ingr': ingrediente.product_id.id,
+                                    'cod_prov': codprov,
+                                    'cant_tot': ncant_limitante,
+                                    'unidad': ingrediente.product_id.uom_id.name,
+                                    'pct_formula': ingrediente.x_porcentaje,
+                                    'pct_categoria': ingrediente.x_porcentaje_categoria,
+                                    'x_orden': norden
+                        })
+
+                if ncomponente:
+                    ncant = ncomponente.cant_tot
+                    nccomp = ncant_limitante
+                    ncant_tot = ncant + nccomp
+                    ncomponente.write({'cant_tot': ncant_tot})
 
                     #for componente_n1 in subformula_n1:
 
