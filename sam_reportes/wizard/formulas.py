@@ -87,8 +87,11 @@ class Formulas(models.TransientModel):
 
                 if subformula:               
                     self.consolida_formula(subformula, ncant_limitante ,secuencia)
-                        
+
                 else:
+
+                    raise UserError(ingrediente.product_id.name)    
+
                     ncomponente = self.env['wizard.formulas'].search(
                         [('ingr.id', '=', ingrediente.product_id.id),
                          ('x_secuencia', '=', secuencia)])         
@@ -115,35 +118,6 @@ class Formulas(models.TransientModel):
                     nccomp = ncant_limitante
                     ncant_tot = ncant + nccomp
                     ncomponente.write({'cant_tot': ncant_tot})
-
-                    #for componente_n1 in subformula_n1:
-
-                    #    ncomponente_n1 = self.env['wizard.formulas'].search(
-                    #            [('ingr.id','=', componente_n1.product_id.id),
-                    #             ('x_secuencia','=',secuencia)])
-
-                    #    if not ncomponente_n1:
-                    #        codprov = self.env['product.supplierinfo'].search(
-                    #            [('product_tmpl_id.id', '=',
-                    #              componente_n1.product_id.product_tmpl_id.id)], limit=1
-                    #        ).product_name
-
-                    #        norden = self.get_orden(componente_n1.product_id.default_code)
-
-                    #        self.env['wizard.formulas'].create({
-                    #            'x_secuencia':secuencia,
-                    #            'ingr': componente_n1.product_id.id,
-                    #            'cod_prov': codprov,
-                    #            'cant_tot': ncant_limitante * (componente_n1.x_porcentaje / 100),
-                    #            'unidad': componente_n1.product_id.uom_id.name,
-                    #            'pct_formula': componente_n1.x_porcentaje,
-                    #            'pct_categoria': componente_n1.x_porcentaje_categoria,
-                    #            'x_orden': norden
-                    #        })
-
-                    #    if ncomponente_n1:
-                    #        ncant = ncomponente_n1.cant_tot
-                    #        ncomponente_n1.write({'cant_tot':(ncant_limitante * (componente_n1.x_porcentaje / 100)) + ncant})
 
             else:
 
@@ -177,110 +151,6 @@ class Formulas(models.TransientModel):
                     ncomponente.write({'cant_tot': ncant_tot})
 
         return    
-
-    def consolida_subformula1(self, ingredientes, nqty, secuencia):
-
-        for ingrediente in ingredientes:
-
-            #raise UserError(ingrediente.product_id.name+ ' ' +str(ingrediente.product_id.bom_count))   
-
-            ncant_limitante = nqty * (ingrediente.x_porcentaje / 100)
-            # verifica que el ingrediente se fabrique.
-            if ingrediente.product_id.bom_count > 0: #tiene subformula
-
-                bom_pf = self.env['mrp.bom'].search([(
-                        'product_tmpl_id','=',ingrediente.product_tmpl_id.id)], limit=1).id
-                
-                raise UserError(ingrediente.product_id.bom_count)        
-
-                subformula = self.env['mrp.bom.line'].search([
-                        ('bom_id.id', '=', bom_pf)])
-
-                self.consolida_subformula2(subformula, ncant_limitante ,secuencia)    
-
-            else:
-                
-                ncomponente = self.env['wizard.formulas'].search(
-                        [('ingr.id', '=', ingrediente.product_id.id),
-                         ('x_secuencia', '=', secuencia)])         
-
-                if not ncomponente:
-
-                    codprov = self.get_codprov(ingrediente.product_id.product_tmpl_id.id)
-                        
-                    norden = self.get_orden(ingrediente.product_id.default_code)
-                       
-                    self.env['wizard.formulas'].create({
-                                    'x_secuencia':secuencia,
-                                    'ingr': ingrediente.product_id.id,
-                                    'cod_prov': codprov,
-                                    'cant_tot': ncant_limitante,
-                                    'unidad': ingrediente.product_id.uom_id.name,
-                                    'pct_formula': ingrediente.x_porcentaje,
-                                    'pct_categoria': ingrediente.x_porcentaje_categoria,
-                                    'x_orden': norden
-                        })
-
-                if ncomponente:
-                    ncant = ncomponente.cant_tot
-                    nccomp = ncant_limitante
-                    ncant_tot = ncant + nccomp
-                    ncomponente.write({'cant_tot': ncant_tot})
-
-        return  
-
-    def consolida_subformula2(self, ingredientes, nqty, secuencia):
-
-        for ingrediente in ingredientes:
-
-            #raise UserError(ingrediente.product_id.name+ ' ' +str(ingrediente.product_id.bom_count))   
-
-            ncant_limitante = nqty * (ingrediente.x_porcentaje / 100)
-            # verifica que el ingrediente se fabrique.
-            if ingrediente.product_id.bom_count > 0: #tiene subformula
-
-                bom_pf = self.env['mrp.bom'].search([(
-                        'product_tmpl_id','=',ingrediente.product_tmpl_id.id)], limit=1).id
-                
-                #raise UserError(bom_pf)        
-
-                subformula = self.env['mrp.bom.line'].search([
-                        ('bom_id.id', '=', bom_pf)])
-
-                #raise UserError(subformula)        
-
-                self.consolida_formula(subformula, ncant_limitante ,secuencia)    
-
-            else:
-                
-                ncomponente = self.env['wizard.formulas'].search(
-                        [('ingr.id', '=', ingrediente.product_id.id),
-                         ('x_secuencia', '=', secuencia)])         
-
-                if not ncomponente:
-
-                    codprov = self.get_codprov(ingrediente.product_id.product_tmpl_id.id)
-                        
-                    norden = self.get_orden(ingrediente.product_id.default_code)
-                       
-                    self.env['wizard.formulas'].create({
-                                    'x_secuencia':secuencia,
-                                    'ingr': ingrediente.product_id.id,
-                                    'cod_prov': codprov,
-                                    'cant_tot': ncant_limitante,
-                                    'unidad': ingrediente.product_id.uom_id.name,
-                                    'pct_formula': ingrediente.x_porcentaje,
-                                    'pct_categoria': ingrediente.x_porcentaje_categoria,
-                                    'x_orden': norden
-                        })
-
-                if ncomponente:
-                    ncant = ncomponente.cant_tot
-                    nccomp = ncant_limitante
-                    ncant_tot = ncant + nccomp
-                    ncomponente.write({'cant_tot': ncant_tot})
-
-        return  
 
 
     # imprime formula
