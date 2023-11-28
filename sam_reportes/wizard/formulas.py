@@ -74,6 +74,7 @@ class Formulas(models.TransientModel):
 
         if not ncomponente:
             codprov = self.get_codprov(ingrediente.product_id.product_tmpl_id.id)
+            
             #norden = self.get_orden(ingrediente.product_id.default_code)
             norden = ingrediente.product_id.x_studio_sub_categoria.name
 
