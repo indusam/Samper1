@@ -3,7 +3,7 @@
 # formulas.py
 # Impresión de la fórmula de un producto..
 # VBueno 2505202111:46
-#
+# ..
 # Impresión de la fórmula de un producto con y sin consolidación.
 # Si una fórmula tiene un ingrediente fórmula, suma las cantidades de los ingr.
 # de ambas fórmulas e imprime el resultado.
@@ -74,7 +74,8 @@ class Formulas(models.TransientModel):
 
         if not ncomponente:
             codprov = self.get_codprov(ingrediente.product_id.product_tmpl_id.id)
-            norden = self.get_orden(ingrediente.product_id.default_code)
+            #norden = self.get_orden(ingrediente.product_id.default_code)
+            norden = ingrediente.product_id.x_studio_sub_categoria.name
 
             self.env['wizard.formulas'].create({
                 'x_secuencia': secuencia,
@@ -134,7 +135,8 @@ class Formulas(models.TransientModel):
 
                 codprov = self.get_codprov(ingrediente.product_id.product_tmpl_id.id)    
 
-                norden = self.get_orden(ingrediente.product_id.default_code)
+                #norden = self.get_orden(ingrediente.product_id.default_code)
+                norden = ingrediente.product_id.x_studio_sub_categoria.name
 
                 vals.append({
                     'componente': ingrediente.product_id.name,
