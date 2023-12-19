@@ -53,7 +53,7 @@
         'report/contenido_energetico_pdf.xml',
         'report/tabla_nutrimental_pdf.xml',
         'report/formulas_pdf.xml',
-        'report/formulas_costo_pdf.xml'
+        'report/formulas_costo_pdf.xml',
         'report/formula_base_carnicos_pdf.xml',
         'report/formula_base_salmuera_pdf.xml',
         'report/ant_saldos_detalle_pdf.xml'
