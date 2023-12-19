@@ -42,7 +42,7 @@
         'views/reportes.xml',
         'wizard/tabla_nutrimental_view.xml',
         'wizard/formulas_view.xml',
-        'wizard/formulas_costo_view.xml'
+        'wizard/formulas_costo_view.xml',
         'wizard/contenido_energetico_view.xml',
         'wizard/saldos_clientes_view.xml',
         'wizard/ant_saldos_detalle_view.xml',
