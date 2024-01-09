@@ -87,6 +87,7 @@ class FormulasCosto(models.TransientModel):
                 'unidad': ingrediente.product_id.uom_id.name,
                 'pct_formula': ingrediente.x_porcentaje,
                 'pct_categoria': ingrediente.x_porcentaje_categoria,
+                'costo' : ingrediente.product_id.standard_price,
                 'x_orden': norden
             })
 
@@ -148,6 +149,7 @@ class FormulasCosto(models.TransientModel):
                     'unidad': ingrediente.product_id.uom_id.name,
                     'pct_formula': ingrediente.x_porcentaje,
                     'pct_categoria': ingrediente.x_porcentaje_categoria,
+                    'costo' : ingrediente.product_id.standard_price,
                     'orden': norden
                 })
 
@@ -167,6 +169,7 @@ class FormulasCosto(models.TransientModel):
                         'unidad': ingrediente.product_id.uom_id.name,
                         'pct_formula': ingrediente.x_porcentaje,
                         'pct_categoria': ingrediente.x_porcentaje_categoria,
+                        'costo' : ingrediente.product_id.standard_price,
                         'orden': norden
                         })
 
@@ -206,7 +209,7 @@ class FormulasCosto(models.TransientModel):
                         'unidad': ingrediente.ingr.uom_id.name,
                         'pct_formula': (ingrediente.cant_tot / self.cantidad) * 100 ,
                         'pct_categoria': ingrediente.pct_categoria,
-                        'costo': ingrediente.standard_price
+                        'costo' : ingrediente.product_id.standard_price
                     })
 
         
