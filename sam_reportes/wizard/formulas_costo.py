@@ -116,7 +116,7 @@ class FormulasCosto(models.TransientModel):
         return
 
     # imprime formula
-    def imprime_formula(self):
+    def imprime_formula_costo(self):
 
         vals=[]
         ingredientes = self.env['mrp.bom.line'].search(
