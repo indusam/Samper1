@@ -48,7 +48,7 @@
         id="formula_costo_menu"
         name="Fórmulas con costeo"
         action="action_formulas_costo_wizard"
-        parent="studio_customization.samper_informes_9a4c552e-6a2c-49dc-b22f-2c77d1e02fac"
+        parent="mrp.menu_mrp_reporting"
         groups="base.group_user"
         sequence="350"/>    
 

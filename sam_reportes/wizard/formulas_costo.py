@@ -69,7 +69,7 @@ class FormulasCosto(models.TransientModel):
                         ).product_name
         return ccodprov
 
-    def crear_ncomponente(self, ingrediente, secuencia, ncant_limitante):
+    def crear_ncomponente_costo(self, ingrediente, secuencia, ncant_limitante):
         ncomponente = self.env['wizard.formulas.costo'].search(
             [('ingr.id', '=', ingrediente.product_id.id),
             ('x_secuencia', '=', secuencia)])
@@ -98,7 +98,7 @@ class FormulasCosto(models.TransientModel):
             ncomponente.write({'cant_tot': ncant_tot})
             
 
-    def consolida_formula(self, ingredientes, nqty, secuencia):
+    def consolida_formula_costo(self, ingredientes, nqty, secuencia):
         for ingrediente in ingredientes:
             ncant_limitante = nqty * (ingrediente.x_porcentaje / 100)
             # verifica que el ingrediente se fabrique.
