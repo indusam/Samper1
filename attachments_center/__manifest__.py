@@ -29,7 +29,7 @@ folder document folders attachment unique number reference unique number \
     # Check https://github.com/odoo/odoo/blob/13.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
     'category': 'Document Management',
-    'version': '15.9.0.3',
+    'version': '15.9',
     "license": "OPL-1",
     'price': 13.0,
     'currency': 'EUR',
