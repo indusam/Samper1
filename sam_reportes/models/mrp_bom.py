@@ -20,7 +20,6 @@
 #    If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 """ 
 from datetime import datetime
 from odoo import fields, models
