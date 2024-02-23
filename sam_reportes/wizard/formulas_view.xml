@@ -10,15 +10,20 @@
                     <group>
                         <field name="producto" required="1"/>
                          
-                        <field name="partidas" invisible="['|', ('cantidad','>',0), ('ing_limitante','!=',False)]"/>
+                        <field name="partidas" attrs="{'invisible': ['|',
+                                                       ('cantidad','>',0),
+                                                       ('ing_limitante','!=',False)]}"/>
                                                        
-                        <field name="cantidad" invisible="['|','|', ('ing_limitante','!=',False), ('partidas','>',0), ('cant_limitante','>',0)]"/>
+                        <field name="cantidad" attrs="{'invisible': ['|','|',
+                                                       ('ing_limitante','!=',False),
+                                                       ('partidas','>',0),('cant_limitante','>',0)]}"/>
+
                         <field name="consolidado" />
                     </group>
 
                     <group>
-                        <field name="ing_limitante" options="{'invisible': ['|', ('cantidad','>',0), ('partidas','>',0)]}"/>
-                        <field name="cant_limitante" options="{'invisible': ['|', ('cantidad','>',0), ('partidas','>',0)]}"/>
+                        <field name="ing_limitante" attrs="{'invisible': ['|', ('cantidad','>',0), ('partidas','>',0)]}"/>
+                        <field name="cant_limitante" attrs="{'invisible': ['|', ('cantidad','>',0), ('partidas','>',0)]}"/>
                     </group>
 
                 </group>
@@ -46,4 +51,5 @@
         parent="studio_customization.samper_informes_9a4c552e-6a2c-49dc-b22f-2c77d1e02fac"
         groups="base.group_user"
         sequence="349"/>    
+
 </odoo>
