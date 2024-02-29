@@ -1,0 +1,135 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* addenda_comercial_mexicana
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-06-08 14:46+0000\n"
+"PO-Revision-Date: 2022-06-08 10:51-0400\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: es_MX\n"
+"X-Generator: Poedit 3.0\n"
+
+#. module: addenda_comercial_mexicana
+#: model:ir.model.fields,field_description:addenda_comercial_mexicana.field_account_bank_statement_line__amount_letters
+#: model:ir.model.fields,field_description:addenda_comercial_mexicana.field_account_move__amount_letters
+#: model:ir.model.fields,field_description:addenda_comercial_mexicana.field_account_payment__amount_letters
+msgid "Amount in letters"
+msgstr "Monto en letras"
+
+#. module: addenda_comercial_mexicana
+#: model_terms:ir.ui.view,arch_db:addenda_comercial_mexicana.mexican_commercial_addenda
+msgid "BILLING_CURRENCY"
+msgstr ""
+
+#. module: addenda_comercial_mexicana
+#: model_terms:ir.ui.view,arch_db:addenda_comercial_mexicana.mexican_commercial_addenda
+msgid "CREDIT_NOTE"
+msgstr ""
+
+#. module: addenda_comercial_mexicana
+#: model:ir.model.fields,help:addenda_comercial_mexicana.field_account_bank_statement_line__generate_mexican_commercial_addenda
+#: model:ir.model.fields,help:addenda_comercial_mexicana.field_account_move__generate_mexican_commercial_addenda
+#: model:ir.model.fields,help:addenda_comercial_mexicana.field_account_payment__generate_mexican_commercial_addenda
+#: model:ir.model.fields,help:addenda_comercial_mexicana.field_res_partner__generate_mexican_commercial_addenda
+#: model:ir.model.fields,help:addenda_comercial_mexicana.field_res_users__generate_mexican_commercial_addenda
+msgid "Check this field if require generate Mexican Commercial Addenda"
+msgstr "Marque este campo si requiere generar Addenda Comercial Mexicana"
+
+#. module: addenda_comercial_mexicana
+#: model:ir.model,name:addenda_comercial_mexicana.model_res_company
+msgid "Companies"
+msgstr "Empresas"
+
+#. module: addenda_comercial_mexicana
+#: model:ir.model,name:addenda_comercial_mexicana.model_res_partner
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: addenda_comercial_mexicana
+#: model:ir.model,name:addenda_comercial_mexicana.model_account_edi_format
+msgid "EDI format"
+msgstr "Formato EDI"
+
+#. module: addenda_comercial_mexicana
+#: model:ir.model.fields,field_description:addenda_comercial_mexicana.field_account_bank_statement_line__generate_mexican_commercial_addenda
+#: model:ir.model.fields,field_description:addenda_comercial_mexicana.field_account_move__generate_mexican_commercial_addenda
+#: model:ir.model.fields,field_description:addenda_comercial_mexicana.field_account_payment__generate_mexican_commercial_addenda
+#: model:ir.model.fields,field_description:addenda_comercial_mexicana.field_res_partner__generate_mexican_commercial_addenda
+#: model:ir.model.fields,field_description:addenda_comercial_mexicana.field_res_users__generate_mexican_commercial_addenda
+msgid "Generate Mexican Commercial Addenda"
+msgstr "Generar Addenda Comercial Mexicana"
+
+#. module: addenda_comercial_mexicana
+#: model:ir.model.fields,field_description:addenda_comercial_mexicana.field_res_company__global_localitation_number
+#: model:ir.model.fields,field_description:addenda_comercial_mexicana.field_res_partner__global_localitation_number
+#: model:ir.model.fields,field_description:addenda_comercial_mexicana.field_res_users__global_localitation_number
+msgid "Global localitation number(GLN)"
+msgstr "Número de localización global(GLN)"
+
+#. module: addenda_comercial_mexicana
+#: model_terms:ir.ui.view,arch_db:addenda_comercial_mexicana.mexican_commercial_addenda
+msgid "INVOICE"
+msgstr "INVOICE"
+
+#. module: addenda_comercial_mexicana
+#: model:ir.model,name:addenda_comercial_mexicana.model_account_move
+msgid "Journal Entry"
+msgstr "Asiento de diario"
+
+#. module: addenda_comercial_mexicana
+#: model:ir.model,name:addenda_comercial_mexicana.model_account_move_line
+msgid "Journal Item"
+msgstr "Apunte de diario"
+
+#. module: addenda_comercial_mexicana
+#: model:ir.model.fields,field_description:addenda_comercial_mexicana.field_account_bank_statement_line__mexican_commercial_addenda
+#: model:ir.model.fields,field_description:addenda_comercial_mexicana.field_account_move__mexican_commercial_addenda
+#: model:ir.model.fields,field_description:addenda_comercial_mexicana.field_account_payment__mexican_commercial_addenda
+msgid "Mexican Commercial Addenda"
+msgstr "Addenda Comercial Mexicana"
+
+#. module: addenda_comercial_mexicana
+#: model:ir.model.fields,field_description:addenda_comercial_mexicana.field_res_company__supplier_id
+msgid "No. supplier"
+msgstr "No. Proveedor"
+
+#. module: addenda_comercial_mexicana
+#: model:ir.model.fields,field_description:addenda_comercial_mexicana.field_account_bank_statement_line__order_id
+#: model:ir.model.fields,field_description:addenda_comercial_mexicana.field_account_move__order_id
+#: model:ir.model.fields,field_description:addenda_comercial_mexicana.field_account_payment__order_id
+msgid "Sale order"
+msgstr "Pedido de Venta"
+
+#. module: addenda_comercial_mexicana
+#: model:ir.model.fields,help:addenda_comercial_mexicana.field_res_company__global_localitation_number
+msgid "Specifies the global location number (GLN) for vendor."
+msgstr "Número específico de localización global (GLN) para el proveedor."
+
+#. module: addenda_comercial_mexicana
+#: model:ir.model.fields,help:addenda_comercial_mexicana.field_res_partner__global_localitation_number
+#: model:ir.model.fields,help:addenda_comercial_mexicana.field_res_users__global_localitation_number
+msgid "Specifies the global location number (GLN) of the buyer."
+msgstr "Número específico de localización global (GLN) para el comprador."
+
+#. module: addenda_comercial_mexicana
+#: model_terms:ir.ui.view,arch_db:addenda_comercial_mexicana.mexican_commercial_addenda
+msgid "TRANSFERIDO"
+msgstr "TRANSFERIDO"
+
+#. module: addenda_comercial_mexicana
+#: model:ir.model.fields,help:addenda_comercial_mexicana.field_res_company__supplier_id
+msgid "This information is given by supplier"
+msgstr "Esta información es dada por el proveedor"
+
+#. module: addenda_comercial_mexicana
+#: model_terms:ir.ui.view,arch_db:addenda_comercial_mexicana.mexican_commercial_addenda
+msgid "VAT"
+msgstr "VAT"

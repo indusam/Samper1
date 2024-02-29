@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="w_inherit_account_move_view_addenda_comercial_mexicana" model="ir.ui.view">
+            <field name="name">w.inherit.account.invoice.form.mexican_commercial_addenda</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='partner_id']" position='after'>
+                        <field name="mexican_commercial_addenda" invisible="1"/>
+                        <field name="amount_letters" invisible="1"/>
+                        <field name="order_id" invisible="1"/>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+    </data>
+</odoo>
