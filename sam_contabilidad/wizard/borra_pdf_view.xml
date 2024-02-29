@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Formulario para borrar PDFs.
     vbueno 0110202109:33
-    test
+    test 2
 -->
 <odoo>
     <record id="report_wizard_borra_pdf_view_form" model="ir.ui.view">
