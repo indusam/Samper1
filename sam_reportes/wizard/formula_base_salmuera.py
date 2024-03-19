@@ -118,7 +118,7 @@ class FormulaBaseSalmuera(models.TransientModel):
                     ncant_limitante = total_cantidad * (ingrediente.x_porcentaje / 100)
 
                     bom_pf = self.env['mrp.bom'].search([(
-                        'product_tmpl_id','=',ingrediente.product_tmpl_id.id)]).id
+                        'product_tmpl_id','=',ingrediente.product_tmpl_id.id)], limit=1).id
 
                     subformula = self.env['mrp.bom.line'].search([
                         ('bom_id.id', '=', bom_pf)])
