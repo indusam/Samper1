@@ -22,7 +22,7 @@ class PesoCantidadCaja(models.TransientModel):
     cantidad = fields.Float(string="Cantidad por caja", digits=(10, 4))
     peso = fields.Float(string="Peso por caja", digits=(10, 4))
     
-    @api.multi
+    
     def aplicar_peso_cantidad(self):
         if not self.producto:
             raise UserError("Debe seleccionar un producto.")
