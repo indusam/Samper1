@@ -19,17 +19,13 @@ class PesoCantidadCaja(models.TransientModel):
     _description = 'Peso y cantidad en caja'
 
     producto = fields.Many2one('product.template', string="Producto")
-    cantidad = fields.Float(string="Cantidad por caja", digits=(10, 4))
-    peso = fields.Float(string="Peso por caja", digits=(10, 4))
-    
+    cantidad = fields.Float(string="Cantidad por caja", digits=(10, 4), default=lambda self: self.producto.x_cantidad_por_caja)
+    peso = fields.Float(string="Peso por caja", digits=(10, 4), default=lambda self: self.producto.x_peso_por_caja)
 
     def aplicar_peso_cantidad(self):
         if not self.producto:
             raise UserError("Debe seleccionar un producto.")
-        valores_originales = {
-            'peso_anterior': self.producto.x_peso_por_caja,
-            'cantidad_anterior': self.producto.x_cantidad_por_caja,
-        }
+        
         self.env['product.template'].browse(self.producto.id).write(valores_originales)
         self.producto.x_peso_por_caja = self.peso
         self.producto.x_cantidad_por_caja = self.cantidad
