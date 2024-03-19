@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Formulario para impresión de antiguedad de saldos detalle.
+    vbueno 1011202116:08
+-->
+<odoo>
+    <record id="wizard_peso_cantidad_caja_view_form" model="ir.ui.view">
+        <field name="name">wizard.peso.cantidad.caja.view.form</field>
+        <field name="model">wizard.pesocajacantidad</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="producto"/>
+                        <field name="cantidad"/>
+                        <field name="peso"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="aplicar_peso_cantidad" type="object" string="Guardar" class="oe_highlight"/>
+                    <button special="cancel" string="Cancelar"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_peso_cantidad_caja_wizard" model="ir.actions.act_window">
+        <field name="name">Peso y cantidad por caja</field>
+        <field name="res_model">wizard.pesocajacantidad</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="wizard_peso_cantidad_caja_view_form"/>
+        <field name="target">new</field>
+    </record>
+  
+    <menuitem
+        id="peso_cantidad_caja_menu"
+        name="Peso y cantidad por caja"
+        action="action_peso_cantidad_caja_wizard"
+        parent="mrp.menu_mrp_production_report"
+        groups="base.group_user"
+        sequence="12"/>
+   
+</odoo>
