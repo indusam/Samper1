@@ -19,8 +19,8 @@ class PesoCantidadCaja(models.TransientModel):
     _description = 'Peso y cantidad en caja'
 
     producto = fields.Many2one('product.template', string="Producto")
-    cantidad = fields.Float(string="Cantidad por caja", digits=(10, 4))
-    peso = fields.Float(string="Peso por caja", digits=(10, 4))
+    cantidad = fields.Char(string="Cantidad por caja")
+    peso = fields.Char(string="Peso por caja")
 
     @api.onchange('producto')
     def _onchange_producto(self):
