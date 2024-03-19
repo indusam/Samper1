@@ -16,10 +16,10 @@ from odoo.exceptions import UserError
 _logger = logging.getLogger(__name__)
 
 
-class Formulas(models.TransientModel):
+class FormulasCosto(models.TransientModel):
 
-    _name = 'wizard.formulas'
-    _description = 'Fórmulas'
+    _name = 'wizard.formulas.costo'
+    _description = 'Fórmulas con costeo'
 
     producto = fields.Many2one('mrp.bom', string="Producto")
     cantidad = fields.Float(string="Cantidad")
@@ -27,6 +27,7 @@ class Formulas(models.TransientModel):
     cant_limitante = fields.Float(string="Cantidad limitante")
     consolidado = fields.Boolean(string="Fórmula consolidada",  )
     partidas = fields.Integer(string="Partidas")
+    costo_total = fields.Float(string="Costo")
 
     # campos para consolidar
     x_secuencia = fields.Char(string="Número")
@@ -38,6 +39,7 @@ class Formulas(models.TransientModel):
     pct_categoria = fields.Float(string="% Grupo", digits=(6, 4))
     pct_merma = fields.Float(string="% Merma", digits=(6, 4))
     x_orden = fields.Char(string="Orden", required=False, )
+    costo = fields.Float(string="Costo")
 
 
     # permite seleccionar el ingrediente limitante.
@@ -67,8 +69,8 @@ class Formulas(models.TransientModel):
                         ).product_name
         return ccodprov
 
-    def crear_ncomponente(self, ingrediente, secuencia, ncant_limitante):
-        ncomponente = self.env['wizard.formulas'].search(
+    def crear_ncomponente_costo(self, ingrediente, secuencia, ncant_limitante):
+        ncomponente = self.env['wizard.formulas.costo'].search(
             [('ingr.id', '=', ingrediente.product_id.id),
             ('x_secuencia', '=', secuencia)])
 
@@ -77,7 +79,7 @@ class Formulas(models.TransientModel):
             #norden = self.get_orden(ingrediente.product_id.default_code)
             norden = ingrediente.product_id.x_studio_sub_categoria.name
 
-            self.env['wizard.formulas'].create({
+            self.env['wizard.formulas.costo'].create({
                 'x_secuencia': secuencia,
                 'ingr': ingrediente.product_id.id,
                 'cod_prov': codprov,
@@ -85,6 +87,7 @@ class Formulas(models.TransientModel):
                 'unidad': ingrediente.product_id.uom_id.name,
                 'pct_formula': ingrediente.x_porcentaje,
                 'pct_categoria': ingrediente.x_porcentaje_categoria,
+                'costo' : ingrediente.product_id.standard_price,
                 'x_orden': norden
             })
 
@@ -95,7 +98,7 @@ class Formulas(models.TransientModel):
             ncomponente.write({'cant_tot': ncant_tot})
             
 
-    def consolida_formula(self, ingredientes, nqty, secuencia):
+    def consolida_formula_costo(self, ingredientes, nqty, secuencia):
         for ingrediente in ingredientes:
             ncant_limitante = nqty * (ingrediente.x_porcentaje / 100)
             # verifica que el ingrediente se fabrique.
@@ -113,7 +116,7 @@ class Formulas(models.TransientModel):
         return
 
     # imprime formula
-    def imprime_formula(self):
+    def imprime_formula_costo(self):
 
         vals=[]
         ingredientes = self.env['mrp.bom.line'].search(
@@ -146,6 +149,7 @@ class Formulas(models.TransientModel):
                     'unidad': ingrediente.product_id.uom_id.name,
                     'pct_formula': ingrediente.x_porcentaje,
                     'pct_categoria': ingrediente.x_porcentaje_categoria,
+                    'costo' : ingrediente.product_id.standard_price,
                     'orden': norden
                 })
 
@@ -165,6 +169,7 @@ class Formulas(models.TransientModel):
                         'unidad': ingrediente.product_id.uom_id.name,
                         'pct_formula': ingrediente.x_porcentaje,
                         'pct_categoria': ingrediente.x_porcentaje_categoria,
+                        'costo' : ingrediente.product_id.standard_price,
                         'orden': norden
                         })
 
@@ -188,7 +193,7 @@ class Formulas(models.TransientModel):
             self.consolida_formula(ingredientes,self.cantidad,nsecuencia)
 
             #ordena la tabla para la impresión
-            bom_consolidada = self.env['wizard.formulas'].search([('x_secuencia','=',nsecuencia)])
+            bom_consolidada = self.env['wizard.formulas.costo'].search([('x_secuencia','=',nsecuencia)])
 
             bom_ordenada = sorted(bom_consolidada, key=lambda l: l.cant_tot,
                                   reverse=True)

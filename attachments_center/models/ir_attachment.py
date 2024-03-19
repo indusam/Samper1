@@ -34,6 +34,7 @@ from odoo.exceptions import ValidationError
 
 class ir_attachment_tag(models.Model):
     _name = 'ir.attachment.tag'
+    _description = 'attachment center'
     _parent_store = True
 
     name = fields.Char('Tag Name', required=True, translate=True)
