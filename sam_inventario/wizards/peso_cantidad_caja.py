@@ -24,6 +24,9 @@ class PesoCantidadCaja(models.TransientModel):
 
     @api.onchange('producto')
     def _onchange_producto(self):
+
+        raise UserError("onchange.")
+
         if self.producto:
             self.peso = self.producto.x_peso_por_caja
             self.cantidad = self.producto.x_cantidad_por_caja
