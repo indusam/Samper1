@@ -24,18 +24,11 @@ class PesoCantidadCaja(models.TransientModel):
 
     @api.onchange('producto')
     def _onchange_producto(self):
-
-        if self.producto:
-            self.peso = self.producto.x_peso_por_caja
-            self.cantidad = self.producto.x_cantidad_por_caja
-
+        self.peso = self.producto.x_peso_por_caja if self.producto else 0
+        self.cantidad = self.producto.x_cantidad_por_caja if self.producto else 0
 
     def aplicar_peso_cantidad(self):
         if not self.producto:
             raise UserError("Debe seleccionar un producto.")
-        
-        self.env['product.template'].browse(self.producto.id).write(valores_originales)
-        self.producto.x_peso_por_caja = self.peso
-        self.producto.x_cantidad_por_caja = self.cantidad
+        self.producto.write({'x_peso_por_caja': self.peso, 'x_cantidad_por_caja': self.cantidad})
         return True
-

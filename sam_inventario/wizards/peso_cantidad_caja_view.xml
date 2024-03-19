@@ -36,7 +36,7 @@
         id="peso_cantidad_caja_menu"
         name="Peso y cantidad por caja"
         action="action_peso_cantidad_caja_wizard"
-        parent="mrp.menu_mrp_production_report"
+        parent="mrp.product_menu"
         groups="base.group_user"
         sequence="12"/>
    
