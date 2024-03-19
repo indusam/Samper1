@@ -37,6 +37,7 @@ _logger = logging.getLogger(__name__)
 
 class IrAttachmentWizard(models.Model):
     _name = "ir.attachment.wizard"
+    _description = 'attachment center wizard'
 
     # category_ids = fields.Many2many(
     #     comodel_name="ir.attachment.category",
