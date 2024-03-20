@@ -3,7 +3,7 @@
 # peso_cantidad_caja.py
 # captura de peso y cantidad por caja de un producto.
 # VBueno 1903202411:29
-# .
+# ..
 
 import logging
 from odoo.tools.float_utils import float_round
