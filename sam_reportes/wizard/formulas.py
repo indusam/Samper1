@@ -6,7 +6,7 @@
 # .
 # Impresión de la fórmula de un producto con y sin consolidación.
 # Si una fórmula tiene un ingrediente fórmula, suma las cantidades de los ingr.
-# de ambas fórmulas e imprime el resultado..
+# de ambas fórmulas e imprime el resultado.
 
 import logging
 from odoo.tools.float_utils import float_round
