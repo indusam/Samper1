@@ -195,6 +195,7 @@ class Formulas(models.TransientModel):
             bom_ordenada1 = sorted(bom_ordenada, key=lambda l: l.x_orden, reverse=False)
 
             for ingrediente in bom_ordenada1:
+                
                 if ingrediente.cant_tot > 0:
                     vals.append({
                         'orden': ingrediente.x_orden,
