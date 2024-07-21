@@ -3,7 +3,7 @@
 # formulas.py
 # Impresión de la fórmula de un producto..
 # VBueno 2505202111:46
-# .
+# 
 # Impresión de la fórmula de un producto con y sin consolidación.
 # Si una fórmula tiene un ingrediente fórmula, suma las cantidades de los ingr.
 # de ambas fórmulas e imprime el resultado.
@@ -195,6 +195,7 @@ class Formulas(models.TransientModel):
             bom_ordenada1 = sorted(bom_ordenada, key=lambda l: l.x_orden, reverse=False)
 
             for ingrediente in bom_ordenada1:
+                
                 if ingrediente.cant_tot > 0:
                     vals.append({
                         'orden': ingrediente.x_orden,
