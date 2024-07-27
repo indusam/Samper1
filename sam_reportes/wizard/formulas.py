@@ -22,7 +22,6 @@ class Formulas(models.TransientModel):
     _description = 'Fórmulas'
 
     producto = fields.Many2one('mrp.bom', string="Producto")
-    referencia = fields.Char(string="Referencia")
     cantidad = fields.Float(string="Cantidad")
     ing_limitante = fields.Many2one('mrp.bom.line',string="Ingrediente limitante")
     cant_limitante = fields.Float(string="Cantidad limitante")
@@ -45,7 +44,6 @@ class Formulas(models.TransientModel):
     @api.onchange('producto')
     def onchange_producto(self):
         nlista = self.producto.id
-        self.referencia = self.producto.code
         # self.pct_merma = self.producto.product_tmpl_id.x_pct_merma
         for rec in self:
             return {'domain': {'ing_limitante':
