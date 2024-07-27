@@ -213,7 +213,7 @@ class Formulas(models.TransientModel):
         data = {'ids': self.ids,
                 'model':self._name,
                 'vals':vals,
-                'producto':self.producto.product_tmpl_id.name+' - '+self.referencia,
+                'producto': self.producto.product_tmpl_id.name + ' - ' + self.producto.code,
                 'codigo': self.producto.product_tmpl_id.default_code,
                 'cantidad':self.cantidad,
                 'ing_limitante':self.ing_limitante,
