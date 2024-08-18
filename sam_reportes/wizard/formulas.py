@@ -3,7 +3,7 @@
 # formulas.py
 # Impresión de la fórmula de un producto..
 # VBueno 1707202411:14
-# v16 producción
+# v16 producción 1
 # Impresión de la fórmula de un producto con y sin consolidación.
 # Si una fórmula tiene un ingrediente fórmula, suma las cantidades de los ingr.
 # de ambas fórmulas e imprime el resultado.
