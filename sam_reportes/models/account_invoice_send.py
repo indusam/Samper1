@@ -27,6 +27,7 @@ from odoo import fields, models
 from odoo.tools.safe_eval import safe_eval
 
 
+# La opción de imprimir  es False por Default
 class AccountInvoiceSend(models.TransientModel):
 
     _inherit = 'account.invoice.send'
