@@ -27,7 +27,7 @@ from odoo import fields, models
 from odoo.tools.safe_eval import safe_eval
 
 
-class AccountInvoiceSend(models.Model):
+class AccountInvoiceSend(models.TransientModel):
 
     _inherit = 'account.invoice.send'
 
