@@ -54,7 +54,7 @@ folder document folders attachment unique number reference unique number \
     ],
     'assets': {
         'web.assets_backend': [
-            'attachments_center/static/**/*',
+            'attachments_center/static/src/js/webKanbanRecord.js',
         ],
     },
 }
