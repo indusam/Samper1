@@ -1,91 +1,75 @@
 
-odoo.define('attachments_center.webKanbanRecord', function(require) {
-    "use strict";
+/** @odoo-module **/
 
-    var KanbanRecord = require('web.KanbanRecord');
-    var session = require('web.session');
+import { KanbanRecord } from "@web/views/kanban/kanban_record";
+import { session } from "@web/session";
+import { patch } from "@web/core/utils/patch";
 
-    KanbanRecord.include({
-        events: _.extend({}, KanbanRecord.prototype.events, {
-            'click .on_preview_ms': '_onPreviewMSAttachment',
-            'click .on_preview_google': '_onPreviewGoogleAttachment',
-        }),
+patch(KanbanRecord.prototype, 'attachments_center.webKanbanRecord', {
+    setup() {
+        this._super(...arguments);
+    },
 
-        attachmentUrl() {
-            return session.url('/web/content', {
-                id: this.recordData.id,
-                download: true,
-            });
-        },
+    // Añadimos eventos adicionales para los botones de previsualización
+    events: {
+        ...KanbanRecord.prototype.events,
+        'click .on_preview_ms': '_onPreviewMSAttachment',
+        'click .on_preview_google': '_onPreviewGoogleAttachment',
+    },
 
-        async _generateAccessToken() {
-            let access_token = await this._rpc({
-                model: 'ir.attachment',
-                method: 'generate_access_token',
-                args: [
-                    [this.recordData.id]
-                ],
-            })
-            return access_token;
-        },
+    // Generar la URL del adjunto
+    attachmentUrl() {
+        return session.url('/web/content', {
+            id: this.record.data.id,
+            download: true,
+        });
+    },
 
-        async _onPreviewMSAttachment(ev) {
-            ev.stopPropagation();
-            ev.preventDefault();
-            let odoo_url = this.attachmentUrl();
-            if (this.recordData.type != 'url' && !this.recordData.public){
-                let access_token = await this._generateAccessToken();
-                odoo_url += '&access_token=' + access_token;
-            }
-    
-            var url = 'https://view.officeapps.live.com/op/embed.aspx?src='+ encodeURIComponent(odoo_url);
-            if (this.recordData.type === 'url')
-                url = this.recordData.url;
-                
-            window.open(url, '_blank');
-        },
+    // Generar un token de acceso para los adjuntos privados
+    async _generateAccessToken() {
+        const access_token = await this.rpc({
+            model: 'ir.attachment',
+            method: 'generate_access_token',
+            args: [
+                [this.record.data.id]
+            ],
+        });
+        return access_token;
+    },
 
-        async _onPreviewGoogleAttachment(ev) {
-            ev.stopPropagation();
-            ev.preventDefault();
-            let odoo_url = this.attachmentUrl();
-            if (this.recordData.type != 'url' && !this.recordData.public){
-                let access_token = await this._generateAccessToken();
-                odoo_url += '&access_token=' + access_token;
-            }
-    
-            var url = 'https://docs.google.com/viewer?url='+ encodeURIComponent(odoo_url);
-            if (this.recordData.type === 'url')
-                url = this.recordData.url;
-    
-            window.open(url, '_blank');
-        },
-        //--------------------------------------------------------------------------
-        // Private
-        //--------------------------------------------------------------------------
-    
-        /**
-         * @override
-         * @private
-         */
-        // _openRecord: function () {
-        //     if (this.modelName === 'ir.attachment' && this.$el.parents('.o_attachments_center_attendance_kanban').length) {
-        //         // needed to diffentiate : check in/out kanban view of employees <-> standard employee kanban view
-        //         var action = {
-        //             type: 'ir.actions.client',
-        //             name: 'Confirm',
-        //             tag: 'hr_attendance_kiosk_confirm',
-        //             employee_id: this.record.id.raw_value,
-        //             employee_name: this.record.name.raw_value,
-        //             employee_state: this.record.attendance_state.raw_value,
-        //             employee_hours_today: this.record.hours_today.raw_value,
-        //         };
-        //         this.do_action(action);
-        //     } else {
-        //         this._super.apply(this, arguments);
-        //     }
-        // }
-    });
-    
-    });
-    
+    // Previsualizar adjuntos de Microsoft Office
+    async _onPreviewMSAttachment(ev) {
+        ev.stopPropagation();
+        ev.preventDefault();
+        let odoo_url = this.attachmentUrl();
+        if (this.record.data.type !== 'url' && !this.record.data.public) {
+            const access_token = await this._generateAccessToken();
+            odoo_url += '&access_token=' + access_token;
+        }
+
+        let url = 'https://view.officeapps.live.com/op/embed.aspx?src=' + encodeURIComponent(odoo_url);
+        if (this.record.data.type === 'url') {
+            url = this.record.data.url;
+        }
+
+        window.open(url, '_blank');
+    },
+
+    // Previsualizar adjuntos de Google Docs
+    async _onPreviewGoogleAttachment(ev) {
+        ev.stopPropagation();
+        ev.preventDefault();
+        let odoo_url = this.attachmentUrl();
+        if (this.record.data.type !== 'url' && !this.record.data.public) {
+            const access_token = await this._generateAccessToken();
+            odoo_url += '&access_token=' + access_token;
+        }
+
+        let url = 'https://docs.google.com/viewer?url=' + encodeURIComponent(odoo_url);
+        if (this.record.data.type === 'url') {
+            url = this.record.data.url;
+        }
+
+        window.open(url, '_blank');
+    },
+});
