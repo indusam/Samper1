@@ -57,4 +57,5 @@ folder document folders attachment unique number reference unique number \
             'attachments_center/static/src/js/webKanbanRecord.js',
         ],
     },
+    'installable': True,
 }
