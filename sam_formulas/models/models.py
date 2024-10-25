@@ -59,6 +59,8 @@ class ListaMaterialesHeader(models.Model):
             percentage = 0.0
             _logger.debug(f"Computing x_percentage_of_product for BOM {bom.id} with product_id: {product_id}")
 
+            raise UserError(product_id)
+
             if product_id:
                 # Filtrar la línea de la BoM que corresponde al producto
                 line = bom.bom_line_ids.filtered(lambda l: l.product_id.id == product_id)
