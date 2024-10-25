@@ -46,14 +46,23 @@ class ListaMaterialesHeader(models.Model):
 
     @api.depends('bom_line_ids.x_porcentaje', 'bom_line_ids.product_id')
     def _compute_x_percentage_of_product(self):
-        # Extraer el ID del producto que se está consultando desde el contexto
-        product_id = self.env.context.get('default_product_id')
         for bom in self:
+            # Extraer el ID del producto que se está consultando desde el contexto
+            product_id = self.env.context.get('default_product_id')
             percentage = 0.0
-            # Buscar la línea de la BoM que coincide con el producto
-            line = bom.bom_line_ids.filtered(lambda l: l.product_id.id == product_id)
-            if line:
-                percentage = line.x_porcentaje
+
+            # Mensaje de depuración para verificar el contexto y producto
+            _logger.debug(f"Computing x_percentage_of_product for BOM {bom.id} with product_id: {product_id}")
+
+            if product_id:
+                # Buscar la línea de la BoM que coincide con el producto
+                line = bom.bom_line_ids.filtered(lambda l: l.product_id.id == product_id)
+                if line:
+                    percentage = line.x_porcentaje
+                    _logger.debug(f"Found line with percentage: {percentage} for product {line.product_id.name}")
+                else:
+                    _logger.debug(f"No line found for product_id {product_id} in BOM {bom.id}")
+
             bom.x_percentage_of_product = percentage
 
 
