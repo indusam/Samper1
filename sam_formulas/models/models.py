@@ -43,7 +43,8 @@ class ListaMaterialesHeader(models.Model):
                                               string="Ingrediente limitante")
     x_percentage_of_product = fields.Float(
         string='Percentage of Product',
-        compute='_compute_x_percentage_of_product'
+        digits = (3,4),
+        compute='_compute_x_percentage_of_product',
     )
 
     @api.depends('bom_line_ids.x_porcentaje', 'bom_line_ids.product_id')
@@ -57,20 +58,14 @@ class ListaMaterialesHeader(models.Model):
                 # Buscamos la línea que coincide con el product_id
                 found_percentage = False
                 for line in bom.bom_line_ids:
-
-                    #raise UserError('line.product_id.id :'+ str(line.product_id.id)+' product_id: '+str(product_id))
-
                     if line.product_id.product_tmpl_id.id == product_id:
                         percentage = line.x_porcentaje
                         found_percentage = True
-                        _logger.debug(f"Found line with percentage: {percentage} for product {line.product_id.name}")
                         break  # Salimos del bucle una vez que encontramos el porcentaje
-            
-                if not found_percentage:
-                    _logger.debug(f"No line found for product_id {product_id} in BOM {bom.id}")
             
             # Asignar el porcentaje al campo calculado
             bom.x_percentage_of_product = percentage
+
 
     @api.onchange('x_cantidad_il')
     def onchange_x_cantidad_il(self):
