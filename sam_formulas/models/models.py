@@ -53,6 +53,8 @@ class ListaMaterialesHeader(models.Model):
             product_id = self.env.context.get('default_product_id')
             percentage = 0.0
 
+            raise UserError(product_id)
+
             # Mensaje de depuración para verificar el contexto y producto
             _logger.debug(f"Computing x_percentage_of_product for BOM {bom.id} with product_id: {product_id}")
 
