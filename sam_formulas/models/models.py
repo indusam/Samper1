@@ -41,7 +41,7 @@ class ListaMaterialesHeader(models.Model):
     x_cantidad_il = fields.Float(string="Cantidad Limitante", digits=(12, 4))
     x_ingrediente_limitante = fields.Many2one("mrp.bom.line",
                                               string="Ingrediente limitante")
-    x_qty_of_product = fields.Float(string="Cantidad", digits=(12,4))
+    #x_qty_of_product = fields.Float(string="Cantidad", digits=(12,4))
     x_percentage_of_product = fields.Float(
         string='% de la fórmula',
         digits = (3,4),
@@ -54,7 +54,7 @@ class ListaMaterialesHeader(models.Model):
             # Intentar obtener el product_id desde el contexto
             product_id = self.env.context.get('default_product_id') or self.env.context.get('active_id') or self.env.context.get('product_id')
             percentage = 0.0  # Valor predeterminado
-            qty = 0.0
+            #qty = 0.0
 
             if product_id:
                 # Buscamos la línea que coincide con el product_id
@@ -62,13 +62,13 @@ class ListaMaterialesHeader(models.Model):
                 for line in bom.bom_line_ids:
                     if line.product_id.product_tmpl_id.id == product_id:
                         percentage = line.x_porcentaje
-                        qty = line.product_qty
+                        #qty = line.product_qty
                         found_percentage = True
                         break  # Salimos del bucle una vez que encontramos el porcentaje
             
             # Asignar el porcentaje al campo calculado
             bom.x_percentage_of_product = percentage
-            bom.x_qty_of_product = qty
+            #bom.x_qty_of_product = qty
 
     @api.onchange('x_cantidad_il')
     def onchange_x_cantidad_il(self):
