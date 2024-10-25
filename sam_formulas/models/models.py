@@ -58,9 +58,9 @@ class ListaMaterialesHeader(models.Model):
                 found_percentage = False
                 for line in bom.bom_line_ids:
 
-                    raise UserError('line.product_id.id :'+ str(line.product_id.id)+' product_id: '+str(product_id))
+                    #raise UserError('line.product_id.id :'+ str(line.product_id.id)+' product_id: '+str(product_id))
 
-                    if line.product_id.id == product_id:
+                    if line.product_id.id == product_id.product_tmpl_id:
                         percentage = line.x_porcentaje
                         found_percentage = True
                         _logger.debug(f"Found line with percentage: {percentage} for product {line.product_id.name}")
