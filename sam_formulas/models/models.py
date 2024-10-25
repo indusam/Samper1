@@ -50,7 +50,8 @@ class ListaMaterialesHeader(models.Model):
     def _compute_x_percentage_of_product(self):
         for bom in self:
             # Extraer el ID del producto que se está consultando desde el contexto
-            product_id = self.env.context.get('default_product_id')
+            # product_id = self.env.context.get('default_product_id')
+            product_id = self.product_id
             percentage = 0.0
 
             raise UserError(product_id)
