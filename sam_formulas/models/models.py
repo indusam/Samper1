@@ -57,9 +57,11 @@ class ListaMaterialesHeader(models.Model):
                 # Buscamos la línea que coincide con el product_id
                 found_percentage = False
                 for line in bom.bom_line_ids:
+
+                    raise UserError('si entra al for')    
+
                     if line.product_id.id == product_id:
                         percentage = line.x_porcentaje
-                        raise UserError(line.x_porcentaje)
                         found_percentage = True
                         _logger.debug(f"Found line with percentage: {percentage} for product {line.product_id.name}")
                         break  # Salimos del bucle una vez que encontramos el porcentaje
