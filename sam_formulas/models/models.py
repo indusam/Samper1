@@ -57,6 +57,7 @@ class ListaMaterialesHeader(models.Model):
             bom.x_percentage_of_product = percentage
 
 
+    
     @api.onchange('x_cantidad_il')
     def onchange_x_cantidad_il(self):
         nlista = self.product_tmpl_id.id

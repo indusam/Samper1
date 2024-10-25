@@ -3,7 +3,7 @@
 # ant_saldos_detalle.py
 # Reporte de detalle de antiguedad de saldos de clientes.
 # VBueno 0911202115:37
-# upgrade 16.00 1
+# upgrade 17.00 1
 
 import datetime
 import logging
