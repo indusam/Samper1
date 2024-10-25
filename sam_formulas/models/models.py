@@ -60,7 +60,7 @@ class ListaMaterialesHeader(models.Model):
 
                     #raise UserError('line.product_id.id :'+ str(line.product_id.id)+' product_id: '+str(product_id))
 
-                    if line.product_id.id == product_id.product_tmpl_id:
+                    if line.product_id.id == product_id.product_tmpl_id.id:
                         percentage = line.x_porcentaje
                         found_percentage = True
                         _logger.debug(f"Found line with percentage: {percentage} for product {line.product_id.name}")
