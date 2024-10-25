@@ -49,27 +49,26 @@ class ListaMaterialesHeader(models.Model):
     @api.depends('bom_line_ids.x_porcentaje', 'bom_line_ids.product_id')
     def _compute_x_percentage_of_product(self):
         for bom in self:
-            # Extraer el ID del producto que se está consultando desde el contexto
-            # product_id = self.env.context.get('default_product_id')
-            product_id = self.product_id
+            # Intentar obtener el product_id directamente desde las líneas relacionadas si el contexto falla
+            product_id = self.env.context.get('default_product_id') or self.env.context.get('active_id') or self.env.context.get('product_id')
+
+            # Si el contexto no tiene el ID, intentamos con las líneas de producto si se visualiza desde el producto
+            if not product_id and bom.bom_line_ids:
+                product_id = bom.bom_line_ids[0].product_id.id
+
             percentage = 0.0
-
-            raise UserError(product_id)
-
-            # Mensaje de depuración para verificar el contexto y producto
             _logger.debug(f"Computing x_percentage_of_product for BOM {bom.id} with product_id: {product_id}")
 
             if product_id:
-                # Buscar la línea de la BoM que coincide con el producto
+                # Filtrar la línea de la BoM que corresponde al producto
                 line = bom.bom_line_ids.filtered(lambda l: l.product_id.id == product_id)
                 if line:
-                    percentage = line.x_porcentaje
-                    _logger.debug(f"Found line with percentage: {percentage} for product {line.product_id.name}")
+                    percentage = line[0].x_porcentaje
+                    _logger.debug(f"Found line with percentage: {percentage} for product {line[0].product_id.name}")
                 else:
                     _logger.debug(f"No line found for product_id {product_id} in BOM {bom.id}")
 
             bom.x_percentage_of_product = percentage
-
 
     @api.onchange('x_cantidad_il')
     def onchange_x_cantidad_il(self):
