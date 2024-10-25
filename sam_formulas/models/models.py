@@ -44,7 +44,6 @@ class ListaMaterialesHeader(models.Model):
         compute='_compute_x_percentage_of_product'
     )
 
-
     @api.depends('bom_line_ids.x_porcentaje', 'bom_line_ids.product_id')
     def _compute_x_percentage_of_product(self):
         # Extraer el ID del producto que se está consultando desde el contexto
@@ -58,7 +57,6 @@ class ListaMaterialesHeader(models.Model):
             bom.x_percentage_of_product = percentage
 
 
-    
     @api.onchange('x_cantidad_il')
     def onchange_x_cantidad_il(self):
         nlista = self.product_tmpl_id.id

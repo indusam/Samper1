@@ -10,11 +10,11 @@
                     <group>
                         <field name="producto" required="1"/>
                          
-                        <field name="partidas" modifiers="{'invisible': ['|',
+                        <field name="partidas" attrs="{'invisible': ['|',
                                                        ('cantidad','>',0),
                                                        ('ing_limitante','!=',False)]}"/>
                                                        
-                        <field name="cantidad" modifiers="{'invisible': ['|','|',
+                        <field name="cantidad" attrs="{'invisible': ['|','|',
                                                        ('ing_limitante','!=',False),
                                                        ('partidas','>',0),('cant_limitante','>',0)]}"/>
 
@@ -22,8 +22,8 @@
                     </group>
 
                     <group>
-                        <field name="ing_limitante" modifiers="{'invisible': ['|', ('cantidad','>',0), ('partidas','>',0)]}"/>
-                        <field name="cant_limitante" modifiers="{'invisible': ['|', ('cantidad','>',0), ('partidas','>',0)]}"/>
+                        <field name="ing_limitante" attrs="{'invisible': ['|', ('cantidad','>',0), ('partidas','>',0)]}"/>
+                        <field name="cant_limitante" attrs="{'invisible': ['|', ('cantidad','>',0), ('partidas','>',0)]}"/>
                     </group>
 
                 </group>
