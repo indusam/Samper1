@@ -49,28 +49,24 @@ class ListaMaterialesHeader(models.Model):
     @api.depends('bom_line_ids.x_porcentaje', 'bom_line_ids.product_id')
     def _compute_x_percentage_of_product(self):
         for bom in self:
-            # Intentar obtener el product_id directamente desde las líneas relacionadas si el contexto falla
+            # Intentar obtener el product_id desde el contexto
             product_id = self.env.context.get('default_product_id') or self.env.context.get('active_id') or self.env.context.get('product_id')
-
-            # Si el contexto no tiene el ID, intentamos con las líneas de producto si se visualiza desde el producto
-            if not product_id and bom.bom_line_ids:
-                product_id = bom.bom_line_ids[0].product_id.id
-
-            percentage = 0.0
-            _logger.debug(f"Computing x_percentage_of_product for BOM {bom.id} with product_id: {product_id}")
+            percentage = 0.0  # Valor predeterminado
 
             if product_id:
-                # Filtrar la línea de la BoM que corresponde al producto
-                line = bom.bom_line_ids.filtered(lambda l: l.product_id.id == product_id)
-                
-                raise UserError(line)
-
-                if line:
-                    percentage = line[0].x_porcentaje
-                    _logger.debug(f"Found line with percentage: {percentage} for product {line[0].product_id.name}")
-                else:
+                # Buscamos la línea que coincide con el product_id
+                found_percentage = False
+                for line in bom.bom_line_ids:
+                    if line.product_id.id == product_id:
+                        percentage = line.x_porcentaje
+                        found_percentage = True
+                        _logger.debug(f"Found line with percentage: {percentage} for product {line.product_id.name}")
+                        break  # Salimos del bucle una vez que encontramos el porcentaje
+            
+                if not found_percentage:
                     _logger.debug(f"No line found for product_id {product_id} in BOM {bom.id}")
-
+            
+            # Asignar el porcentaje al campo calculado
             bom.x_percentage_of_product = percentage
 
     @api.onchange('x_cantidad_il')
