@@ -41,7 +41,9 @@ class ListaMaterialesHeader(models.Model):
     x_cantidad_il = fields.Float(string="Cantidad Limitante", digits=(12, 4))
     x_ingrediente_limitante = fields.Many2one("mrp.bom.line",
                                               string="Ingrediente limitante")    
-    x_qty_of_product = fields.Float(string="Cantidad", digits=(12,4))
+    x_qty_of_product = fields.Float(string="Cantidad", 
+                                    digits=(12,4), 
+                                    compute='_compute_x_percentage_of_product')
     x_percentage_of_product = fields.Float(
         string='% de la fórmula',
         digits = (3,4),
