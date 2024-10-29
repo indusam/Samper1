@@ -41,12 +41,13 @@ class ListaMaterialesHeader(models.Model):
     x_cantidad_il = fields.Float(string="Cantidad Limitante", digits=(12, 4))
     x_ingrediente_limitante = fields.Many2one("mrp.bom.line",
                                               string="Ingrediente limitante")    
+    x_qty_of_product = fields.Float(string="Cantidad", digits=(12,4))
     x_percentage_of_product = fields.Float(
         string='% de la fórmula',
         digits = (3,4),
         compute='_compute_x_percentage_of_product',
     )
-    #x_qty_of_product = fields.Float(string="Cantidad", digits=(12,4))
+
 
 
     @api.depends('bom_line_ids.x_porcentaje', 'bom_line_ids.product_id')
