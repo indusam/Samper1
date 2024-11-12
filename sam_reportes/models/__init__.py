@@ -21,4 +21,5 @@
 #
 ##############################################################################
 
-from . import mrp_bom, account_invoice_send
+from . import mrp_bom
+# , account_invoice_send
