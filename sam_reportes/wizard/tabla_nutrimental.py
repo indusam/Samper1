@@ -2,7 +2,7 @@
 
 # tabla_nutrimental.py
 # Impresión de la tabla nutrimental de un producto.
-# VBueno 1603202112:12 v17
+# VBueno 1603202112:12
 
 # En product.product (y/o product.template) están los porcentajes de proteínas,
 # grasa, grasa saturada, humedad, carbohidratos, azúcares y sodio para hacer el

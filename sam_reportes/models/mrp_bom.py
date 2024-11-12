@@ -3,7 +3,7 @@
 #
 #    VBueno
 #    Copyright (C) 2021-TODAY Industrias Alimenticias SAM SA de CV
-#    Author: VBueno 17
+#    Author: VBueno
 #    you can modify it under the terms of the GNU LESSER
 #    GENERAL PUBLIC LICENSE (LGPL v3), Version 3.
 #
