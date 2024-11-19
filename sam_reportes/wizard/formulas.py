@@ -43,11 +43,14 @@ class Formulas(models.TransientModel):
     # permite seleccionar el ingrediente limitante.
     @api.onchange('producto')
     def onchange_producto(self):
-        nlista = self.producto.id
-        # self.pct_merma = self.producto.product_tmpl_id.x_pct_merma
         for rec in self:
-            return {'domain': {'ing_limitante':
-                                   [('bom_id', '=', nlista)]}}
+            if rec.producto:
+                nlista = rec.producto.id
+                # Aplicar un dominio al campo 'ing_limitante'
+                return {'domain': {'ing_limitante': [('bom_id', '=', nlista)]}}
+            else:
+                # Si no hay producto seleccionado, eliminar el dominio
+                return {'domain': {'ing_limitante': []}}
 
     def get_orden(self, codigo_producto):
         prefix = codigo_producto[:2]  # Tomar las dos primeras letras
