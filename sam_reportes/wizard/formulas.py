@@ -56,6 +56,7 @@ class Formulas(models.TransientModel):
                 # Si no hay producto seleccionado, eliminar el dominio
                 return {'domain': {'ing_limitante': []}}
 
+
     def get_orden(self, codigo_producto):
         prefix = codigo_producto[:2]  # Tomar las dos primeras letras
         ordenes = {
@@ -227,5 +228,7 @@ class Formulas(models.TransientModel):
                 }
 
         return self.env.ref('sam_reportes.formulas_reporte').report_action(self, data=data)
+        #report = self.env.ref('sam_reportes.formulas_reporte')
+        #return report.report_action(self, data=data)
         #report = self.env.ref('sam_reportes.formulas_reporte')
         #return report.report_action(self, data=data)
