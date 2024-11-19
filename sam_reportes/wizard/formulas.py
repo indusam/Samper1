@@ -40,14 +40,14 @@ class Formulas(models.TransientModel):
     x_orden = fields.Char(string="Orden", required=False, )
 
 
-    # permite seleccionar el ingrediente limitante.
     @api.onchange('producto')
     def onchange_producto(self):
         for rec in self:
             if rec.producto:
-                nlista = rec.producto.id
-                # Aplicar un dominio al campo 'ing_limitante'
-                return {'domain': {'ing_limitante': [('bom_id', '=', nlista)]}}
+                # Obtener el ID de la lista de materiales seleccionada
+                bom_id = rec.producto.id
+                # Filtrar las líneas de la BOM asociadas al producto
+                return {'domain': {'ing_limitante': [('bom_id', '=', bom_id)]}}
             else:
                 # Si no hay producto seleccionado, eliminar el dominio
                 return {'domain': {'ing_limitante': []}}
