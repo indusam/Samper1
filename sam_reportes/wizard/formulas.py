@@ -23,7 +23,11 @@ class Formulas(models.TransientModel):
 
     producto = fields.Many2one('mrp.bom', string="Producto")
     cantidad = fields.Float(string="Cantidad")
-    ing_limitante = fields.Many2one('mrp.bom.line',string="Ingrediente limitante")
+    ing_limitante = fields.Many2one(
+        'mrp.bom.line',
+        string="Ingrediente limitante",
+        domain="[('bom_id', '=', producto)]"  # Filtra las líneas según la BOM seleccionada
+    )
     cant_limitante = fields.Float(string="Cantidad limitante")
     consolidado = fields.Boolean(string="Fórmula consolidada",  )
     partidas = fields.Integer(string="Partidas")
