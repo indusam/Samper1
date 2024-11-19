@@ -6,31 +6,36 @@
         <field name="name">wizard.formulas.view.form</field>
         <field name="arch" type="xml">
             <form>
-                <group>
+                <sheet>
                     <group>
-                        <field name="producto" required="1"/>
-                         
-                        <field name="partidas" attrs="{'invisible': ['|',
-                                                       ('cantidad','>',0),
-                                                       ('ing_limitante','!=',False)]}"/>
-                                                       
-                        <field name="cantidad" attrs="{'invisible': ['|','|',
-                                                       ('ing_limitante','!=',False),
-                                                       ('partidas','>',0),('cant_limitante','>',0)]}"/>
+                        <group>
+                            <field name="producto" required="1"/>
+                            
+                            <field name="partidas">
+                                <attribute name="modifiers">{'invisible': ['|', ('cantidad', '>', 0), ('ing_limitante', '!=', False)]}</attribute>
+                            </field>
+                                                        
+                            <field name="cantidad">
+                                <attribute name="modifiers">{'invisible': ['|', '|', ('ing_limitante', '!=', False), ('partidas', '>', 0), ('cant_limitante', '>', 0)]}</attribute>
+                            </field>
 
-                        <field name="consolidado" />
+                            <field name="consolidado"/>
+                        </group>
+
+                        <group>
+                            <field name="ing_limitante">
+                                <attribute name="modifiers">{'invisible': ['|', ('cantidad', '>', 0), ('partidas', '>', 0)]}</attribute>
+                            </field>
+                            <field name="cant_limitante">
+                                <attribute name="modifiers">{'invisible': ['|', ('cantidad', '>', 0), ('partidas', '>', 0)]}</attribute>
+                            </field>
+                        </group>
                     </group>
-
-                    <group>
-                        <field name="ing_limitante" attrs="{'invisible': ['|', ('cantidad','>',0), ('partidas','>',0)]}"/>
-                        <field name="cant_limitante" attrs="{'invisible': ['|', ('cantidad','>',0), ('partidas','>',0)]}"/>
-                    </group>
-
-                </group>
-                <footer>
-                    <button name="imprime_formula" type="object" string="Imprimir" class="oe_highlight"/>
-                    <button special="cancel" string="Cancelar"/>
-                </footer>
+                    <footer>
+                        <button name="imprime_formula" type="object" string="Imprimir" class="btn-primary"/>
+                        <button special="cancel" string="Cancelar"/>
+                    </footer>
+                </sheet>
             </form>
         </field>
     </record>
