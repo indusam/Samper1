@@ -10,11 +10,15 @@
                         <group>
                             <field name="producto" required="1"/>
 
-                            <!-- Partidas será invisible si ing_limitante tiene valor -->
-                            <field name="partidas" attrs="{'invisible': [('ing_limitante', '!=', False)]}"/>
+                            <!-- Control de visibilidad para 'partidas' -->
+                            <div t-if="not record.ing_limitante">
+                                <field name="partidas"/>
+                            </div>
 
-                            <!-- Cantidad será invisible si ing_limitante tiene valor -->
-                            <field name="cantidad" attrs="{'invisible': [('ing_limitante', '!=', False)]}"/>
+                            <!-- Control de visibilidad para 'cantidad' -->
+                            <div t-if="not record.ing_limitante">
+                                <field name="cantidad"/>
+                            </div>
 
                             <field name="consolidado"/>
                         </group>
@@ -32,22 +36,6 @@
             </form>
         </field>
     </record>
-
-    <record id="action_formulas_wizard" model="ir.actions.act_window">
-        <field name="name">Fórmulas</field>
-        <field name="res_model">wizard.formulas</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="view_mode">form</field>
-        <field name="view_id" ref="wizard_formulas_view_form"/>
-        <field name="target">new</field>
-    </record>
-
-    <menuitem
-        id="formula_menu"
-        name="Fórmulas"
-        action="action_formulas_wizard"
-        parent="studio_customization.samper_informes_9a4c552e-6a2c-49dc-b22f-2c77d1e02fac"
-        groups="base.group_user"
-        sequence="349"/>    
 </odoo>
+
 
