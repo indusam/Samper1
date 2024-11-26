@@ -11,10 +11,12 @@
                         <group>
                             <field name="producto" required="1"/>
                             
+                            <!-- Modificación: Se añade la condición para "ing_limitante" -->
                             <field name="partidas">
                                 <attribute name="modifiers">{'invisible': ['|', ('cantidad', '>', 0), ('ing_limitante', '!=', False)]}</attribute>
                             </field>
-                                                        
+                            
+                            <!-- Modificación: Se añade la condición para "ing_limitante" -->
                             <field name="cantidad">
                                 <attribute name="modifiers">{'invisible': ['|', '|', ('ing_limitante', '!=', False), ('partidas', '>', 0), ('cant_limitante', '>', 0)]}</attribute>
                             </field>
