@@ -10,16 +10,16 @@
                     <group>
                         <field name="producto" required="1"/>
                          
-                        <field name="partidas" invisible="eval: cantidad > 0 or ing_limitante"/>
+                        <field name="partidas" modifiers="{'invisible': ['|', ('cantidad','>',0), ('ing_limitante','!=',False)]}"/>
                                                        
-                        <field name="cantidad" invisible="eval: ing_limitante or partidas > 0 or cant_limitante > 0"/>
+                        <field name="cantidad" modifiers="{'invisible': ['|','|', ('ing_limitante','!=',False), ('partidas','>',0), ('cant_limitante','>',0)]}"/>
 
                         <field name="consolidado" />
                     </group>
 
                     <group>
-                        <field name="ing_limitante" invisible="eval: cantidad > 0 or partidas > 0"/>
-                        <field name="cant_limitante" invisible="eval: cantidad > 0 or partidas > 0"/>
+                        <field name="ing_limitante" modifiers="{'invisible': ['|', ('cantidad','>',0), ('partidas','>',0)]}"/>
+                        <field name="cant_limitante" modifiers="{'invisible': ['|', ('cantidad','>',0), ('partidas','>',0)]}"/>
                     </group>
 
                 </group>
