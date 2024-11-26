@@ -11,12 +11,12 @@
                             <field name="producto" required="1"/>
 
                             <!-- Control de visibilidad para 'partidas' -->
-                            <div t-if="not record.ing_limitante">
+                            <div class="o_field_widget" widget="dynamic" options="{'visible': [('ing_limitante', '=', False)]}">
                                 <field name="partidas"/>
                             </div>
 
                             <!-- Control de visibilidad para 'cantidad' -->
-                            <div t-if="not record.ing_limitante">
+                            <div class="o_field_widget" widget="dynamic" options="{'visible': [('ing_limitante', '=', False)]}">
                                 <field name="cantidad"/>
                             </div>
 
@@ -37,5 +37,6 @@
         </field>
     </record>
 </odoo>
+
 
 
