@@ -9,11 +9,12 @@
                 <group>
                     <group>
                         <field name="producto" required="1"/>
-                         
+                        <!--  
                         <field name="partidas" modifiers="{'invisible': ['|', ('cantidad','>',0), ('ing_limitante','!=',False)]}"/>
-                                                       
                         <field name="cantidad" modifiers="{'invisible': ['|','|', ('ing_limitante','!=',False), ('partidas','>',0), ('cant_limitante','>',0)]}"/>
-
+                        -->
+                        <field name="cantidad" invisible="['|','|', ('ing_limitante','!=',False), ('partidas','>',0), ('cant_limitante','>',0)]"/>
+                        <field name="partidas" invisible="['|', ('cantidad','>',0), ('ing_limitante','!=',False)]"/>
                         <field name="consolidado" />
                     </group>
 
