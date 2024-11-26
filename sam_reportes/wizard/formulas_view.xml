@@ -9,15 +9,12 @@
                     <group>
                         <group>
                             <field name="producto" required="1"/>
-                            
-                            <!-- Modificación: Invisibilidad basada en "ing_limitante" -->
-                            <field name="partidas">
-                                <attribute name="modifiers">{'invisible': [('ing_limitante', '>, 0)]}</attribute>
-                            </field>
-                            
-                            <field name="cantidad">
-                                <attribute name="modifiers">{'invisible': [('ing_limitante', '>', 0)]}</attribute>
-                            </field>
+
+                            <!-- Partidas será invisible si ing_limitante tiene valor -->
+                            <field name="partidas" attrs="{'invisible': [('ing_limitante', '!=', False)]}"/>
+
+                            <!-- Cantidad será invisible si ing_limitante tiene valor -->
+                            <field name="cantidad" attrs="{'invisible': [('ing_limitante', '!=', False)]}"/>
 
                             <field name="consolidado"/>
                         </group>
@@ -53,3 +50,4 @@
         groups="base.group_user"
         sequence="349"/>    
 </odoo>
+
