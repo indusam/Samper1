@@ -24,7 +24,11 @@ class TablaNutrimental(models.TransientModel):
 
     producto = fields.Many2one('mrp.bom', string="Producto")
     cantidad = fields.Float(string="Cantidad")
-    ing_limitante = fields.Many2one('mrp.bom.line',string="Ingrediente limitante")
+    ing_limitante = fields.Many2one(
+        'mrp.bom.line',
+        string="Ingrediente limitante",
+        domain="[('bom_id', '=', producto)]"  # Filtra las líneas según la BOM seleccionada
+    )
     cant_limitante = fields.Float(string="Cantidad limitante")
     pct_merma = fields.Float(string='% Merma')
     consolidado = fields.Boolean(string="Fórmula consolidada", )
