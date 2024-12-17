@@ -20,6 +20,8 @@ class StockMove(models.Model):
                 ('location_id', '=', self.location_id.id)
             ], limit=1)
 
+            raise UserError(stock_quant)
+
             self.x_exis_origen = stock_quant.quantity if stock_quant else 0.0
 
             # La descripción es obligatoria, se establece un valor por defecto
