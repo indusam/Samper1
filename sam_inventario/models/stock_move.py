@@ -17,10 +17,11 @@ class StockMove(models.Model):
         if self.product_id and self.location_id:
             stock_quant = self.env['stock.quant'].search([
                 ('product_id', '=', self.product_id.id),
-                ('location_id', '=', self.location_id.id)
+                ('location_id', '=', self.location_id.id),
+                ('quantity','>',0)
             ], limit=1)
 
-            raise UserError(stock_quant)
+            raise UserError(stock_quant.quantity)
 
             self.x_exis_origen = stock_quant.quantity if stock_quant else 0.0
 
