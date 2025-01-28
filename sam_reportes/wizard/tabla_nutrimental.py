@@ -24,11 +24,7 @@ class TablaNutrimental(models.TransientModel):
 
     producto = fields.Many2one('mrp.bom', string="Producto")
     cantidad = fields.Float(string="Cantidad")
-    ing_limitante = fields.Many2one(
-        'mrp.bom.line',
-        string="Ingrediente limitante",
-        domain="[('bom_id', '=', producto)]"  # Filtra las líneas según la BOM seleccionada
-    )
+    ing_limitante = fields.Many2one('mrp.bom.line',string="Ingrediente limitante")
     cant_limitante = fields.Float(string="Cantidad limitante")
     pct_merma = fields.Float(string='% Merma')
     consolidado = fields.Boolean(string="Fórmula consolidada", )
@@ -91,25 +87,11 @@ class TablaNutrimental(models.TransientModel):
     # permite seleccionar el ingrediente limitante.
     @api.onchange('producto')
     def onchange_producto(self):
+        nlista = self.producto.id
         self.pct_merma = self.producto.product_tmpl_id.x_pct_merma
         for rec in self:
-            if rec.producto:
-                # Obtener el ID de la lista de materiales seleccionada
-                bom_id = rec.producto.id
-                # Filtrar las líneas de la BOM asociadas al producto
-                return {'domain': {'ing_limitante': [('bom_id', '=', bom_id)]}}
-            else:
-                # Si no hay producto seleccionado, eliminar el dominio
-                return {'domain': {'ing_limitante': []}}
-
-
-#    @api.onchange('producto')
-#    def onchange_producto(self):
-#        nlista = self.producto.id
-#        self.pct_merma = self.producto.product_tmpl_id.x_pct_merma
-#        for rec in self:
-#            return {'domain': {'ing_limitante':
-#                                   [('bom_id', '=', nlista)]}}
+            return {'domain': {'ing_limitante':
+                                   [('bom_id', '=', nlista)]}}
 
 
     # imprime la tabla nutrimental.

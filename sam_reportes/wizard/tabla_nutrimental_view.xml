@@ -8,13 +8,13 @@
                 <group>
                     <group>
                         <field name="producto" required="1"/>
-                        <field name="cantidad" invisible="ing_limitante or cant_limitante >  0"/>
+                        <field name="cantidad" />
                         <field name="pct_merma" required="0"/>
-                        <field name="consolidado" invisible="ing_limitante or cant_limitante >  0"/>
+                        <field name="consolidado" options="{'invisible': 'ing_limitante'}"/>
                     </group>
                     <group>
-                        <field name="ing_limitante" invisible="cantidad > 0"/>
-                        <field name="cant_limitante" invisible="cantidad > 0"/>
+                        <field name="ing_limitante" options="{'invisible': 'cantidad &gt; 0'}"/>
+                        <field name="cant_limitante" options="{'invisible': 'cantidad &gt; 0'}"/>
                     </group>
                 </group>
                 <footer>

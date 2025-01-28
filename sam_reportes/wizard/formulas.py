@@ -23,11 +23,7 @@ class Formulas(models.TransientModel):
 
     producto = fields.Many2one('mrp.bom', string="Producto")
     cantidad = fields.Float(string="Cantidad")
-    ing_limitante = fields.Many2one(
-        'mrp.bom.line',
-        string="Ingrediente limitante",
-        domain="[('bom_id', '=', producto)]"  # Filtra las líneas según la BOM seleccionada
-    )
+    ing_limitante = fields.Many2one('mrp.bom.line',string="Ingrediente limitante")
     cant_limitante = fields.Float(string="Cantidad limitante")
     consolidado = fields.Boolean(string="Fórmula consolidada",  )
     partidas = fields.Integer(string="Partidas")
@@ -44,18 +40,14 @@ class Formulas(models.TransientModel):
     x_orden = fields.Char(string="Orden", required=False, )
 
 
+    # permite seleccionar el ingrediente limitante.
     @api.onchange('producto')
     def onchange_producto(self):
+        nlista = self.producto.id
+        # self.pct_merma = self.producto.product_tmpl_id.x_pct_merma
         for rec in self:
-            if rec.producto:
-                # Obtener el ID de la lista de materiales seleccionada
-                bom_id = rec.producto.id
-                # Filtrar las líneas de la BOM asociadas al producto
-                return {'domain': {'ing_limitante': [('bom_id', '=', bom_id)]}}
-            else:
-                # Si no hay producto seleccionado, eliminar el dominio
-                return {'domain': {'ing_limitante': []}}
-
+            return {'domain': {'ing_limitante':
+                                   [('bom_id', '=', nlista)]}}
 
     def get_orden(self, codigo_producto):
         prefix = codigo_producto[:2]  # Tomar las dos primeras letras
@@ -228,7 +220,5 @@ class Formulas(models.TransientModel):
                 }
 
         return self.env.ref('sam_reportes.formulas_reporte').report_action(self, data=data)
-        #report = self.env.ref('sam_reportes.formulas_reporte')
-        #return report.report_action(self, data=data)
         #report = self.env.ref('sam_reportes.formulas_reporte')
         #return report.report_action(self, data=data)

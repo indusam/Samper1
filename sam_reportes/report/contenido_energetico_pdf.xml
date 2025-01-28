@@ -64,17 +64,17 @@
                             <t t-set="tot_otros_carb" t-value="tot_carb - tot_azucares - tot_azucares_anadidos"/>
 
                             <!-- Calcula % en base a la cantidad -->
-                            <t t-set="tpct_prot" t-value="(tot_proteina / tot_cantidad) *  100"/>
-                            <t t-set="tpct_gras" t-value="(tot_gras / tot_cantidad) *  100"/>
-                            <t t-set="tpct_gras_poli" t-value="(tot_gras_poli / tot_cantidad) *  100"/>
-                            <t t-set="tpct_gras_mono" t-value="(tot_gras_mono / tot_cantidad) *  100"/>
-                            <t t-set="tpct_gras_tran" t-value="(tot_gras_tran / tot_cantidad) *  100"/>
-                            <t t-set="tpct_gras_satu" t-value="(tot_gras_satu / tot_cantidad) *  100"/>
-                            <t t-set="tpct_carb" t-value="(tot_carb / tot_cantidad) *  100"/>
-                            <t t-set="tpct_azucares" t-value="(tot_azucares / tot_cantidad) *  100"/>
-                            <t t-set="tpct_azucares_anadidos" t-value="(tot_azucares_anadidos / tot_cantidad) *  100"/>
-                            <t t-set="tpct_otros_carb" t-value="(tot_otros_carb / tot_cantidad) *  100"/>
-                            <t t-set="tpct_hume" t-value="(tot_hume / tot_cantidad) *  100"/>
+                            <t t-set="tpct_prot" t-value="0 if tot_cantidad == 0 else (tot_proteina / tot_cantidad) * 100"/>
+                            <t t-set="tpct_gras" t-value="0 if tot_cantidad == 0 else (tot_gras / tot_cantidad) * 100"/>
+                            <t t-set="tpct_gras_poli" t-value="0 if tot_cantidad == 0 else (tot_gras_poli / tot_cantidad) * 100"/>
+                            <t t-set="tpct_gras_mono" t-value="0 if tot_cantidad == 0 else (tot_gras_mono / tot_cantidad) * 100"/>
+                            <t t-set="tpct_gras_tran" t-value="0 if tot_cantidad == 0 else (tot_gras_tran / tot_cantidad) * 100"/>
+                            <t t-set="tpct_gras_satu" t-value="0 if tot_cantidad == 0 else (tot_gras_satu / tot_cantidad) * 100"/>
+                            <t t-set="tpct_carb" t-value="0 if tot_cantidad == 0 else (tot_carb / tot_cantidad) * 100"/>
+                            <t t-set="tpct_azucares" t-value="0 if tot_cantidad == 0 else (tot_azucares / tot_cantidad) * 100"/>
+                            <t t-set="tpct_azucares_anadidos" t-value="0 if tot_cantidad == 0 else (tot_azucares_anadidos / tot_cantidad) * 100"/>
+                            <t t-set="tpct_otros_carb" t-value="0 if tot_cantidad == 0 else (tot_otros_carb / tot_cantidad) * 100"/>
+                            <t t-set="tpct_hume" t-value="0 if tot_cantidad == 0 else (tot_hume / tot_cantidad) * 100"/>
 
                             <!-- Calcula energía -->
                             <t t-set="tot_kj_prot" t-value="round(tot_proteina,3) * 17" />
@@ -123,18 +123,18 @@
                                                                                 tot_kj_azucares_anadidos +
                                                                                 tot_kj_otros_carb" />
 
-                            <t t-set="pct_prot" t-value="(tot_kc_prot / tot_kc) * 100"/>
-                            <t t-set="pct_prot_desglosado" t-value="(tot_kc_prot / tot_kc_desglosado) * 100"/>
-                            <t t-set="pct_gras" t-value="(tot_kc_gras / tot_kc) * 100"/>
-                            <t t-set="pct_gras_poli" t-value="(tot_kc_gras_poli / tot_kc_desglosado) * 100"/>
-                            <t t-set="pct_gras_mono" t-value="(tot_kc_gras_mono / tot_kc_desglosado) * 100"/>
-                            <t t-set="pct_gras_tran" t-value="(tot_kc_gras_tran / tot_kc_desglosado) * 100"/>
-                            <t t-set="pct_gras_satu" t-value="(tot_kc_gras_satu / tot_kc_desglosado) * 100"/>
+                            <t t-set="pct_prot" t-value="0 if tot_kc == 0 else (tot_kc_prot / tot_kc) * 100"/>
+                            <t t-set="pct_prot_desglosado" t-value="0 if tot_kc_desglosado == 0 else (tot_kc_prot / tot_kc_desglosado) * 100"/>
+                            <t t-set="pct_gras" t-value="0 if tot_kc == 0 else (tot_kc_gras / tot_kc) * 100"/>
+                            <t t-set="pct_gras_poli" t-value="0 if tot_kc_desglosado == 0 else (tot_kc_gras_poli / tot_kc_desglosado) * 100"/>
+                            <t t-set="pct_gras_mono" t-value="0 if tot_kc_desglosado == 0 else (tot_kc_gras_mono / tot_kc_desglosado) * 100"/>
+                            <t t-set="pct_gras_tran" t-value="0 if tot_kc_desglosado == 0 else (tot_kc_gras_tran / tot_kc_desglosado) * 100"/>
+                            <t t-set="pct_gras_satu" t-value="0 if tot_kc_desglosado == 0 else (tot_kc_gras_satu / tot_kc_desglosado) * 100"/>
 
-                            <t t-set="pct_carb" t-value="(tot_kc_carb / tot_kc) * 100"/>
-                            <t t-set="pct_azucares" t-value="(tot_kc_azucares / tot_kc_desglosado) * 100"/>
-                            <t t-set="pct_azucares_anadidos" t-value="(tot_kc_azucares_anadidos / tot_kc_desglosado) * 100"/>
-                            <t t-set="pct_otros_carb" t-value="(tot_kc_otros_carb / tot_kc_desglosado) * 100"/>
+                            <t t-set="pct_carb" t-value="0 if tot_kc == 0 else (tot_kc_carb / tot_kc) * 100"/>
+                            <t t-set="pct_azucares" t-value="0 if tot_kc_desglosado == 0 else (tot_kc_azucares / tot_kc_desglosado) * 100"/>
+                            <t t-set="pct_azucares_anadidos" t-value="0 if tot_kc_desglosado == 0 else (tot_kc_azucares_anadidos / tot_kc_desglosado) * 100"/>
+                            <t t-set="pct_otros_carb" t-value="0 if tot_kc_desglosado == 0 else (tot_kc_otros_carb / tot_kc_desglosado) * 100"/>
 
                             <t t-set="pct_hume" t-value="0"/>
                             <t t-set="pct_tota" t-value="pct_prot + pct_gras + pct_carb"/>
@@ -558,20 +558,20 @@
                                 <t t-set="tcantmerma" t-value="tot_cantidad - tot_cant_merma"/>
                                 <t t-set="tot_hume" t-value="tpct_hume - tcantmerma"/>
 
-                                <t t-set="tot_prot_merma" t-value="(tot_proteina / tot_cant_merma) * 100"/>
+                                <t t-set="tot_prot_merma" t-value="0 if tot_cant_merma == 0 else (tot_proteina / tot_cant_merma) * 100"/>
 
-                                <t t-set="tot_gras_merma" t-value="(tot_gras / tot_cant_merma) * 100"/>
-                                <t t-set="tot_gras_poli_merma" t-value="(tot_gras_poli / tot_cant_merma) * 100"/>
-                                <t t-set="tot_gras_mono_merma" t-value="(tot_gras_mono / tot_cant_merma) * 100"/>
-                                <t t-set="tot_gras_satu_merma" t-value="(tot_gras_satu / tot_cant_merma) * 100"/>
-                                <t t-set="tot_gras_tran_merma" t-value="(tot_gras_tran / tot_cant_merma) * 100"/>
+                                <t t-set="tot_gras_merma" t-value="0 if tot_cant_merma == 0 else (tot_gras / tot_cant_merma) * 100"/>
+                                <t t-set="tot_gras_poli_merma" t-value="0 if tot_cant_merma == 0 else (tot_gras_poli / tot_cant_merma) * 100"/>
+                                <t t-set="tot_gras_mono_merma" t-value="0 if tot_cant_merma == 0 else (tot_gras_mono / tot_cant_merma) * 100"/>
+                                <t t-set="tot_gras_satu_merma" t-value="0 if tot_cant_merma == 0 else (tot_gras_satu / tot_cant_merma) * 100"/>
+                                <t t-set="tot_gras_tran_merma" t-value="0 if tot_cant_merma == 0 else (tot_gras_tran / tot_cant_merma) * 100"/>
 
-                                <t t-set="tot_carb_merma" t-value="(tot_carb / tot_cant_merma) * 100"/>
-                                <t t-set="tot_azucares_merma" t-value="(tot_azucares / tot_cant_merma) * 100"/>
-                                <t t-set="tot_azucares_anadidos_merma" t-value="(tot_azucares_anadidos / tot_cant_merma) * 100"/>
-                                <t t-set="tot_otros_carb_merma" t-value="(tot_otros_carb / tot_cant_merma) * 100"/>
+                                <t t-set="tot_carb_merma" t-value="0 if tot_cant_merma == 0 else (tot_carb / tot_cant_merma) * 100"/>
+                                <t t-set="tot_azucares_merma" t-value="0 if tot_cant_merma == 0 else (tot_azucares / tot_cant_merma) * 100"/>
+                                <t t-set="tot_azucares_anadidos_merma" t-value="0 if tot_cant_merma == 0 else (tot_azucares_anadidos / tot_cant_merma) * 100"/>
+                                <t t-set="tot_otros_carb_merma" t-value="0 if tot_cant_merma == 0 else (tot_otros_carb / tot_cant_merma) * 100"/>
 
-                                <t t-set="tot_hume_merma" t-value="(tot_hume /tot_cant_merma) * 100"/>
+                                <t t-set="tot_hume_merma" t-value="0 if tot_cant_merma == 0 else (tot_hume /tot_cant_merma) * 100"/>
 
                                 <!-- Calcula energía después de merma-->
                                 <t t-set="tot_kj_prot" t-value="round(tot_prot_merma,3) * 17" />
@@ -617,19 +617,18 @@
                                                                                 tot_kj_azucares +
                                                                                 tot_kj_azucares_anadidos +
                                                                                 tot_kj_otros_carb" />
+                                <t t-set="pct_prot" t-value="0 if tot_kc == 0 else (tot_kc_prot / tot_kc) * 100"/>
+                                <t t-set="pct_prot_desglosado" t-value="0 if tot_kc_desglosado == 0 else (tot_kc_prot / tot_kc_desglosado) * 100"/>
 
-                                <t t-set="pct_prot" t-value="(tot_kc_prot / tot_kc) * 100"/>
-                                <t t-set="pct_prot_desglosado" t-value="(tot_kc_prot / tot_kc_desglosado) * 100"/>
-
-                                <t t-set="pct_gras" t-value="(tot_kc_gras / tot_kc) * 100"/>
-                                <t t-set="pct_gras_poli" t-value="(tot_kc_gras_poli / tot_kc_desglosado) * 100"/>
-                                <t t-set="pct_gras_mono" t-value="(tot_kc_gras_mono / tot_kc_desglosado) * 100"/>
-                                <t t-set="pct_gras_tran" t-value="(tot_kc_gras_tran / tot_kc_desglosado) * 100"/>
-                                <t t-set="pct_gras_satu" t-value="(tot_kc_gras_satu / tot_kc_desglosado) * 100"/>
-                                <t t-set="pct_carb" t-value="(tot_kc_carb / tot_kc) * 100"/>
-                                <t t-set="pct_azucares" t-value="(tot_kc_azucares / tot_kc_desglosado) * 100"/>
-                                <t t-set="pct_azucares_anadidos" t-value="(tot_kc_azucares_anadidos / tot_kc_desglosado) * 100"/>
-                                <t t-set="pct_otros_carb" t-value="(tot_kc_otros_carb / tot_kc_desglosado) * 100"/>
+                                <t t-set="pct_gras" t-value="0 if tot_kc == 0 else (tot_kc_gras / tot_kc) * 100"/>
+                                <t t-set="pct_gras_poli" t-value="0 if tot_kc_desglosado == 0 else (tot_kc_gras_poli / tot_kc_desglosado) * 100"/>
+                                <t t-set="pct_gras_mono" t-value="0 if tot_kc_desglosado == 0 else (tot_kc_gras_mono / tot_kc_desglosado) * 100"/>
+                                <t t-set="pct_gras_tran" t-value="0 if tot_kc_desglosado == 0 else (tot_kc_gras_tran / tot_kc_desglosado) * 100"/>
+                                <t t-set="pct_gras_satu" t-value="0 if tot_kc_desglosado == 0 else (tot_kc_gras_satu / tot_kc_desglosado) * 100"/>
+                                <t t-set="pct_carb" t-value="0 if tot_kc == 0 else (tot_kc_carb / tot_kc) * 100"/>
+                                <t t-set="pct_azucares" t-value="0 if tot_kc_desglosado == 0 else (tot_kc_azucares / tot_kc_desglosado) * 100"/>
+                                <t t-set="pct_azucares_anadidos" t-value="0 if tot_kc_desglosado == 0 else (tot_kc_azucares_anadidos / tot_kc_desglosado) * 100"/>
+                                <t t-set="pct_otros_carb" t-value="0 if tot_kc_desglosado == 0 else (tot_kc_otros_carb / tot_kc_desglosado) * 100"/>
 
                                 <t t-set="pct_hume" t-value="0"/>
                                 <t t-set="pct_tota" t-value="pct_prot + pct_gras + pct_carb"/>
