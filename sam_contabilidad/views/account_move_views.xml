@@ -3,8 +3,11 @@
     <!-- Acción de servidor -->
     <record id="action_download_xml" model="ir.actions.server">
         <field name="name">Descargar XML_PDF</field>
-        <field name="model_id" ref="model_account_move"/>
+        <field name="model_id" model="ir.model">
+            <field name="model">account.move</field>
+        </field>
         <field name="state">code</field>
         <field name="code">action = model.action_download_xml()</field>
     </record>
 </odoo>
+
