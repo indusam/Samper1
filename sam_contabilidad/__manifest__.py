@@ -26,6 +26,7 @@
     'data': [
         'security/ir.model.access.csv',
         'wizard/borra_pdf_view.xml',
+        'views/account_move_views.xml'
     ],
     # only loaded in demonstration mode
     'demo': [
