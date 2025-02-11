@@ -36,10 +36,10 @@
     <!-- Elemento de menú para acceder al wizard desde el menú de MRP -->
     <menuitem
         id="peso_cantidad_caja_menu"
-        name="Peso y cantidad por caja" <!-- Nombre del menú -->
-        action="action_peso_cantidad_caja_wizard" <!-- Acción asociada al menú -->
-        parent="mrp.menu_mrp_bom" <!-- Menú principal de MRP -->
-        groups="base.group_user" <!-- Grupos de usuarios autorizados para ver este menú -->
-        sequence="12"/> <!-- Orden de aparición en el menú -->
+        name="Peso y cantidad por caja" 
+        action="action_peso_cantidad_caja_wizard" 
+        parent="mrp.menu_mrp_bom" 
+        groups="base.group_user" 
+        sequence="12"/> 
    
 </odoo>
