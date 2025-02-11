@@ -70,8 +70,6 @@ class BorraPdf(models.TransientModel):
         for archivo in archivos:
             file_path = os.path.join(filestore_path, archivo.store_fname)  # Construir la ruta del archivo
 
-            raise UserError(file_path)
-
             if os.path.exists(file_path):
                 os.remove(file_path)  # Eliminar el archivo físico
                 archivo.write({'res_id': 0})  # Desvincular de su registro en Odoo
