@@ -65,12 +65,12 @@ class BorraPdf(models.TransientModel):
         # Obtener la ruta base del almacenamiento de archivos en Odoo
         filestore_path = self.env['ir.config_parameter'].sudo().get_param('ir_attachment.location', '/home/odoo/data/filestore')
 
-        raise UserError(filestore_path)
-
         archivos_eliminados = 0  # Contador de archivos eliminados
 
         for archivo in archivos:
             file_path = os.path.join(filestore_path, archivo.store_fname)  # Construir la ruta del archivo
+
+            raise UserError(file_path)
 
             if os.path.exists(file_path):
                 os.remove(file_path)  # Eliminar el archivo físico
