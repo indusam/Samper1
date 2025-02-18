@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Definición del reporte de antigüedad de saldos detallado -->
 <odoo>
+    <!-- Template principal del reporte -->
     <template id="ant_saldos_detalle_template">
-
+        <!-- Usa el layout estándar de Odoo -->
         <t t-call="web.html_container">
             <t t-call="web.external_layout">
                 <div class="page">
                     <br/>
+                    <!-- Encabezado del reporte con información general -->
                     <div style="text-align:left;color:black!important;">
                         <strong>
                             <h5>
@@ -20,7 +23,9 @@
                         </strong>
                     </div>
                     <br/>
+                    <!-- Tabla principal del reporte -->
                     <table class="table table-condensed">
+                        <!-- Encabezados de columnas -->
                         <thead>
                             <tr >
                                 <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Cliente</th>
@@ -36,7 +41,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Crea variables para totales -->
+                            <!-- Inicialización de variables para totales -->
                             <t t-set="total_facturado" t-value="0.00" />
                             <t t-set="total_deuda" t-value="0.00" />
                             <t t-set="total_por_vencer" t-value="0.00" />
@@ -45,6 +50,7 @@
                             <t t-set="total_90" t-value="0.00" />
                             <t t-set="total_mas_90" t-value="0.00" />    
 
+                            <!-- Iteración sobre cada línea de detalle -->
                             <t t-foreach="detalle" t-as="line">
                                 <tr>
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -77,7 +83,7 @@
                                     <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="'{0:,.2f}'.format(line['nmas90'])"/>
                                     </td>
-                                    <!-- Suma los totales -->
+                                    <!-- Acumulación de totales -->
                                     <t t-set="total_facturado" t-value="total_facturado + line['ntotal']" />
                                     <t t-set="total_deuda" t-value="total_deuda + line['ndeuda']" />
                                     <t t-set="total_por_vencer" t-value="total_por_vencer + line['no_vencido']" />
@@ -88,7 +94,7 @@
                                    
                                 </tr>
                             </t>
-                            <!-- Imprime los totales -->
+                            <!-- Fila de totales -->
                             <tr>
                                 <td style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                     <strong>Totales</strong>
@@ -129,7 +135,7 @@
         </t>
     </template>
 
-    <!-- esto aplica cuando se imprime desde el menú "Imprimir" al seleccionar registros.
+    <!-- Comentario sobre la configuración del reporte para impresión desde menú
     <report
             id="action_custom_report_lista_de_precios5"
             string="Lista de precios 5"
