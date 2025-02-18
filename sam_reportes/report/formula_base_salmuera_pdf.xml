@@ -4,7 +4,7 @@
     Archivo: formula_base_salmuera_pdf.xml
     Descripción: Template para generar el reporte de fórmula base de salmuera en PDF
     autor: vbueno 1802202511:48
-    
+
     Este template define la estructura y el formato del reporte de fórmula base que incluye:
     - Información del producto (código, nombre, cantidad limitante)
     - Tabla de ingredientes agrupados por sección con:
@@ -30,7 +30,7 @@
                                     <!-- Encabezado con información del producto -->
                                     <tr>
                                         <th class="table-active" colspan="8" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:14px;vertical-align:middle; padding:2px">
-                                          <strong>Fórmula base cárnicos: </strong> <span t-esc="codigo"/> - <span t-esc="producto"/>
+                                          <strong>Fórmula base salmuera: </strong> <span t-esc="codigo"/> - <span t-esc="producto"/>
                                           <br/>
                                           <strong>Cantidad limitante: </strong> <span t-esc="cant_limitante"/> Kgs.
                                         </th>
