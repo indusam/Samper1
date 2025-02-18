@@ -22,14 +22,13 @@
 ##############################################################################
 
 
-from datetime import datetime
-from odoo import fields, models
-from odoo.tools.safe_eval import safe_eval
-
+#from datetime import datetime
+#from odoo import fields, models
+#from odoo.tools.safe_eval import safe_eval
 
 # La opción de imprimir  es False por Default
-class AccountInvoiceSend(models.TransientModel):
+#class AccountInvoiceSend(models.TransientModel):
 
-    _inherit = 'account.invoice.send'
+#    _inherit = 'account.invoice.send'
 
-    is_print = fields.Boolean(string="Print", default=False)
+#    is_print = fields.Boolean(string="Print", default=False)
