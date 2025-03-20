@@ -190,7 +190,7 @@ class FormulasCosto(models.TransientModel):
                 self.cantidad = ntotcantidad
 
             #consolida la formula
-            self.consolida_formula(ingredientes,self.cantidad,nsecuencia)
+            self.consolida_formula_costo(ingredientes,self.cantidad,nsecuencia)
 
             #ordena la tabla para la impresión
             bom_consolidada = self.env['wizard.formulas.costo'].search([('x_secuencia','=',nsecuencia)])
