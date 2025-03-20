@@ -209,7 +209,7 @@ class FormulasCosto(models.TransientModel):
                         'unidad': ingrediente.ingr.uom_id.name,
                         'pct_formula': (ingrediente.cant_tot / self.cantidad) * 100 ,
                         'pct_categoria': ingrediente.pct_categoria,
-                        'costo' : ingrediente.product_id.standard_price
+                        'costo' : ingrediente.standard_price
                     })
 
         
