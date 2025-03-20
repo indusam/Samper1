@@ -35,6 +35,7 @@
         'views/saldos_clientes_reporte.xml',
         'views/tabla_nutrimental_reporte.xml',
         'views/formulas_reporte.xml',
+        'views/formulas_costo_reporte.xml',
         'views/formula_base_carnicos_reporte.xml',
         'views/formula_base_salmuera_reporte.xml',
         'views/contenido_energetico_reporte.xml',

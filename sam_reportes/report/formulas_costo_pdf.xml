@@ -45,13 +45,9 @@
                                         <td width="15" class="table-active" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle; padding:5px">
                                           <strong>Costo</strong>
                                         </td>
-                                        <td width="15" class="table-active" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle; padding:5px">
-                                          <strong>Costo Total</strong>
-                                        </td>
                                     </tr>
                                     <t t-set="tot_gral" t-value="0"/>
                                     <t t-set="pct_gral" t-value="0"/>
-                                    <t t-set="costo_total" t-value="0"/>
                                     <t t-set="orden1" t-value="[]"/>
                                     <tr t-foreach="vals" t-as="l">
                                         <t t-set="orden1" t-value="orden1 + [l['orden']]"/>
@@ -59,9 +55,8 @@
                                     <t t-foreach="sorted(set(orden1))" t-as="seccion">
                                         <t t-set="tot_cantidad" t-value="0"/>
                                         <t t-set="tot_pct_form" t-value="0"/>
-                                        <t t-set="tot_costo_seccion" t-value="0"/>
                                         <tr>
-                                            <th class="table-secondary" colspan="7" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
+                                            <th class="table-secondary" colspan="6" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
                                                 <strong t-esc="seccion"/>
                                             </th>
                                             <tr t-foreach="vals" t-as="table_line">
@@ -87,12 +82,10 @@
                                                     </td>
                                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
                                                         <t t-esc="'{0:,.4f}'.format(table_line['costo'])"/>
-                                                    </td>
-                                                    <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                        <t t-set="costo_linea" t-value="table_line['cant_comp'] * table_line['costo']"/>
-                                                        <t t-esc="'{0:,.4f}'.format(costo_linea)"/>
-                                                        <t t-set="tot_costo_seccion" t-value="tot_costo_seccion + costo_linea"/>
-                                                        <t t-set="costo_total" t-value="costo_total + costo_linea"/>
+                                                        <!-- 
+                                                        <t t-set="tot_pct_form" t-value="tot_pct_form + table_line['pct_formula']"/>
+                                                        <t t-set="pct_gral" t-value="pct_gral + table_line['pct_formula']"/>
+                                                        -->
                                                     </td>
                                                 </t>
                                             </tr>
@@ -103,8 +96,6 @@
                                             <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle;" align="right"><strong t-esc="'{0:,.4f}'.format(tot_cantidad)"/></td>
                                             <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
                                             <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle;" align="right"><strong t-esc="'{0:,.4f}'.format(tot_pct_form)"/></td>
-                                            <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
-                                            <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle;" align="right"><strong t-esc="'{0:,.4f}'.format(tot_costo_seccion)"/></td>
                                         </tr>
                                     </t>
                                      <tr>
@@ -113,8 +104,6 @@
                                          <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle;" align="right"><strong t-esc="'{0:,.4f}'.format(tot_gral)"/></td>
                                          <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
                                          <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle;" align="right"><strong t-esc="'{0:,.4f}'.format(pct_gral)"/></td>
-                                         <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
-                                         <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle;" align="right"><strong t-esc="'{0:,.4f}'.format(costo_total)"/></td>
                                      </tr>
                                 </table>
                             </div>
