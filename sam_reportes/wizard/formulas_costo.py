@@ -107,7 +107,7 @@ class FormulasCosto(models.TransientModel):
                                                     limit=1).id
                 subformula = self.env['mrp.bom.line'].search([('bom_id.id', '=', bom_pf)])
                 if subformula:
-                    self.consolida_formula(subformula, ncant_limitante, secuencia)
+                    self.consolida_formula_costo(subformula, ncant_limitante, secuencia)
                 else:
                     self.crear_ncomponente(ingrediente, secuencia, ncant_limitante)
             else:
