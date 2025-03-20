@@ -45,7 +45,10 @@
                                         </td>
                                         -->
                                         <td width="15" class="table-active" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle; padding:5px">
-                                          <strong>Costo</strong>
+                                          <strong>Costo x kg</strong>
+                                        </td>
+                                        <td width="15" class="table-active" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle; padding:5px">
+                                          <strong>Costo total</strong>
                                         </td>
                                     </tr>
                                     <t t-set="tot_gral" t-value="0"/>
@@ -86,6 +89,9 @@
                                                     -->
                                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
                                                         <t t-esc="'{0:,.4f}'.format(table_line['costo'])"/>
+                                                    </td>
+                                                    <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                        <t t-esc="'{0:,.4f}'.format(table_line['costo'] * table_line['cant_comp'])"/>
                                                     </td>
                                                 </t>
                                             </tr>
