@@ -63,6 +63,22 @@ class FormulasCosto(models.TransientModel):
                 
         return producto.standard_price  # Si no hay compras, retorna el costo estándar
 
+    def get_ultimo_costo_usd(self, producto):
+        # Buscar la última compra del producto
+        ultima_compra = self.env['purchase.order.line'].search([
+            ('product_id', '=', producto.id),
+            ('state', 'in', ['purchase', 'done'])
+        ], order='create_date desc', limit=1)
+
+        if ultima_compra:
+            # Si la moneda es USD, retornar el precio en USD
+            if ultima_compra.order_id.currency_id.name == 'USD':
+                return ultima_compra.price_unit
+            else:
+                return 0.0  # Si está en pesos, retornar 0
+                
+        return 0.0  # Si no hay compras, retornar 0
+
 
     # permite seleccionar el ingrediente limitante.
     @api.onchange('producto')
@@ -110,7 +126,7 @@ class FormulasCosto(models.TransientModel):
                 'pct_formula': ingrediente.x_porcentaje,
                 'pct_categoria': ingrediente.x_porcentaje_categoria,
                 'costo': self.get_ultimo_costo(ingrediente.product_id),
-                #'costo_usd': self.get_ultimo_costo_usd(ingrediente.product_id),
+                'costo_usd': self.get_ultimo_costo_usd(ingrediente.product_id),
                 'x_orden': norden
             })
 
@@ -172,7 +188,8 @@ class FormulasCosto(models.TransientModel):
                     'unidad': ingrediente.product_id.uom_id.name,
                     'pct_formula': ingrediente.x_porcentaje,
                     'pct_categoria': ingrediente.x_porcentaje_categoria,
-                    'costo' : ingrediente.product_id.standard_price,
+                    'costo': self.get_ultimo_costo(ingrediente.product_id),
+                    'costo_usd': self.get_ultimo_costo_usd(ingrediente.product_id),
                     'orden': norden
                 })
 
@@ -192,7 +209,8 @@ class FormulasCosto(models.TransientModel):
                         'unidad': ingrediente.product_id.uom_id.name,
                         'pct_formula': ingrediente.x_porcentaje,
                         'pct_categoria': ingrediente.x_porcentaje_categoria,
-                        'costo' : ingrediente.product_id.standard_price,
+                        'costo': self.get_ultimo_costo(ingrediente.product_id),
+                        'costo_usd': self.get_ultimo_costo_usd(ingrediente.product_id),
                         'orden': norden
                         })
 
@@ -232,7 +250,8 @@ class FormulasCosto(models.TransientModel):
                         'unidad': ingrediente.ingr.uom_id.name,
                         'pct_formula': (ingrediente.cant_tot / self.cantidad) * 100 ,
                         'pct_categoria': ingrediente.pct_categoria,
-                        'costo' : ingrediente.ingr.standard_price
+                        'costo': self.get_ultimo_costo(ingrediente.product_id),
+                        'costo_usd': self.get_ultimo_costo_usd(ingrediente.product_id),
                     })
 
         
