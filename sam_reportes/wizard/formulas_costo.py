@@ -40,6 +40,28 @@ class FormulasCosto(models.TransientModel):
     pct_merma = fields.Float(string="% Merma", digits=(6, 4))
     x_orden = fields.Char(string="Orden", required=False, )
     costo = fields.Float(string="Costo")
+    costo_usd = fields.Float(string="Costo USD")
+
+
+    #busca el ultimo costo
+    def get_ultimo_costo(self, producto):
+        # Buscar la última compra del producto
+        ultima_compra = self.env['purchase.order.line'].search([
+            ('product_id', '=', producto.id),
+            ('state', 'in', ['purchase', 'done'])
+        ], order='create_date desc', limit=1)
+
+        if ultima_compra:
+            # Obtener el tipo de cambio configurado en la compañía
+            tipo_cambio = self.env.company.x_studio_tipo_de_cambio or 1.0
+            
+            # Si la moneda es USD, convertir a pesos
+            if ultima_compra.order_id.currency_id.name == 'USD':
+                return ultima_compra.price_unit * tipo_cambio
+            else:
+                return ultima_compra.price_unit
+                
+        return producto.standard_price  # Si no hay compras, retorna el costo estándar
 
 
     # permite seleccionar el ingrediente limitante.
@@ -87,7 +109,8 @@ class FormulasCosto(models.TransientModel):
                 'unidad': ingrediente.product_id.uom_id.name,
                 'pct_formula': ingrediente.x_porcentaje,
                 'pct_categoria': ingrediente.x_porcentaje_categoria,
-                'costo' : ingrediente.product_id.standard_price,
+                'costo': self.get_ultimo_costo(ingrediente.product_id),
+                #'costo_usd': self.get_ultimo_costo_usd(ingrediente.product_id),
                 'x_orden': norden
             })
 
