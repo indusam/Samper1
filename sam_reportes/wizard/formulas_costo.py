@@ -250,8 +250,8 @@ class FormulasCosto(models.TransientModel):
                         'unidad': ingrediente.ingr.uom_id.name,
                         'pct_formula': (ingrediente.cant_tot / self.cantidad) * 100 ,
                         'pct_categoria': ingrediente.pct_categoria,
-                        'costo': self.get_ultimo_costo(ingrediente),
-                        'costo_usd': self.get_ultimo_costo_usd(ingrediente),
+                        'costo': self.get_ultimo_costo(ingrediente.ingr),
+                        'costo_usd': self.get_ultimo_costo_usd(ingrediente.ingr),
                     })
 
         
