@@ -40,6 +40,44 @@ class FormulasCosto(models.TransientModel):
     pct_merma = fields.Float(string="% Merma", digits=(6, 4))
     x_orden = fields.Char(string="Orden", required=False, )
     costo = fields.Float(string="Costo")
+    costo_usd = fields.Float(string="Costo USD")
+
+
+    #busca el ultimo costo
+    def get_ultimo_costo(self, producto):
+        # Buscar la última compra del producto
+        ultima_compra = self.env['purchase.order.line'].search([
+            ('product_id', '=', producto.id),
+            ('state', 'in', ['purchase', 'done'])
+        ], order='create_date desc', limit=1)
+
+        if ultima_compra:
+            # Obtener el tipo de cambio configurado en la compañía
+            tipo_cambio = self.env.company.x_studio_tipo_de_cambio or 1.0
+            
+            # Si la moneda es USD, convertir a pesos
+            if ultima_compra.order_id.currency_id.name == 'USD':
+                return ultima_compra.price_unit * tipo_cambio
+            else:
+                return ultima_compra.price_unit
+                
+        return producto.standard_price  # Si no hay compras, retorna el costo estándar
+
+    def get_ultimo_costo_usd(self, producto):
+        # Buscar la última compra del producto
+        ultima_compra = self.env['purchase.order.line'].search([
+            ('product_id', '=', producto.id),
+            ('state', 'in', ['purchase', 'done'])
+        ], order='create_date desc', limit=1)
+
+        if ultima_compra:
+            # Si la moneda es USD, retornar el precio en USD
+            if ultima_compra.order_id.currency_id.name == 'USD':
+                return ultima_compra.price_unit
+            else:
+                return 0.0  # Si está en pesos, retornar 0
+                
+        return 0.0  # Si no hay compras, retornar 0
 
 
     # permite seleccionar el ingrediente limitante.
@@ -87,7 +125,8 @@ class FormulasCosto(models.TransientModel):
                 'unidad': ingrediente.product_id.uom_id.name,
                 'pct_formula': ingrediente.x_porcentaje,
                 'pct_categoria': ingrediente.x_porcentaje_categoria,
-                'costo' : ingrediente.product_id.standard_price,
+                'costo': self.get_ultimo_costo(ingrediente.product_id),
+                'costo_usd': self.get_ultimo_costo_usd(ingrediente.product_id),
                 'x_orden': norden
             })
 
@@ -107,11 +146,11 @@ class FormulasCosto(models.TransientModel):
                                                     limit=1).id
                 subformula = self.env['mrp.bom.line'].search([('bom_id.id', '=', bom_pf)])
                 if subformula:
-                    self.consolida_formula(subformula, ncant_limitante, secuencia)
+                    self.consolida_formula_costo(subformula, ncant_limitante, secuencia)
                 else:
-                    self.crear_ncomponente(ingrediente, secuencia, ncant_limitante)
+                    self.crear_ncomponente_costo(ingrediente, secuencia, ncant_limitante)
             else:
-                self.crear_ncomponente(ingrediente, secuencia, ncant_limitante)
+                self.crear_ncomponente_costo(ingrediente, secuencia, ncant_limitante)
 
         return
 
@@ -149,7 +188,8 @@ class FormulasCosto(models.TransientModel):
                     'unidad': ingrediente.product_id.uom_id.name,
                     'pct_formula': ingrediente.x_porcentaje,
                     'pct_categoria': ingrediente.x_porcentaje_categoria,
-                    'costo' : ingrediente.product_id.standard_price,
+                    'costo': self.get_ultimo_costo(ingrediente.product_id),
+                    'costo_usd': self.get_ultimo_costo_usd(ingrediente.product_id),
                     'orden': norden
                 })
 
@@ -169,7 +209,8 @@ class FormulasCosto(models.TransientModel):
                         'unidad': ingrediente.product_id.uom_id.name,
                         'pct_formula': ingrediente.x_porcentaje,
                         'pct_categoria': ingrediente.x_porcentaje_categoria,
-                        'costo' : ingrediente.product_id.standard_price,
+                        'costo': self.get_ultimo_costo(ingrediente.product_id),
+                        'costo_usd': self.get_ultimo_costo_usd(ingrediente.product_id),
                         'orden': norden
                         })
 
@@ -190,7 +231,7 @@ class FormulasCosto(models.TransientModel):
                 self.cantidad = ntotcantidad
 
             #consolida la formula
-            self.consolida_formula(ingredientes,self.cantidad,nsecuencia)
+            self.consolida_formula_costo(ingredientes,self.cantidad,nsecuencia)
 
             #ordena la tabla para la impresión
             bom_consolidada = self.env['wizard.formulas.costo'].search([('x_secuencia','=',nsecuencia)])
@@ -208,7 +249,9 @@ class FormulasCosto(models.TransientModel):
                         'cant_comp': ingrediente.cant_tot,
                         'unidad': ingrediente.ingr.uom_id.name,
                         'pct_formula': (ingrediente.cant_tot / self.cantidad) * 100 ,
-                        'pct_categoria': ingrediente.pct_categoria
+                        'pct_categoria': ingrediente.pct_categoria,
+                        'costo': self.get_ultimo_costo(ingrediente.product_id),
+                        'costo_usd': self.get_ultimo_costo_usd(ingrediente.product_id),
                     })
 
         
@@ -223,79 +266,6 @@ class FormulasCosto(models.TransientModel):
                 'cant_limitante':self.cant_limitante
                 }
 
-        return self.env.ref('sam_reportes.formulas_reporte').report_action(self, data=data)
+        return self.env.ref('sam_reportes.formulas_costo_reporte').report_action(self, data=data)
         #report = self.env.ref('sam_reportes.formulas_reporte')
         #return report.report_action(self, data=data)
-
-'''
-    def consolida_formula(self, ingredientes, nqty, secuencia):
-
-        for ingrediente in ingredientes:
-
-            ncant_limitante = nqty * (ingrediente.x_porcentaje / 100)
-            # verifica que el ingrediente se fabrique.
-            if ingrediente.product_id.bom_count > 0: #tiene subformula
-
-                bom_pf = self.env['mrp.bom'].search([(
-                        'product_tmpl_id','=',ingrediente.product_tmpl_id.id)], limit=1).id
-
-                subformula = self.env['mrp.bom.line'].search([
-                        ('bom_id.id', '=', bom_pf)])
-
-                if subformula:               
-                    self.consolida_formula(subformula, ncant_limitante ,secuencia)
-
-                else:
-                    ncomponente = self.env['wizard.formulas'].search(
-                        [('ingr.id', '=', ingrediente.product_id.id),
-                         ('x_secuencia', '=', secuencia)])         
-
-                    if not ncomponente:
-                        codprov = self.get_codprov(ingrediente.product_id.product_tmpl_id.id)
-                        norden = self.get_orden(ingrediente.product_id.default_code)
-                        
-                        self.env['wizard.formulas'].create({
-                                        'x_secuencia':secuencia,
-                                        'ingr': ingrediente.product_id.id,
-                                        'cod_prov': codprov,
-                                        'cant_tot': ncant_limitante,
-                                        'unidad': ingrediente.product_id.uom_id.name,
-                                        'pct_formula': ingrediente.x_porcentaje,
-                                        'pct_categoria': ingrediente.x_porcentaje_categoria,
-                                        'x_orden': norden
-                            })
-
-                    if ncomponente:
-                        ncant = ncomponente.cant_tot
-                        nccomp = ncant_limitante
-                        ncant_tot = ncant + nccomp
-                        ncomponente.write({'cant_tot': ncant_tot})
-
-            else:
-
-                ncomponente = self.env['wizard.formulas'].search(
-                        [('ingr.id', '=', ingrediente.product_id.id),
-                         ('x_secuencia', '=', secuencia)])         
-
-                if not ncomponente:
-                    codprov = self.get_codprov(ingrediente.product_id.product_tmpl_id.id)   
-                    norden = self.get_orden(ingrediente.product_id.default_code)
-                       
-                    self.env['wizard.formulas'].create({
-                                    'x_secuencia':secuencia,
-                                    'ingr': ingrediente.product_id.id,
-                                    'cod_prov': codprov,
-                                    'cant_tot': ncant_limitante,
-                                    'unidad': ingrediente.product_id.uom_id.name,
-                                    'pct_formula': ingrediente.x_porcentaje,
-                                    'pct_categoria': ingrediente.x_porcentaje_categoria,
-                                    'x_orden': norden
-                        })
-
-                if ncomponente:
-                    ncant = ncomponente.cant_tot
-                    nccomp = ncant_limitante
-                    ncant_tot = ncant + nccomp
-                    ncomponente.write({'cant_tot': ncant_tot})
-        return
-'''

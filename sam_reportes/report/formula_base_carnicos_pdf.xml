@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Módulo para generar reporte de fórmulas base de cárnicos -->
 <odoo>
+    <!-- Template principal para el reporte -->
     <template id="formula_base_carnicos_template">
+        <!-- Usa el contenedor HTML estándar -->
         <t t-call="web.html_container">
+            <!-- Usa el layout externo estándar -->
             <t t-call="web.external_layout">
                 <div class="page">
                     <div style="text-align:left;color:black!important;">
                         <div class="row">
                             <div class="col">
+                                <!-- Tabla principal del reporte -->
                                 <table width="100%">
+                                    <!-- Encabezado con información de la fórmula -->
                                     <tr>
                                         <th class="table-active" colspan="8" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:14px;vertical-align:middle; padding:2px">
                                           <strong>Fórmula base cárnicos: </strong> <span t-esc="codigo"/> - <span t-esc="producto"/>
@@ -15,6 +21,7 @@
                                           <strong>Cantidad limitante: </strong> <span t-esc="cant_limitante"/> Kgs.
                                         </th>
                                     </tr>
+                                    <!-- Encabezados de columnas -->
                                      <tr>
                                         <td class="table-active" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle; padding:5px">
                                           <strong>Ingrediente</strong>
@@ -32,27 +39,35 @@
                                           <strong>% Fórmula</strong>
                                         </td>
                                     </tr>
+                                    <!-- Inicialización de totales -->
                                     <t t-set="tot_gral" t-value="0"/>
                                     <t t-set="pct_gral" t-value="0"/>
+                                    <!-- Obtiene lista de órdenes únicas -->
                                     <t t-set="orden1" t-value="[]"/>
                                     <tr t-foreach="vals" t-as="l">
                                         <t t-set="orden1" t-value="orden1 + [l['orden']]"/>
                                     </tr>
+                                    <!-- Itera sobre cada sección ordenada -->
                                     <t t-foreach="sorted(set(orden1))" t-as="seccion">
+                                        <!-- Inicializa totales por sección -->
                                         <t t-set="tot_cantidad" t-value="0"/>
                                         <t t-set="tot_pct_form" t-value="0"/>
                                         <tr>
+                                            <!-- Encabezado de sección -->
                                             <th class="table-secondary" colspan="6" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
                                                 <strong t-esc="seccion"/>
                                             </th>
+                                            <!-- Itera sobre cada línea de la sección -->
                                             <tr t-foreach="vals" t-as="table_line">
                                                 <t t-if="table_line['orden'] == seccion">
+                                                    <!-- Muestra datos del ingrediente -->
                                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:10px;vertical-align:middle; padding:2px">
                                                         <t t-esc="table_line['componente']"/>
                                                     </td>
                                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:10px;vertical-align:middle; padding:2px">
                                                         <t t-esc="table_line['cod_prov']"/>
                                                     </td>
+                                                    <!-- Cantidad y acumulación de totales -->
                                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:10px;vertical-align:middle; padding:2px" align="right">
                                                         <t t-esc="'{0:,.4f}'.format(table_line['cant_comp'])"/>
                                                         <t t-set="tot_cantidad" t-value="tot_cantidad + table_line['cant_comp']"/>
@@ -61,6 +76,7 @@
                                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:10px;vertical-align:middle; padding:2px" >
                                                         <t t-esc="table_line['unidad']"/>
                                                     </td>
+                                                    <!-- Porcentaje y acumulación de totales -->
                                                     <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:10px;vertical-align:middle; padding:2px" align="right">
                                                         <t t-esc="'{0:,.4f}'.format(table_line['pct_formula'])"/>
                                                         <t t-set="tot_pct_form" t-value="tot_pct_form + table_line['pct_formula']"/>
@@ -69,6 +85,7 @@
                                                 </t>
                                             </tr>
                                         </tr>
+                                        <!-- Totales por sección -->
                                         <tr>
                                             <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:10px;vertical-align:middle; padding:2px"/>
                                             <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:10px;vertical-align:middle; padding:2px"/>
@@ -77,6 +94,7 @@
                                             <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:10px;vertical-align:middle;" align="right"><strong t-esc="'{0:,.4f}'.format(tot_pct_form)"/></td>
                                         </tr>
                                     </t>
+                                    <!-- Totales generales -->
                                      <tr>
                                          <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:10px;vertical-align:middle; padding:2px"/>
                                          <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:10px;vertical-align:middle; padding:2px"/>
@@ -93,6 +111,7 @@
         </t>
     </template>
 
+    <!-- Configuración del formato de papel para el reporte -->
     <record id="paperformat_custom_tabla_nutrimental_report" model="report.paperformat">
         <field name="name">Tabla Nutrimental Report</field>
         <field name="default" eval="False"/>

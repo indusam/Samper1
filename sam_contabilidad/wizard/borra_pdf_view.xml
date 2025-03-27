@@ -1,36 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Formulario para borrar PDFs.
-    vbueno 0110202109:33
-    test 3
+<!-- 
+    Definición de una vista y acción para un asistente (wizard) 
+    que permite borrar archivos PDF en Odoo.
+    
+    Autor: vbueno
+    Fecha: 01/10/2021 - 09:33
 -->
+
 <odoo>
+    <!-- 
+        Definición de la vista del formulario del asistente para borrar PDFs.
+        Este formulario permite al usuario seleccionar un corte y ejecutar la acción de eliminación.
+    -->
     <record id="report_wizard_borra_pdf_view_form" model="ir.ui.view">
+        <!-- Nombre técnico de la vista -->
         <field name="name">report.wizard.borra.pdf.view.form</field>
+        
+        <!-- Modelo asociado a la vista -->
         <field name="model">borra_pdf.wizard</field>
+        
+        <!-- Definición de la estructura del formulario -->
         <field name="arch" type="xml">
             <form>
                 <group>
                     <group>
+                        <!-- Campo de entrada para seleccionar el corte -->
                         <field name="corte"/>
                     </group>
                 </group>
                 <footer>
+                    <!-- Botón para ejecutar la acción de borrar PDFs -->
                     <button name="deletepdf" type="object" string="Borrar" class="oe_highlight"/>
+                    
+                    <!-- Botón para cancelar y cerrar el asistente -->
                     <button special="cancel" string="Cancelar"/>
                 </footer>
             </form>
         </field>
     </record>
 
+    <!-- 
+        Definición de la acción para abrir el asistente de eliminación de PDFs.
+    -->
     <record id="action_borra_pdf_wizard" model="ir.actions.act_window">
+        <!-- Nombre de la acción en la interfaz -->
         <field name="name">Borra PDF</field>
+        
+        <!-- Modelo que se usará en la acción -->
         <field name="res_model">borra_pdf.wizard</field>
+        
+        <!-- Tipo de acción: ventana emergente (wizard) -->
         <field name="type">ir.actions.act_window</field>
+        
+        <!-- Modo de vista: árbol (lista) y formulario -->
         <field name="view_mode">tree,form</field>
+        
+        <!-- Referencia a la vista del formulario -->
         <field name="view_id" ref="report_wizard_borra_pdf_view_form"/>
+        
+        <!-- La ventana se abrirá como un cuadro de diálogo modal -->
         <field name="target">new</field>
     </record>
 
+    <!-- 
+        Definición de un elemento de menú para acceder al asistente de eliminación de PDFs.
+    -->
     <menuitem
         id="borra_pdf_menu"
         name="Borra PDF"

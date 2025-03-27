@@ -1,10 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 
+    Módulo: sam_reportes
+    Archivo: certificado_calidad_pdf.xml
+    Descripción: Template para generar el reporte de certificado de calidad en PDF
+    autor: vbueno 18020202511:20
+    
+    Este template define la estructura y el formato del certificado de calidad que incluye:
+    - Información general del producto (certificado, fecha, producto, código, etc)
+    - Análisis sensoriales (olor, color, sabor, textura)
+    - Análisis microbiológicos (mesófilos, e.coli, salmonella, etc)
+    - Análisis fisicoquímicos (ph, estaño, nitritos, etc)
+    - Firma del responsable
+-->
 <odoo>
+    <!-- Template principal del certificado de calidad -->
     <template id="certificado_calidad_template">
+        <!-- Usa el layout base de Odoo -->
         <t t-call="web.html_container">
+            <!-- Itera sobre los documentos a generar -->
             <t t-foreach="docs" t-as="o">       
+                <!-- Aplica el layout externo de Odoo -->
                 <t t-call="web.external_layout">    
                     <div class="page">
+                        <!-- Título del certificado -->
                         <div style="text-align:center;color:black!important;">
                             <strong>
                                 <h4>
@@ -12,13 +30,17 @@
                                 </h4>
                             </strong>
                         </div>
+                        
+                        <!-- Sección de información general -->
                         <div class="oe_structure">
                             <div class="row">
                                 <div class="col-xs-8">
                                     <table class="table table-condensed">
                                         <tr> 
+                                            <!-- Columna izquierda con datos principales -->
                                             <td width="70%">                                           
                                                 <table>
+                                                    <!-- Certificado No. -->
                                                     <tr>
                                                         <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
                                                             <span>
@@ -32,6 +54,7 @@
                                                             <span t-field="o.x_name"/>
                                                         </td>   
                                                     </tr>
+                                                    <!-- Fecha -->
                                                      <tr>
                                                         <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
                                                             <span>
@@ -45,6 +68,7 @@
                                                             <span t-field="o.x_studio_fecha"/>
                                                         </td>   
                                                     </tr>
+                                                    <!-- Producto -->
                                                      <tr>
                                                         <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
                                                             <span>
@@ -58,6 +82,7 @@
                                                             <span t-field="o.x_studio_producto"/>
                                                         </td>
                                                     </tr>
+                                                    <!-- Código -->
                                                      <tr>
                                                         <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
                                                             <span>
@@ -71,6 +96,7 @@
                                                             <span t-field="o.x_studio_codigo"/>
                                                         </td>
                                                     </tr>
+                                                    <!-- Lote pieza -->
                                                      <tr>
                                                         <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
                                                             <span>
@@ -84,6 +110,7 @@
                                                             <span t-field="o.x_studio_lote_pieza"/>
                                                         </td>
                                                     </tr>
+                                                    <!-- Fecha último análisis -->
                                                      <tr>
                                                         <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                                             <span>
@@ -99,8 +126,10 @@
                                                     </tr>
                                                 </table>
                                             </td>    
+                                            <!-- Columna derecha con datos adicionales -->
                                             <td width="30%">
                                                 <table>
+                                                    <!-- Especie/T.E. -->
                                                     <tr>
                                                         <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
                                                             <span>
@@ -114,6 +143,7 @@
                                                             <span t-field="o.x_studio_especie"/>
                                                         </td>
                                                     </tr>
+                                                    <!-- Lote -->
                                                      <tr>
                                                         <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
                                                             <span>
@@ -127,6 +157,7 @@
                                                             <span t-field="o.x_studio_lote"/>
                                                         </td>
                                                     </tr>
+                                                    <!-- Elaboración -->
                                                      <tr>
                                                         <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
                                                             <span>
@@ -140,6 +171,7 @@
                                                             <span t-field="o.x_elaboracion"/>
                                                         </td>
                                                     </tr>
+                                                    <!-- Caducidad -->
                                                      <tr>
                                                         <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
                                                             <span>
@@ -160,10 +192,13 @@
                                 </div>    
                             </div>
                         </div>
+                        
+                        <!-- Tabla con descripción, empaque y almacenamiento -->
                         <table class="table table-condensed">
                             <tr>
                                 <td>
                                     <table>
+                                        <!-- Descripción -->
                                         <tr>
                                             <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
                                                 <span>
@@ -177,6 +212,7 @@
                                                 <span t-field="o.x_studio_descripcion"/>
                                             </td>   
                                         </tr>
+                                        <!-- Empaque -->
                                          <tr>
                                             <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
                                                 <span>
@@ -190,6 +226,7 @@
                                                 <span t-field="o.x_studio_empaque"/>
                                             </td>                                               
                                         </tr>
+                                        <!-- Almacenamiento -->
                                         <tr>
                                             <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
                                                 <span>
@@ -207,6 +244,8 @@
                                 </td>
                             </tr>
                         </table>
+                        
+                        <!-- Sección de análisis sensoriales -->
                         <div style="text-align:center;color:black!important;">
                             <strong>
                                 <h6>
@@ -222,22 +261,26 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <!-- Olor -->
                                 <tr>
                                     <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Olor</th>
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="o.x_studio_olor"/>
                                     </td>
                                 </tr> 
+                                <!-- Color -->
                                 <tr>   
                                     <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Color</th>
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="o.x_studio_color"/>
                                     </td>
                                 </tr>    
+                                <!-- Sabor -->
                                     <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Sabor</th>
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                         <t t-esc="o.x_studio_sabor"/>
                                     </td>
+                                <!-- Textura -->
                                 <tr>    
                                     <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Textura</th>
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -246,6 +289,8 @@
                                 </tr>
                             </tbody>
                         </table>
+                        
+                        <!-- Sección de análisis microbiológicos -->
                         <div style="text-align:center;color:black!important;">
                             <strong>
                                 <h6>
@@ -265,6 +310,7 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <!-- Mesófilos Aerobios -->
                                 <tr>
                                     <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Mesófilos Aerobios (UFC / g)</th>
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -283,6 +329,7 @@
                                         <t t-esc="o.x_studio_mesofilos_aerobios_referencia"/>
                                     </td>
                                 </tr>
+                                <!-- Escherichia Coli -->
                                 <tr>
                                     <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Escherichia Coli (NMP / g)</th>
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -301,6 +348,7 @@
                                         <t t-esc="o.x_studio_escherichia_coli_referencia"/>
                                     </td>
                                 </tr>
+                                <!-- Salmonella sp -->
                                 <tr>
                                     <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Salmonella sp (25 g de muestra)</th>
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -319,6 +367,7 @@
                                         <t t-esc="o.x_studio_salmonella_sp_referencia"/>
                                     </td>
                                 </tr>
+                                <!-- Lysteria Monocitogenes -->
                                  <tr>
                                     <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Lysteria Monocitogenes / 25g</th>
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -337,6 +386,7 @@
                                         <t t-esc="o.x_studio_lysteria_monocito_referencia"/>
                                     </td>
                                 </tr>
+                                <!-- E. Coli 0157:H7 -->
                                 <tr>
                                     <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">E. Coli 0157:H7</th>
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -358,6 +408,8 @@
 
                             </tbody>
                         </table>
+                        
+                        <!-- Sección de análisis fisicoquímicos -->
                         <div style="text-align:center;color:black!important;">
                             <strong>
                                 <h6>
@@ -377,6 +429,7 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <!-- pH a 20 C -->
                                 <tr>
                                     <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">ph a 20 C</th>
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -395,6 +448,7 @@
                                         <t t-esc="o.x_studio_ph_a_20_referencia"/>
                                     </td>
                                 </tr>
+                                <!-- Estaño -->
                                 <tr>
                                     <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Estaño (mg/kg)</th>
                                     <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
