@@ -52,12 +52,5 @@
         groups="base.group_user"
         sequence="350"/>    
 
-    <menuitem
-        id="formula_costo_menu"
-        name="Fórmulas con costeo"
-        action="action_formulas_costo_wizard"
-        parent="mrp.menu_mrp_reporting"
-        groups="base.group_user"
-        sequence="350"/>    
   
 </odoo>
