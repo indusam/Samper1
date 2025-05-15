@@ -4,6 +4,9 @@
     <record id="wizard_formulas_costo_view_form" model="ir.ui.view">
         <field name="model">wizard.formulas.costo</field>
         <field name="name">wizard.formulas.costo.view.form</field>
+        <field name="inherit_id" ref="web.view_base_form"/>
+        <field name="mode">primary</field>
+        <field name="priority" eval="16"/>
         <field name="arch" type="xml">
             <form>
                 <group>
@@ -42,6 +45,14 @@
         <field name="view_mode">form</field>
         <field name="view_id" ref="wizard_formulas_costo_view_form"/>
         <field name="target">new</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="wizard_formulas_costo_view_form"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Seleccione un producto para generar el reporte de fórmulas con costeo.
+            </p>
+        </field>
     </record>
 
     <menuitem
