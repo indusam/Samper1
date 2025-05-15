@@ -266,6 +266,36 @@ class FormulasCosto(models.TransientModel):
                 'cant_limitante':self.cant_limitante
                 }
 
-        return self.env.ref('sam_reportes.formulas_costo_reporte').report_action(self, data=data)
-        #report = self.env.ref('sam_reportes.formulas_reporte')
-        #return report.report_action(self, data=data)
+        # Guardar los datos necesarios antes de limpiar
+        report_action = self.env.ref('sam_reportes.formulas_costo_reporte').report_action(self, data=data)
+        
+        # Crear un diccionario con los valores por defecto
+        default_values = {
+            'producto': False,
+            'cantidad': 0,
+            'ing_limitante': False,
+            'cant_limitante': 0,
+            'partidas': 0,
+            'consolidado': False,
+            'costo_total': 0,
+        }
+        
+        # Actualizar el registro actual con los valores por defecto
+        self.write(default_values)
+        
+        # Devolver tanto la acción del reporte como la acción para actualizar la vista
+        return {
+            'type': 'ir.actions.act_multi',
+            'actions': [
+                report_action,
+                {'type': 'ir.actions.act_window_close'},  # Cierra el diálogo de impresión
+                {
+                    'type': 'ir.actions.act_window',
+                    'res_model': self._name,
+                    'view_mode': 'form',
+                    'target': 'new',
+                    'res_id': self.id,
+                    'views': [(False, 'form')],
+                },
+            ],
+        }
