@@ -283,19 +283,12 @@ class FormulasCosto(models.TransientModel):
         # Actualizar el registro actual con los valores por defecto
         self.write(default_values)
         
-        # Devolver tanto la acción del reporte como la acción para actualizar la vista
-        return {
-            'type': 'ir.actions.act_multi',
-            'actions': [
-                report_action,
-                {'type': 'ir.actions.act_window_close'},  # Cierra el diálogo de impresión
-                {
-                    'type': 'ir.actions.act_window',
-                    'res_model': self._name,
-                    'view_mode': 'form',
-                    'target': 'new',
-                    'res_id': self.id,
-                    'views': [(False, 'form')],
-                },
-            ],
+        # Agregar un script para recargar el wizard después de imprimir
+        report_action['close_on_report_download'] = True
+        report_action['context'] = {
+            'active_id': self.id,
+            'active_model': self._name,
         }
+        
+        # Devolver la acción del reporte
+        return report_action
