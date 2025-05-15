@@ -266,29 +266,12 @@ class FormulasCosto(models.TransientModel):
                 'cant_limitante':self.cant_limitante
                 }
 
-        # Guardar los datos necesarios antes de limpiar
+        # Obtener la acción del reporte
         report_action = self.env.ref('sam_reportes.formulas_costo_reporte').report_action(self, data=data)
         
-        # Crear un diccionario con los valores por defecto
-        default_values = {
-            'producto': False,
-            'cantidad': 0,
-            'ing_limitante': False,
-            'cant_limitante': 0,
-            'partidas': 0,
-            'consolidado': False,
-            'costo_total': 0,
-        }
-        
-        # Actualizar el registro actual con los valores por defecto
-        self.write(default_values)
-        
-        # Agregar un script para recargar el wizard después de imprimir
-        report_action['close_on_report_download'] = True
-        report_action['context'] = {
-            'active_id': self.id,
-            'active_model': self._name,
-        }
+        # Si es una acción de reporte, configurar para cerrar después de la descarga
+        if report_action.get('type') == 'ir.actions.report':
+            report_action['close_on_report_download'] = True
         
         # Devolver la acción del reporte
         return report_action
