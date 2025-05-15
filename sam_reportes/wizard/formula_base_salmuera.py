@@ -227,5 +227,13 @@ class FormulaBaseSalmuera(models.TransientModel):
                 'cant_limitante':self.cantidad
                 }
 
-        return self.env.ref('sam_reportes.formula_base_salmuera_reporte').report_action(self, data=data)
+        # Obtener la acción del reporte
+        report_action = self.env.ref('sam_reportes.formula_base_salmuera_reporte').report_action(self, data=data)
+        
+        # Si es una acción de reporte, configurar para cerrar después de la descarga
+        if report_action.get('type') == 'ir.actions.report':
+            report_action['close_on_report_download'] = True
+        
+        # Devolver la acción del reporte
+        return report_action
 
