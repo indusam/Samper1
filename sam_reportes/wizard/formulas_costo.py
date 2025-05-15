@@ -266,6 +266,12 @@ class FormulasCosto(models.TransientModel):
                 'cant_limitante':self.cant_limitante
                 }
 
-        return self.env.ref('sam_reportes.formulas_costo_reporte').report_action(self, data=data)
-        #report = self.env.ref('sam_reportes.formulas_reporte')
-        #return report.report_action(self, data=data)
+        # Obtener la acción del reporte
+        report_action = self.env.ref('sam_reportes.formulas_costo_reporte').report_action(self, data=data)
+        
+        # Si es una acción de reporte, configurar para cerrar después de la descarga
+        if report_action.get('type') == 'ir.actions.report':
+            report_action['close_on_report_download'] = True
+        
+        # Devolver la acción del reporte
+        return report_action
