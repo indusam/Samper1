@@ -2,7 +2,7 @@
 
 # formulas.py
 # Impresión de la fórmula de un producto..
-# VBueno 2505202111:46
+# VBueno 1605202511:44
 # .
 # Impresión de la fórmula de un producto con y sin consolidación.
 # Si una fórmula tiene un ingrediente fórmula, suma las cantidades de los ingr.
@@ -273,5 +273,5 @@ class FormulasCosto(models.TransientModel):
         if report_action.get('type') == 'ir.actions.report':
             report_action['close_on_report_download'] = True
         
-        # Devolver la acción del reporte
+        # Devolver la acción del reporte de la 
         return report_action
