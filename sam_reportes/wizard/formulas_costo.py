@@ -21,6 +21,12 @@ class FormulasCosto(models.TransientModel):
     _name = 'wizard.formulas.costo'
     _description = 'Fórmulas con costeo'
 
+    tipo_costo = fields.Selection(
+        [('ultimo', 'Último Costo'), ('autorizado', 'Costo Autorizado')],
+        string='Tipo de Costo',
+        default='ultimo',
+        required=True
+    )
     producto = fields.Many2one('mrp.bom', string="Producto")
     cantidad = fields.Float(string="Cantidad")
     ing_limitante = fields.Many2one('mrp.bom.line',string="Ingrediente limitante")
@@ -43,7 +49,31 @@ class FormulasCosto(models.TransientModel):
     costo_usd = fields.Float(string="Costo USD")
 
 
-    #busca el ultimo costo
+    def get_costo_autorizado(self, producto):
+        """Obtiene el costo autorizado del producto desde product.supplierinfo"""
+        supplier_info = self.env['product.supplierinfo'].search([
+            ('product_tmpl_id', '=', producto.product_tmpl_id.id)
+        ], order='sequence, id', limit=1)
+        
+        if supplier_info and supplier_info.price > 0:
+            # Si el precio está en USD, convertirlo a MXN
+            if supplier_info.currency_id.name == 'USD':
+                tipo_cambio = self.env.company.x_studio_tipo_de_cambio or 1.0
+                return supplier_info.price * tipo_cambio
+            return supplier_info.price
+        return 0.0
+
+    def get_costo_autorizado_usd(self, producto):
+        """Obtiene el costo autorizado en USD del producto desde product.supplierinfo"""
+        supplier_info = self.env['product.supplierinfo'].search([
+            ('product_tmpl_id', '=', producto.product_tmpl_id.id)
+        ], order='sequence, id', limit=1)
+        
+        if supplier_info and supplier_info.price > 0:
+            if supplier_info.currency_id.name == 'USD':
+                return supplier_info.price
+        return 0.0
+
     def get_ultimo_costo(self, producto):
         # Buscar la última compra del producto
         ultima_compra = self.env['purchase.order.line'].search([
@@ -114,8 +144,15 @@ class FormulasCosto(models.TransientModel):
 
         if not ncomponente:
             codprov = self.get_codprov(ingrediente.product_id.product_tmpl_id.id)
-            #norden = self.get_orden(ingrediente.product_id.default_code)
             norden = ingrediente.product_id.x_studio_sub_categoria.name
+            
+            # Determinar qué costo usar según la selección
+            if self.tipo_costo == 'autorizado':
+                costo = self.get_costo_autorizado(ingrediente.product_id)
+                costo_usd = self.get_costo_autorizado_usd(ingrediente.product_id)
+            else:
+                costo = self.get_ultimo_costo(ingrediente.product_id)
+                costo_usd = self.get_ultimo_costo_usd(ingrediente.product_id)
 
             self.env['wizard.formulas.costo'].create({
                 'x_secuencia': secuencia,
@@ -125,8 +162,8 @@ class FormulasCosto(models.TransientModel):
                 'unidad': ingrediente.product_id.uom_id.name,
                 'pct_formula': ingrediente.x_porcentaje,
                 'pct_categoria': ingrediente.x_porcentaje_categoria,
-                'costo': self.get_ultimo_costo(ingrediente.product_id),
-                'costo_usd': self.get_ultimo_costo_usd(ingrediente.product_id),
+                'costo': costo,
+                'costo_usd': costo_usd,
                 'x_orden': norden
             })
 
@@ -180,6 +217,14 @@ class FormulasCosto(models.TransientModel):
                 #norden = self.get_orden(ingrediente.product_id.default_code)
                 norden = ingrediente.product_id.x_studio_sub_categoria.name
 
+                # Determinar qué costo usar según la selección
+                if self.tipo_costo == 'autorizado':
+                    costo = self.get_costo_autorizado(ingrediente.product_id)
+                    costo_usd = self.get_costo_autorizado_usd(ingrediente.product_id)
+                else:
+                    costo = self.get_ultimo_costo(ingrediente.product_id)
+                    costo_usd = self.get_ultimo_costo_usd(ingrediente.product_id)
+
                 vals.append({
                     'componente': ingrediente.product_id.name,
                     'cod_prov': codprov,
@@ -188,8 +233,8 @@ class FormulasCosto(models.TransientModel):
                     'unidad': ingrediente.product_id.uom_id.name,
                     'pct_formula': ingrediente.x_porcentaje,
                     'pct_categoria': ingrediente.x_porcentaje_categoria,
-                    'costo': self.get_ultimo_costo(ingrediente.product_id),
-                    'costo_usd': self.get_ultimo_costo_usd(ingrediente.product_id),
+                    'costo': costo,
+                    'costo_usd': costo_usd,
                     'orden': norden
                 })
 
