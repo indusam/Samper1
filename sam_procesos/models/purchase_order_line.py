@@ -11,17 +11,29 @@ class PurchaseOrderLine(models.Model):
         cuando se cambia el producto o el precio unitario
         """
         if not self.product_id or not self.order_id.partner_id:
-            return
+            return {'warning': {}}
             
         supplier_info = self.env['product.supplierinfo'].search([
             ('product_tmpl_id', '=', self.product_id.product_tmpl_id.id),
             ('partner_id', '=', self.order_id.partner_id.id)
         ], limit=1)
         
-        if supplier_info and self.price_unit and self.price_unit != supplier_info.price:
+        warning = {}
+        
+        if not supplier_info:
+            warning = {
+                'title': _('Producto no encontrado en lista de precios'),
+                'message': _('El producto %s no se encuentra en la lista de precios del proveedor. ¿Desea continuar?') % self.product_id.name,
+                'type': 'notification',
+                'sticky': True
+            }
+            return {'warning': warning}
+        
+        if self.price_unit and self.price_unit != supplier_info.price:
             warning = {
                 'title': _('Costo no autorizado'),
                 'message': _('El costo del producto %s debe ser %s según la información del proveedor.') % (self.product_id.name, supplier_info.price),
             }
             self.price_unit = supplier_info.price
-            return {'warning': warning}
+            
+        return {'warning': warning} if warning else {}
