@@ -51,13 +51,25 @@ class FormulasCosto(models.TransientModel):
 
     def get_costo_autorizado(self, producto):
         """Obtiene el costo autorizado del producto desde product.supplierinfo"""
+        # Buscar primero en la variante del producto (product.product)
         supplier_info = self.env['product.supplierinfo'].search([
-            ('product_tmpl_id', '=', producto.product_tmpl_id.id)
+            '|',
+            ('product_tmpl_id', '=', producto.product_tmpl_id.id),
+            '&',
+                ('product_id', '=', producto.id),
+                ('product_tmpl_id', '=', producto.product_tmpl_id.id)
         ], order='sequence, id', limit=1)
+        
+        # Si no se encuentra, buscar en la plantilla del producto
+        if not supplier_info:
+            supplier_info = self.env['product.supplierinfo'].search([
+                ('product_tmpl_id', '=', producto.product_tmpl_id.id),
+                ('product_id', '=', False)
+            ], order='sequence, id', limit=1)
         
         if supplier_info and supplier_info.price > 0:
             # Si el precio está en USD, convertirlo a MXN
-            if supplier_info.currency_id.name == 'USD':
+            if supplier_info.currency_id and supplier_info.currency_id.name == 'USD':
                 tipo_cambio = self.env.company.x_studio_tipo_de_cambio or 1.0
                 return supplier_info.price * tipo_cambio
             return supplier_info.price
@@ -65,12 +77,24 @@ class FormulasCosto(models.TransientModel):
 
     def get_costo_autorizado_usd(self, producto):
         """Obtiene el costo autorizado en USD del producto desde product.supplierinfo"""
+        # Buscar primero en la variante del producto (product.product)
         supplier_info = self.env['product.supplierinfo'].search([
-            ('product_tmpl_id', '=', producto.product_tmpl_id.id)
+            '|',
+            ('product_tmpl_id', '=', producto.product_tmpl_id.id),
+            '&',
+                ('product_id', '=', producto.id),
+                ('product_tmpl_id', '=', producto.product_tmpl_id.id)
         ], order='sequence, id', limit=1)
         
+        # Si no se encuentra, buscar en la plantilla del producto
+        if not supplier_info:
+            supplier_info = self.env['product.supplierinfo'].search([
+                ('product_tmpl_id', '=', producto.product_tmpl_id.id),
+                ('product_id', '=', False)
+            ], order='sequence, id', limit=1)
+        
         if supplier_info and supplier_info.price > 0:
-            if supplier_info.currency_id.name == 'USD':
+            if supplier_info.currency_id and supplier_info.currency_id.name == 'USD':
                 return supplier_info.price
         return 0.0
 
