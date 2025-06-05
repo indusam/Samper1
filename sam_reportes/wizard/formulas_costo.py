@@ -300,15 +300,19 @@ class FormulasCosto(models.TransientModel):
                     })
 
         
+        # Get the display name of the selected cost type
+        cost_type_display = dict(self._fields['tipo_costo'].selection).get(self.tipo_costo)
+        
         data = {'ids': self.ids,
-                'model':self._name,
-                'vals':vals,
-                'producto':self.producto.product_tmpl_id.name,
+                'model': self._name,
+                'vals': vals,
+                'producto': self.producto.product_tmpl_id.name,
                 'codigo': self.producto.product_tmpl_id.default_code,
-                'cantidad':self.cantidad,
-                'ing_limitante':self.ing_limitante,
-                'nombre_il':self.ing_limitante.product_tmpl_id.name,
-                'cant_limitante':self.cant_limitante
+                'cantidad': self.cantidad,
+                'ing_limitante': self.ing_limitante,
+                'nombre_il': self.ing_limitante.product_tmpl_id.name if self.ing_limitante else '',
+                'cant_limitante': self.cant_limitante,
+                'tipo_costo': cost_type_display.lower() if cost_type_display else ''
                 }
 
         # Obtener la acción del reporte
