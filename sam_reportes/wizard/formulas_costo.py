@@ -155,15 +155,30 @@ class FormulasCosto(models.TransientModel):
 
         return ordenes.get(prefix, '4. Especias')
 
-    def get_codprov(self, producto):
-        supplier_info = self.env['product.supplierinfo'].search([
-            '|',
-            ('product_tmpl_id', '=', producto),
-            '&',
-                ('product_id', '=', producto),
-                ('product_tmpl_id', '=', self.env['product.product'].browse(producto).product_tmpl_id.id)
-        ], order='sequence, id', limit=1)
-        return supplier_info.product_name if supplier_info else ''
+    def get_codprov(self, producto_id):
+        """Obtiene el código de proveedor para un producto o plantilla de producto"""
+        ProductProduct = self.env['product.product']
+        ProductTemplate = self.env['product.template']
+        
+        # Verificar si el ID es de un producto o plantilla
+        if ProductProduct.search_count([('id', '=', producto_id)]) > 0:
+            # Es un ID de producto
+            product = ProductProduct.browse(producto_id)
+            supplier_info = self.env['product.supplierinfo'].search([
+                '|',
+                ('product_tmpl_id', '=', product.product_tmpl_id.id),
+                '&',
+                    ('product_id', '=', product.id),
+                    ('product_tmpl_id', '=', product.product_tmpl_id.id)
+            ], order='sequence, id', limit=1)
+        else:
+            # Asumir que es un ID de plantilla de producto
+            supplier_info = self.env['product.supplierinfo'].search([
+                ('product_tmpl_id', '=', producto_id),
+                ('product_id', '=', False)
+            ], order='sequence, id', limit=1)
+            
+        return supplier_info.product_name if supplier_info and supplier_info.product_name else ''
 
     def crear_ncomponente_costo(self, ingrediente, secuencia, ncant_limitante):
         ncomponente = self.env['wizard.formulas.costo'].search(
