@@ -156,10 +156,14 @@ class FormulasCosto(models.TransientModel):
         return ordenes.get(prefix, '4. Especias')
 
     def get_codprov(self, producto):
-        ccodprov = self.env['product.supplierinfo'].search(
-                            [('product_tmpl_id.id', '=', producto)], limit=1
-                        ).product_name
-        return ccodprov
+        supplier_info = self.env['product.supplierinfo'].search([
+            '|',
+            ('product_tmpl_id', '=', producto),
+            '&',
+                ('product_id', '=', producto),
+                ('product_tmpl_id', '=', self.env['product.product'].browse(producto).product_tmpl_id.id)
+        ], order='sequence, id', limit=1)
+        return supplier_info.product_name if supplier_info else ''
 
     def crear_ncomponente_costo(self, ingrediente, secuencia, ncant_limitante):
         ncomponente = self.env['wizard.formulas.costo'].search(
@@ -278,8 +282,8 @@ class FormulasCosto(models.TransientModel):
                         'unidad': ingrediente.product_id.uom_id.name,
                         'pct_formula': ingrediente.x_porcentaje,
                         'pct_categoria': ingrediente.x_porcentaje_categoria,
-                        'costo': self.get_ultimo_costo(ingrediente.product_id),
-                        'costo_usd': self.get_ultimo_costo_usd(ingrediente.product_id),
+                        'costo': self.get_costo_autorizado(ingrediente.product_id) if self.tipo_costo == 'autorizado' else self.get_ultimo_costo(ingrediente.product_id),
+                        'costo_usd': self.get_costo_autorizado_usd(ingrediente.product_id) if self.tipo_costo == 'autorizado' else self.get_ultimo_costo_usd(ingrediente.product_id),
                         'orden': norden
                         })
 
@@ -319,8 +323,8 @@ class FormulasCosto(models.TransientModel):
                         'unidad': ingrediente.ingr.uom_id.name,
                         'pct_formula': (ingrediente.cant_tot / self.cantidad) * 100 ,
                         'pct_categoria': ingrediente.pct_categoria,
-                        'costo': self.get_ultimo_costo(ingrediente.ingr),
-                        'costo_usd': self.get_ultimo_costo_usd(ingrediente.ingr),
+                        'costo': self.get_costo_autorizado(ingrediente.ingr) if self.tipo_costo == 'autorizado' else self.get_ultimo_costo(ingrediente.ingr),
+                        'costo_usd': self.get_costo_autorizado_usd(ingrediente.ingr) if self.tipo_costo == 'autorizado' else self.get_ultimo_costo_usd(ingrediente.ingr),
                     })
 
         
