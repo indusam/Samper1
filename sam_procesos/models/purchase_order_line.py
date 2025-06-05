@@ -21,15 +21,18 @@ class PurchaseOrderLine(models.Model):
         warning = {}
         
         if not supplier_info:
+            # Si el producto no está en la lista de precios, forzamos al usuario a tomar una decisión
+            # estableciendo el precio unitario como 0
             warning = {
                 'title': _('Producto no encontrado en lista de precios'),
-                'message': _('El producto %s no se encuentra en la lista de precios del proveedor. ¿Desea continuar?') % self.product_id.name,
+                'message': _('El producto %s no se encuentra en la lista de precios del proveedor. Por favor, actualice la lista de precios o contacte al administrador.') % self.product_id.name,
                 'type': 'notification',
                 'sticky': True
             }
+            self.price_unit = 0
             return {'warning': warning}
         
-        if self.price_unit and self.price_unit != supplier_info.price:
+        if not self.price_unit or self.price_unit != supplier_info.price:
             warning = {
                 'title': _('Costo no autorizado'),
                 'message': _('El costo del producto %s debe ser %s según la información del proveedor.') % (self.product_id.name, supplier_info.price),
