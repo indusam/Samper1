@@ -14,7 +14,7 @@ class PurchaseOrderLine(models.Model):
                 
             supplier_info = self.env['product.supplierinfo'].search([
                 ('product_tmpl_id', '=', line.product_id.product_tmpl_id.id),
-                ('name', '=', line.order_id.partner_id.id)
+                ('partner_id', '=', line.order_id.partner_id.id)
             ], limit=1)
             
             if supplier_info and supplier_info.price != line.price_unit:
