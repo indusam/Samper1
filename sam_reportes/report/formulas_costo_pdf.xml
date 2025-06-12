@@ -70,6 +70,11 @@
                                     </tr>
                                     <t t-set="tot_gral" t-value="0"/>
                                     <t t-set="tot_costo" t-value="0"/>
+                                    <!-- First calculate the total cost -->
+                                    <t t-set="total_cost" t-value="0"/>
+                                    <t t-foreach="vals" t-as="line">
+                                        <t t-set="total_cost" t-value="total_cost + (line['costo'] * line['cant_comp'])"/>
+                                    </t>
                                     <t t-foreach="vals" t-as="table_line">
                                         <tr>
                                             <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
@@ -96,7 +101,7 @@
                                                 <t t-set="tot_costo" t-value="tot_costo + (table_line['costo'] * table_line['cant_comp'])"/>
                                             </td>
                                             <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                <t t-esc="'{0:,.2f}'.format((table_line['costo'] * table_line['cant_comp'] / tot_costo) * 100 if tot_costo > 0 else 0)"/>%
+                                                <t t-esc="'{0:,.2f}'.format((table_line['costo'] * table_line['cant_comp'] / total_cost) * 100 if total_cost > 0 else 0)"/>%
                                             </td>
                                         </tr>
                                     </t>
