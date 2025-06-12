@@ -115,6 +115,15 @@
                                         <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right"><strong t-esc="'{0:,.4f}'.format(tot_costo)"/></td>
                                         <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right"><strong>100.00%</strong></td>
                                     </tr>
+                                    <tr>
+                                        <td colspan="6" class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                            <strong>Costo por kilo:</strong>
+                                        </td>
+                                        <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                            <strong t-esc="'{0:,.4f}'.format(tot_costo / cantidad if cantidad > 0 else 0)"/>
+                                        </td>
+                                        <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
+                                    </tr>
                                 </table>
                             </div>
                         </div>
