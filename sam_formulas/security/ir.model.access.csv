@@ -1,0 +1,12 @@
+# -*- coding: utf-8 -*-
+# Archivo de control de acceso a modelos
+# Formato: id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+# Acceso completo para el grupo Usuarios (base.group_user)
+access_sam_formulas_user,access.sam.formulas.user,model_sam_formulas,base.group_user,1,1,1,1
+
+# Acceso de solo lectura para el grupo Usuarios con acceso a ventas (sales_team.group_sale_salesman)
+access_sam_formulas_salesman,access.sam.formulas.salesman,model_sam_formulas,sales_team.group_sale_salesman,1,0,0,0
+
+# Acceso completo para el grupo Administrador (base.group_system)
+access_sam_formulas_manager,access.sam.formulas.manager,model_sam_formulas,base.group_system,1,1,1,1
