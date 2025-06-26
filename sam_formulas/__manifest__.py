@@ -36,7 +36,6 @@
         
         # Vistas
         'views/views.xml',
-        'views/intermedios_empaques_views.xml',
         
         # Datos
         # 'data/data.xml',
