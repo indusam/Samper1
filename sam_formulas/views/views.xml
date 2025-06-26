@@ -10,14 +10,25 @@
         <xpath expr="//page[@name='inventory']" position="after">
           <page string="Intermedios y Empaques" name="intermedios_empaques_page" groups="base.group_user">
             <group>
-              <field name="int_y_emp" nolabel="1">
-                <tree editable="bottom">
-                  <field name="product_id" domain="[('type', 'in', ['product', 'consu'])]"/>
-                  <field name="tipo"/>
-                  <field name="cantidad"/>
-                  <field name="unidades_por_pieza"/>
-                  <field name="uom_id" readonly="1"/>
+              <field name="int_y_emp" nolabel="1" context="{'default_product_tmpl_id': active_id}">
+                <tree editable="bottom" decoration-muted="product_id == False" create="1" delete="1">
+                  <field name="product_id" string="Producto" domain="[('type', 'in', ['product', 'consu'])]"/>
+                  <field name="tipo" string="Tipo"/>
+                  <field name="cantidad" string="Cantidad"/>
+                  <field name="unidades_por_pieza" string="Unidades por Pieza"/>
+                  <field name="uom_id" string="UdM" readonly="1"/>
                 </tree>
+                <form>
+                  <sheet>
+                    <group>
+                      <field name="product_id" domain="[('type', 'in', ['product', 'consu'])]"/>
+                      <field name="tipo"/>
+                      <field name="cantidad"/>
+                      <field name="unidades_por_pieza"/>
+                      <field name="uom_id" readonly="1"/>
+                    </group>
+                  </sheet>
+                </form>
               </field>
             </group>
           </page>

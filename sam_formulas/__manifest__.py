@@ -1,37 +1,54 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "sam_contabilidad",
+    'name': "sam_formulas",
 
     'summary': """
-        Personalización de Odoo para Industrias Alimenticias SAM SA de CV""",
+        Módulo para la gestión de fórmulas, intermedios y empaques en Samper.
+    """,
 
     'description': """
-        Campos, vistas, reportes, etc. propios de Samper.
-        Adecuaciones al módulo de contabilidad para Samper.
+        Módulo personalizado para la gestión de:
+        - Fórmulas de producción
+        - Productos intermedios
+        - Empaques
+        - Relación entre productos y sus componentes
     """,
 
     'author': "vbueno",
     'license': 'AGPL-3',
     'website': "http://www.samper.mx",
 
-    # Categories can be used to filter modules in modules listing
-    # Check https://github.com/odoo/odoo/blob/13.0/odoo/addons/base/data/ir_module_category_data.xml
-    # for the full list
-    'category': 'mrp',
-    'version': '0.1',
+    # Categoría del módulo
+    'category': 'Manufacturing/Manufacturing',
+    'version': '16.0.1.0.0',
 
-    # any module necessary for this one to work correctly
-    'depends': ['base', 'mrp'],
+    # Módulos necesarios para que este funcione correctamente
+    'depends': [
+        'base',
+        'mrp',
+        'product',
+    ],
 
-    # always loaded
+    # Archivos de datos que se cargarán al instalar/actualizar el módulo
     'data': [
+        # Seguridad y permisos
         'security/ir.model.access.csv',
+        
+        # Vistas
         'views/views.xml',
-        'views/templates.xml',
         'views/intermedios_empaques_views.xml',
+        
+        # Datos
+        # 'data/data.xml',
     ],
-    # only loaded in demonstration mode
+    
+    # Solo para modo demostración
     'demo': [
-        'demo/demo.xml',
+        # 'demo/demo.xml',
     ],
+    
+    # Aplicación (no es un módulo técnico)
+    'application': False,
+    'installable': True,
+    'auto_install': False,
 }
