@@ -18,15 +18,6 @@ class ProductTemplate(models.Model):
         help="Unidad de medida que representa la presentación del producto")
     x_pct_variacion = fields.Float(string='% Variación', digits=(3, 4),
         help="Porcentaje de variación permitido para el producto")
-        
-    int_y_emp = fields.One2many(
-        comodel_name='intermedios.empaques',
-        inverse_name='product_tmpl_id',
-        string='Intermedios y Empaques',
-        copy=True,
-        help="Lista de productos intermedios y empaques necesarios para este producto"
-    )
-   
 
 
 class ListaMateriales(models.Model):
