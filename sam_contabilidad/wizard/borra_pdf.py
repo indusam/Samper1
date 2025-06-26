@@ -9,7 +9,7 @@ Descripción:
     una fecha de creación anterior a una fecha de corte definida por el usuario.
 
 Autor: VBueno
-Fecha: 19/08/2021 - 12:04
+Fecha: 19/08/2021 - 12:04 - 2606202510:53
 """
 
 import datetime
