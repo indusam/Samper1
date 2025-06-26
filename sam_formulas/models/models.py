@@ -1,8 +1,9 @@
 # -*- coding: utf-8  -*-
+# vbueno 2606202510:35
 
 import logging
-from odoo import models, fields, api
-from odoo.exceptions import UserError
+from odoo import models, fields, api, _
+from odoo.exceptions import UserError, ValidationError
 from odoo.tools.safe_eval import safe_eval
 
 _logger = logging.getLogger(__name__)
@@ -17,16 +18,7 @@ class ProductTemplate(models.Model):
     x_presentacion = fields.Many2one("uom.uom", string="Presentacion",
         help="Unidad de medida que representa la presentación del producto")
     x_pct_variacion = fields.Float(string='% Variación', digits=(3, 4),
-        help="Porcentaje de variación permitido para el producto")
-        
-    int_y_emp = fields.One2many(
-        'intermedios.empaques',
-        'product_tmpl_id',
-        string='Intermedios y Empaques',
-        copy=True,
-        help="Lista de productos intermedios y empaques necesarios para este producto"
-    )
-   
+        help="Porcentaje de variación permitido para el producto seleccionado")
 
 
 class ListaMateriales(models.Model):
