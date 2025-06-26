@@ -1,4 +1,5 @@
 # -*- coding: utf-8  -*-
+# vbueno 2606202510:35
 
 import logging
 from odoo import models, fields, api, _
@@ -17,7 +18,7 @@ class ProductTemplate(models.Model):
     x_presentacion = fields.Many2one("uom.uom", string="Presentacion",
         help="Unidad de medida que representa la presentación del producto")
     x_pct_variacion = fields.Float(string='% Variación', digits=(3, 4),
-        help="Porcentaje de variación permitido para el producto")
+        help="Porcentaje de variación permitido para el producto seleccionado")
 
 
 class ListaMateriales(models.Model):
