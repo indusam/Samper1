@@ -20,8 +20,8 @@ class ProductTemplate(models.Model):
         help="Porcentaje de variación permitido para el producto")
         
     int_y_emp = fields.One2many(
-        'intermedios.empaques',
-        'product_tmpl_id',
+        comodel_name='intermedios.empaques',
+        inverse_name='product_tmpl_id',
         string='Intermedios y Empaques',
         copy=True,
         help="Lista de productos intermedios y empaques necesarios para este producto"
