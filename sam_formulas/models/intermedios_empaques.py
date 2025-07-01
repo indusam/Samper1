@@ -25,10 +25,16 @@ class IntermediosEmpaques(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
-            if 'name' not in vals and 'product_id' in vals:
+            if 'product_id' in vals:
                 product = self.env['product.product'].browse(vals['product_id'])
-                vals['name'] = product.display_name
-        return super().create(vals_list)
+                if 'name' not in vals:
+                    vals['name'] = product.display_name
+                # Asegurarse de que el campo calculado se actualice
+                vals['product_uom_name'] = product.uom_id.name if product.uom_id else ''
+        records = super().create(vals_list)
+        # Forzar el cálculo del campo product_uom_name
+        records.mapped('product_uom_name')
+        return records
         
     @api.onchange('product_id')
     def _onchange_product_id(self):
