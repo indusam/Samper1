@@ -14,6 +14,7 @@
                         <tree editable="bottom" string="Intermedios y Empaques">
                             <field name="name" invisible="1"/>
                             <field name="product_id" required="1"/>
+                            <field name="product_uom_name" string="Unidad" readonly="1"/>
                             <field name="kgs_unidad" string="Kgs/Unidad"/>
                             <field name="unidad_pza" string="Unidad/Pieza"/>
                             <field name="proceso" string="Proceso"/>
@@ -23,18 +24,11 @@
                                 <group>
                                     <group>
                                         <field name="name" invisible="1"/>
-                                        <group>
-                                            <field name="product_id" required="1"/>
-                                            <div class="o_row" style="margin-left: 10px; margin-top: 8px;">
-                                                <label for="product_uom_name" string="Unidad:" class="oe_inline o_form_label"/>
-                                                <span class="oe_inline" style="margin-left: 5px;">
-                                                    <field name="product_uom_name" readonly="1" nolabel="1"/>
-                                                </span>
-                                            </div>
-                                        </group>
+                                        <field name="product_id" required="1"/>
                                         <field name="kgs_unidad" string="Kgs/Unidad"/>
                                     </group>
                                     <group>
+                                        <field name="product_uom_name" string="Unidad" readonly="1"/>
                                         <field name="unidad_pza" string="Unidad/Pieza"/>
                                         <field name="proceso" string="Proceso"/>
                                     </group>
