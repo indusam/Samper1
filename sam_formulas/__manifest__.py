@@ -20,7 +20,7 @@
 
     # Categoría del módulo
     'category': 'Manufacturing/Manufacturing',
-    'version': '16.0.1.0.0',
+    'version': '16.0',
 
     # Módulos necesarios para que este funcione correctamente
     'depends': [
