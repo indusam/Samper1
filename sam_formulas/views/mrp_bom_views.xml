@@ -6,7 +6,8 @@
         <field name="model">mrp.bom</field>
         <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
         <field name="arch" type="xml">
-            <xpath expr="//page[@name='sub_products']" position="after">
+            <!-- Try to find the sub_products page, if not found, place after the main components page -->
+            <xpath expr="//page[@name='sub_products'] | //page[@name='components']" position="after">
                 <page string="Intermedios y Empaques" name="intermedios_empaques">
                     <field name="intermedios_empaques_count" invisible="1"/>
                     <field name="intermedios_empaques_ids" nolabel="1" context="{'default_lista_materiales': active_id}">
