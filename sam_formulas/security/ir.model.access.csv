@@ -3,5 +3,3 @@
 # Formato: id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 
 access.intermedios.empaques,access_intermedios_empaques,sam_formulas.model_intermedios_empaques,base.group_user,1,1,1,1
-
-#access.wizard.formulas.costo,access_wizard_formulas_costo,sam_reportes.model_wizard_formulas_costo,base.group_user,1,1,1,1
