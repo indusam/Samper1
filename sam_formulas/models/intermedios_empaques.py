@@ -14,7 +14,7 @@ class IntermediosEmpaques(models.Model):
     
     name = fields.Char(string='Nombre', required=True, readonly=True, copy=False)
     product_id = fields.Many2one('product.product', string='Producto', required=True, ondelete='restrict')
-    product_uom = fields.Many2one('uom.uom', string='Unidad', related='product_id.uom_id', readonly=True)
+    product_uom = fields.Many2one('uom.uom', string='Unidad', related='product_id.uom_id', readonly=True, store=True)
     kgs_unidad = fields.Float(string='Kgs por unidad', required=True)
     
     @api.model_create_multi
