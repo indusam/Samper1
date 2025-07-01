@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Extensión de la vista de lista de materiales para agregar pestaña de Intermedios y Empaques -->
+    <record id="view_mrp_bom_form_inherit_intermedios_empaques" model="ir.ui.view">
+        <field name="name">mrp.bom.form.inherit.intermedios.empaques</field>
+        <field name="model">mrp.bom</field>
+        <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='sub_products']" position="after">
+                <page string="Intermedios y Empaques" name="intermedios_empaques">
+                    <field name="intermedios_empaques_count" invisible="1"/>
+                    <field name="intermedios_empaques_ids" nolabel="1" context="{'default_lista_materiales': active_id}">
+                        <tree editable="bottom" string="Intermedios y Empaques">
+                            <field name="product_id" required="1"/>
+                            <field name="kgs_unidad" string="Kgs/Unidad"/>
+                            <field name="unidad_pza" string="Unidad/Pieza"/>
+                            <field name="proceso" string="Proceso"/>
+                        </tree>
+                        <form>
+                            <sheet>
+                                <group>
+                                    <group>
+                                        <field name="product_id" required="1"/>
+                                        <field name="kgs_unidad" string="Kgs/Unidad"/>
+                                    </group>
+                                    <group>
+                                        <field name="unidad_pza" string="Unidad/Pieza"/>
+                                        <field name="proceso" string="Proceso"/>
+                                    </group>
+                                </group>
+                            </sheet>
+                        </form>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    
+    <!-- Agregar el contador en el encabezado del formulario -->
+    <record id="view_mrp_bom_form_inherit_intermedios_empaques_count" model="ir.ui.view">
+        <field name="name">mrp.bom.form.inherit.intermedios.empaques.count</field>
+        <field name="model">mrp.bom</field>
+        <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='ready_to_produce']" position="after">
+                <field name="intermedios_empaques_count" widget="statinfo" string="Intermedios/Empaques" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

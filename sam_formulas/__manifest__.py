@@ -35,6 +35,7 @@
         'security/ir.model.access.csv',
         
         # Vistas
+        'views/mrp_bom_views.xml',
         
         # Datos
         # 'data/data.xml',
