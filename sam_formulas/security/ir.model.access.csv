@@ -2,5 +2,4 @@
 # Archivo de control de acceso a modelos
 # Formato: id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 
-# Acceso completo para el grupo Usuarios (base.group_user)
-access_intermedios_empaques_user,access.intermedios.empaques.user,model_intermedios_empaques,base.group_user,1,1,1,1
+access.intermedios.empaques,access_intermedios_empaques,model_intermedios_empaques,base.group_user,1,1,1,1
