@@ -347,12 +347,24 @@ class FormulasCosto(models.TransientModel):
         # Get the display name of the selected cost type
         cost_type_display = dict(self._fields['tipo_costo'].selection).get(self.tipo_costo)
         
-        # Get the intermedios_empaques records from the BOM
-        intermedios_empaques = self.env['intermedios.empaques']
+        # Get the intermedios_empaques records from the BOM and prepare them as dictionaries
+        intermedios_empaques = []
         if self.producto and self.producto.intermedios_empaques_ids:
-            intermedios_empaques = self.env['intermedios.empaques'].search([
+            records = self.env['intermedios.empaques'].search([
                 ('lista_materiales', '=', self.producto.id)
             ])
+            # Convert records to a list of dictionaries
+            intermedios_empaques = [{
+                'id': rec.id,
+                'name': rec.name,
+                'product_id': {
+                    'id': rec.product_id.id,
+                    'name': rec.product_id.name,
+                },
+                'product_uom_name': rec.product_uom_name,
+                'kgs_unidad': rec.kgs_unidad,
+                'unidad_pza': rec.unidad_pza
+            } for rec in records]
             
         data = {
             'ids': self.ids,

@@ -139,17 +139,17 @@
                                         <t t-foreach="intermedios_empaques" t-as="item">
                                             <tr>
                                                 <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
-                                                    <t t-esc="item.product_id.name"/>
+                                                    <t t-esc="item.get('product_id', {}).name or item.get('product_id', '')"/>
                                                 </td>
                                                 <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
-                                                    <t t-esc="item.product_uom_name"/>
+                                                    <t t-esc="item.get('product_uom_name', '')"/>
                                                 </td>
                                                 <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                    <t t-if="item.kgs_unidad > 0" t-esc="'{0:,.4f}'.format(item.kgs_unidad)"/>
-                                                    <t t-if="item.unidad_pza > 0" t-esc="'{0:,.4f}'.format(item.unidad_pza)"/>
+                                                    <t t-if="item.get('kgs_unidad', 0) > 0" t-esc="'{0:,.4f}'.format(item.get('kgs_unidad', 0))"/>
+                                                    <t t-if="item.get('unidad_pza', 0) > 0" t-esc="'{0:,.4f}'.format(item.get('unidad_pza', 0))"/>
                                                 </td>
                                                 <td colspan="5" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
-                                                    <t t-esc="item.name"/>
+                                                    <t t-esc="item.get('name', '')"/>
                                                 </td>
                                             </tr>
                                         </t>
