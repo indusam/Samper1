@@ -13,7 +13,8 @@ class IntermediosEmpaques(models.Model):
     _description = 'Intermedios y empaques'
     
     name = fields.Char(string='Nombre', required=True, readonly=True, copy=False)
-    product_id = fields.Many2one('product.product', string='Producto', required=True, ondelete='restrict')
+    product_id = fields.Many2one('product.product', string='Producto', required=True, ondelete='restrict',
+        domain="[('categ_id.name', 'ilike', 'EMPAQUE'), '|', ('categ_id.name', 'ilike', 'INTERMEDIOS')]")
     product_uom_name = fields.Char(string='Unidad', compute='_compute_product_uom_name', readonly=True, store=True)
     kgs_unidad = fields.Float(string='Kgs por unidad', required=True)
     
