@@ -347,17 +347,26 @@ class FormulasCosto(models.TransientModel):
         # Get the display name of the selected cost type
         cost_type_display = dict(self._fields['tipo_costo'].selection).get(self.tipo_costo)
         
-        data = {'ids': self.ids,
-                'model': self._name,
-                'vals': vals,
-                'producto': self.producto.product_tmpl_id.name,
-                'codigo': self.producto.product_tmpl_id.default_code,
-                'cantidad': self.cantidad,
-                'ing_limitante': self.ing_limitante,
-                'nombre_il': self.ing_limitante.product_tmpl_id.name if self.ing_limitante else '',
-                'cant_limitante': self.cant_limitante,
-                'tipo_costo': cost_type_display.lower() if cost_type_display else ''
-                }
+        # Get the intermedios_empaques_ids from the BOM
+        intermedios_empaques = []
+        if self.producto and self.producto.intermedios_empaques_ids:
+            intermedios_empaques = self.env['intermedios.empaques'].search([
+                ('lista_materiales', '=', self.producto.id)
+            ])
+            
+        data = {
+            'ids': self.ids,
+            'model': self._name,
+            'vals': vals,
+            'producto': self.producto.product_tmpl_id.name,
+            'codigo': self.producto.product_tmpl_id.default_code,
+            'cantidad': self.cantidad,
+            'ing_limitante': self.ing_limitante,
+            'nombre_il': self.ing_limitante.product_tmpl_id.name if self.ing_limitante else '',
+            'cant_limitante': self.cant_limitante,
+            'tipo_costo': cost_type_display.lower() if cost_type_display else '',
+            'intermedios_empaques_ids': intermedios_empaques.ids
+        }
 
         # Obtener la acción del reporte
         report_action = self.env.ref('sam_reportes.formulas_costo_reporte').report_action(self, data=data)
