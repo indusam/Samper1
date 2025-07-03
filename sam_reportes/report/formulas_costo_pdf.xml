@@ -70,11 +70,24 @@
                                     </tr>
                                     <t t-set="tot_gral" t-value="0"/>
                                     <t t-set="tot_costo" t-value="0"/>
-                                    <!-- First calculate the total cost -->
+                                    <!-- Calculate total cost of first section -->
                                     <t t-set="total_cost" t-value="0"/>
                                     <t t-foreach="vals" t-as="line">
                                         <t t-set="total_cost" t-value="total_cost + (line['costo'] * line['cant_comp'])"/>
                                     </t>
+                                    
+                                    <!-- Calculate total cost of intermedios y empaques -->
+                                    <t t-set="total_intermedios" t-value="0"/>
+                                    <t t-if="intermedios_empaques">
+                                        <t t-foreach="intermedios_empaques" t-as="item">
+                                            <t t-set="cant" t-value="item.get('kgs_unidad', 0.0) or item.get('unidad_pza', 0.0)"/>
+                                            <t t-set="costo" t-value="item.get('costo', 0.0)"/>
+                                            <t t-set="total_intermedios" t-value="total_intermedios + (cant * costo)"/>
+                                        </t>
+                                    </t>
+                                    
+                                    <!-- Combined total cost -->
+                                    <t t-set="combined_total" t-value="total_cost + total_intermedios"/>
                                     <t t-foreach="vals" t-as="table_line">
                                         <tr>
                                             <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
@@ -101,7 +114,7 @@
                                                 <t t-set="tot_costo" t-value="tot_costo + (table_line['costo'] * table_line['cant_comp'])"/>
                                             </td>
                                             <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                <t t-esc="'{0:,.2f}'.format((table_line['costo'] * table_line['cant_comp'] / total_cost) * 100 if total_cost > 0 else 0)"/>%
+                                                <t t-esc="'{0:,.2f}'.format((table_line['costo'] * table_line['cant_comp'] / combined_total) * 100 if combined_total > 0 else 0)"/>%
                                             </td>
                                         </tr>
                                     </t>
@@ -113,7 +126,9 @@
                                         <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
                                         <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
                                         <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right"><strong t-esc="'{0:,.4f}'.format(tot_costo)"/></td>
-                                        <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right"><strong>100.00%</strong></td>
+                                        <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                            <t t-esc="'{0:,.2f}'.format((tot_costo / combined_total) * 100 if combined_total > 0 else 0)"/>%
+                                        </td>
                                     </tr>
                                     <!-- Sección de Intermedios y Empaques -->
                                     <t t-if="intermedios_empaques and len(intermedios_empaques) > 0">
@@ -179,7 +194,7 @@
                                                     <t t-set="tot_costo" t-value="tot_costo + costo_total"/>
                                                 </td>
                                                 <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                    <t t-esc="'{0:,.2f}'.format((costo_total / (total_cost or 1)) * 100) if total_cost else '0.00'"/>%
+                                                    <t t-esc="'{0:,.2f}'.format((costo_total / combined_total) * 100 if combined_total > 0 else 0)"/>%
                                                 </td>
                                             </tr>
                                         </t>
@@ -198,7 +213,7 @@
                                                 <strong t-esc="'{0:,.4f}'.format(total_importe) if total_importe else '0.0000'"/>
                                             </td>
                                             <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                <t t-esc="'{0:,.2f}'.format((total_importe / (total_cost or 1)) * 100) if total_cost else '0.00'"/>%
+                                                <t t-esc="'{0:,.2f}'.format((total_importe / combined_total) * 100 if combined_total > 0 else 0)"/>%
                                             </td>
                                         </tr>
                                         <tr><td colspan="8" style="height: 15px;"></td></tr>
