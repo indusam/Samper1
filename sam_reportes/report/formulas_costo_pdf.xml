@@ -139,7 +139,7 @@
                                         <t t-foreach="intermedios_empaques" t-as="item">
                                             <tr>
                                                 <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
-                                                    <t t-esc="item.get('product_id', {}).name or item.get('product_id', '')"/>
+                                                    <t t-esc="item.get('product_id', {}).get('name', '')" t-raw="0"/>
                                                 </td>
                                                 <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
                                                     <t t-esc="item.get('product_uom_name', '')"/>
