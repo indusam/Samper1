@@ -137,32 +137,7 @@
                                                 <strong>Intermedios y Empaques</strong>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td class="table-active" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle; padding:5px">
-                                              <strong>Ingrediente</strong>
-                                            </td>
-                                            <td class="table-active" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle; padding:5px">
-                                              <strong>Código</strong>
-                                            </td>
-                                            <td class="table-active" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle; padding:5px">
-                                              <strong>Cantidad</strong>
-                                            </td>
-                                            <td width="18" class="table-active" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle; padding:5px">
-                                              <strong>Unidad</strong>
-                                            </td>
-                                            <td width="15" class="table-active" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle; padding:5px">
-                                              <strong>Costo x kg USD</strong>
-                                            </td>
-                                            <td width="15" class="table-active" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle; padding:5px">
-                                              <strong>Costo x kg MXN</strong>
-                                            </td>
-                                            <td width="15" class="table-active" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle; padding:5px">
-                                              <strong>Costo total</strong>
-                                            </td>
-                                            <td width="15" class="table-active" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle; padding:5px">
-                                              <strong>% Costo</strong>
-                                            </td>
-                                        </tr>
+
                                         <t t-set="total_importe" t-value="0.0"/>
                                         <t t-foreach="intermedios_empaques" t-as="item">
                                             <t t-set="cantidad" t-value="item.get('kgs_unidad', 0.0) or item.get('unidad_pza', 0.0)"/>
