@@ -124,20 +124,38 @@
                                         </tr>
                                         <tr>
                                             <td class="table-active" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle; padding:5px">
+                                                <strong>#</strong>
+                                            </td>
+                                            <td class="table-active" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle; padding:5px">
                                                 <strong>Producto</strong>
                                             </td>
                                             <td class="table-active" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle; padding:5px">
                                                 <strong>Unidad</strong>
                                             </td>
-                                            <td class="table-active" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle; padding:5px">
-                                                <strong>Cantidad</strong>
+                                            <td class="table-active" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle; padding:5px" align="right">
+                                                <strong>Cant. Total</strong>
                                             </td>
-                                            <td colspan="5" class="table-active" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle; padding:5px">
-                                                <strong>Descripción</strong>
+                                            <td class="table-active" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle; padding:5px" align="right">
+                                                <strong>% Fórmula</strong>
+                                            </td>
+                                            <td class="table-active" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle; padding:5px" align="right">
+                                                <strong>% Grupo</strong>
+                                            </td>
+                                            <td class="table-active" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle; padding:5px" align="right">
+                                                <strong>% Merma</strong>
+                                            </td>
+                                            <td class="table-active" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle; padding:5px" align="right">
+                                                <strong>Costo</strong>
                                             </td>
                                         </tr>
+                                        <t t-set="total_costo_intermedios" t-value="0.0"/>
                                         <t t-foreach="intermedios_empaques" t-as="item">
+                                            <t t-set="costo_linea" t-value="item.get('costo', 0.0) * (item.get('kgs_unidad', 0.0) or item.get('unidad_pza', 0.0))"/>
+                                            <t t-set="total_costo_intermedios" t-value="total_costo_intermedios + costo_linea"/>
                                             <tr>
+                                                <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
+                                                    <t t-esc="item.get('x_orden', '')" t-raw="0"/>
+                                                </td>
                                                 <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
                                                     <t t-esc="item.get('product_id', {}).get('name', '')" t-raw="0"/>
                                                 </td>
@@ -145,14 +163,32 @@
                                                     <t t-esc="item.get('product_uom_name', '')"/>
                                                 </td>
                                                 <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                    <t t-if="item.get('kgs_unidad', 0) > 0" t-esc="'{0:,.4f}'.format(item.get('kgs_unidad', 0))"/>
-                                                    <t t-if="item.get('unidad_pza', 0) > 0" t-esc="'{0:,.4f}'.format(item.get('unidad_pza', 0))"/>
+                                                    <t t-if="item.get('kgs_unidad', 0) > 0" t-esc="'{0:,.4f}'.format(item.get('kgs_unidad', 0.0))"/>
+                                                    <t t-if="item.get('unidad_pza', 0) > 0" t-esc="'{0:,.4f}'.format(item.get('unidad_pza', 0.0))"/>
                                                 </td>
-                                                <td colspan="5" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
-                                                    <t t-esc="item.get('name', '')"/>
+                                                <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                    <t t-esc="'{0:,.4f}'.format(item.get('pct_formula', 0.0)) if item.get('pct_formula') else '0.0000'"/>
+                                                </td>
+                                                <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                    <t t-esc="'{0:,.4f}'.format(item.get('pct_categoria', 0.0)) if item.get('pct_categoria') else '0.0000'"/>
+                                                </td>
+                                                <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                    <t t-esc="'{0:,.4f}'.format(item.get('pct_merma', 0.0)) if item.get('pct_merma') else '0.0000'"/>
+                                                </td>
+                                                <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                    <t t-esc="'$ {0:,.4f}'.format(costo_linea)"/>
                                                 </td>
                                             </tr>
                                         </t>
+                                        <!-- Total row for Intermedios y Empaques -->
+                                        <tr style="font-weight: bold;">
+                                            <td colspan="7" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                Total Intermedios y Empaques:
+                                            </td>
+                                            <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                <t t-esc="'$ {0:,.4f}'.format(total_costo_intermedios)"/>
+                                            </td>
+                                        </tr>
                                         <tr><td colspan="8" style="height: 15px;"></td></tr>
                                     </t>
                                     
