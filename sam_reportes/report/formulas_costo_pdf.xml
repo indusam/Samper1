@@ -215,7 +215,8 @@
                                     </t>
                                     
                                     <!-- Costo por kilo después de intermedios y empaques -->
-                                    <t t-set="costo_despues" t-value="tot_costo / cantidad if cantidad > 0 else 0"/>
+                                    <t t-set="costo_intermedios_por_kilo" t-value="total_importe / cantidad if cantidad > 0 else 0"/>
+                                    <t t-set="costo_despues" t-value="costo_antes + costo_intermedios_por_kilo"/>
                                     <tr>
                                         <td colspan="6" class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
                                             <strong>Costo por kilo (después de intermedios y empaques):</strong>
