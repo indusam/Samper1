@@ -132,10 +132,13 @@
                                     </tr>
                                     <!-- Inicializar total_importe si es None -->
                                     <t t-set="total_importe" t-value="total_importe or 0.0"/>
-                                    <!-- Calcular total de ingredientes principales -->
-                                    <t t-set="costo_ingredientes" t-value="tot_costo - total_importe"/>
-                                    <t t-set="cantidad_ingredientes" t-value="tot_gral - total_intermedios"/>
-                                    <!-- Costo por kilo antes de intermedios y empaques -->
+                                    <!-- Calcular costo por kilo antes de intermedios y empaques -->
+                                    <t t-set="costo_ingredientes" t-value="0.0"/>
+                                    <t t-set="cantidad_ingredientes" t-value="0.0"/>
+                                    <t t-foreach="vals" t-as="line">
+                                        <t t-set="costo_ingredientes" t-value="costo_ingredientes + (line['costo'] * line['cant_comp'])"/>
+                                        <t t-set="cantidad_ingredientes" t-value="cantidad_ingredientes + line['cant_comp']"/>
+                                    </t>
                                     <t t-set="costo_antes" t-value="costo_ingredientes / cantidad_ingredientes if cantidad_ingredientes > 0 else 0"/>
                                     <tr>
                                         <td colspan="6" class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
