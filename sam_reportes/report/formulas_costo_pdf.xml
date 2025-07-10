@@ -130,6 +130,8 @@
                                             <t t-esc="'{0:,.2f}'.format((tot_costo / combined_total) * 100 if combined_total > 0 else 0)"/>%
                                         </td>
                                     </tr>
+                                    <!-- Inicializar total_importe si es None -->
+                                    <t t-set="total_importe" t-value="total_importe or 0.0"/>
                                     <!-- Costo por kilo antes de intermedios y empaques -->
                                     <t t-set="costo_antes" t-value="(tot_costo - total_importe) / cantidad if cantidad > 0 else 0"/>
                                     <tr>
