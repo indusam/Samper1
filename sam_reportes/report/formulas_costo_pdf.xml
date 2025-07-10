@@ -130,6 +130,17 @@
                                             <t t-esc="'{0:,.2f}'.format((tot_costo / combined_total) * 100 if combined_total > 0 else 0)"/>%
                                         </td>
                                     </tr>
+                                    <!-- Costo por kilo antes de intermedios y empaques -->
+                                    <tr>
+                                        <td colspan="6" class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                            <strong>Costo por kilo (antes de intermedios y empaques):</strong>
+                                        </td>
+                                        <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                            <strong t-esc="'{0:,.4f}'.format((tot_costo - total_intermedios) / cantidad if cantidad > 0 else 0)"/>
+                                        </td>
+                                        <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
+                                    </tr>
+                                    
                                     <!-- Sección de Intermedios y Empaques -->
                                     <t t-if="intermedios_empaques and len(intermedios_empaques) > 0">
                                         <tr>
@@ -194,16 +205,6 @@
                                         <tr><td colspan="8" style="height: 15px;"></td></tr>
                                     </t>
                                     
-                                    <!-- Costo por kilo antes de intermedios y empaques -->
-                                    <tr>
-                                        <td colspan="6" class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                            <strong>Costo por kilo (antes de intermedios y empaques):</strong>
-                                        </td>
-                                        <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                            <strong t-esc="'{0:,.4f}'.format((tot_costo - total_intermedios) / cantidad if cantidad > 0 else 0)"/>
-                                        </td>
-                                        <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
-                                    </tr>
                                     <!-- Costo por kilo después de intermedios y empaques -->
                                     <tr>
                                         <td colspan="6" class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
