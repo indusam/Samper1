@@ -354,17 +354,29 @@ class FormulasCosto(models.TransientModel):
                 ('lista_materiales', '=', self.producto.id)
             ])
             # Convert records to a list of dictionaries
-            intermedios_empaques = [{
-                'id': rec.id,
-                'name': rec.name,
-                'product_id': {
-                    'id': rec.product_id.id,
-                    'name': rec.product_id.name,
-                },
-                'product_uom_name': rec.product_uom_name,
-                'kgs_unidad': rec.kgs_unidad,
-                'unidad_pza': rec.unidad_pza
-            } for rec in records]
+            intermedios_empaques = []
+            for rec in records:
+                # Obtener el costo según el tipo seleccionado
+                if self.tipo_costo == 'autorizado':
+                    costo = self.get_costo_autorizado(rec.product_id)
+                    costo_usd = self.get_costo_autorizado_usd(rec.product_id)
+                else:
+                    costo = self.get_ultimo_costo(rec.product_id)
+                    costo_usd = self.get_ultimo_costo_usd(rec.product_id)
+                
+                intermedios_empaques.append({
+                    'id': rec.id,
+                    'name': rec.name,
+                    'product_id': {
+                        'id': rec.product_id.id,
+                        'name': rec.product_id.name,
+                    },
+                    'product_uom_name': rec.product_uom_name,
+                    'kgs_unidad': rec.kgs_unidad,
+                    'unidad_pza': rec.unidad_pza,
+                    'costo': costo,
+                    'costo_usd': costo_usd
+                })
             
         data = {
             'ids': self.ids,
