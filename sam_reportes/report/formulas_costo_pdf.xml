@@ -17,6 +17,7 @@
                                                 </span>
                                                 <span style="float: right; white-space: nowrap; margin-left: 10px;">
                                                   <strong>Tipo de cambio: </strong><span t-esc="'{0:,.4f}'.format(env.company.x_studio_tipo_de_cambio or 0.0)"/>
+                                                  <t t-if="tipo_costo">(<t t-esc="tipo_costo"/>)</t>
                                                 </span>
                                               </div>
                                               <div>
