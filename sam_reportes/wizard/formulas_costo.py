@@ -2,7 +2,7 @@
 
 # formulas.py
 # Impresión de la fórmula de un producto..
-# VBueno 1605202511:44
+# VBueno 1707202511:00
 # v16
 # .
 # Impresión de la fórmula de un producto con y sin consolidación.
