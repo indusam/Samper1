@@ -20,9 +20,9 @@
                                                 </span>
                                               </div>
                                               <div style="position: relative;">
-                                                <span><strong>Cantidad: </strong> <span t-esc="'{0:,.4f}'.format(cantidad)"/> Kgs.</span>
+                                                <span><strong>Cantidad: </strong> <span t-esc="'{0:,.4f}'.format(cantidad)"/> Kgs.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                                                 <t t-if="bom_code">
-                                                  <span style="position: absolute; left: 150px;">
+                                                  <span style="position: absolute; left: 200px;">
                                                     <strong>Código: </strong><span t-esc="bom_code"/>
                                                   </span>
                                                 </t>
