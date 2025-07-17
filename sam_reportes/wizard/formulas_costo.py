@@ -389,7 +389,8 @@ class FormulasCosto(models.TransientModel):
             'nombre_il': self.ing_limitante.product_tmpl_id.name if self.ing_limitante else '',
             'cant_limitante': self.cant_limitante,
             'tipo_costo': cost_type_display.lower() if cost_type_display else '',
-            'intermedios_empaques': intermedios_empaques
+            'intermedios_empaques': intermedios_empaques,
+            'bom_code': self.producto.code  # Add BOM code to the template context
         }
 
         # Obtener la acción del reporte
