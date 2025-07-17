@@ -21,7 +21,9 @@
                                               </div>
                                               <div>
                                                 <strong>Cantidad: </strong> <span t-esc="'{0:,.4f}'.format(cantidad)"/> Kgs.
-                                                <t t-if="tipo_costo">(<t t-esc="tipo_costo"/>)</t>
+                                                <span style="float: right; white-space: nowrap; margin-left: 10px;">
+                                                  <t t-if="tipo_costo">(<t t-esc="tipo_costo"/>)</t>
+                                                </span>
                                               </div>
                                             </th>
                                         </t>
