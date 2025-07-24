@@ -11,7 +11,6 @@ class IntermediosEmpaques(models.Model):
     Modelo para intermedios y empaques en fórmulas.
     """
     _name = 'intermedios.empaques'
-    _inherit = 'mail.thread'
     _description = 'Intermedios y empaques'
     
     # Field definitions first
