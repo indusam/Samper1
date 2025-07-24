@@ -2,7 +2,8 @@
 
 # formulas.py
 # Impresión de la fórmula de un producto..
-# VBueno 1605202511:44
+# VBueno 1707202511:00
+# v16
 # .
 # Impresión de la fórmula de un producto con y sin consolidación.
 # Si una fórmula tiene un ingrediente fórmula, suma las cantidades de los ingr.
@@ -346,17 +347,51 @@ class FormulasCosto(models.TransientModel):
         # Get the display name of the selected cost type
         cost_type_display = dict(self._fields['tipo_costo'].selection).get(self.tipo_costo)
         
-        data = {'ids': self.ids,
-                'model': self._name,
-                'vals': vals,
-                'producto': self.producto.product_tmpl_id.name,
-                'codigo': self.producto.product_tmpl_id.default_code,
-                'cantidad': self.cantidad,
-                'ing_limitante': self.ing_limitante,
-                'nombre_il': self.ing_limitante.product_tmpl_id.name if self.ing_limitante else '',
-                'cant_limitante': self.cant_limitante,
-                'tipo_costo': cost_type_display.lower() if cost_type_display else ''
-                }
+        # Get the intermedios_empaques records from the BOM and prepare them as dictionaries
+        intermedios_empaques = []
+        if self.producto and self.producto.intermedios_empaques_ids:
+            records = self.env['intermedios.empaques'].search([
+                ('lista_materiales', '=', self.producto.id)
+            ])
+            # Convert records to a list of dictionaries
+            intermedios_empaques = []
+            for rec in records:
+                # Obtener el costo según el tipo seleccionado
+                if self.tipo_costo == 'autorizado':
+                    costo = self.get_costo_autorizado(rec.product_id)
+                    costo_usd = self.get_costo_autorizado_usd(rec.product_id)
+                else:
+                    costo = self.get_ultimo_costo(rec.product_id)
+                    costo_usd = self.get_ultimo_costo_usd(rec.product_id)
+                
+                intermedios_empaques.append({
+                    'id': rec.id,
+                    'name': rec.name,
+                    'product_id': {
+                        'id': rec.product_id.id,
+                        'name': rec.product_id.name,
+                    },
+                    'product_uom_name': rec.product_uom_name,
+                    'kgs_unidad': rec.kgs_unidad,
+                    'unidad_pza': rec.unidad_pza,
+                    'costo': costo,
+                    'costo_usd': costo_usd
+                })
+            
+        data = {
+            'ids': self.ids,
+            'model': self._name,
+            'vals': vals,
+            'producto': self.producto.product_tmpl_id.name,
+            'codigo': self.producto.product_tmpl_id.default_code,
+            'cantidad': self.cantidad,
+            'ing_limitante': self.ing_limitante,
+            'nombre_il': self.ing_limitante.product_tmpl_id.name if self.ing_limitante else '',
+            'cant_limitante': self.cant_limitante,
+            'tipo_costo': cost_type_display.lower() if cost_type_display else '',
+            'intermedios_empaques': intermedios_empaques,
+            'bom_code': self.producto.code  # Add BOM code to the template context
+        }
 
         # Obtener la acción del reporte
         report_action = self.env.ref('sam_reportes.formulas_costo_reporte').report_action(self, data=data)

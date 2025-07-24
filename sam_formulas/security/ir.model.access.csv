@@ -1,2 +1,5 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_sam_formulas_sam_formulas,sam_formulas.sam_formulas,model_sam_formulas_sam_formulas,base.group_user,1,1,1,1
+# -*- coding: utf-8 -*-
+# Archivo de control de acceso a modelos
+# Formato: id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access.intermedios.empaques,access_intermedios_empaques,sam_formulas.model_intermedios_empaques,base.group_user,1,1,1,1
