@@ -10,6 +10,7 @@ class IntermediosEmpaques(models.Model):
     Modelo para intermedios y empaques en fórmulas.
     """
     _name = 'intermedios.empaques'
+    _inherit = 'mail.thread'
     _description = 'Intermedios y empaques'
     
     name = fields.Char(string='Nombre', required=True, readonly=True, copy=False)
