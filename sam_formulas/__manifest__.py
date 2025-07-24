@@ -41,11 +41,6 @@
         # 'data/data.xml',
     ],
     
-    # Solo para modo demostración
-    'demo': [
-        # 'demo/demo.xml',
-    ],
-    
     # Aplicación (no es un módulo técnico)
     'application': False,
     'installable': True,
