@@ -21,7 +21,8 @@ class Formulas(models.TransientModel):
     _name = 'wizard.formulas'
     _description = 'Fórmulas'
 
-    producto = fields.Many2one('mrp.bom', string="Producto")
+    product_tmpl = fields.Many2one('product.template', string="Plantilla de Producto")
+    producto = fields.Many2one('mrp.bom', string="Lista de Materiales", domain="[('product_tmpl_id', '=', product_tmpl)]")
     cantidad = fields.Float(string="Cantidad")
     ing_limitante = fields.Many2one('mrp.bom.line',string="Ingrediente limitante")
     cant_limitante = fields.Float(string="Cantidad limitante")
@@ -39,6 +40,12 @@ class Formulas(models.TransientModel):
     pct_merma = fields.Float(string="% Merma", digits=(6, 4))
     x_orden = fields.Char(string="Orden", required=False, )
 
+
+    @api.onchange('product_tmpl')
+    def _onchange_product_tmpl(self):
+        # Reset producto when product_tmpl changes
+        self.producto = False
+        return {'domain': {'producto': [('product_tmpl_id', '=', self.product_tmpl.id)]}}
 
     # permite seleccionar el ingrediente limitante.
     @api.onchange('producto')
