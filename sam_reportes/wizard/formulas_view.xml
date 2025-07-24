@@ -55,6 +55,5 @@
         action="action_formulas_wizard"
         parent="studio_customization.samper_informes_9a4c552e-6a2c-49dc-b22f-2c77d1e02fac"
         groups="base.group_user"
-        sequence="349"/>    
-
+        sequence="349"/>
 </odoo>
