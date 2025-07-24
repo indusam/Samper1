@@ -1,4 +1,5 @@
 # -*- coding: utf-8  -*-
+# se deben agregar intermedios y empaques.
 
 import logging
 from odoo import models, fields, api
