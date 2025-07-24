@@ -11,10 +11,11 @@
                         <field name="product_tmpl" required="1"/>
                         <field name="producto" required="1" attrs="{'required': [('product_tmpl', '!=', False)]}"/>
                          
-                        <field name="partidas" attrs="{'readonly': ['|',
+                        <field name="partidas" attrs="{'readonly': ['|', '|', '|',
                                                        ('cantidad','>',0),
                                                        ('ing_limitante','!=',False),
-                                                       ('product_tmpl','=',False)]}"/>
+                                                       ('product_tmpl','=',False),
+                                                       ('cant_limitante','>',0)]}"/>
                                                        
                         <field name="cantidad" attrs="{'readonly': ['|','|','|',
                                                        ('ing_limitante','!=',False),
