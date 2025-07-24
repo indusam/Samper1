@@ -21,7 +21,7 @@ class Formulas(models.TransientModel):
     _name = 'wizard.formulas'
     _description = 'Fórmulas'
 
-    product_tmpl = fields.Many2one('product.template', string="Plantilla de Producto")
+    product_tmpl = fields.Many2one('product.template', string="Producto")
     producto = fields.Many2one('mrp.bom', string="Lista de Materiales", domain="[('product_tmpl_id', '=', product_tmpl)]")
     cantidad = fields.Float(string="Cantidad")
     ing_limitante = fields.Many2one('mrp.bom.line',string="Ingrediente limitante")
