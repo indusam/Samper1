@@ -4,4 +4,3 @@
 
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_intermedios_empaques,intermedios.empaques user,model_intermedios_empaques,base.group_user,1,1,1,0
-access_intermedios_empaques_manager,intermedios.empaques manager,model_intermedios_empaques,base.group_system,1,1,1,1
