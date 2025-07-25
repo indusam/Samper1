@@ -1,3 +1,3 @@
 # -*- coding: utf-8 -*-
 # 2
-from . import models
+from . import models, intermedios_empaques
