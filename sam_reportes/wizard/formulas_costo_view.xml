@@ -18,7 +18,7 @@
                                                        ('product_tmpl','=',False),
                                                        ('cant_limitante','>',0)]}"/>
                                                        
-                        <field name="cantidad" attrs="{'readonly': ['|','|',
+                        <field name="cantidad" attrs="{'readonly': ['|','|','|',
                                                        ('ing_limitante','!=',False),
                                                        ('partidas','>',0),
                                                        ('cant_limitante','>',0),
@@ -26,18 +26,6 @@
 
                         <field name="consolidado" />
                     </group>
-                    <!--
-                    <group>
-                        <field name="ing_limitante" attrs="{'readonly': ['|', '|', 
-                                                       ('cantidad','>',0), 
-                                                       ('partidas','>',0), 
-                                                       ('product_tmpl','=',False)]}"/>
-                        <field name="cant_limitante" attrs="{'readonly': ['|', '|', 
-                                                       ('cantidad','>',0), 
-                                                       ('partidas','>',0), 
-                                                       ('product_tmpl','=',False)]}" readonly="1"/>
-                    </group>
-                    -->
                     <group>
                         <field name="ing_limitante" attrs="{'readonly': ['|', '|', ('cantidad','>',0), ('partidas','>',0), ('product_tmpl','=',False)]}"/>
                         <field name="cant_limitante" attrs="{'readonly': ['|', '|', ('cantidad','>',0), ('partidas','>',0), ('product_tmpl','=',False)]}"/>
