@@ -8,9 +8,10 @@
             <form>
                 <group>
                     <group>
-                        <field name="producto" required="1"/>
+                        <field name="product_tmpl" required="1"/>
+                        <field name="producto" required="1" attrs="{'required': [('product_tmpl', '!=', False)]}"/>
                         <field name="tipo_costo"/>
-                         
+                        
                         <field name="partidas" attrs="{'invisible': ['|',
                                                        ('cantidad','>',0),
                                                        ('ing_limitante','!=',False)]}"/>
@@ -24,7 +25,7 @@
 
                     <group>
                         <field name="ing_limitante" attrs="{'invisible': ['|', ('cantidad','>',0), ('partidas','>',0)]}"/>
-                        <field name="cant_limitante" attrs="{'invisible': ['|', ('cantidad','>',0), ('partidas','>',0)]}"/>
+                        <field name="cant_limitante" attrs="{'invisible': ['|', ('cantidad','>',0), ('partidas','>',0)]}" readonly="1"/>
                     </group>
 
                 </group>

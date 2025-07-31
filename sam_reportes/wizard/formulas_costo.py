@@ -28,7 +28,8 @@ class FormulasCosto(models.TransientModel):
         default='ultimo',
         required=True
     )
-    producto = fields.Many2one('mrp.bom', string="Producto")
+    product_tmpl = fields.Many2one('product.template', string="Producto")
+    producto = fields.Many2one('mrp.bom', string="Lista de Materiales", domain="[('product_tmpl_id', '=', product_tmpl)]")
     cantidad = fields.Float(string="Cantidad")
     ing_limitante = fields.Many2one('mrp.bom.line',string="Ingrediente limitante")
     cant_limitante = fields.Float(string="Cantidad limitante")
@@ -75,6 +76,18 @@ class FormulasCosto(models.TransientModel):
                 return supplier_info.price * tipo_cambio
             return supplier_info.price
         return 0.0
+
+    @api.onchange('product_tmpl')
+    def _onchange_product_tmpl(self):
+        # Reset producto when product_tmpl changes
+        self.producto = False
+        return {'domain': {'producto': [('product_tmpl_id', '=', self.product_tmpl.id)]}}
+
+    # permite seleccionar el ingrediente limitante.
+    @api.onchange('producto')
+    def onchange_producto(self):
+        nlista = self.producto.id
+        return {'domain': {'ing_limitante': [('bom_id', '=', nlista)]}}
 
     def get_costo_autorizado_usd(self, producto):
         """Obtiene el costo autorizado en USD del producto desde product.supplierinfo"""
