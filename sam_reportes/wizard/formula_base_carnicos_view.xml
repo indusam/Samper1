@@ -12,11 +12,12 @@
                         <field name="cantidad" required="1"/>
                         <field name="consolidado"/>
                     </group>
-
+                    <!---
                     <group>
                         <field name="ing_limitante" attrs="{'invisible': [('cantidad','>',0)]}"/>
                         <field name="cant_limitante" attrs="{'invisible': [('cantidad','>',0)]}" readonly="1"/>
                     </group>
+                    -->
                 </group>
                 <footer>
                     <button name="imprime_formula_base_carnicos" type="object" string="Imprimir" class="oe_highlight"/>
