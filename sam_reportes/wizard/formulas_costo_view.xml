@@ -26,7 +26,7 @@
 
                         <field name="consolidado" />
                     </group>
-
+                    <!--
                     <group>
                         <field name="ing_limitante" attrs="{'readonly': ['|', '|', 
                                                        ('cantidad','>',0), 
@@ -36,6 +36,11 @@
                                                        ('cantidad','>',0), 
                                                        ('partidas','>',0), 
                                                        ('product_tmpl','=',False)]}" readonly="1"/>
+                    </group>
+                    -->
+                    <group>
+                        <field name="ing_limitante" attrs="{'readonly': ['|', '|', ('cantidad','>',0), ('partidas','>',0), ('product_tmpl','=',False)]}"/>
+                        <field name="cant_limitante" attrs="{'readonly': ['|', '|', ('cantidad','>',0), ('partidas','>',0), ('product_tmpl','=',False)]}"/>
                     </group>
 
                 </group>
