@@ -151,11 +151,20 @@ class FormulasCosto(models.TransientModel):
     # permite seleccionar el ingrediente limitante.
     @api.onchange('producto')
     def onchange_producto(self):
-        nlista = self.producto.id
-        # self.pct_merma = self.producto.product_tmpl_id.x_pct_merma
-        for rec in self:
-            return {'domain': {'ing_limitante':
-                                   [('bom_id', '=', nlista)]}}
+        if self.producto:
+            # Reset ing_limitante when producto changes
+            self.ing_limitante = False
+            self.cant_limitante = 0.0
+            
+            # Get all BOM lines for the selected BOM
+            bom_lines = self.env['mrp.bom.line'].search([('bom_id', '=', self.producto.id)])
+            
+            # Set domain to only show BOM lines from the selected BOM
+            return {'domain': {'ing_limitante': [('id', 'in', bom_lines.ids)]}}
+        else:
+            self.ing_limitante = False
+            self.cant_limitante = 0.0
+            return {'domain': {'ing_limitante': [('id', 'in', [])]}}
 
     def get_orden(self, codigo_producto):
         prefix = codigo_producto[:2]  # Tomar las dos primeras letras
