@@ -7,16 +7,17 @@
             <form>
                 <group>
                     <group>
-                        <field name="producto" required="1"/>
+                        <field name="product_tmpl" required="1"/>
+                        <field name="producto" required="1" attrs="{'required': [('product_tmpl', '!=', False)]}"/>
                         <field name="cantidad" required="1"/>
-                        <field name="consolidado" />
+                        <field name="consolidado"/>
                     </group>
-                    <!--  Esto no se usa en la formula de base de carnicos     
+                    <!-- 
                     <group>
                         <field name="ing_limitante" attrs="{'invisible': [('cantidad','>',0)]}"/>
-                        <field name="cant_limitante" attrs="{'invisible': [('cantidad','>',0)]}"/>
+                        <field name="cant_limitante" attrs="{'invisible': [('cantidad','>',0)]}" readonly="1"/>
                     </group>
-                    -->    
+                    -->
                 </group>
                 <footer>
                     <button name="imprime_formula_base_salmuera" type="object" string="Imprimir" class="oe_highlight"/>
