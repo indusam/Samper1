@@ -285,3 +285,14 @@ class ReporteInventario(models.Model):
     _inherit = 'stock.quant'
     inventory_quantity = fields.Float(string="Cantidad Disponible",
                                       digits=(12, 4))
+
+
+class StockLotExtended(models.Model):
+    """Extensión del modelo stock.lot para modificar la precisión decimal de product_qty"""
+    _inherit = 'stock.lot'
+    
+    product_qty = fields.Float(
+        string='Cantidad',
+        digits=(12, 4),
+        help='Cantidad de productos en este lote/específico',
+    )
