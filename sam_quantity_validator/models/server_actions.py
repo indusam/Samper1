@@ -14,7 +14,7 @@ class QuantityValidatorAction(models.Model):
         try:
             model = self.env[model_name]
             if not model._fields.get(quantity_field):
-                return 0
+                return 0, []
                 
             domain = [
                 (quantity_field, '!=', 0),
@@ -26,15 +26,37 @@ class QuantityValidatorAction(models.Model):
             
             records = model.search(domain)
             if not records:
-                return 0
+                return 0, []
                 
             _logger.info("Found %s records with small quantities in %s", len(records), model_name)
-            records.write({quantity_field: 0})
-            return len(records)
+            
+            # Process records one by one to handle potential validation errors
+            fixed_count = 0
+            error_records = []
+            
+            for record in records:
+                try:
+                    # Create a copy of the record's values to avoid modifying the original
+                    vals = {quantity_field: 0}
+                    # For stock.quant, we need to handle the in_date field
+                    if model_name == 'stock.quant' and hasattr(record, 'in_date'):
+                        vals['in_date'] = record.in_date or fields.Datetime.now()
+                    
+                    # Update the record
+                    record.write(vals)
+                    fixed_count += 1
+                except Exception as e:
+                    error_msg = f"{model_name}({record.id}): {str(e)[:100]}"
+                    _logger.warning("Could not update %s: %s", model_name, error_msg)
+                    error_records.append(error_msg)
+                    continue
+            
+            return fixed_count, error_records
             
         except Exception as e:
-            _logger.error("Error fixing small quantities in %s: %s", model_name, str(e))
-            return 0
+            error_msg = str(e)
+            _logger.error("Error processing %s: %s", model_name, error_msg)
+            return 0, [f"{model_name}: {error_msg}"]
 
     @api.model
     def validate_quantities(self):
@@ -52,13 +74,16 @@ class QuantityValidatorAction(models.Model):
         ]
         
         fixed_counts = {}
+        all_errors = []
         
         # First, fix existing small quantities
         for model_name, qty_field in models_config:
             if qty_field:
-                count = self._fix_existing_small_quantities(model_name, qty_field)
+                count, errors = self._fix_existing_small_quantities(model_name, qty_field)
                 if count > 0:
                     fixed_counts[model_name] = count
+                if errors:
+                    all_errors.extend(errors)
         
         # Then run model-specific validations
         for model_name, _ in models_config:
@@ -68,24 +93,37 @@ class QuantityValidatorAction(models.Model):
                     _logger.info("Running validation for model: %s", model_name)
                     model._validate_quantities()
             except Exception as e:
-                _logger.error("Error in %s._validate_quantities: %s", model_name, str(e))
+                error_msg = f"Error in {model_name}._validate_quantities: {str(e)[:200]}"
+                _logger.error(error_msg)
+                all_errors.append(error_msg)
         
         _logger.info("Quantity validation process completed")
         
-        # Create a more detailed success message
-        message = "Quantity validation completed successfully"
+        # Prepare the result message
+        message_parts = []
+        
         if fixed_counts:
             details = ", ".join([f"{model}: {count}" for model, count in fixed_counts.items()])
-            message = f"Fixed small quantities in: {details}"
+            message_parts.append(f"Fixed small quantities in: {details}")
         
-        # Return a simple success message
+        if all_errors:
+            error_count = len(all_errors)
+            error_summary = "\n".join([f"- {e}" for e in all_errors[:5]])  # Show first 5 errors
+            if error_count > 5:
+                error_summary += f"\n... and {error_count - 5} more errors"
+            message_parts.append(f"Encountered {error_count} errors:\n{error_summary}")
+        
+        if not message_parts:
+            message_parts.append("No quantities needed adjustment")
+        
+        # Return the result
         return {
             'type': 'ir.actions.client',
             'tag': 'display_notification',
             'params': {
-                'title': 'Success',
-                'message': message,
-                'sticky': False,
-                'type': 'success',
+                'title': 'Quantity Validation Complete',
+                'message': "\n\n".join(message_parts),
+                'sticky': True,  # Keep the message visible until dismissed
+                'type': 'success' if not all_errors else 'warning',
             }
         }
