@@ -7,7 +7,7 @@ class StockQuant(models.Model):
     _inherit = 'stock.quant'
 
     def _validate_qty(self, qty):
-        if 0 < qty < 0.0001:
+        if abs(qty) < 0.0001:
             _logger.info(
                 f"Ajustando cantidad {qty} a 0 en existencia {self.id}"
             )
