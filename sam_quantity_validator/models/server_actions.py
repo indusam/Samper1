@@ -1,4 +1,5 @@
 from odoo import models, api, _
+from odoo.exceptions import UserError
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -70,12 +71,20 @@ class QuantityValidatorAction(models.Model):
                 _logger.error("Error in %s._validate_quantities: %s", model_name, str(e))
         
         _logger.info("Quantity validation process completed")
+        
+        # Create a more detailed success message
+        message = "Quantity validation completed successfully"
+        if fixed_counts:
+            details = ", ".join([f"{model}: {count}" for model, count in fixed_counts.items()])
+            message = f"Fixed small quantities in: {details}"
+        
+        # Return a simple success message
         return {
             'type': 'ir.actions.client',
             'tag': 'display_notification',
             'params': {
-                'title': _('Success'),
-                'message': _('Quantity validation completed successfully'),
+                'title': 'Success',
+                'message': message,
                 'sticky': False,
                 'type': 'success',
             }
