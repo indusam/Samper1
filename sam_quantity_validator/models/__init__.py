@@ -4,3 +4,4 @@ from . import stock_quant
 from . import mrp_production
 from . import stock_lot
 from . import stock_picking
+from . import server_actions
