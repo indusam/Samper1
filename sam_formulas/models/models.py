@@ -293,6 +293,6 @@ class StockLotExtended(models.Model):
     
     product_qty = fields.Float(
         string='Cantidad',
-        digits=(12, 6),
+        digits=(12, 4),
         help='Cantidad de productos en este lote/específico',
     )
