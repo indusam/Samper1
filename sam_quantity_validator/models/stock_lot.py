@@ -57,8 +57,25 @@ class StockLot(models.Model):
         return super().write(vals)
 
     def _compute_quantities(self) -> None:
-        """Override _compute_quantities to validate quantities."""
+        """Override _compute_quantities to validate and round quantities to 4 decimal places."""
         super()._compute_quantities()
         for lot in self:
-            if abs(lot.product_qty) < 0.0001:
+            try:
+                # Redondear a 4 decimales
+                rounded_qty = round(float(lot.product_qty or 0.0), 4)
+                
+                # Si el valor redondeado es efectivamente 0, establecer a 0.0
+                if abs(rounded_qty) < 0.0001:
+                    lot.product_qty = 0.0
+                else:
+                    lot.product_qty = rounded_qty
+                    
+            except (TypeError, ValueError) as e:
+                _logger.error(
+                    "%s: Error redondeando cantidad en lote %s: %s",
+                    self._name,
+                    lot.id,
+                    str(e)
+                )
+                # En caso de error, forzar a 0.0 para evitar problemas
                 lot.product_qty = 0.0

@@ -65,6 +65,9 @@ class MrpProduction(models.Model):
                 raise ValidationError(_("Movimiento o campo no válido"))
                 
             value = move[field] or 0.0
+            # Redondear a 4 decimales
+            value = round(float(value), 4)
+            
             if abs(value) < 0.0001:
                 _logger.info(
                     "%s: Ajustando %s a 0 en movimiento %s (producción: %s)",
@@ -74,6 +77,8 @@ class MrpProduction(models.Model):
                     self.name or 'Nueva'
                 )
                 move[field] = 0.0
+            else:
+                move[field] = value
         except Exception as e:
             _logger.error(
                 "%s: Error validando movimiento %s, campo %s: %s",

@@ -50,8 +50,26 @@ class StockMove(models.Model):
         return super().write(vals)
 
     def _action_assign(self) -> bool:
-        """Override _action_assign to validate quantities before assigning."""
+        """Override _action_assign to validate and round quantities before assigning."""
         for move in self:
-            if abs(move.product_uom_qty) < 0.0001:
+            try:
+                # Redondear a 4 decimales
+                rounded_qty = round(float(move.product_uom_qty or 0.0), 4)
+                
+                # Si el valor redondeado es efectivamente 0, establecer a 0.0
+                if abs(rounded_qty) < 0.0001:
+                    move.product_uom_qty = 0.0
+                else:
+                    move.product_uom_qty = rounded_qty
+                    
+            except (TypeError, ValueError) as e:
+                _logger.error(
+                    "%s: Error redondeando cantidad en movimiento %s: %s",
+                    self._name,
+                    move.id,
+                    str(e)
+                )
+                # En caso de error, forzar a 0.0 para evitar problemas
                 move.product_uom_qty = 0.0
+                
         return super()._action_assign()

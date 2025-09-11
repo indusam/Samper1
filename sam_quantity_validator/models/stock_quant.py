@@ -9,20 +9,24 @@ class StockQuant(models.Model):
     _inherit = 'stock.quant'
 
     def _validate_qty(self, qty: Union[float, int]) -> float:
-        """Validate and adjust quantity values.
+        """Validate, round to 4 decimal places, and adjust quantity values.
         
         Args:
-            qty: The quantity to validate
+            qty: The quantity to validate and round
             
         Returns:
-            float: The validated quantity (0 if abs(qty) < 0.0001)
+            float: The validated and rounded quantity (0 if abs(qty) < 0.0001)
             
         Raises:
             ValidationError: If qty is not a valid number
         """
         try:
+            # Convertir a float y redondear a 4 decimales
             qty_float = float(qty)
-            if abs(qty_float) < 0.0001:
+            rounded_qty = round(qty_float, 4)
+            
+            # Si el valor redondeado es efectivamente 0, retornar 0.0
+            if abs(rounded_qty) < 0.0001:
                 _logger.info(
                     "%s: Ajustando cantidad %s a 0 en existencia %s",
                     self._name,
@@ -30,7 +34,9 @@ class StockQuant(models.Model):
                     self.id or 'nueva'
                 )
                 return 0.0
-            return qty_float
+                
+            return rounded_qty
+            
         except (TypeError, ValueError) as e:
             _logger.error(
                 "%s: Error validando cantidad %s: %s",
