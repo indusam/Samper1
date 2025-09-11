@@ -3,8 +3,11 @@ import logging
 
 _logger = logging.getLogger(__name__)
 
-class MrpConsumptionWarningLine(models.Model):
-    """Extend mrp.consumption.warning.line to modify float fields precision."""
+class MrpConsumptionWarningLine(models.TransientModel):
+    """Extend mrp.consumption.warning.line to modify float fields precision.
+    
+    This is a transient model used for consumption warnings in manufacturing.
+    """
     
     _inherit = 'mrp.consumption.warning.line'
     
