@@ -5,11 +5,10 @@ _logger = logging.getLogger(__name__)
 
 class MrpConsumptionWarningLine(models.TransientModel):
     """Extend mrp.consumption.warning.line to modify float fields precision and handle quantity adjustments.
-    
-    This is a transient model used for consumption warnings in manufacturing.
     """
     
     _inherit = 'mrp.consumption.warning.line'
+    _name = 'mrp.consumption.warning.line'  # Explicitly set the model name
     
     # Override fields to set 4 decimal places and handle quantity adjustments
     product_consumed_qty_uom = fields.Float(
@@ -31,7 +30,7 @@ class MrpConsumptionWarningLine(models.TransientModel):
             rounded = round(original, 4)
             result = 0.0 if abs(rounded) < 0.0001 else rounded
             
-            # Log the rounding operation
+            # Log the rounding operation with more context
             _logger.info(
                 "[QUANTITY ROUNDING] %s - Original: %.10f, Rounded: %.4f, Final: %.4f",
                 context_info or "No context",
@@ -45,20 +44,21 @@ class MrpConsumptionWarningLine(models.TransientModel):
             _logger.error("Error rounding quantity %s: %s", qty, str(e))
             return 0.0
     
-    @api.model
-    def create(self, vals):
-        """Override create to ensure values are properly rounded to 4 decimal places."""
-        _logger.info("[CREATE] Original values: %s", vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        """Override create to handle batch creation and ensure values are properly rounded."""
+        _logger.info("[CREATE] Original values list: %s", vals_list)
         
-        # Round quantity fields to 4 decimal places if they exist in vals
-        float_fields = ['product_consumed_qty_uom', 'product_expected_qty_uom']
+        # Process each set of values in the batch
+        for vals in vals_list:
+            # Round quantity fields to 4 decimal places if they exist in vals
+            float_fields = ['product_consumed_qty_uom', 'product_expected_qty_uom']
+            for field in float_fields:
+                if field in vals and vals[field] is not None:
+                    vals[field] = self._round_quantity(vals[field], f"Create {field}")
         
-        for field in float_fields:
-            if field in vals and vals[field] is not None:
-                vals[field] = self._round_quantity(vals[field], f"Create {field}")
-        
-        _logger.info("[CREATE] Rounded values: %s", vals)
-        return super().create(vals)
+        _logger.info("[CREATE] Processed values list: %s", vals_list)
+        return super().create(vals_list)
     
     def write(self, vals):
         """Override write to ensure values are properly rounded to 4 decimal places."""
@@ -66,12 +66,11 @@ class MrpConsumptionWarningLine(models.TransientModel):
         
         # Round quantity fields to 4 decimal places if they exist in vals
         float_fields = ['product_consumed_qty_uom', 'product_expected_qty_uom']
-        
         for field in float_fields:
             if field in vals and vals[field] is not None:
                 vals[field] = self._round_quantity(vals[field], f"Write {field}")
         
-        _logger.info("[WRITE] Rounded values: %s", vals)
+        _logger.info("[WRITE] Processed values: %s", vals)
         return super().write(vals)
     
     @api.model
@@ -85,5 +84,5 @@ class MrpConsumptionWarningLine(models.TransientModel):
             if field in res and res[field] is not None:
                 res[field] = self._round_quantity(res[field], f"Default {field}")
         
-        _logger.info("[DEFAULT_GET] Rounded values: %s", res)
+        _logger.info("[DEFAULT_GET] Processed values: %s", res)
         return res
