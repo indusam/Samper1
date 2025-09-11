@@ -1,33 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!-- Override the consumption warning line tree view -->
-        <record id="view_mrp_consumption_warning_line_tree_inherit" model="ir.ui.view">
-            <field name="name">mrp.consumption.warning.line.tree.inherit</field>
+        <!-- Create a new tree view for mrp.consumption.warning.line -->
+        <record id="view_mrp_consumption_warning_line_tree" model="ir.ui.view">
+            <field name="name">mrp.consumption.warning.line.tree</field>
             <field name="model">mrp.consumption.warning.line</field>
-            <field name="inherit_id" ref="mrp.view_mrp_consumption_warning_line_tree"/>
             <field name="arch" type="xml">
-                <!-- Replace the quantity fields with our display fields -->
-                <xpath expr="//field[@name='product_consumed_qty_uom']" position="replace">
-                    <field name="display_consumed_qty" string="Consumed" />
-                </xpath>
-                <xpath expr="//field[@name='product_expected_qty_uom']" position="replace">
-                    <field name="display_expected_qty" string="Expected" />
-                </xpath>
+                <tree string="Consumption Warning Lines" create="false" edit="false">
+                    <field name="product_id"/>
+                    <field name="product_consumed_qty_uom" string="Consumed" widget="float" digits="(16, 4)"/>
+                    <field name="product_expected_qty_uom" string="Expected" widget="float" digits="(16, 4)"/>
+                    <field name="consumption"/>
+                </tree>
             </field>
         </record>
         
-        <!-- Also update the form view if it exists -->
-        <record id="view_mrp_consumption_warning_line_form_inherit" model="ir.ui.view">
-            <field name="name">mrp.consumption.warning.line.form.inherit</field>
-            <field name="model">mrp.consumption.warning.line</field>
-            <field name="inherit_id" ref="mrp.view_mrp_consumption_warning_line_form"/>
+        <!-- Action to open the consumption warning lines -->
+        <record id="action_mrp_consumption_warning_line" model="ir.actions.act_window">
+            <field name="name">Consumption Warnings</field>
+            <field name="res_model">mrp.consumption.warning.line</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No consumption warnings found.
+                </p>
+            </field>
+        </record>
+        
+        <!-- Add the action to the More menu of the parent model -->
+        <record id="mrp_production_view_form_inherit_consumption_warning" model="ir.ui.view">
+            <field name="name">mrp.production.view.form.inherit.consumption.warning</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='product_consumed_qty_uom']" position="replace">
-                    <field name="display_consumed_qty" string="Consumed" />
-                </xpath>
-                <xpath expr="//field[@name='product_expected_qty_uom']" position="replace">
-                    <field name="display_expected_qty" string="Expected" />
+                <xpath expr="//header" position="inside">
+                    <button name="%(sam_quantity_validator.action_mrp_consumption_warning_line)d"
+                            type="action"
+                            string="View Consumption Warnings"
+                            class="oe_stat_button"
+                            icon="fa-exclamation-triangle"/>
                 </xpath>
             </field>
         </record>
