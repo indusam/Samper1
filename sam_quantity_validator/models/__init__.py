@@ -5,3 +5,4 @@ from . import mrp_production
 from . import stock_lot
 from . import stock_picking
 from . import server_actions
+from . import mrp_consumption_warning_line
