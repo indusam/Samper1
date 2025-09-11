@@ -90,12 +90,24 @@ class MrpProduction(models.Model):
             raise ValidationError(_("Error al validar la cantidad del movimiento")) from e
 
     # ============ BASIC VALIDATIONS ============
-    @api.model
-    def create(self, vals: Dict[str, Any]) -> 'MrpProduction':
-        """Override create to validate quantity fields."""
-        if 'product_qty' in vals:
-            vals['product_qty'] = self._validate_qty(vals['product_qty'], 'create')
-        return super().create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        """Override create to validate quantity fields in batch."""
+        for vals in vals_list:
+            if 'product_qty' in vals and vals['product_qty'] is not None:
+                try:
+                    # Create a temporary record to validate the quantity
+                    temp = self.new(vals)
+                    validated_qty = temp._validate_qty(vals['product_qty'], 'create')
+                    vals['product_qty'] = validated_qty
+                except (ValidationError, ValueError) as e:
+                    _logger.error(
+                        "Error al validar cantidad en producción: %s",
+                        str(e)
+                    )
+                    # Let the super method handle the error
+                    continue
+        return super().create(vals_list)
 
     def write(self, vals: Dict[str, Any]) -> bool:
         """Override write to validate quantity fields."""

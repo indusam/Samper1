@@ -45,11 +45,12 @@ class StockLot(models.Model):
                 )
         return vals
 
-    @api.model
-    def create(self, vals: Dict[str, Any]) -> 'StockLot':
-        """Override create to validate quantity fields."""
-        vals = self._validate_quantity_fields(vals, 'create')
-        return super().create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        """Override create to validate quantity fields in batch."""
+        for vals in vals_list:
+            self._validate_quantity_fields(vals, 'create')
+        return super().create(vals_list)
 
     def write(self, vals: Dict[str, Any]) -> bool:
         """Override write to validate quantity fields."""

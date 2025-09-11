@@ -46,26 +46,20 @@ class StockQuant(models.Model):
             )
             raise ValidationError(_("La cantidad debe ser un número válido")) from e
 
-    @api.model
-    def create(self, vals: Dict[str, Any]) -> 'StockQuant':
-        """Override create to validate quantity fields.
-        
-        Args:
-            vals: Dictionary of field values
-            
-        Returns:
-            Record created
-        """
-        if 'quantity' in vals and vals['quantity'] is not None:
-            try:
-                vals['quantity'] = self._validate_qty(vals['quantity'])
-            except ValidationError as e:
-                _logger.error(
-                    "Error al crear existencia: %s",
-                    str(e)
-                )
-                raise
-        return super().create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        """Override create to validate quantity fields in batch."""
+        for vals in vals_list:
+            if 'quantity' in vals and vals['quantity'] is not None:
+                # Create a temporary record to validate the quantity
+                temp = self.new(vals)
+                try:
+                    validated_qty = temp._validate_qty(vals['quantity'])
+                    vals['quantity'] = validated_qty
+                except ValidationError:
+                    # If validation fails for one record, skip it and let the super method handle the error
+                    continue
+        return super().create(vals_list)
 
     def write(self, vals: Dict[str, Any]) -> bool:
         """Override write to validate quantity fields.
