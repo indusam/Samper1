@@ -30,35 +30,48 @@ class MrpConsumptionWarningLine(models.TransientModel):
             rounded = round(original, 4)
             result = 0.0 if abs(rounded) < 0.0001 else rounded
             
-            # Log the rounding operation with more context
+            # Enhanced logging with more context
             _logger.info(
-                "[QUANTITY ROUNDING] %s - Original: %.10f, Rounded: %.4f, Final: %.4f",
+                "[QUANTITY ROUNDING] %s\n"
+                "  - Original: %.10f\n"
+                "  - Rounded:  %.10f\n"
+                "  - Final:    %.10f\n"
+                "  - Type:     %s",
                 context_info or "No context",
                 original,
                 rounded,
-                result
+                result,
+                type(qty).__name__
             )
             
             return result
         except (TypeError, ValueError) as e:
-            _logger.error("Error rounding quantity %s: %s", qty, str(e))
+            _logger.error("Error rounding quantity %s: %s", qty, str(e), exc_info=True)
             return 0.0
     
     @api.model_create_multi
     def create(self, vals_list):
         """Override create to handle batch creation and ensure values are properly rounded."""
-        _logger.info("[CREATE] Original values list: %s", vals_list)
+        _logger.info("[CREATE] Starting batch create with %d records", len(vals_list))
         
         # Process each set of values in the batch
-        for vals in vals_list:
+        for index, vals in enumerate(vals_list):
+            _logger.info("[CREATE] Processing record %d: %s", index + 1, vals)
+            
             # Round quantity fields to 4 decimal places if they exist in vals
             float_fields = ['product_consumed_qty_uom', 'product_expected_qty_uom']
             for field in float_fields:
                 if field in vals and vals[field] is not None:
-                    vals[field] = self._round_quantity(vals[field], f"Create {field}")
+                    before = vals[field]
+                    vals[field] = self._round_quantity(before, f"Create {field}")
+                    _logger.info(
+                        "[CREATE] Field '%s' transformed: %s -> %s",
+                        field, before, vals[field]
+                    )
         
-        _logger.info("[CREATE] Processed values list: %s", vals_list)
-        return super().create(vals_list)
+        result = super().create(vals_list)
+        _logger.info("[CREATE] Created %d records: %s", len(result), result.ids)
+        return result
     
     def write(self, vals):
         """Override write to ensure values are properly rounded to 4 decimal places."""
