@@ -15,7 +15,9 @@
     'website': 'https://www.samper1.mx',
     'depends': ['stock', 'mrp'],
     'category': 'Manufacturing',
-    'data': [],
+    'data': [
+        'security/ir.model.access.csv',
+    ],
     'installable': True,
     'application': False,
     'license': 'LGPL-3',
