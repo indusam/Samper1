@@ -17,6 +17,7 @@
     'category': 'Manufacturing',
     'data': [
         'security/ir.model.access.csv',
+        'views/mrp_consumption_warning_views.xml',
     ],
     'installable': True,
     'application': False,

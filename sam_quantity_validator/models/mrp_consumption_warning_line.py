@@ -23,6 +23,21 @@ class MrpConsumptionWarningLine(models.TransientModel):
         readonly=True,
     )
     
+    # Add these computed fields to log and display the formatted quantities
+    display_consumed_qty = fields.Char(
+        string='Display Consumed',
+        compute='_compute_display_quantities',
+        store=False,
+        readonly=True
+    )
+    
+    display_expected_qty = fields.Char(
+        string='Display Expected',
+        compute='_compute_display_quantities',
+        store=False,
+        readonly=True
+    )
+    
     def _round_quantity(self, qty, context_info=""):
         """Helper method to round quantity to 4 decimal places and handle very small values."""
         try:
@@ -48,6 +63,23 @@ class MrpConsumptionWarningLine(models.TransientModel):
         except (TypeError, ValueError) as e:
             _logger.error("Error rounding quantity %s: %s", qty, str(e), exc_info=True)
             return 0.0
+    
+    @api.depends('product_consumed_qty_uom', 'product_expected_qty_uom')
+    def _compute_display_quantities(self):
+        for record in self:
+            # Format the quantities to 4 decimal places for display
+            record.display_consumed_qty = f"{record.product_consumed_qty_uom:.4f}"
+            record.display_expected_qty = f"{record.product_expected_qty_uom:.4f}"
+            
+            # Log the values being displayed
+            _logger.info(
+                "[DISPLAY] Product ID: %s | Consumed: %s (original: %.10f) | Expected: %s (original: %.10f)",
+                record.product_id.id,
+                record.display_consumed_qty,
+                record.product_consumed_qty_uom,
+                record.display_expected_qty,
+                record.product_expected_qty_uom
+            )
     
     @api.model_create_multi
     def create(self, vals_list):

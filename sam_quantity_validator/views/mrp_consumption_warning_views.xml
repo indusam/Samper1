@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Override the consumption warning line tree view -->
+        <record id="view_mrp_consumption_warning_line_tree_inherit" model="ir.ui.view">
+            <field name="name">mrp.consumption.warning.line.tree.inherit</field>
+            <field name="model">mrp.consumption.warning.line</field>
+            <field name="inherit_id" ref="mrp.view_mrp_consumption_warning_line_tree"/>
+            <field name="arch" type="xml">
+                <!-- Replace the quantity fields with our display fields -->
+                <xpath expr="//field[@name='product_consumed_qty_uom']" position="replace">
+                    <field name="display_consumed_qty" string="Consumed" />
+                </xpath>
+                <xpath expr="//field[@name='product_expected_qty_uom']" position="replace">
+                    <field name="display_expected_qty" string="Expected" />
+                </xpath>
+            </field>
+        </record>
+        
+        <!-- Also update the form view if it exists -->
+        <record id="view_mrp_consumption_warning_line_form_inherit" model="ir.ui.view">
+            <field name="name">mrp.consumption.warning.line.form.inherit</field>
+            <field name="model">mrp.consumption.warning.line</field>
+            <field name="inherit_id" ref="mrp.view_mrp_consumption_warning_line_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_consumed_qty_uom']" position="replace">
+                    <field name="display_consumed_qty" string="Consumed" />
+                </xpath>
+                <xpath expr="//field[@name='product_expected_qty_uom']" position="replace">
+                    <field name="display_expected_qty" string="Expected" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
