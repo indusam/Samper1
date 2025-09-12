@@ -55,6 +55,13 @@ class MrpConsumptionWarningLine(models.TransientModel):
         readonly=True
     )
     
+    consumption = fields.Char(
+        string='Consumption',
+        compute='_compute_display_quantities',
+        store=False,
+        readonly=True
+    )
+    
     def _round_quantity(self, qty, digits=4, context_info=""):
         """Helper method to round quantity to specified decimal places and handle very small values."""
         try:
@@ -150,17 +157,37 @@ class MrpConsumptionWarningLine(models.TransientModel):
 
     @api.depends('product_consumed_qty_uom', 'product_expected_qty_uom')
     def _compute_display_quantities(self):
+        # Get the tolerance from settings
+        Config = self.env['res.config.settings']
+        tolerance = Config.get_consumption_tolerance()
+        
         for record in self:
+            # Get the quantities
+            consumed = record.product_consumed_qty_uom or 0.0
+            expected = record.product_expected_qty_uom or 0.0
+            
+            # Calculate the absolute difference and relative tolerance
+            diff = abs(consumed - expected)
+            allowed_diff = expected * tolerance
+            
             # Format the quantities to 4 decimal places for display
-            record.display_consumed_qty = f"{record.product_consumed_qty_uom:.4f}"
-            record.display_expected_qty = f"{record.product_expected_qty_uom:.4f}"
+            record.display_consumed_qty = f"{consumed:.4f}"
+            record.display_expected_qty = f"{expected:.4f}"
+            
+            # Only show warning if difference exceeds tolerance
+            if diff > allowed_diff:
+                record.consumption = 'warning'
+            else:
+                # If within tolerance, set consumption to 'normal' to avoid warning
+                record.consumption = 'normal'
             
             # Log the values being displayed
             _logger.info(
-                "[DISPLAY] Product ID: %s | Consumed: %s (original: %.10f) | Expected: %s (original: %.10f)",
+                "[DISPLAY] Product ID: %s | Consumed: %s | Expected: %s | Diff: %.4f | Allowed: %.4f | Tolerance: %.2f%%",
                 record.product_id.id,
                 record.display_consumed_qty,
-                record.product_consumed_qty_uom,
                 record.display_expected_qty,
-                record.product_expected_qty_uom
+                diff,
+                allowed_diff,
+                tolerance * 100
             )

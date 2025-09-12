@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_inherit_sam_quantity_validator" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.sam.quantity.validator</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="mrp.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div class="app_settings_block" data-key="mrp" string="Consumption" data-name="mrp">
+                    <h2>Consumption Tolerance</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="consumption_tolerance"/>
+                                <div class="text-muted">
+                                    Set the allowed tolerance percentage for consumption differences
+                                </div>
+                                <field name="consumption_tolerance" class="oe_inline" widget="percentage"/>
+                                <span>%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
