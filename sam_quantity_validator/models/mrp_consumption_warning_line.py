@@ -13,7 +13,7 @@ class MrpConsumptionWarningLine(models.TransientModel):
     _inherit = 'mrp.consumption.warning.line'
     _name = 'mrp.consumption.warning.line'  # Explicitly set the model name
     
-    def __init__(self, pool, cr):
+    def __init__(self, pool, cr, *args, **kwargs):
         _logger.info("\n=== INICIALIZANDO INSTANCIA DE MrpConsumptionWarningLine ===")
         super().__init__(pool, cr)
     
@@ -81,23 +81,6 @@ class MrpConsumptionWarningLine(models.TransientModel):
             _logger.error("Error rounding quantity %s: %s", qty, str(e), exc_info=True)
             return 0.0
 
-    @api.depends('product_consumed_qty_uom', 'product_expected_qty_uom')
-    def _compute_display_quantities(self):
-        for record in self:
-            # Format the quantities to 4 decimal places for display
-            record.display_consumed_qty = f"{record.product_consumed_qty_uom:.4f}"
-            record.display_expected_qty = f"{record.product_expected_qty_uom:.4f}"
-            
-            # Log the values being displayed
-            _logger.info(
-                "[DISPLAY] Product ID: %s | Consumed: %s (original: %.10f) | Expected: %s (original: %.10f)",
-                record.product_id.id,
-                record.display_consumed_qty,
-                record.product_consumed_qty_uom,
-                record.display_expected_qty,
-                record.product_expected_qty_uom
-            )
-    
     @api.model_create_multi
     def create(self, vals_list):
         """Override create to ensure all quantity values are properly rounded to 4 decimal places."""
@@ -164,3 +147,20 @@ class MrpConsumptionWarningLine(models.TransientModel):
                 )
         
         return res
+
+    @api.depends('product_consumed_qty_uom', 'product_expected_qty_uom')
+    def _compute_display_quantities(self):
+        for record in self:
+            # Format the quantities to 4 decimal places for display
+            record.display_consumed_qty = f"{record.product_consumed_qty_uom:.4f}"
+            record.display_expected_qty = f"{record.product_expected_qty_uom:.4f}"
+            
+            # Log the values being displayed
+            _logger.info(
+                "[DISPLAY] Product ID: %s | Consumed: %s (original: %.10f) | Expected: %s (original: %.10f)",
+                record.product_id.id,
+                record.display_consumed_qty,
+                record.product_consumed_qty_uom,
+                record.display_expected_qty,
+                record.product_expected_qty_uom
+            )
