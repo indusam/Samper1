@@ -1,4 +1,4 @@
-from odoo import models, api, _
+from odoo import models, api, fields, _
 from odoo.exceptions import UserError
 import logging
 
@@ -7,6 +7,9 @@ _logger = logging.getLogger(__name__)
 class QuantityValidatorAction(models.Model):
     _name = 'quantity.validator.action'
     _description = 'Quantity Validator Server Actions'
+    
+    # Add a dummy field to ensure the model is created in the database
+    name = fields.Char('Name', default='Quantity Validator')
 
     @api.model
     def _fix_existing_small_quantities(self, model_name, quantity_field='product_qty'):
