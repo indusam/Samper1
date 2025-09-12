@@ -9,6 +9,7 @@ from . import mrp_production
 from . import stock_lot
 from . import stock_picking
 from . import server_actions
+from . import res_config_settings
 _logger.info("\n=== Cargando mrp_consumption_warning_line ===")
 from . import mrp_consumption_warning_line
 _logger.info("=== mrp_consumption_warning_line cargado correctamente ===\n")
