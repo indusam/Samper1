@@ -27,7 +27,11 @@ class MrpConsumptionWarning(models.TransientModel):
         # If all lines are within tolerance, skip the warning
         if all_within_tolerance:
             _logger.info("All consumption differences are within tolerance (%.2f%%), skipping warning", tolerance * 100)
-            return self.mrp_production_id.with_context(skip_consumption=True).button_mark_done()
+            # Get the production order from the first line
+            if self.mrp_consumption_warning_line_ids and len(self.mrp_consumption_warning_line_ids) > 0:
+                production = self.mrp_consumption_warning_line_ids[0].production_id
+                if production:
+                    return production.with_context(skip_consumption=True).button_mark_done()
         
         # Otherwise, show the warning as usual
         return super().action_confirm()
