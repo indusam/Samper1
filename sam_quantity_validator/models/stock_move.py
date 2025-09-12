@@ -1,8 +1,6 @@
-from odoo import models, api, _
-import logging
-from typing import Optional, Union, Dict, Any
-
-_logger = logging.getLogger(__name__)
+from odoo import models, api, fields
+from odoo.exceptions import UserError, ValidationError
+from typing import Dict, Any, Optional, Union
 
 class StockMove(models.Model):
     _inherit = 'stock.move'
@@ -15,19 +13,12 @@ class StockMove(models.Model):
         
         Args:
             qty: The quantity to validate
-            field_name: Name of the field being validated (for logging)
+            field_name: Name of the field being validated (for reference)
             
         Returns:
-            float: The validated quantity (0 if abs(qty) < 0.0001)
+            float: The validated quantity (0 if abs(qty) < 0.000001)
         """
-        if abs(qty) < 0.0001:
-            _logger.info(
-                "%s: Ajustando %s de %s a 0 en movimiento %s",
-                self._name,
-                field_name or 'quantity',
-                qty,
-                self.id
-            )
+        if abs(qty) < 0.000001:
             return 0.0
         return qty
 
@@ -49,49 +40,29 @@ class StockMove(models.Model):
         """Override write to validate quantity fields."""
         vals = self._validate_quantity_fields(vals)
         return super().write(vals)
-
-    def _action_assign(self, force_qty=None):
-        """Override _action_assign to validate and round quantities before assigning.
         
-        Args:
-            force_qty: Optional quantity to force assign (used by parent method)
-            
-        Returns:
-            bool: Result of the parent's _action_assign method
-        """
+    def _action_assign(self, force_qty=None):
+        """Override _action_assign to handle quantity validation."""
+        res = super()._action_assign(force_qty=force_qty)
+        
         for move in self:
             try:
-                # Usar force_qty si se proporciona, de lo contrario usar product_uom_qty
                 qty_to_validate = force_qty if force_qty is not None else (move.product_uom_qty or 0.0)
                 
-                # Redondear a 4 decimales
-                rounded_qty = round(float(qty_to_validate), 4)
+                # Round to 6 decimal places
+                rounded_qty = round(float(qty_to_validate), 6)
                 
-                # Si el valor redondeado es efectivamente 0, establecer a 0.0
-                if abs(rounded_qty) < 0.0001:
+                # If the rounded value is effectively 0, set to 0.0
+                if abs(rounded_qty) < 0.000001:
                     rounded_qty = 0.0
                 
-                # Actualizar el campo correspondiente
+                # Update the corresponding field
                 if force_qty is not None:
-                    # Si se está forzando una cantidad, devolver el valor redondeado
-                    # para que el método padre lo utilice
-                    force_qty = rounded_qty
-                else:
-                    # De lo contrario, actualizar el campo product_uom_qty
                     move.product_uom_qty = rounded_qty
-                    
-            except (TypeError, ValueError) as e:
-                _logger.error(
-                    "%s: Error redondeando cantidad en movimiento %s: %s",
-                    self._name,
-                    move.id,
-                    str(e)
-                )
-                # En caso de error, forzar a 0.0 para evitar problemas
-                if force_qty is not None:
-                    force_qty = 0.0
                 else:
-                    move.product_uom_qty = 0.0
+                    move.quantity_done = rounded_qty
+                    
+            except Exception:
+                continue
                 
-        # Llamar al método padre con el force_qty actualizado si es necesario
-        return super()._action_assign(force_qty=force_qty if force_qty is not None else None)
+        return res

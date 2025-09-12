@@ -22,7 +22,7 @@ class StockLot(models.Model):
         Returns:
             float: The validated quantity (0 if abs(qty) < 0.0001)
         """
-        if abs(qty) < 0.0001:
+        if abs(qty) < 0.000001:
             _logger.info(
                 "%s: Ajustando cantidad %s a 0 en %s (ID: %s, contexto: %s)",
                 self._name,
@@ -63,10 +63,10 @@ class StockLot(models.Model):
         for lot in self:
             try:
                 # Redondear a 4 decimales
-                rounded_qty = round(float(lot.product_qty or 0.0), 4)
+                rounded_qty = round(float(lot.product_qty or 0.0), 6)
                 
                 # Si el valor redondeado es efectivamente 0, establecer a 0.0
-                if abs(rounded_qty) < 0.0001:
+                if abs(rounded_qty) < 0.000001:
                     lot.product_qty = 0.0
                 else:
                     lot.product_qty = rounded_qty

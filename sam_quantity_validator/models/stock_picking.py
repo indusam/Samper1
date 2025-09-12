@@ -23,10 +23,10 @@ class StockPicking(models.Model):
         try:
             # Obtener el valor actual y redondear a 4 decimales
             current_value = move[field] or 0.0
-            rounded_value = round(float(current_value), 4)
+            rounded_value = round(float(current_value), 6)
             
             # Si el valor redondeado es efectivamente 0, establecer a 0.0
-            if abs(rounded_value) < 0.0001:
+            if abs(rounded_value) < 0.000001:
                 move[field] = 0.0
                 _logger.info(
                     "%s: Ajustando %s de %s a 0 en movimiento %s (transferencia: %s)",
@@ -37,7 +37,7 @@ class StockPicking(models.Model):
                     self.name or 'Nueva'
                 )
             # Solo actualizar si el valor ha cambiado significativamente
-            elif abs(rounded_value - current_value) > 0.00001:
+            elif abs(rounded_value - current_value) > 0.000001:
                 move[field] = rounded_value
                 _logger.debug(
                     "%s: Redondeando %s de %s a %s en movimiento %s (transferencia: %s)",
