@@ -16,7 +16,7 @@
     'depends': ['stock', 'mrp'],
     'category': 'Manufactura/Inventario',
     'data': [
-        'security/ir.model.access.csv',
+        # 'security/ir.model.access.csv',  # Comentado temporalmente
     ],
     'installable': True,
     'application': False,
