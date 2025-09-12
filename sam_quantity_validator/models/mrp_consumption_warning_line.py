@@ -13,10 +13,6 @@ class MrpConsumptionWarningLine(models.TransientModel):
     _inherit = 'mrp.consumption.warning.line'
     _name = 'mrp.consumption.warning.line'  # Explicitly set the model name
     
-    def __init__(self, pool, cr, *args, **kwargs):
-        _logger.info("\n=== INICIALIZANDO INSTANCIA DE MrpConsumptionWarningLine ===")
-        super(MrpConsumptionWarningLine, self).__init__(pool, cr, *args, **kwargs) 
-           
     def _log_quantity(self, value, prefix=""):
         """Helper para registrar valores con información detallada"""
         if value is None:
