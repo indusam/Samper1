@@ -8,8 +8,8 @@
             <field name="arch" type="xml">
                 <tree string="Consumption Warning Lines" create="false" edit="false">
                     <field name="product_id"/>
-                    <field name="product_consumed_qty_uom" string="Consumed" widget="float" digits="(16, 4)"/>
-                    <field name="product_expected_qty_uom" string="Expected" widget="float" digits="(16, 4)"/>
+                    <field name="display_consumed_qty" string="Consumed" widget="float" options="{'digits': [42, 4]}"/>
+                    <field name="display_expected_qty" string="Expected" widget="float" options="{'digits': [42, 4]}"/>
                     <field name="consumption"/>
                 </tree>
             </field>

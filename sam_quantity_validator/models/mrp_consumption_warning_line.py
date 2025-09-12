@@ -4,6 +4,7 @@ import math
 from inspect import currentframe, getframeinfo
 
 _logger = logging.getLogger(__name__)
+_logger.info("\n=== INICIALIZANDO mrp_consumption_warning_line ===")
 
 class MrpConsumptionWarningLine(models.TransientModel):
     """Extend mrp.consumption.warning.line to modify float fields precision and handle quantity adjustments.
@@ -11,6 +12,10 @@ class MrpConsumptionWarningLine(models.TransientModel):
     
     _inherit = 'mrp.consumption.warning.line'
     _name = 'mrp.consumption.warning.line'  # Explicitly set the model name
+    
+    def __init__(self, pool, cr):
+        _logger.info("\n=== INICIALIZANDO INSTANCIA DE MrpConsumptionWarningLine ===")
+        super().__init__(pool, cr)
     
     def _log_quantity(self, value, prefix=""):
         """Helper para registrar valores con información detallada"""
