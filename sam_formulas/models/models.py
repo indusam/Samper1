@@ -16,7 +16,7 @@ class ProductTemplate(models.Model):
 
     x_presentacion = fields.Many2one("uom.uom", string="Presentacion",
         help="Unidad de medida que representa la presentación del producto")
-    x_pct_variacion = fields.Float(string='% Variación', digits=(3, 4),
+    x_pct_variacion = fields.Float(string='% Variación', digits=(3, 6),
         help="Porcentaje de variación permitido para el producto")
    
 
@@ -29,31 +29,31 @@ class ListaMateriales(models.Model):
     _inherit = 'mrp.bom.line'
 
     # Campos para porcentajes y cantidades
-    x_porcentaje = fields.Float(string="%", digits=(3, 4),
+    x_porcentaje = fields.Float(string="%", digits=(3, 6),
         help="Porcentaje del ingrediente en la fórmula")
-    x_porcentaje_il = fields.Float(string="% IL", digits=(3, 4),
+    x_porcentaje_il = fields.Float(string="% IL", digits=(3, 6),
         help="Porcentaje del ingrediente limitante")
-    x_cantidad_il = fields.Float(string="Cantidad Limitante", digits=(12, 4),
+    x_cantidad_il = fields.Float(string="Cantidad Limitante", digits=(12, 6),
         help="Cantidad del ingrediente limitante")
     x_ingrediente_limitante = fields.Boolean(string="IL",
         help="Indica si es un ingrediente limitante")
-    x_cantidad_pzas = fields.Float(string="Cantidad x piezas", digits=(12, 4),
+    x_cantidad_pzas = fields.Float(string="Cantidad x piezas", digits=(12, 6),
         help="Cantidad del ingrediente por pieza")
 
     # Campos para información nutricional por kilogramo
-    x_proteina_kg = fields.Float(string="Proteína kg", digits=(10, 4),
+    x_proteina_kg = fields.Float(string="Proteína kg", digits=(10, 6),
         help="Cantidad de proteína por kilogramo")
-    x_grasa_kg = fields.Float(string="Grasa kg", digits=(10, 4),
+    x_grasa_kg = fields.Float(string="Grasa kg", digits=(10, 6),
         help="Cantidad de grasa por kilogramo")
-    x_grasa_sat_kg = fields.Float(string="Grasa Sat. kg", digits=(10, 4),
+    x_grasa_sat_kg = fields.Float(string="Grasa Sat. kg", digits=(10, 6),
         help="Cantidad de grasa saturada por kilogramo")
-    x_humedad_kg = fields.Float(string="Humedad kg", digits=(10, 4),
+    x_humedad_kg = fields.Float(string="Humedad kg", digits=(10, 6),
         help="Cantidad de humedad por kilogramo")
-    x_carbs_kg = fields.Float(string="Carbs. kg", digits=(10, 4),
+    x_carbs_kg = fields.Float(string="Carbs. kg", digits=(10, 6),
         help="Cantidad de carbohidratos por kilogramo")
-    x_azucares_kg = fields.Float(string="Azúcares kg", digits=(10, 4),
+    x_azucares_kg = fields.Float(string="Azúcares kg", digits=(10, 6),
         help="Cantidad de azúcares por kilogramo")
-    x_sodio_mg = fields.Float(string="Sodio mg/kg", digits=(10, 4),
+    x_sodio_mg = fields.Float(string="Sodio mg/kg", digits=(10, 6),
         help="Cantidad de sodio en miligramos por kilogramo")
 
 
@@ -64,24 +64,24 @@ class ListaMaterialesHeader(models.Model):
     """
     _inherit = 'mrp.bom'
 
-    product_qty = fields.Float(string="Cantidad", digits=(12, 4),
+    product_qty = fields.Float(string="Cantidad", digits=(12, 6),
         help="Cantidad total del producto en la lista de materiales")
     x_piezas = fields.Integer(string='Piezas:',
         help="Número de piezas a producir")
-    x_cantidad_pzas = fields.Float(string='Cantidad x piezas', digits=(12, 4),
+    x_cantidad_pzas = fields.Float(string='Cantidad x piezas', digits=(12, 6),
         help="Cantidad calculada por número de piezas")
-    x_cantidad_il = fields.Float(string="Cantidad Limitante", digits=(12, 4),
+    x_cantidad_il = fields.Float(string="Cantidad Limitante", digits=(12, 6),
         help="Cantidad del ingrediente limitante en la fórmula")
     x_ingrediente_limitante = fields.Many2one("mrp.bom.line",
                                               string="Ingrediente limitante",
                                               help="Ingrediente que limita la producción de la fórmula")    
     x_qty_of_product = fields.Float(string="Cantidad", 
-                                    digits=(12,4), 
+                                    digits=(12,6), 
                                     compute='_compute_x_percentage_of_product',
                                     help="Cantidad calculada del producto")
     x_percentage_of_product = fields.Float(
         string='% de la fórmula',
-        digits = (3,4),
+        digits = (3,6),
         compute='_compute_x_percentage_of_product',
         help="Porcentaje que representa el producto en la fórmula"
     )
