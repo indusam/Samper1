@@ -23,9 +23,9 @@ class Formulas(models.TransientModel):
 
     product_tmpl = fields.Many2one('product.template', string="Producto")
     producto = fields.Many2one('mrp.bom', string="Lista de Materiales", domain="[('product_tmpl_id', '=', product_tmpl)]")
-    cantidad = fields.Float(string="Cantidad", digits=(12, 3))
+    cantidad = fields.Float(string="Cantidad", digits=(12, 4))
     ing_limitante = fields.Many2one('mrp.bom.line',string="Ingrediente limitante")
-    cant_limitante = fields.Float(string="Cantidad limitante", digits=(12, 3))
+    cant_limitante = fields.Float(string="Cantidad limitante", digits=(12, 4))
     consolidado = fields.Boolean(string="Fórmula consolidada")
     partidas = fields.Integer(string="Partidas")
 
@@ -33,11 +33,11 @@ class Formulas(models.TransientModel):
     x_secuencia = fields.Char(string="Número")
     ingr = fields.Many2one('product.product', string="Producto")
     cod_prov = fields.Char(string="Código Prov", required=False)
-    cant_tot = fields.Float(string="Cant Total", digits=(12, 3))
+    cant_tot = fields.Float(string="Cant Total", digits=(12, 4))
     unidad = fields.Char(string="Unidad")
-    pct_formula = fields.Float(string="% Fórmula", digits=(8, 3))
-    pct_categoria = fields.Float(string="% Grupo", digits=(8, 3))
-    pct_merma = fields.Float(string="% Merma", digits=(8, 3))
+    pct_formula = fields.Float(string="% Fórmula", digits=(8, 4))
+    pct_categoria = fields.Float(string="% Grupo", digits=(8, 4))
+    pct_merma = fields.Float(string="% Merma", digits=(8, 4))
     x_orden = fields.Char(string="Orden", required=False, )
 
 
@@ -97,23 +97,23 @@ class Formulas(models.TransientModel):
                 'x_secuencia': secuencia,
                 'ingr': ingrediente.product_id.id,
                 'cod_prov': codprov,
-                'cant_tot': float_round(ncant_limitante, precision_digits=3),
+                'cant_tot': float_round(ncant_limitante, precision_digits=4),
                 'unidad': ingrediente.product_id.uom_id.name,
-                'pct_formula': float_round(ingrediente.x_porcentaje, precision_digits=3),
-                'pct_categoria': float_round(ingrediente.x_porcentaje_categoria, precision_digits=3),
+                'pct_formula': float_round(ingrediente.x_porcentaje, precision_digits=4),
+                'pct_categoria': float_round(ingrediente.x_porcentaje_categoria, precision_digits=4),
                 'x_orden': norden
             })
 
         if ncomponente:
             ncant = ncomponente.cant_tot
             nccomp = ncant_limitante
-            ncant_tot = float_round(ncant + nccomp, precision_digits=3)
+            ncant_tot = float_round(ncant + nccomp, precision_digits=4)
             ncomponente.write({'cant_tot': ncant_tot})
             
 
     def consolida_formula(self, ingredientes, nqty, secuencia):
         for ingrediente in ingredientes:
-            ncant_limitante = float_round(nqty * (ingrediente.x_porcentaje / 100), precision_digits=3)
+            ncant_limitante = float_round(nqty * (ingrediente.x_porcentaje / 100), precision_digits=4)
             # verifica que el ingrediente se fabrique.
             if ingrediente.product_id.bom_count > 0:  # tiene subformula
                 bom_pf = self.env['mrp.bom'].search([('product_tmpl_id', '=', ingrediente.product_tmpl_id.id)],
@@ -157,8 +157,8 @@ class Formulas(models.TransientModel):
                 vals.append({
                     'componente': ingrediente.product_id.name,
                     'cod_prov': codprov,
-                    'cant_comp': float_round(ingrediente.product_qty * self.partidas, precision_digits=3) if self.partidas > 0 
-                                else float_round(self.cantidad * (ingrediente.x_porcentaje / 100), precision_digits=3),
+                    'cant_comp': float_round(ingrediente.product_qty * self.partidas, precision_digits=4) if self.partidas > 0 
+                                else float_round(self.cantidad * (ingrediente.x_porcentaje / 100), precision_digits=4),
                     'unidad': ingrediente.product_id.uom_id.name,
                     'pct_formula': ingrediente.x_porcentaje,
                     'pct_categoria': ingrediente.x_porcentaje_categoria,
@@ -177,7 +177,7 @@ class Formulas(models.TransientModel):
                 vals.append({
                         'componente': ingrediente.product_id.name,
                         'cod_prov': codprov,
-                        'cant_comp': float_round(self.cant_limitante * (ingrediente.product_qty / ncantidad_il), precision_digits=3),
+                        'cant_comp': float_round(self.cant_limitante * (ingrediente.product_qty / ncantidad_il), precision_digits=4),
                         'unidad': ingrediente.product_id.uom_id.name,
                         'pct_formula': ingrediente.x_porcentaje,
                         'pct_categoria': ingrediente.x_porcentaje_categoria,
@@ -196,7 +196,7 @@ class Formulas(models.TransientModel):
 
                 for ingrediente in ingredientes:
                     ntotcantidad = float_round(ntotcantidad + self.cant_limitante * (
-                                ingrediente.product_qty / ncantidad_il), precision_digits=3)
+                                ingrediente.product_qty / ncantidad_il), precision_digits=4)
 
                 self.cantidad = ntotcantidad
 
@@ -217,9 +217,9 @@ class Formulas(models.TransientModel):
                         'orden': ingrediente.x_orden,
                         'componente': ingrediente.ingr.name,
                         'cod_prov': ingrediente.cod_prov,
-                        'cant_comp': float_round(ingrediente.cant_tot, precision_digits=3),
+                        'cant_comp': float_round(ingrediente.cant_tot, precision_digits=4),
                         'unidad': ingrediente.ingr.uom_id.name,
-                        'pct_formula': float_round((ingrediente.cant_tot / self.cantidad) * 100, precision_digits=3),
+                        'pct_formula': float_round((ingrediente.cant_tot / self.cantidad) * 100, precision_digits=4),
                         'pct_categoria': ingrediente.pct_categoria
                     })
 
