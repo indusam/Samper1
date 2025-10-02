@@ -19,9 +19,9 @@ class StockQuant(models.Model):
         """
         try:
             qty_float = float(qty)
-            qty_rounded = round(qty_float, 6)
+            qty_rounded = round(qty_float, 4)
             
-            if abs(qty_rounded) < 0.000001:
+            if abs(qty_rounded) < 0.0001:
                 return 0.0
                 
             return qty_rounded
