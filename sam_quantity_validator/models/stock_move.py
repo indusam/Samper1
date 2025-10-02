@@ -16,11 +16,12 @@ class StockMove(models.Model):
             field_name: Name of the field being validated (for reference)
             
         Returns:
-            float: The validated quantity (0 if abs(qty) < 0.000001)
+            float: The validated quantity (0 if abs(qty) < 0.0001)
         """
-        if abs(qty) < 0.000001:
+        qty_rounded = round(float(qty), 4) if qty is not None else 0.0
+        if abs(qty_rounded) < 0.0001:
             return 0.0
-        return qty
+        return qty_rounded
 
     def _validate_quantity_fields(self, vals: Dict[str, Any]) -> Dict[str, Any]:
         """Validate all quantity fields in the provided values dict."""

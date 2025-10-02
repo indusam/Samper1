@@ -19,16 +19,17 @@ class MrpProduction(models.Model):
             context: Context string for logging (e.g., 'create', 'write')
             
         Returns:
-            float: The validated quantity (0 if abs(qty) < 0.000001)
+            float: The validated quantity (0 if abs(qty) < 0.0001)
             
         Raises:
             ValidationError: If qty is not a valid number
         """
         try:
             qty_float = float(qty)
-            if abs(qty_float) < 0.000001:
+            qty_rounded = round(qty_float, 4)
+            if abs(qty_rounded) < 0.0001:
                 return 0.0
-            return qty_float
+            return qty_rounded
         except (TypeError, ValueError) as e:
             raise ValidationError(_("Cantidad inválida: %s") % str(e)) from e
 
@@ -38,10 +39,12 @@ class MrpProduction(models.Model):
             raise ValidationError(_("Movimiento o campo no válido"))
             
         value = move[field] or 0.0
-        value = round(float(value), 6)
+        value_rounded = round(float(value), 4)
         
-        if abs(value) < 0.000001:
+        if abs(value_rounded) < 0.0001:
             move[field] = 0.0
+        else:
+            move[field] = value_rounded
 
     def write(self, vals: Dict[str, Any]) -> bool:
         """Override write to validate quantity fields."""
