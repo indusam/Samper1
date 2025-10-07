@@ -44,10 +44,10 @@ class AccountEdiFormat(models.Model):
         cfdi_node = fromstring(cfdi)
         if addenda.id == self.env.ref('w_addenda_liverpool.addenda_liverpool').id:
             addenda_values = {'record': move, 'cfdi': cfdi}
-            addenda = addenda._render(values=addenda_values).strip()
-            if not addenda:
+            addenda_content = addenda._render(values=addenda_values).strip()
+            if not addenda_content:
                 return cfdi
-            addenda_node = fromstring(addenda)
+            addenda_node = fromstring(addenda_content)
             # Add a root node Addenda if not specified explicitly by the user.
             if addenda_node.tag != '{http://www.sat.gob.mx/cfd/4}Addenda':
                 node = etree.Element(etree.QName('http://www.sat.gob.mx/cfd/4', 'Addenda'))
