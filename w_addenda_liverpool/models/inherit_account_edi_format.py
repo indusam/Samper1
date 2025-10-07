@@ -42,9 +42,9 @@ class AccountEdiFormat(models.Model):
         :return cfdi:   The cfdi including the addenda.
         '''
         cfdi_node = fromstring(cfdi)
-        if addenda.id == self.env.ref('w_addenda_liverpool.addenda_liverpool').id:
+        if addenda and addenda.id == self.env.ref('w_addenda_liverpool.addenda_liverpool').id:
             addenda_values = {'record': move, 'cfdi': cfdi}
-            addenda_content = addenda._render(values=addenda_values).strip()
+            addenda_content = addenda.with_context(addenda_context=True)._render(values=addenda_values).strip()
             if not addenda_content:
                 return cfdi
             addenda_node = fromstring(addenda_content)
