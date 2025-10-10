@@ -63,17 +63,41 @@ class MrpProduction(models.Model):
     def _generate_moves(self) -> 'StockMove':
         """Override _generate_moves to validate move quantities."""
         moves = super()._generate_moves()
+<<<<<<< HEAD
         for move in moves:
             if abs(move.product_uom_qty) < 0.000001:
                 move.product_uom_qty = 0.0
+=======
+        # Handle both tuple and StockMove objects
+        if isinstance(moves, (list, tuple)):
+            for move in moves:
+                if hasattr(move, 'product_uom_qty'):
+                    if abs(move.product_uom_qty) < 0.0001:
+                        move.product_uom_qty = 0.0
+        elif hasattr(moves, 'product_uom_qty'):
+            if abs(moves.product_uom_qty) < 0.0001:
+                moves.product_uom_qty = 0.0
+>>>>>>> origin/master
         return moves
 
     def _update_raw_moves(self, factor: float) -> 'StockMove':
         """Override _update_raw_moves to validate quantities."""
         moves = super()._update_raw_moves(factor)
+<<<<<<< HEAD
         for move in moves:
             if abs(move.product_uom_qty) < 0.000001:
                 move.product_uom_qty = 0.0
+=======
+        # Handle both tuple and StockMove objects
+        if isinstance(moves, (list, tuple)):
+            for move in moves:
+                if hasattr(move, 'product_uom_qty'):
+                    if abs(move.product_uom_qty) < 0.0001:
+                        move.product_uom_qty = 0.0
+        elif hasattr(moves, 'product_uom_qty'):
+            if abs(moves.product_uom_qty) < 0.0001:
+                moves.product_uom_qty = 0.0
+>>>>>>> origin/master
         return moves
 
     def _check_quantities(self) -> None:
