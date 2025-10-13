@@ -41,7 +41,6 @@ This module adds the Liverpool addenda in signed invoices
     'depends': [
         'base',
         'account',
-        'account_accountant',
         'l10n_mx_edi'
     ],
     'data': [
@@ -51,7 +50,7 @@ This module adds the Liverpool addenda in signed invoices
         'views/inherit_account_move_view.xml'
     ],
     'demo': [],
-    'qweb': [],
+    'assets': {},
     'installable': True,
     'application': False,
 }
