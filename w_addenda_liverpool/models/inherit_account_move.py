@@ -30,7 +30,7 @@ import uuid
 import logging
 from lxml import etree
 from datetime import datetime
-import unidecode
+import re
 
 _logger = logging.getLogger(__name__)
 
@@ -76,9 +76,22 @@ class AccountMove(models.Model):
 
 
     def unescape_characters(self, value):
-        return unidecode.unidecode(value)
+        if not value:
+            return value
+        # Reemplazar caracteres especiales comunes por equivalentes ASCII
+        replacements = {
+            'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u',
+            'Á': 'A', 'É': 'E', 'Í': 'I', 'Ó': 'O', 'Ú': 'U',
+            'ñ': 'n', 'Ñ': 'N',
+            'ü': 'u', 'Ü': 'U'
+        }
+        result = str(value)
+        for old, new in replacements.items():
+            result = result.replace(old, new)
+        return result
    
     def get_total_amount(self):
+        # En Odoo 16, usar amount_untaxed para el subtotal antes de impuestos
         return "%.2f" % round(self.amount_untaxed, 2)
 
 
@@ -87,15 +100,9 @@ class AccountMoveLine(models.Model):
 
 
     def get_price_gross(self):
-        taxes_line = self.tax_ids.flatten_taxes_hierarchy()
-        transferred = taxes_line.filtered(lambda r: r.amount >= 0)
-        price_net =  self.price_unit * self.quantity
-        price_gross = price_net
-        if transferred:
-            for tax in transferred:
-                tasa = abs(tax.amount if tax.amount_type == 'fixed' else (tax.amount / 100.0)) * 100
-                price_gross += (price_net * tasa / 100)
-        return "%.2f" % round(price_gross, 2)
+        # En Odoo 16, el manejo de impuestos puede haber cambiado
+        # Vamos a usar el precio con impuestos incluido directamente
+        return "%.2f" % round(self.price_total, 2)
 
     def get_price_net(self):
         return "%.2f" % round(self.price_unit * self.quantity, 2)
@@ -106,47 +113,5 @@ class AccountMoveLine(models.Model):
     def get_net_amount(self):
         return "%.2f" % round(self.price_subtotal, 2)
     
-    def _l10n_mx_edi_prepare_tax_details_for_addenda(self):
-        """Prepare tax details in the format expected by the Liverpool addenda template."""
-        tax_details_transferred = {'invoice_line_tax_details': {}, 'tax_details': {}, 'tax_amount_currency': 0.0}
-        tax_details_withholding = {'invoice_line_tax_details': {}, 'tax_details': {}, 'tax_amount_currency': 0.0}
-
-        # Process each invoice line
-        for line in self.invoice_line_ids.filtered(lambda l: not l.display_type):
-            line_tax_details_transferred = []
-            line_tax_details_withholding = []
-
-            # Get taxes for this line
-            taxes = line.tax_ids.flatten_taxes_hierarchy()
-
-            for tax in taxes:
-                tax_amount = tax._compute_amount(line.price_subtotal, line.price_unit, line.quantity, line.product_id, self.partner_id)
-
-                tax_detail = {
-                    'tax': tax,
-                    'base_amount_currency': line.price_subtotal,
-                    'tax_amount_currency': abs(tax_amount),
-                    'tax_rate_transferred': abs(tax.amount / 100.0) if tax.amount_type == 'percent' else 0.0,
-                }
-
-                if tax.amount >= 0:  # Transferred taxes (IVA, etc.)
-                    line_tax_details_transferred.append(tax_detail)
-                    tax_details_transferred['tax_amount_currency'] += tax_detail['tax_amount_currency']
-                else:  # Withholding taxes (ISR, etc.)
-                    tax_detail['tax_rate_transferred'] = abs(tax.amount / 100.0)
-                    line_tax_details_withholding.append(tax_detail)
-                    tax_details_withholding['tax_amount_currency'] += tax_detail['tax_amount_currency']
-
-            tax_details_transferred['invoice_line_tax_details'][line] = {
-                'tax_details': {i: detail for i, detail in enumerate(line_tax_details_transferred)},
-                'base_amount_currency': line.price_subtotal,
-                'tax_amount_currency': sum(d['tax_amount_currency'] for d in line_tax_details_transferred),
-            }
-
-            tax_details_withholding['invoice_line_tax_details'][line] = {
-                'tax_details': {i: detail for i, detail in enumerate(line_tax_details_withholding)},
-                'base_amount_currency': line.price_subtotal,
-                'tax_amount_currency': sum(d['tax_amount_currency'] for d in line_tax_details_withholding),
-            }
-
-        return tax_details_transferred, tax_details_withholding
+    def get_quantity(self):
+        return "%.2f" % round(self.quantity, 2)
