@@ -1,28 +1,4 @@
 # -*- encoding: utf-8 -*-
-#
-# Module written to Odoo, Open Source Management Solution
-#
-# Copyright (c) 2022 Birtum - http://www.birtum.com/
-# All Rights Reserved.
-#
-# Developer(s): Eddy Luis Pérez Vila
-#               (epv@birtum.com)
-########################################################################
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-########################################################################
 from odoo import models, api
 import logging
 from lxml import etree
@@ -58,3 +34,15 @@ class AccountEdiFormat(models.Model):
         else:
             return super(AccountEdiFormat, self)._l10n_mx_edi_cfdi_append_addenda(
                 move, cfdi, addenda)
+
+    def _l10n_mx_edi_prepare_tax_details_for_template(self, move):
+        """Prepare tax details for template context."""
+        if not move.require_addenda_liverpool:
+            return {}
+
+        tax_details_transferred, tax_details_withholding = move._l10n_mx_edi_prepare_tax_details_for_addenda()
+
+        return {
+            'tax_details_transferred': tax_details_transferred,
+            'tax_details_withholding': tax_details_withholding,
+        }
