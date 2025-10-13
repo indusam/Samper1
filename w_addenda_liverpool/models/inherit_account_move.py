@@ -30,7 +30,7 @@ import uuid
 import logging
 from lxml import etree
 from datetime import datetime
-import re
+import unidecode
 
 _logger = logging.getLogger(__name__)
 
@@ -76,22 +76,9 @@ class AccountMove(models.Model):
 
 
     def unescape_characters(self, value):
-        if not value:
-            return value
-        # Reemplazar caracteres especiales comunes por equivalentes ASCII
-        replacements = {
-            'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u',
-            'Á': 'A', 'É': 'E', 'Í': 'I', 'Ó': 'O', 'Ú': 'U',
-            'ñ': 'n', 'Ñ': 'N',
-            'ü': 'u', 'Ü': 'U'
-        }
-        result = str(value)
-        for old, new in replacements.items():
-            result = result.replace(old, new)
-        return result
+        return unidecode.unidecode(value)
    
     def get_total_amount(self):
-        # En Odoo 16, usar amount_untaxed para el subtotal antes de impuestos
         return "%.2f" % round(self.amount_untaxed, 2)
 
 
@@ -100,9 +87,15 @@ class AccountMoveLine(models.Model):
 
 
     def get_price_gross(self):
-        # En Odoo 16, el manejo de impuestos puede haber cambiado
-        # Vamos a usar el precio con impuestos incluido directamente
-        return "%.2f" % round(self.price_total, 2)
+        taxes_line = self.filtered('price_subtotal').tax_ids.flatten_taxes_hierarchy()
+        transferred = taxes_line.filtered(lambda r: r.amount >= 0)
+        price_net =  self.price_unit * self.quantity
+        price_gross = price_net
+        if transferred:
+            for tax in transferred:
+                tasa = abs(tax.amount if tax.amount_type == 'fixed' else (tax.amount / 100.0)) * 100
+                price_gross += (price_net * tasa / 100)
+        return "%.2f" % round(price_gross, 2)
 
     def get_price_net(self):
         return "%.2f" % round(self.price_unit * self.quantity, 2)
