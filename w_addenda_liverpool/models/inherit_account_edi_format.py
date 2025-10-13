@@ -40,9 +40,50 @@ class AccountEdiFormat(models.Model):
         if not move.require_addenda_liverpool:
             return {}
 
+        # Apply the patch if not already applied
+        self._l10n_mx_edi_patch_qweb_render()
+
         tax_details_transferred, tax_details_withholding = move._l10n_mx_edi_prepare_tax_details_for_addenda()
 
         return {
             'tax_details_transferred': tax_details_transferred,
             'tax_details_withholding': tax_details_withholding,
         }
+
+    @api.model
+    def _l10n_mx_edi_patch_qweb_render(self):
+        """Patch QWeb render method to add tax details to context for Liverpool addenda."""
+        try:
+            from odoo.addons.base.models.ir_qweb import QWeb
+
+            if hasattr(QWeb, '_l10n_mx_edi_patched'):
+                return
+
+            original_render = QWeb._render
+
+            def patched_render(self, template, values=None, **options):
+                # Check if this is a CFDI template and if we need to add tax details
+                if (template and hasattr(template, 'name') and
+                    'l10n_mx_edi' in str(template.name) and
+                    values and 'record' in values and
+                    hasattr(values['record'], 'require_addenda_liverpool') and
+                    values['record'].require_addenda_liverpool):
+
+                    # Get the EDI format instance
+                    edi_format = self.env['account.edi.format'].search([
+                        ('code', '=', 'l10n_mx_edi')
+                    ], limit=1)
+
+                    if edi_format:
+                        tax_context = edi_format._l10n_mx_edi_prepare_tax_details_for_template(values['record'])
+                        if values is None:
+                            values = {}
+                        values.update(tax_context)
+
+                return original_render(self, template, values, **options)
+
+            QWeb._render = patched_render
+            QWeb._l10n_mx_edi_patched = True
+
+        except ImportError:
+            _logger.warning("Could not patch QWeb render method - ir_qweb module not available")
