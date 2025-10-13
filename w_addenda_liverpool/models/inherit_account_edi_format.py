@@ -43,15 +43,7 @@ class AccountEdiFormat(models.Model):
         '''
         cfdi_node = fromstring(cfdi)
         if addenda and addenda.id == self.env.ref('w_addenda_liverpool.addenda_liverpool').id:
-            # Prepare tax details for Liverpool addenda
-            tax_details_transferred, tax_details_withholding = self._l10n_mx_edi_prepare_tax_details_for_addenda(move)
-
-            addenda_values = {
-                'record': move,
-                'cfdi': cfdi,
-                'liverpool_tax_details_transferred': tax_details_transferred,
-                'liverpool_tax_details_withholding': tax_details_withholding,
-            }
+            addenda_values = {'record': move, 'cfdi': cfdi}
             addenda_content = addenda.with_context(addenda_context=True)._render(values=addenda_values).strip()
             if not addenda_content:
                 return cfdi
@@ -66,48 +58,3 @@ class AccountEdiFormat(models.Model):
         else:
             return super(AccountEdiFormat, self)._l10n_mx_edi_cfdi_append_addenda(
                 move, cfdi, addenda)
-
-    def _l10n_mx_edi_prepare_tax_details_for_addenda(self, move):
-        """Prepare tax details in the format expected by the Liverpool addenda template."""
-        tax_details_transferred = {'invoice_line_tax_details': {}, 'tax_details': {}, 'tax_amount_currency': 0.0}
-        tax_details_withholding = {'invoice_line_tax_details': {}, 'tax_details': {}, 'tax_amount_currency': 0.0}
-
-        # Process each invoice line
-        for line in move.invoice_line_ids.filtered(lambda l: not l.display_type):
-            line_tax_details_transferred = []
-            line_tax_details_withholding = []
-
-            # Get taxes for this line
-            taxes = line.tax_ids.flatten_taxes_hierarchy()
-
-            for tax in taxes:
-                tax_amount = tax._compute_amount(line.price_subtotal, line.price_unit, line.quantity, line.product_id, move.partner_id)
-
-                tax_detail = {
-                    'tax': tax,
-                    'base_amount_currency': line.price_subtotal,
-                    'tax_amount_currency': abs(tax_amount),
-                    'tax_rate_transferred': abs(tax.amount / 100.0) if tax.amount_type == 'percent' else 0.0,
-                }
-
-                if tax.amount >= 0:  # Transferred taxes (IVA, etc.)
-                    line_tax_details_transferred.append(tax_detail)
-                    tax_details_transferred['tax_amount_currency'] += tax_detail['tax_amount_currency']
-                else:  # Withholding taxes (ISR, etc.)
-                    tax_detail['tax_rate_transferred'] = abs(tax.amount / 100.0)
-                    line_tax_details_withholding.append(tax_detail)
-                    tax_details_withholding['tax_amount_currency'] += tax_detail['tax_amount_currency']
-
-            tax_details_transferred['invoice_line_tax_details'][line] = {
-                'tax_details': {i: detail for i, detail in enumerate(line_tax_details_transferred)},
-                'base_amount_currency': line.price_subtotal,
-                'tax_amount_currency': sum(d['tax_amount_currency'] for d in line_tax_details_transferred),
-            }
-
-            tax_details_withholding['invoice_line_tax_details'][line] = {
-                'tax_details': {i: detail for i, detail in enumerate(line_tax_details_withholding)},
-                'base_amount_currency': line.price_subtotal,
-                'tax_amount_currency': sum(d['tax_amount_currency'] for d in line_tax_details_withholding),
-            }
-
-        return tax_details_transferred, tax_details_withholding

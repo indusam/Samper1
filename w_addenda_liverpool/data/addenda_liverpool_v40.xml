@@ -47,6 +47,15 @@
                 <cfdi:Conceptos>
                     <t t-foreach="invoice_line_vals_list" t-as="line_vals">
                         <t t-set="line" t-value="line_vals['line']"/>
+                        <t t-if="record.require_addenda_liverpool">
+                            <t t-set="liverpool_tax_data" t-value="record._l10n_mx_edi_prepare_tax_details_for_addenda()"/>
+                            <t t-set="liverpool_tax_details_transferred" t-value="liverpool_tax_data[0]"/>
+                            <t t-set="liverpool_tax_details_withholding" t-value="liverpool_tax_data[1]"/>
+                        </t>
+                        <t t-else="">
+                            <t t-set="liverpool_tax_details_transferred" t-value="{}"/>
+                            <t t-set="liverpool_tax_details_withholding" t-value="{}"/>
+                        </t>
                         <t t-set="tax_details" t-value="(liverpool_tax_details_transferred, liverpool_tax_details_withholding)"/>
                         <t t-set="tax_details_transferred" t-value="tax_details[0]"/>
                         <t t-set="tax_details_withholding" t-value="tax_details[1]"/>

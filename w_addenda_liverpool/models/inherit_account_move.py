@@ -106,5 +106,47 @@ class AccountMoveLine(models.Model):
     def get_net_amount(self):
         return "%.2f" % round(self.price_subtotal, 2)
     
-    def get_quantity(self):
-        return "%.2f" % round(self.quantity, 2)
+    def _l10n_mx_edi_prepare_tax_details_for_addenda(self):
+        """Prepare tax details in the format expected by the Liverpool addenda template."""
+        tax_details_transferred = {'invoice_line_tax_details': {}, 'tax_details': {}, 'tax_amount_currency': 0.0}
+        tax_details_withholding = {'invoice_line_tax_details': {}, 'tax_details': {}, 'tax_amount_currency': 0.0}
+
+        # Process each invoice line
+        for line in self.invoice_line_ids.filtered(lambda l: not l.display_type):
+            line_tax_details_transferred = []
+            line_tax_details_withholding = []
+
+            # Get taxes for this line
+            taxes = line.tax_ids.flatten_taxes_hierarchy()
+
+            for tax in taxes:
+                tax_amount = tax._compute_amount(line.price_subtotal, line.price_unit, line.quantity, line.product_id, self.partner_id)
+
+                tax_detail = {
+                    'tax': tax,
+                    'base_amount_currency': line.price_subtotal,
+                    'tax_amount_currency': abs(tax_amount),
+                    'tax_rate_transferred': abs(tax.amount / 100.0) if tax.amount_type == 'percent' else 0.0,
+                }
+
+                if tax.amount >= 0:  # Transferred taxes (IVA, etc.)
+                    line_tax_details_transferred.append(tax_detail)
+                    tax_details_transferred['tax_amount_currency'] += tax_detail['tax_amount_currency']
+                else:  # Withholding taxes (ISR, etc.)
+                    tax_detail['tax_rate_transferred'] = abs(tax.amount / 100.0)
+                    line_tax_details_withholding.append(tax_detail)
+                    tax_details_withholding['tax_amount_currency'] += tax_detail['tax_amount_currency']
+
+            tax_details_transferred['invoice_line_tax_details'][line] = {
+                'tax_details': {i: detail for i, detail in enumerate(line_tax_details_transferred)},
+                'base_amount_currency': line.price_subtotal,
+                'tax_amount_currency': sum(d['tax_amount_currency'] for d in line_tax_details_transferred),
+            }
+
+            tax_details_withholding['invoice_line_tax_details'][line] = {
+                'tax_details': {i: detail for i, detail in enumerate(line_tax_details_withholding)},
+                'base_amount_currency': line.price_subtotal,
+                'tax_amount_currency': sum(d['tax_amount_currency'] for d in line_tax_details_withholding),
+            }
+
+        return tax_details_transferred, tax_details_withholding
