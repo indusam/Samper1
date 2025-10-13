@@ -10,11 +10,6 @@ _logger = logging.getLogger(__name__)
 class AccountEdiFormat(models.Model):
     _inherit = 'account.edi.format'
 
-    def __init__(self, pool, cr):
-        super(AccountEdiFormat, self).__init__(pool, cr)
-        # Apply the patch when the model is initialized
-        self._l10n_mx_edi_patch_qweb_render()
-
     def _l10n_mx_edi_cfdi_append_addenda(self, move, cfdi, addenda):
         ''' Append an additional block to the signed CFDI passed as parameter.
         :param move:    The account.move record.
@@ -44,6 +39,10 @@ class AccountEdiFormat(models.Model):
         """Prepare tax details for template context."""
         if not move.require_addenda_liverpool:
             return {}
+
+        # Apply the patch if not already applied
+        if not hasattr(self.env['ir.qweb'], '_l10n_mx_edi_patched'):
+            self._l10n_mx_edi_patch_qweb_render()
 
         tax_details_transferred, tax_details_withholding = move._l10n_mx_edi_prepare_tax_details_for_addenda()
 
