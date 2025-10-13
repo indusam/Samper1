@@ -42,7 +42,8 @@ This module adds the Liverpool addenda in signed invoices
         'base',
         'account',
         'account_accountant',
-        'l10n_mx_edi'
+        'l10n_mx_edi',
+        'l10n_mx_edi_40'
     ],
     'data': [
         'data/addenda_liverpool_v40.xml',

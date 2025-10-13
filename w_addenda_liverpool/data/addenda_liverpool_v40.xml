@@ -47,7 +47,7 @@
                 <cfdi:Conceptos>
                     <t t-foreach="invoice_line_vals_list" t-as="line_vals">
                         <t t-set="line" t-value="line_vals['line']"/>
-                        <t t-set="tax_details" t-value="ctx.get('edi_format')._l10n_mx_edi_prepare_tax_details_for_addenda(record)"/>
+                        <t t-set="tax_details" t-value="(liverpool_tax_details_transferred, liverpool_tax_details_withholding)"/>
                         <t t-set="tax_details_transferred" t-value="tax_details[0]"/>
                         <t t-set="tax_details_withholding" t-value="tax_details[1]"/>
                         <cfdi:Concepto

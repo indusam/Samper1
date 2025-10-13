@@ -32,7 +32,7 @@ _logger = logging.getLogger(__name__)
 
 
 class AccountEdiFormat(models.Model):
-    _inherit = 'account.edi.format'
+    _inherit = 'l10n_mx_edi.edi.format'
 
     def _l10n_mx_edi_cfdi_append_addenda(self, move, cfdi, addenda):
         ''' Append an additional block to the signed CFDI passed as parameter.
@@ -102,4 +102,23 @@ class AccountEdiFormat(models.Model):
                 'tax_amount_currency': sum(d['tax_amount_currency'] for d in line_tax_details_withholding),
             }
 
-        return tax_details_transferred, tax_details_withholding
+    def _l10n_mx_edi_export_invoice_cfdi(self, invoice):
+        """Override to add tax details preparation for Liverpool addenda."""
+        # Prepare tax details if this is for Liverpool addenda
+        tax_details_transferred = None
+        tax_details_withholding = None
+
+        if invoice.require_addenda_liverpool:
+            tax_details_transferred, tax_details_withholding = self._l10n_mx_edi_prepare_tax_details_for_addenda(invoice)
+
+        # Call parent method to get the CFDI values
+        cfdi_values = super()._l10n_mx_edi_export_invoice_cfdi(invoice)
+
+        # Add our prepared tax details to the context if needed
+        if tax_details_transferred is not None:
+            cfdi_values.update({
+                'liverpool_tax_details_transferred': tax_details_transferred,
+                'liverpool_tax_details_withholding': tax_details_withholding,
+            })
+
+        return cfdi_values
