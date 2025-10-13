@@ -10,7 +10,7 @@
                     <field name="require_addenda_liverpool" invisible="1"/>
                 </field>
                 <xpath expr="//page[@name='other_info']" position="after">
-                    <page name="addenda_liverpool" invisible="not require_addenda_liverpool or move_type == 'entry'" string="Addenda Liverpool">
+                    <page name="addenda_liverpool" attrs="{'invisible': ['|', ('require_addenda_liverpool', '=', False), ('move_type', '=', 'entry')]}" string="Addenda Liverpool">
                         <group name="principal_group">
                             <group name="left_group">
                                 <field name="purchase_order_liv"/>
