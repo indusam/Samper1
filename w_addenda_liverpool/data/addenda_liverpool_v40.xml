@@ -43,8 +43,12 @@
                             <detallista:alternatePartyIdentification type="SELLER_ASSIGNED_IDENTIFIER_FOR_A_PARTY"><t t-esc="record.partner_id.supplier_identification or record.company_id.vat or 'N/A'"/></detallista:alternatePartyIdentification>
                         </detallista:seller>
                         <t t-set="line_counts" t-value="0"/>
-                        <t t-foreach="record.invoice_line_ids.filtered(lambda inv: not inv.display_type)" t-as="line">
+                        <!-- Debug: Show invoice lines count -->
+                        <t t-set="invoice_lines" t-value="record.invoice_line_ids.filtered(lambda inv: not inv.display_type)"/>
+                        <t t-log="Invoice lines count: " + str(len(invoice_lines))/>
+                        <t t-foreach="invoice_lines" t-as="line">
                             <t t-set="line_counts" t-value="line_counts + 1"/>
+                            <t t-log="Processing line: " + str(line_counts) + " - " + str(line.product_id.name or line.name)/>
                             <detallista:lineItem t-att-number="line_counts" type="SimpleInvoiceLineItemType">
                                 <detallista:tradeItemIdentification>
                                     <detallista:gtin><t t-esc="line.product_id.barcode or '00000000000000'"/></detallista:gtin>
