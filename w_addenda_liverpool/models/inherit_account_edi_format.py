@@ -2,6 +2,9 @@
 
 from odoo import models
 from lxml import etree
+import logging
+
+_logger = logging.getLogger(__name__)
 
 
 class AccountEdiFormat(models.Model):
@@ -15,30 +18,45 @@ class AccountEdiFormat(models.Model):
         if invoice.require_addenda_liverpool:
             try:
                 # Parse the CFDI XML
-                cfdi_node = etree.fromstring(cfdi)
+                cfdi_node = etree.fromstring(cfdi.encode('utf-8'))
                 
-                # Add detallista namespace to Comprobante
-                cfdi_node.set('{http://www.w3.org/2001/XMLSchema-instance}schemaLocation',
-                    'http://www.sat.gob.mx/cfd/4 http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd '
-                    'http://www.sat.gob.mx/detallista http://www.sat.gob.mx/sitio_internet/cfd/detallista/detallista.xsd')
+                # Get current schema location
+                xsi_ns = 'http://www.w3.org/2001/XMLSchema-instance'
+                schema_loc_key = '{%s}schemaLocation' % xsi_ns
+                current_schema = cfdi_node.get(schema_loc_key, '')
                 
-                # Add detallista namespace declaration
-                nsmap = cfdi_node.nsmap.copy()
-                nsmap['detallista'] = 'http://www.sat.gob.mx/detallista'
+                # Add detallista schema if not already present
+                if 'detallista' not in current_schema:
+                    new_schema = current_schema.strip() + ' http://www.sat.gob.mx/detallista http://www.sat.gob.mx/sitio_internet/cfd/detallista/detallista.xsd'
+                    cfdi_node.set(schema_loc_key, new_schema.strip())
                 
-                # Create new element with updated nsmap
-                new_cfdi = etree.Element(cfdi_node.tag, nsmap=nsmap, attrib=cfdi_node.attrib)
-                new_cfdi.text = cfdi_node.text
-                new_cfdi.tail = cfdi_node.tail
+                # Register detallista namespace if not already present
+                if 'detallista' not in cfdi_node.nsmap:
+                    # We need to recreate the element with the new namespace
+                    nsmap = dict(cfdi_node.nsmap)
+                    nsmap['detallista'] = 'http://www.sat.gob.mx/detallista'
+                    
+                    # Create new root with updated namespace map
+                    new_root = etree.Element(cfdi_node.tag, nsmap=nsmap)
+                    
+                    # Copy all attributes
+                    for key, value in cfdi_node.attrib.items():
+                        new_root.set(key, value)
+                    
+                    # Copy text
+                    new_root.text = cfdi_node.text
+                    new_root.tail = cfdi_node.tail
+                    
+                    # Copy all children
+                    for child in cfdi_node:
+                        new_root.append(child)
+                    
+                    cfdi_node = new_root
                 
-                # Copy all children
-                for child in cfdi_node:
-                    new_cfdi.append(child)
+                # Convert back to string with proper encoding
+                cfdi = etree.tostring(cfdi_node, encoding='unicode', pretty_print=False)
                 
-                # Convert back to string
-                cfdi = etree.tostring(new_cfdi, encoding='unicode')
-            except Exception:
-                # If anything fails, return original CFDI
-                pass
+            except Exception as e:
+                _logger.error('Error adding detallista namespace to CFDI: %s', str(e))
         
         return cfdi
