@@ -15,25 +15,32 @@ class AccountEdiFormat(models.Model):
         res = super()._l10n_mx_edi_post_invoice(invoices)
         
         for invoice in invoices:
+            _logger.info('Processing invoice %s, require_addenda_liverpool: %s', invoice.name, invoice.require_addenda_liverpool)
+            
             if invoice.require_addenda_liverpool and invoice.id in res:
                 edi_result = res[invoice.id]
+                _logger.info('EDI result keys: %s', edi_result.keys())
+                
                 if edi_result.get('cfdi_str'):
                     try:
+                        _logger.info('Adding detallista namespace to CFDI for invoice %s', invoice.name)
+                        
                         # Parse the CFDI XML
                         cfdi_node = etree.fromstring(edi_result['cfdi_str'].encode('utf-8'))
+                        
+                        _logger.info('Current nsmap: %s', cfdi_node.nsmap)
                         
                         # Get current schema location
                         xsi_ns = 'http://www.w3.org/2001/XMLSchema-instance'
                         schema_loc_key = '{%s}schemaLocation' % xsi_ns
                         current_schema = cfdi_node.get(schema_loc_key, '')
                         
-                        # Add detallista schema if not already present
-                        if 'detallista' not in current_schema:
-                            new_schema = current_schema.strip() + ' http://www.sat.gob.mx/detallista http://www.sat.gob.mx/sitio_internet/cfd/detallista/detallista.xsd'
-                            cfdi_node.set(schema_loc_key, new_schema.strip())
+                        _logger.info('Current schema location: %s', current_schema)
                         
                         # Register detallista namespace if not already present
                         if 'detallista' not in cfdi_node.nsmap:
+                            _logger.info('Adding detallista namespace to nsmap')
+                            
                             # We need to recreate the element with the new namespace
                             nsmap = dict(cfdi_node.nsmap)
                             nsmap['detallista'] = 'http://www.sat.gob.mx/detallista'
@@ -54,11 +61,20 @@ class AccountEdiFormat(models.Model):
                                 new_root.append(child)
                             
                             cfdi_node = new_root
+                            _logger.info('New nsmap: %s', cfdi_node.nsmap)
+                        
+                        # Add detallista schema if not already present
+                        if 'detallista' not in current_schema:
+                            _logger.info('Adding detallista to schema location')
+                            new_schema = current_schema.strip() + ' http://www.sat.gob.mx/detallista http://www.sat.gob.mx/sitio_internet/cfd/detallista/detallista.xsd'
+                            cfdi_node.set(schema_loc_key, new_schema.strip())
+                            _logger.info('New schema location: %s', cfdi_node.get(schema_loc_key))
                         
                         # Convert back to string
                         edi_result['cfdi_str'] = etree.tostring(cfdi_node, encoding='unicode', pretty_print=False)
+                        _logger.info('CFDI updated successfully')
                         
                     except Exception as e:
-                        _logger.error('Error adding detallista namespace to CFDI for invoice %s: %s', invoice.name, str(e))
+                        _logger.error('Error adding detallista namespace to CFDI for invoice %s: %s', invoice.name, str(e), exc_info=True)
         
         return res
