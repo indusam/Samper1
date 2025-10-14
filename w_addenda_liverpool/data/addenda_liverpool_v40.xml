@@ -2,17 +2,12 @@
 <odoo>
     <!--This is the addenda liverpool for CFDI 4.0-->
     <template id="cfdiv40_liverpool" name="Addenda Liverpool" inherit_id="l10n_mx_edi_40.cfdiv40">
-        <!-- Add the detallista namespace to the Comprobante element -->
-        <xpath expr="//*[name()='cfdi:Comprobante']" position="attributes">
-            <attribute name="xmlns:detallista">http://www.sat.gob.mx/detallista</attribute>
-            <attribute name="xsi:schemaLocation" add="http://www.sat.gob.mx/detallista http://www.sat.gob.mx/sitio_internet/cfd/detallista/detallista.xsd" separator=" "/>
-        </xpath>
-        
         <!-- Add the addenda at the end of Comprobante, after all other elements -->
         <xpath expr="//*[name()='cfdi:Comprobante']" position="inside">
-            <t t-if="record.require_addenda_liverpool" xmlns:cfdi="http://www.sat.gob.mx/cfd/4" xmlns:detallista="http://www.sat.gob.mx/detallista">
-                <cfdi:Complemento>
-                    <detallista:detallista contentVersion="1.3.1" documentStructureVersion="AMC8.1" type="SimpleInvoiceType" documentStatus="ORIGINAL">
+            <t t-if="record.require_addenda_liverpool">
+                <t xmlns:detallista="http://www.sat.gob.mx/detallista">
+                    <Complemento>
+                        <detallista:detallista contentVersion="1.3.1" documentStructureVersion="AMC8.1" type="SimpleInvoiceType" documentStatus="ORIGINAL">
                         <detallista:requestForPaymentIdentification>
                             <t t-if="record.move_type in ('out_invoice', 'in_invoice')">
                                 <detallista:entityType>INVOICE</detallista:entityType>
@@ -81,7 +76,8 @@
                             <detallista:Amount>0.00</detallista:Amount>
                         </detallista:TotalAllowanceCharge>
                     </detallista:detallista>
-                </cfdi:Complemento>
+                    </Complemento>
+                </t>
             </t>
         </xpath>
     </template>
