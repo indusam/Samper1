@@ -65,6 +65,23 @@ class AccountMove(models.Model):
    
     def get_total_amount(self):
         return "%.2f" % round(self.amount_untaxed, 2)
+    
+    def _l10n_mx_edi_cfdi_amount_to_text(self):
+        """Convert the invoice amount to text in Spanish for Mexican localization."""
+        self.ensure_one()
+        # Try to use the standard Odoo method if it exists
+        if hasattr(super(AccountMove, self), '_l10n_mx_edi_cfdi_amount_to_text'):
+            return super()._l10n_mx_edi_cfdi_amount_to_text()
+        
+        # Otherwise, use the currency's amount_to_text method
+        try:
+            from odoo.addons.l10n_mx_edi.models.account_edi_format import CURRENCY_CODE_TO_NAME
+            currency_name = CURRENCY_CODE_TO_NAME.get(self.currency_id.name, self.currency_id.name)
+            amount_text = self.currency_id.with_context(lang='es_MX').amount_to_text(self.amount_total)
+            return amount_text.upper()
+        except:
+            # Fallback: return empty string if conversion fails
+            return ""
 
 
 class AccountMoveLine(models.Model):

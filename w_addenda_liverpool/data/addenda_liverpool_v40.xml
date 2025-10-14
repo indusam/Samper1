@@ -17,7 +17,7 @@
                             </t>
                         </detallista:requestForPaymentIdentification>
                         <detallista:specialInstruction code="ZZZ">
-                            <detallista:text><t t-if="record.l10n_mx_edi_amount_to_text" t-esc="record.unescape_characters(record.l10n_mx_edi_amount_to_text)"/></detallista:text>
+                            <detallista:text><t t-esc="record.unescape_characters(record._l10n_mx_edi_cfdi_amount_to_text())"/></detallista:text>
                         </detallista:specialInstruction>
                         <detallista:orderIdentification>
                             <detallista:referenceIdentification type="ON"><t t-if="record.purchase_order_liv" t-esc="record.unescape_characters(record.purchase_order_liv)"/></detallista:referenceIdentification>
