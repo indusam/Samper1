@@ -18,36 +18,44 @@
                         <detallista:specialInstruction code="ZZZ">
                             <detallista:text><t t-esc="record.unescape_characters(record._l10n_mx_edi_cfdi_amount_to_text())"/></detallista:text>
                         </detallista:specialInstruction>
-                        <detallista:orderIdentification>
-                            <detallista:referenceIdentification type="ON"><t t-if="record.purchase_order_liv" t-esc="record.unescape_characters(record.purchase_order_liv)"/></detallista:referenceIdentification>
-                        </detallista:orderIdentification>
+                        <t t-if="record.purchase_order_liv">
+                            <detallista:orderIdentification>
+                                <detallista:referenceIdentification type="ON"><t t-esc="record.unescape_characters(record.purchase_order_liv)"/></detallista:referenceIdentification>
+                            </detallista:orderIdentification>
+                        </t>
                         <detallista:AdditionalInformation>
                             <detallista:referenceIdentification type="IV"><t t-if="record.name" t-esc="record.unescape_characters(record.name)"/></detallista:referenceIdentification>
                         </detallista:AdditionalInformation>
-                        <detallista:DeliveryNote>
-                            <detallista:referenceIdentification><t t-if="record.delivery_folio" t-esc="record.unescape_characters(record.delivery_folio)"/></detallista:referenceIdentification>
-                            <detallista:ReferenceDate><t t-esc="record.date_delivery"/></detallista:ReferenceDate>
-                        </detallista:DeliveryNote>
+                        <t t-if="record.delivery_folio and record.date_delivery">
+                            <detallista:DeliveryNote>
+                                <detallista:referenceIdentification><t t-esc="record.unescape_characters(record.delivery_folio)"/></detallista:referenceIdentification>
+                                <detallista:ReferenceDate><t t-esc="record.date_delivery"/></detallista:ReferenceDate>
+                            </detallista:DeliveryNote>
+                        </t>
                         <detallista:buyer>
-                            <detallista:gln><t t-if="record.partner_id.global_localitation_number" t-esc="record.unescape_characters(record.partner_id.global_localitation_number)"/></detallista:gln>
-                            <detallista:contactInformation>
-                                <detallista:personOrDepartmentName>
-                                    <detallista:text><t t-if="record.partner_id.person_order_department" t-esc="record.unescape_characters(record.partner_id.person_order_department)"/></detallista:text>
-                                </detallista:personOrDepartmentName>
-                            </detallista:contactInformation>
+                            <detallista:gln><t t-esc="record.partner_id.global_localitation_number or '0000000000000'"/></detallista:gln>
+                            <t t-if="record.partner_id.person_order_department">
+                                <detallista:contactInformation>
+                                    <detallista:personOrDepartmentName>
+                                        <detallista:text><t t-esc="record.unescape_characters(record.partner_id.person_order_department)"/></detallista:text>
+                                    </detallista:personOrDepartmentName>
+                                </detallista:contactInformation>
+                            </t>
                         </detallista:buyer>
                         <detallista:seller>
-                            <detallista:gln><t t-if="record.company_id.global_localitation_number" t-esc="record.unescape_characters(record.company_id.global_localitation_number)"/></detallista:gln>
-                            <detallista:alternatePartyIdentification type="SELLER_ASSIGNED_IDENTIFIER_FOR_A_PARTY"><t t-if="record.partner_id.supplier_identification" t-esc="record.unescape_characters(record.partner_id.supplier_identification)"/></detallista:alternatePartyIdentification>
+                            <detallista:gln><t t-esc="record.company_id.global_localitation_number or '0000000000000'"/></detallista:gln>
+                            <t t-if="record.partner_id.supplier_identification">
+                                <detallista:alternatePartyIdentification type="SELLER_ASSIGNED_IDENTIFIER_FOR_A_PARTY"><t t-esc="record.unescape_characters(record.partner_id.supplier_identification)"/></detallista:alternatePartyIdentification>
+                            </t>
                         </detallista:seller>
                         <t t-set="line_counts" t-value="0"/>
                         <t t-foreach="record.invoice_line_ids.filtered(lambda inv: not inv.display_type)" t-as="line">
                             <t t-set="line_counts" t-value="line_counts + 1"/>
                             <detallista:lineItem t-att-number="line_counts" type="SimpleInvoiceLineItemType">
                                 <detallista:tradeItemIdentification>
-                                    <detallista:gtin><t t-esc="line.product_id.barcode"/></detallista:gtin>
+                                    <detallista:gtin><t t-esc="line.product_id.barcode or '00000000000000'"/></detallista:gtin>
                                 </detallista:tradeItemIdentification>
-                                <detallista:alternateTradeItemIdentification type="SUPPLIER_ASSIGNED"><t t-if="line.product_id.default_code" t-esc="record.unescape_characters(line.product_id.default_code)"/></detallista:alternateTradeItemIdentification>
+                                <detallista:alternateTradeItemIdentification type="SUPPLIER_ASSIGNED"><t t-esc="line.product_id.default_code or line.product_id.id"/></detallista:alternateTradeItemIdentification>
                                 <detallista:tradeItemDescriptionInformation language="ES">
                                     <detallista:longText><t t-if="line.product_id.name" t-esc="record.unescape_characters(line.product_id.name[:35])"/></detallista:longText>
                                 </detallista:tradeItemDescriptionInformation>
