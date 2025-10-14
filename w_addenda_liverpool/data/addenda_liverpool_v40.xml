@@ -40,9 +40,7 @@
                         </detallista:buyer>
                         <detallista:seller>
                             <detallista:gln><t t-esc="record.company_id.global_localitation_number or '0000000000000'"/></detallista:gln>
-                            <t t-if="record.partner_id.supplier_identification">
-                                <detallista:alternatePartyIdentification type="SELLER_ASSIGNED_IDENTIFIER_FOR_A_PARTY"><t t-esc="record.unescape_characters(record.partner_id.supplier_identification)"/></detallista:alternatePartyIdentification>
-                            </t>
+                            <detallista:alternatePartyIdentification type="SELLER_ASSIGNED_IDENTIFIER_FOR_A_PARTY"><t t-esc="record.partner_id.supplier_identification or record.company_id.vat or 'N/A'"/></detallista:alternatePartyIdentification>
                         </detallista:seller>
                         <t t-set="line_counts" t-value="0"/>
                         <t t-foreach="record.invoice_line_ids.filtered(lambda inv: not inv.display_type)" t-as="line">
@@ -53,7 +51,7 @@
                                 </detallista:tradeItemIdentification>
                                 <detallista:alternateTradeItemIdentification type="SUPPLIER_ASSIGNED"><t t-esc="line.product_id.default_code or line.product_id.id"/></detallista:alternateTradeItemIdentification>
                                 <detallista:tradeItemDescriptionInformation language="ES">
-                                    <detallista:longText><t t-if="line.product_id.name" t-esc="record.unescape_characters(line.product_id.name[:35])"/></detallista:longText>
+                                    <detallista:longText><t t-esc="record.unescape_characters((line.product_id.name or line.name or 'PRODUCTO')[:35])"/></detallista:longText>
                                 </detallista:tradeItemDescriptionInformation>
                                 <detallista:invoicedQuantity t-att-unitOfMeasure="line.product_uom_id.name"><t t-esc="line.get_quantity()"/></detallista:invoicedQuantity>
                                 <detallista:grossPrice>
