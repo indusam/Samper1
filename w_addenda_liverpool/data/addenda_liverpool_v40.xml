@@ -43,8 +43,20 @@
                             <detallista:alternatePartyIdentification type="SELLER_ASSIGNED_IDENTIFIER_FOR_A_PARTY"><t t-esc="record.partner_id.supplier_identification or record.company_id.vat or 'N/A'"/></detallista:alternatePartyIdentification>
                         </detallista:seller>
                         <t t-set="line_counts" t-value="0"/>
-                        <t t-foreach="record.invoice_line_ids.filtered(lambda inv: not inv.display_type)" t-as="line">
+                        <!-- Debug: Check invoice lines -->
+                        <t t-set="all_lines" t-value="record.invoice_line_ids"/>
+                        <t t-set="visible_lines" t-value="record.invoice_line_ids.filtered(lambda inv: not inv.display_type)"/>
+                        <t t-foreach="all_lines" t-as="line">
+                            <t t-if="line.display_type">
+                                <t t-log="'HIDDEN LINE: ' + str(line.product_id.name or line.name) + ' - display_type: ' + str(line.display_type)"/>
+                            </t>
+                            <t t-else="">
+                                <t t-log="'VISIBLE LINE: ' + str(line.product_id.name or line.name) + ' - display_type: ' + str(line.display_type)"/>
+                            </t>
+                        </t>
+                        <t t-foreach="visible_lines" t-as="line">
                             <t t-set="line_counts" t-value="line_counts + 1"/>
+                            <t t-log="'PROCESSING LINE: ' + str(line_counts) + ' - ' + str(line.product_id.name or line.name)"/>
                             <detallista:lineItem t-att-number="line_counts" type="SimpleInvoiceLineItemType">
                                 <detallista:tradeItemIdentification>
                                     <detallista:gtin><t t-esc="line.product_id.barcode or '00000000000000'"/></detallista:gtin>
