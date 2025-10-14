@@ -22,10 +22,10 @@
                             <detallista:orderIdentification>
                                 <detallista:referenceIdentification type="ON"><t t-esc="record.unescape_characters(record.purchase_order_liv)"/></detallista:referenceIdentification>
                             </detallista:orderIdentification>
+                            <detallista:AdditionalInformation>
+                                <detallista:referenceIdentification type="IV"><t t-esc="record.unescape_characters(record.name)"/></detallista:referenceIdentification>
+                            </detallista:AdditionalInformation>
                         </t>
-                        <detallista:AdditionalInformation>
-                            <detallista:referenceIdentification type="IV"><t t-if="record.name" t-esc="record.unescape_characters(record.name)"/></detallista:referenceIdentification>
-                        </detallista:AdditionalInformation>
                         <t t-if="record.delivery_folio and record.date_delivery">
                             <detallista:DeliveryNote>
                                 <detallista:referenceIdentification><t t-esc="record.unescape_characters(record.delivery_folio)"/></detallista:referenceIdentification>
