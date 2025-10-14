@@ -67,8 +67,8 @@ class AccountEdiFormat(models.Model):
                     cfdi_node.set(schema_loc_key, new_schema.strip())
                     _logger.info('New schema location: %s', cfdi_node.get(schema_loc_key))
                 
-                # Convert back to string
-                res['cfdi_str'] = etree.tostring(cfdi_node, encoding='unicode', pretty_print=False)
+                # Convert back to bytes - PAC expects bytes, not string
+                res['cfdi_str'] = etree.tostring(cfdi_node, encoding='utf-8', pretty_print=False)
                 _logger.info('CFDI updated successfully')
                 
             except Exception as e:
