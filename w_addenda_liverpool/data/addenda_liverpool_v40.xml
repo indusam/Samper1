@@ -18,20 +18,16 @@
                         <detallista:specialInstruction code="ZZZ">
                             <detallista:text><t t-esc="record.unescape_characters(record._l10n_mx_edi_cfdi_amount_to_text())"/></detallista:text>
                         </detallista:specialInstruction>
-                        <t t-if="record.purchase_order_liv">
-                            <detallista:orderIdentification>
-                                <detallista:referenceIdentification type="ON"><t t-esc="record.unescape_characters(record.purchase_order_liv)"/></detallista:referenceIdentification>
-                            </detallista:orderIdentification>
-                            <detallista:AdditionalInformation>
-                                <detallista:referenceIdentification type="IV"><t t-esc="record.unescape_characters(record.name)"/></detallista:referenceIdentification>
-                            </detallista:AdditionalInformation>
-                        </t>
-                        <t t-if="record.delivery_folio and record.date_delivery">
-                            <detallista:DeliveryNote>
-                                <detallista:referenceIdentification><t t-esc="record.unescape_characters(record.delivery_folio)"/></detallista:referenceIdentification>
-                                <detallista:ReferenceDate><t t-esc="record.date_delivery"/></detallista:ReferenceDate>
-                            </detallista:DeliveryNote>
-                        </t>
+                        <detallista:orderIdentification>
+                            <detallista:referenceIdentification type="ON"><t t-esc="record.purchase_order_liv or 'N/A'"/></detallista:referenceIdentification>
+                        </detallista:orderIdentification>
+                        <detallista:AdditionalInformation>
+                            <detallista:referenceIdentification type="IV"><t t-esc="record.unescape_characters(record.name)"/></detallista:referenceIdentification>
+                        </detallista:AdditionalInformation>
+                        <detallista:DeliveryNote>
+                            <detallista:referenceIdentification><t t-esc="record.delivery_folio or 'N/A'"/></detallista:referenceIdentification>
+                            <detallista:ReferenceDate><t t-esc="record.date_delivery or record.invoice_date"/></detallista:ReferenceDate>
+                        </detallista:DeliveryNote>
                         <detallista:buyer>
                             <detallista:gln><t t-esc="record.partner_id.global_localitation_number or '0000000000000'"/></detallista:gln>
                             <t t-if="record.partner_id.person_order_department">
