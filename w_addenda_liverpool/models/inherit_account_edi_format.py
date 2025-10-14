@@ -22,8 +22,8 @@ class AccountEdiFormat(models.Model):
             try:
                 _logger.info('Adding detallista namespace to CFDI for invoice %s', invoice.name)
                 
-                # Parse the CFDI XML
-                cfdi_node = etree.fromstring(res['cfdi_str'].encode('utf-8'))
+                # Parse the CFDI XML - cfdi_str is already bytes
+                cfdi_node = etree.fromstring(res['cfdi_str'])
                 
                 _logger.info('Current nsmap: %s', cfdi_node.nsmap)
                 
