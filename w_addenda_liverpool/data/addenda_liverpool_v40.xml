@@ -2,16 +2,6 @@
 <odoo>
     <!--This is the addenda liverpool for CFDI 4.0-->
     <template id="cfdiv40_liverpool" name="Addenda Liverpool" inherit_id="l10n_mx_edi_40.cfdiv40">
-        <!-- Add detallista namespace to Comprobante -->
-        <xpath expr="//*[name()='cfdi:Comprobante']" position="attributes">
-            <attribute name="xmlns:detallista">http://www.sat.gob.mx/detallista</attribute>
-        </xpath>
-        
-        <!-- Update xsi:schemaLocation to include detallista schema -->
-        <xpath expr="//*[name()='cfdi:Comprobante']" position="attributes">
-            <attribute name="xsi:schemaLocation">http://www.sat.gob.mx/cfd/4 http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd http://www.sat.gob.mx/detallista http://www.sat.gob.mx/sitio_internet/cfd/detallista/detallista.xsd</attribute>
-        </xpath>
-        
         <!-- Add the addenda at the end of Comprobante, after all other elements -->
         <xpath expr="//*[name()='cfdi:Comprobante']" position="inside">
             <t t-if="record.require_addenda_liverpool">
