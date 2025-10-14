@@ -5,7 +5,7 @@
         <!-- Add the addenda at the end of Comprobante, after all other elements -->
         <xpath expr="//*[name()='cfdi:Comprobante']" position="inside">
             <t t-if="record.require_addenda_liverpool">
-                <cfdi:Complemento xmlns:detallista="http://www.sat.gob.mx/detallista">
+                <cfdi:Complemento xmlns:cfdi="http://www.sat.gob.mx/cfd/4" xmlns:detallista="http://www.sat.gob.mx/detallista">
                     <detallista:detallista contentVersion="1.3.1" documentStructureVersion="AMC8.1" type="SimpleInvoiceType" documentStatus="ORIGINAL">
                         <detallista:requestForPaymentIdentification>
                             <t t-if="record.move_type in ('out_invoice', 'in_invoice')">
