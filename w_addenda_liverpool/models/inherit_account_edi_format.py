@@ -1,32 +1,8 @@
-# -*- encoding: utf-8 -*-
-#
-# Module written to Odoo, Open Source Management Solution
-#
-# Copyright (c) 2022 Birtum - http://www.birtum.com/
-# All Rights Reserved.
-#
-# Developer(s): Eddy Luis Pérez Vila
-#               (epv@birtum.com)
-########################################################################
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-########################################################################
-from odoo import models, api
-import logging
+# -*- coding: utf-8 -*-
+
+from odoo import models
 from lxml import etree
-from lxml.objectify import fromstring
+import logging
 
 _logger = logging.getLogger(__name__)
 
@@ -34,27 +10,68 @@ _logger = logging.getLogger(__name__)
 class AccountEdiFormat(models.Model):
     _inherit = 'account.edi.format'
 
-    def _l10n_mx_edi_cfdi_append_addenda(self, move, cfdi, addenda):
-        ''' Append an additional block to the signed CFDI passed as parameter.
-        :param move:    The account.move record.
-        :param cfdi:    The invoice's CFDI as a string.
-        :param addenda: The addenda to add as a string.
-        :return cfdi:   The cfdi including the addenda.
-        '''
-        cfdi_node = fromstring(cfdi)
-        if addenda and addenda.id == self.env.ref('w_addenda_liverpool.addenda_liverpool').id:
-            addenda_values = {'record': move, 'cfdi': cfdi}
-            addenda_content = addenda.with_context(addenda_context=True)._render(values=addenda_values).strip()
-            if not addenda_content:
-                return cfdi
-            addenda_node = fromstring(addenda_content)
-            # Add a root node Addenda if not specified explicitly by the user.
-            if addenda_node.tag != '{http://www.sat.gob.mx/cfd/4}Addenda':
-                node = etree.Element(etree.QName('http://www.sat.gob.mx/cfd/4', 'Addenda'))
-                node.append(addenda_node)
-                addenda_node = node
-            cfdi_node.append(addenda_node)
-            return etree.tostring(cfdi_node, pretty_print=True, xml_declaration=True, encoding='UTF-8')
-        else:
-            return super(AccountEdiFormat, self)._l10n_mx_edi_cfdi_append_addenda(
-                move, cfdi, addenda)
+    def _l10n_mx_edi_export_invoice_cfdi(self, invoice):
+        """Override to add detallista namespace to CFDI when Liverpool addenda is required."""
+        # Get the CFDI from parent method - this returns a dict with 'cfdi_str' and 'errors'
+        res = super()._l10n_mx_edi_export_invoice_cfdi(invoice)
+        
+        _logger.info('Export CFDI for invoice %s, require_addenda_liverpool: %s', invoice.name, invoice.require_addenda_liverpool)
+        
+        # Only modify if Liverpool addenda is required and CFDI was generated successfully
+        if invoice.require_addenda_liverpool and res.get('cfdi_str'):
+            try:
+                _logger.info('Adding detallista namespace to CFDI for invoice %s', invoice.name)
+                
+                # Parse the CFDI XML - cfdi_str is already bytes
+                cfdi_node = etree.fromstring(res['cfdi_str'])
+                
+                _logger.info('Current nsmap: %s', cfdi_node.nsmap)
+                
+                # Get current schema location
+                xsi_ns = 'http://www.w3.org/2001/XMLSchema-instance'
+                schema_loc_key = '{%s}schemaLocation' % xsi_ns
+                current_schema = cfdi_node.get(schema_loc_key, '')
+                
+                _logger.info('Current schema location: %s', current_schema)
+                
+                # Register detallista namespace if not already present
+                if 'detallista' not in cfdi_node.nsmap:
+                    _logger.info('Adding detallista namespace to nsmap')
+                    
+                    # We need to recreate the element with the new namespace
+                    nsmap = dict(cfdi_node.nsmap)
+                    nsmap['detallista'] = 'http://www.sat.gob.mx/detallista'
+                    
+                    # Create new root with updated namespace map
+                    new_root = etree.Element(cfdi_node.tag, nsmap=nsmap)
+                    
+                    # Copy all attributes
+                    for key, value in cfdi_node.attrib.items():
+                        new_root.set(key, value)
+                    
+                    # Copy text
+                    new_root.text = cfdi_node.text
+                    new_root.tail = cfdi_node.tail
+                    
+                    # Copy all children
+                    for child in cfdi_node:
+                        new_root.append(child)
+                    
+                    cfdi_node = new_root
+                    _logger.info('New nsmap: %s', cfdi_node.nsmap)
+                
+                # Add detallista schema if not already present
+                if 'detallista' not in current_schema:
+                    _logger.info('Adding detallista to schema location')
+                    new_schema = current_schema.strip() + ' http://www.sat.gob.mx/detallista http://www.sat.gob.mx/sitio_internet/cfd/detallista/detallista.xsd'
+                    cfdi_node.set(schema_loc_key, new_schema.strip())
+                    _logger.info('New schema location: %s', cfdi_node.get(schema_loc_key))
+                
+                # Convert back to bytes - PAC expects bytes, not string
+                res['cfdi_str'] = etree.tostring(cfdi_node, encoding='utf-8', pretty_print=False)
+                _logger.info('CFDI updated successfully')
+                
+            except Exception as e:
+                _logger.error('Error adding detallista namespace to CFDI for invoice %s: %s', invoice.name, str(e), exc_info=True)
+        
+        return res

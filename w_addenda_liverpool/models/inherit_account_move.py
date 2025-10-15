@@ -24,12 +24,7 @@
 #
 ########################################################################
 from odoo import models, fields, api
-import os
-import tempfile
-import uuid
 import logging
-from lxml import etree
-from datetime import datetime
 import unidecode
 
 _logger = logging.getLogger(__name__)
@@ -65,21 +60,28 @@ class AccountMove(models.Model):
         for move in self:
             move.require_addenda_liverpool = move.partner_id.generate_addenda_liverpool
 
-    # def read(self, fields=None, load='_classic_read'):
-    #     addenda_liverpool_id = self.env.ref('w_addenda_liverpool.addenda_liverpool').id
-    #     for invoice in self:
-    #         if invoice.partner_id.l10n_mx_edi_addenda.id == addenda_liverpool_id:
-    #             invoice.require_addenda_liverpool = True
-    #         else:
-    #             invoice.require_addenda_liverpool = False
-    #     return super(AccountMove, self).read(fields=fields, load=load)
-
-
     def unescape_characters(self, value):
         return unidecode.unidecode(value)
    
     def get_total_amount(self):
         return "%.2f" % round(self.amount_untaxed, 2)
+    
+    def _l10n_mx_edi_cfdi_amount_to_text(self):
+        """Convert the invoice amount to text in Spanish for Mexican localization."""
+        self.ensure_one()
+        # Try to use the standard Odoo method if it exists
+        if hasattr(super(AccountMove, self), '_l10n_mx_edi_cfdi_amount_to_text'):
+            return super()._l10n_mx_edi_cfdi_amount_to_text()
+        
+        # Otherwise, use the currency's amount_to_text method
+        try:
+            from odoo.addons.l10n_mx_edi.models.account_edi_format import CURRENCY_CODE_TO_NAME
+            currency_name = CURRENCY_CODE_TO_NAME.get(self.currency_id.name, self.currency_id.name)
+            amount_text = self.currency_id.with_context(lang='es_MX').amount_to_text(self.amount_total)
+            return amount_text.upper()
+        except:
+            # Fallback: return empty string if conversion fails
+            return ""
 
 
 class AccountMoveLine(models.Model):
@@ -87,7 +89,11 @@ class AccountMoveLine(models.Model):
 
 
     def get_price_gross(self):
-        taxes_line = self.tax_ids.flatten_taxes_hierarchy()
+        # Get taxes for the line
+        taxes_line = self.tax_ids
+        # In v16, flatten_taxes_hierarchy is replaced by flatten_taxes_hierarchy or we use the taxes directly
+        if hasattr(taxes_line, 'flatten_taxes_hierarchy'):
+            taxes_line = taxes_line.flatten_taxes_hierarchy()
         transferred = taxes_line.filtered(lambda r: r.amount >= 0)
         price_net =  self.price_unit * self.quantity
         price_gross = price_net
