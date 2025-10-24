@@ -34,8 +34,8 @@ class IntermediosEmpaques(models.Model):
     product_uom_name = fields.Char(
         string='Unidad',
         compute='_compute_product_uom_name',
+        store=True,
         readonly=True,
-        store=True
     )
     kgs_unidad = fields.Float(
         string='Kgs por unidad',
@@ -70,10 +70,8 @@ class IntermediosEmpaques(models.Model):
         for vals in vals_list:
             if 'product_id' in vals:
                 product = self.env['product.product'].browse(vals['product_id'])
-                if 'name' not in vals:
-                    vals['name'] = product.display_name
-                # Ensure computed field is updated
-                vals['product_uom_name'] = product.uom_id.name if product.uom_id else ''
+                if 'name' not in vals or not vals.get('name'):
+                    vals['name'] = product.display_name or product.name or 'Nuevo'
         return super().create(vals_list)
     
     # Onchange methods
