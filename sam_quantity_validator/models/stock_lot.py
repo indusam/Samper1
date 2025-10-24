@@ -13,16 +13,16 @@ class StockLot(models.Model):
 
     def _validate_quantity(self, qty: float, context: str = '', record_id: Optional[int] = None) -> float:
         """Centralized method for quantity validation.
-        
+
         Args:
             qty: The quantity to validate
             context: Context string for logging (e.g., 'create', 'write')
             record_id: Optional record ID for logging
-            
+
         Returns:
             float: The validated quantity (0 if abs(qty) < 0.0001)
         """
-        if abs(qty) < 0.000001:
+        if abs(qty) < 0.0001:
             _logger.info(
                 "%s: Ajustando cantidad %s a 0 en %s (ID: %s, contexto: %s)",
                 self._name,
@@ -63,14 +63,14 @@ class StockLot(models.Model):
         for lot in self:
             try:
                 # Redondear a 4 decimales
-                rounded_qty = round(float(lot.product_qty or 0.0), 6)
-                
+                rounded_qty = round(float(lot.product_qty or 0.0), 4)
+
                 # Si el valor redondeado es efectivamente 0, establecer a 0.0
-                if abs(rounded_qty) < 0.000001:
+                if abs(rounded_qty) < 0.0001:
                     lot.product_qty = 0.0
                 else:
                     lot.product_qty = rounded_qty
-                    
+
             except (TypeError, ValueError) as e:
                 _logger.error(
                     "%s: Error redondeando cantidad en lote %s: %s",

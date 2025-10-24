@@ -23,94 +23,153 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ########################################################################
-from odoo import models, fields, api
 import logging
 import unidecode
+
+from odoo import api, fields, models
 
 _logger = logging.getLogger(__name__)
 
 
 class AccountMove(models.Model):
+    """Extend account.move to add Liverpool addenda fields."""
+
     _inherit = 'account.move'
 
-    purchase_order_liv =  fields.Char(
-        string='Purchase order liverpool',
-        help='If the invoice is for the liverpool customer, indicate the '
+    purchase_order_liv = fields.Char(
+        string='Purchase Order Liverpool',
+        help='If the invoice is for the Liverpool customer, indicate the '
              'number of the purchase order.',
-        copy=False
+        copy=False,
     )
     delivery_folio = fields.Char(
-        string='Delivery folio',
-        help='Specify the folio number. Number issued by the buyer when he '
-             'receives the merchandise that is billed',
-        copy=False
+        string='Delivery Folio',
+        help='Specify the folio number. Number issued by the buyer when they '
+             'receive the merchandise that is billed.',
+        copy=False,
     )
     date_delivery = fields.Date(
-        string='Date delivery',
-        help='Specify the date the no was assigned. of receipt sheet',
-        copy=False
+        string='Date Delivery',
+        help='Specify the date the receipt sheet number was assigned.',
+        copy=False,
     )
-    require_addenda_liverpool = fields.Boolean(help="Field used to show or hide the fields create for the Liverpool addenda",
+    require_addenda_liverpool = fields.Boolean(
         string="Use Addenda Liverpool",
         compute='_compute_require_addenda_liverpool',
-        store=True)
+        store=True,
+        help="Field used to show or hide the fields created for the Liverpool addenda.",
+    )
 
     @api.depends('partner_id', 'partner_id.generate_addenda_liverpool')
     def _compute_require_addenda_liverpool(self):
+        """Compute if Liverpool addenda is required based on partner configuration."""
         for move in self:
-            move.require_addenda_liverpool = move.partner_id.generate_addenda_liverpool
+            move.require_addenda_liverpool = (
+                move.partner_id.generate_addenda_liverpool
+            )
 
     def unescape_characters(self, value):
+        """Remove special characters and accents from text."""
         return unidecode.unidecode(value)
-   
+
     def get_total_amount(self):
+        """Return total amount without taxes formatted to 2 decimals."""
         return "%.2f" % round(self.amount_untaxed, 2)
-    
+
     def _l10n_mx_edi_cfdi_amount_to_text(self):
-        """Convert the invoice amount to text in Spanish for Mexican localization."""
+        """
+        Convert the invoice amount to text in Spanish for Mexican localization.
+
+        Returns:
+            str: Amount in text format (Spanish)
+        """
         self.ensure_one()
         # Try to use the standard Odoo method if it exists
         if hasattr(super(AccountMove, self), '_l10n_mx_edi_cfdi_amount_to_text'):
             return super()._l10n_mx_edi_cfdi_amount_to_text()
-        
+
         # Otherwise, use the currency's amount_to_text method
         try:
-            from odoo.addons.l10n_mx_edi.models.account_edi_format import CURRENCY_CODE_TO_NAME
-            currency_name = CURRENCY_CODE_TO_NAME.get(self.currency_id.name, self.currency_id.name)
-            amount_text = self.currency_id.with_context(lang='es_MX').amount_to_text(self.amount_total)
+            from odoo.addons.l10n_mx_edi.models.account_edi_format import (
+                CURRENCY_CODE_TO_NAME,
+            )
+            currency_name = CURRENCY_CODE_TO_NAME.get(
+                self.currency_id.name, self.currency_id.name
+            )
+            amount_text = self.currency_id.with_context(
+                lang='es_MX'
+            ).amount_to_text(self.amount_total)
             return amount_text.upper()
-        except:
+        except Exception as e:
+            _logger.warning(
+                'Error converting amount to text for invoice %s: %s',
+                self.name, str(e)
+            )
             # Fallback: return empty string if conversion fails
             return ""
 
 
 class AccountMoveLine(models.Model):
+    """Extend account.move.line to add price calculation methods for Liverpool addenda."""
+
     _inherit = 'account.move.line'
 
-
     def get_price_gross(self):
+        """
+        Calculate gross price (price + taxes) for Liverpool addenda.
+
+        Returns:
+            str: Formatted gross price with 2 decimals
+        """
         # Get taxes for the line
         taxes_line = self.tax_ids
-        # In v16, flatten_taxes_hierarchy is replaced by flatten_taxes_hierarchy or we use the taxes directly
+        # In v18, use taxes directly
         if hasattr(taxes_line, 'flatten_taxes_hierarchy'):
             taxes_line = taxes_line.flatten_taxes_hierarchy()
         transferred = taxes_line.filtered(lambda r: r.amount >= 0)
-        price_net =  self.price_unit * self.quantity
+        price_net = self.price_unit * self.quantity
         price_gross = price_net
         if transferred:
             for tax in transferred:
-                tasa = abs(tax.amount if tax.amount_type == 'fixed' else (tax.amount / 100.0)) * 100
+                tasa = abs(
+                    tax.amount if tax.amount_type == 'fixed'
+                    else (tax.amount / 100.0)
+                ) * 100
                 price_gross += (price_net * tasa / 100)
         return "%.2f" % round(price_gross, 2)
 
     def get_price_net(self):
+        """
+        Calculate net price (price without taxes) for Liverpool addenda.
+
+        Returns:
+            str: Formatted net price with 2 decimals
+        """
         return "%.2f" % round(self.price_unit * self.quantity, 2)
 
     def get_gross_amount(self):
+        """
+        Get total line amount with taxes for Liverpool addenda.
+
+        Returns:
+            str: Formatted gross amount with 2 decimals
+        """
         return "%.2f" % round(self.price_total, 2)
 
     def get_net_amount(self):
+        """
+        Get total line amount without taxes for Liverpool addenda.
+
+        Returns:
+            str: Formatted net amount with 2 decimals
+        """
         return "%.2f" % round(self.price_subtotal, 2)
-    
+
     def get_quantity(self):
+        """
+        Get line quantity for Liverpool addenda.
+
+        Returns:
+            str: Formatted quantity with 2 decimals
+        """
         return "%.2f" % round(self.quantity, 2)

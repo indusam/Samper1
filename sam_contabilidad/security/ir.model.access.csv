@@ -1,3 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access.borra.pdf,access_borra_pdf_wizard,sam_contabilidad.model_borra_pdf_wizard,base.group_user,1,1,1,1
+access_borra_pdf_wizard,access_borra_pdf_wizard,model_borra_pdf_wizard,account.group_account_manager,1,1,1,1
 

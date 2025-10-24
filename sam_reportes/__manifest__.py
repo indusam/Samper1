@@ -22,14 +22,25 @@
 ##############################################################################
 {
     'name': 'Reportes SAM',
-    'summary': 'Reportes para SAMPER',
-    'version': '2.0',
-    'category': 'MRP',
+    'summary': 'Reportes personalizados para SAMPER',
+    'description': """
+        Módulo de reportes personalizados para Industrias Alimenticias SAM.
+
+        Incluye reportes de:
+        - Tabla nutrimental
+        - Fórmulas y costos de fórmulas
+        - Contenido energético
+        - Saldos de clientes
+        - Certificados de calidad
+        - Fórmulas base (cárnicos y salmuera)
+    """,
+    'version': '18.0.1.0.0',
+    'category': 'Manufacturing/Manufacturing',
     'author': 'VBueno',
     'maintainer': 'Industrias Alimenticias SAM SA de CV',
-    'website': 'http://www.samper.mx',
+    'website': 'https://www.samper.mx',
     'license': 'AGPL-3',
-    'depends': ['base', 'mrp','account'],
+    'depends': ['base', 'mrp', 'account'],
     'data': [
         'security/ir.model.access.csv',
         'views/saldos_clientes_reporte.xml',
@@ -59,4 +70,7 @@
         'report/formula_base_salmuera_pdf.xml',
         'report/ant_saldos_detalle_pdf.xml'
     ],
+    'installable': True,
+    'application': False,
+    'auto_install': False,
 }

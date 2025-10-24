@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- vbueno 1011202116:08 -->
+<!--
+    Wizard para captura de peso y cantidad por caja
+    vbueno 1011202116:08
+    Actualizado para Odoo v18
+-->
 <odoo>
     <!-- Definición de la vista del wizard para ingresar el peso y cantidad por caja -->
     <record id="wizard_peso_cantidad_caja_view_form" model="ir.ui.view">
-        <field name="name">wizard.peso.cantidad.caja.view.form</field> <!-- Nombre de la vista -->
-        <field name="model">wizard.pesocajacantidad</field> <!-- Modelo asociado al wizard -->
+        <field name="name">wizard.peso.cantidad.caja.view.form</field>
+        <field name="model">wizard.pesocajacantidad</field>
         <field name="arch" type="xml">
-            <!-- Estructura de la vista en formato XML -->
-            <form>
-                <group>
+            <form string="Peso y Cantidad por Caja">
+                <sheet>
                     <group>
-                        <field name="producto"/> <!-- Campo para seleccionar el producto -->
-                        <field name="cantidad"/> <!-- Campo para ingresar la cantidad -->
-                        <field name="peso"/> <!-- Campo para ingresar el peso -->
+                        <group>
+                            <field name="producto" options="{'no_create': True}"/>
+                            <field name="cantidad"/>
+                            <field name="peso"/>
+                        </group>
                     </group>
-                </group>
+                </sheet>
                 <footer>
-                    <button name="aplicar_peso_cantidad" type="object" string="Guardar" class="oe_highlight"/> <!-- Botón para guardar -->
-                    <button special="cancel" string="Cancelar"/> <!-- Botón para cancelar -->
+                    <button name="aplicar_peso_cantidad" type="object" string="Guardar" class="btn-primary"/>
+                    <button special="cancel" string="Cancelar" class="btn-secondary"/>
                 </footer>
             </form>
         </field>
@@ -25,21 +30,20 @@
 
     <!-- Acción para abrir el wizard de peso y cantidad por caja -->
     <record id="action_peso_cantidad_caja_wizard" model="ir.actions.act_window">
-        <field name="name">Peso y cantidad por caja</field> <!-- Nombre de la acción -->
-        <field name="res_model">wizard.pesocajacantidad</field> <!-- Modelo asociado al wizard -->
-        <field name="type">ir.actions.act_window</field> <!-- Tipo de acción que abre una ventana -->
-        <field name="view_mode">tree,form</field> <!-- Tipos de vista disponibles: lista y formulario -->
-        <field name="view_id" ref="wizard_peso_cantidad_caja_view_form"/> <!-- Referencia a la vista del wizard -->
-        <field name="target">new</field> <!-- Abrir la acción en una ventana emergente -->
+        <field name="name">Peso y cantidad por caja</field>
+        <field name="res_model">wizard.pesocajacantidad</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="wizard_peso_cantidad_caja_view_form"/>
+        <field name="target">new</field>
     </record>
-  
+
     <!-- Elemento de menú para acceder al wizard desde el menú de MRP -->
     <menuitem
         id="peso_cantidad_caja_menu"
-        name="Peso y cantidad por caja" 
-        action="action_peso_cantidad_caja_wizard" 
-        parent="mrp.menu_mrp_bom" 
-        groups="base.group_user" 
-        sequence="12"/> 
-   
+        name="Peso y cantidad por caja"
+        action="action_peso_cantidad_caja_wizard"
+        parent="mrp.menu_mrp_bom"
+        groups="mrp.group_mrp_user"
+        sequence="12"/>
+
 </odoo>

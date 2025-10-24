@@ -1,5 +1,8 @@
-# -*- coding: utf-8  -*-
-# se deben agregar intermedios y empaques.
+# -*- coding: utf-8 -*-
+"""
+Módulo de Fórmulas para Samper - Actualizado para Odoo v18
+Se deben agregar intermedios y empaques.
+"""
 
 import logging
 from odoo import models, fields, api
@@ -14,10 +17,16 @@ class ProductTemplate(models.Model):
     """
     _inherit = 'product.template'
 
-    x_presentacion = fields.Many2one("uom.uom", string="Presentacion",
-        help="Unidad de medida que representa la presentación del producto")
-    x_pct_variacion = fields.Float(string='% Variación', digits=(3, 6),
-        help="Porcentaje de variación permitido para el producto")
+    x_presentacion = fields.Many2one(
+        "uom.uom",
+        string="Presentación",
+        help="Unidad de medida que representa la presentación del producto"
+    )
+    x_pct_variacion = fields.Float(
+        string='% Variación',
+        digits=(3, 6),
+        help="Porcentaje de variación permitido para el producto"
+    )
    
 
 
@@ -61,41 +70,59 @@ class ListaMaterialesHeader(models.Model):
     """
     Extiende el modelo mrp.bom (Lista de Materiales) para agregar campos adicionales
     relacionados con cantidades, piezas e ingredientes limitantes.
+    Actualizado para Odoo v18.
     """
     _inherit = 'mrp.bom'
 
-    product_qty = fields.Float(string="Cantidad", digits=(12, 6),
-        help="Cantidad total del producto en la lista de materiales")
-    x_piezas = fields.Integer(string='Piezas:',
-        help="Número de piezas a producir")
-    x_cantidad_pzas = fields.Float(string='Cantidad x piezas', digits=(12, 6),
-        help="Cantidad calculada por número de piezas")
-    x_cantidad_il = fields.Float(string="Cantidad Limitante", digits=(12, 6),
-        help="Cantidad del ingrediente limitante en la fórmula")
-    x_ingrediente_limitante = fields.Many2one("mrp.bom.line",
-                                              string="Ingrediente limitante",
-                                              help="Ingrediente que limita la producción de la fórmula")    
-    x_qty_of_product = fields.Float(string="Cantidad", 
-                                    digits=(12,6), 
-                                    compute='_compute_x_percentage_of_product',
-                                    help="Cantidad calculada del producto")
+    product_qty = fields.Float(
+        string="Cantidad",
+        digits=(12, 6),
+        help="Cantidad total del producto en la lista de materiales"
+    )
+    x_piezas = fields.Integer(
+        string='Piezas',
+        help="Número de piezas a producir"
+    )
+    x_cantidad_pzas = fields.Float(
+        string='Cantidad x piezas',
+        digits=(12, 6),
+        help="Cantidad calculada por número de piezas"
+    )
+    x_cantidad_il = fields.Float(
+        string="Cantidad Limitante",
+        digits=(12, 6),
+        help="Cantidad del ingrediente limitante en la fórmula"
+    )
+    x_ingrediente_limitante = fields.Many2one(
+        "mrp.bom.line",
+        string="Ingrediente limitante",
+        help="Ingrediente que limita la producción de la fórmula"
+    )
+    x_qty_of_product = fields.Float(
+        string="Cantidad",
+        digits=(12, 6),
+        compute='_compute_x_percentage_of_product',
+        help="Cantidad calculada del producto"
+    )
     x_percentage_of_product = fields.Float(
         string='% de la fórmula',
-        digits = (3,6),
+        digits=(3, 6),
         compute='_compute_x_percentage_of_product',
         help="Porcentaje que representa el producto en la fórmula"
     )
 
     intermedios_empaques_ids = fields.One2many(
-        'intermedios.empaques', 
-        'lista_materiales', 
+        'intermedios.empaques',
+        'lista_materiales',
         string='Intermedios y Empaques',
-        help='Lista de intermedios y empaques asociados a esta lista de materiales')
-    
+        help='Lista de intermedios y empaques asociados a esta lista de materiales'
+    )
+
     intermedios_empaques_count = fields.Integer(
-        'Número de Intermedios/Empaques', 
+        'Número de Intermedios/Empaques',
         compute='_compute_intermedios_empaques_count',
-        store=True)
+        store=True
+    )
     
 
     @api.depends('intermedios_empaques_ids')
@@ -141,8 +168,8 @@ class ListaMaterialesHeader(models.Model):
                         break  # Salimos del bucle una vez que encontramos el porcentaje
             
             # Asignar el porcentaje al campo calculado
-            bom.write({'x_percentage_of_product': percentage,
-                        'x_qty_of_product': qty})
+            bom.x_percentage_of_product = percentage
+            bom.x_qty_of_product = qty
 
 
     @api.onchange('x_cantidad_il')
@@ -282,17 +309,27 @@ class ListaMaterialesHeader(models.Model):
                     x_sodio_mg = item.product_id.x_mg_sodio * item.product_qty
 
 class ReporteInventario(models.Model):
+    """
+    Extiende el modelo stock.quant para ajustar la precisión de inventory_quantity.
+    Actualizado para Odoo v18.
+    """
     _inherit = 'stock.quant'
-    inventory_quantity = fields.Float(string="Cantidad Disponible",
-                                      digits=(12, 4))
+
+    inventory_quantity = fields.Float(
+        string="Cantidad Disponible",
+        digits=(12, 4)
+    )
 
 
 class StockLotExtended(models.Model):
-    """Extensión del modelo stock.lot para modificar la precisión decimal de product_qty"""
+    """
+    Extensión del modelo stock.lot para modificar la precisión decimal de product_qty.
+    Actualizado para Odoo v18.
+    """
     _inherit = 'stock.lot'
-    
+
     product_qty = fields.Float(
         string='Cantidad',
         digits=(12, 4),
-        help='Cantidad de productos en este lote/específico',
+        help='Cantidad de productos en este lote/serial',
     )

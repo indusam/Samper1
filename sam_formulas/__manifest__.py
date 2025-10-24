@@ -1,27 +1,27 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "sam_contabilidad",
+    'name': "sam_formulas",
 
     'summary': """
         Personalización de Odoo para Industrias Alimenticias SAM SA de CV""",
 
     'description': """
-        Campos, vistas, reportes, etc. propios de Samper.
-        Adecuaciones al módulo de contabilidad para Samper.
+        Gestión de fórmulas, listas de materiales, intermedios y empaques.
+        Campos personalizados para productos, información nutricional y control de producción.
     """,
 
     'author': "vbueno",
     'license': 'AGPL-3',
-    'website': "http://www.samper.mx",
+    'website': "https://www.samper.mx",
 
     # Categories can be used to filter modules in modules listing
-    # Check https://github.com/odoo/odoo/blob/13.0/odoo/addons/base/data/ir_module_category_data.xml
+    # Check https://github.com/odoo/odoo/blob/18.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
-    'category': 'mrp',
-    'version': '0.1',
+    'category': 'Manufacturing/Manufacturing',
+    'version': '18.0.1.0.0',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'mrp'],
+    'depends': ['base', 'mrp', 'stock'],
 
     # always loaded
     'data': [
@@ -33,4 +33,7 @@
     'demo': [
         'demo/demo.xml',
     ],
+    'installable': True,
+    'application': False,
+    'auto_install': False,
 }

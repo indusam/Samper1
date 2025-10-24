@@ -23,14 +23,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ########################################################################
-from odoo import models, fields, api, _
+from odoo import fields, models
 
 
 class ResCompany(models.Model):
+    """Extend res.company to add Liverpool addenda configuration fields."""
+
     _inherit = 'res.company'
 
     global_localitation_number = fields.Char(
-        string='Global localitation number(GLN)',
+        string='Global Location Number (GLN)',
         help='Specifies the global location number (GLN) for vendor.',
-        copy=False
+        copy=False,
     )
