@@ -62,7 +62,7 @@ class ListaMateriales(models.Model):
         help="Cantidad de carbohidratos por kilogramo")
     x_azucares_kg = fields.Float(string="Azúcares kg", digits=(10, 6),
         help="Cantidad de azúcares por kilogramo")
-    x_sodio_mg = fields.Float(string="Sodio mg/kg", digits=(10, 6),
+    x_sodio_mg = fields.Float(string="Sodio (mg/kg)", digits=(10, 6),
         help="Cantidad de sodio en miligramos por kilogramo")
 
 
@@ -99,7 +99,7 @@ class ListaMaterialesHeader(models.Model):
         help="Ingrediente que limita la producción de la fórmula"
     )
     x_qty_of_product = fields.Float(
-        string="Cantidad",
+        string="Cantidad del Producto",
         digits=(12, 6),
         compute='_compute_x_percentage_of_product',
         help="Cantidad calculada del producto"
