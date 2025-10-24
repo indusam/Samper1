@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Vista tree para intermedios.empaques -->
+    <!-- Vista list para intermedios.empaques -->
     <record id="view_intermedios_empaques_tree" model="ir.ui.view">
-        <field name="name">intermedios.empaques.tree</field>
+        <field name="name">intermedios.empaques.list</field>
         <field name="model">intermedios.empaques</field>
         <field name="arch" type="xml">
-            <tree editable="bottom" string="Intermedios y Empaques">
+            <list editable="bottom" string="Intermedios y Empaques">
                 <field name="product_id" required="1"/>
                 <field name="product_uom_name" string="Unidad"/>
                 <field name="kgs_unidad" string="Kgs/Unidad"/>
                 <field name="unidad_pza" string="Unidad/Pieza"/>
                 <field name="proceso" string="Proceso"/>
-            </tree>
+            </list>
         </field>
     </record>
 
