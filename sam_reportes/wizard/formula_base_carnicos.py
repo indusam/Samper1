@@ -24,7 +24,7 @@ class FormulaBaseCarnicos(models.TransientModel):
     product_tmpl = fields.Many2one('product.template', string="Producto")
     producto = fields.Many2one('mrp.bom', string="Lista de Materiales", domain="[('product_tmpl_id', '=', product_tmpl)]")
     cantidad = fields.Float(string="Total Cárnicos", digits=(12, 4))
-    ing_limitante = fields.Many2one('mrp.bom.line',string="Ingrediente limitante")
+    ing_limitante = fields.Many2one('mrp.bom.line', string="Ingrediente limitante", domain="[('bom_id', '=', producto)]")
     cant_limitante = fields.Float(string="Cantidad limitante", digits=(12, 4))
     consolidado = fields.Boolean(string="Fórmula consolidada",  )
 

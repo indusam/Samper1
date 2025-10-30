@@ -24,7 +24,7 @@ class ContenidoEnergetico(models.TransientModel):
 
     producto = fields.Many2one('mrp.bom', string="Producto")
     cantidad = fields.Float(string="Porción (grs.)", digits=(12, 4))
-    ing_limitante = fields.Many2one('mrp.bom.line',string="Ingrediente limitante")
+    ing_limitante = fields.Many2one('mrp.bom.line', string="Ingrediente limitante", domain="[('bom_id', '=', producto)]")
     cant_limitante = fields.Float(string="Cantidad limitante", digits=(12, 4))
     pct_merma = fields.Float(string='% Merma')
     consolidado = fields.Boolean(string="Fórmula consolidada", )
