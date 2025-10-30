@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vista de lista personalizada para stock.move -->
+    <record id="view_move_tree_inherit_sam" model="ir.ui.view">
+        <field name="name">stock.move.tree.inherit.sam</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_tree"/>
+        <field name="arch" type="xml">
+            <!-- Agregar campo x_studio_nombre_comercial antes del campo origin (Documento origen) -->
+            <field name="origin" position="before">
+                <field name="x_studio_nombre_comercial" optional="show"/>
+            </field>
+        </field>
+    </record>
+</odoo>
