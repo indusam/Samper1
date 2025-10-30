@@ -7,9 +7,9 @@
         <field name="inherit_id" ref="base.view_partner_tree"/>
         <field name="arch" type="xml">
             <field name="complete_name" position="after">
+                <field name="x_nombre_comercial" optional="show"/>
                 <field name="x_lp" optional="show"/>
                 <field name="x_ruta" optional="show"/>
-                <field name="x_nombre_comercial" optional="show"/>
             </field>
         </field>
     </record>
