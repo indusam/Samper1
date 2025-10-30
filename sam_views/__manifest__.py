@@ -27,10 +27,8 @@
     'license': 'LGPL-3',
     'depends': [
         'stock',
-        'web_studio',
     ],
     'data': [
-        'views/stock_move_views.xml',
     ],
     'installable': True,
     'application': False,
