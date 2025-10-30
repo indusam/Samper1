@@ -54,16 +54,13 @@ class Formulas(models.TransientModel):
             # Reset ing_limitante when producto changes
             self.ing_limitante = False
             self.cant_limitante = 0.0
-            
-            # Get all BOM lines for the selected BOM
-            bom_lines = self.env['mrp.bom.line'].search([('bom_id', '=', self.producto.id)])
-            
-            # Set domain to only show BOM lines from the selected BOM
-            return {'domain': {'ing_limitante': [('id', 'in', bom_lines.ids)]}}
+
+            # Set domain to show BOM lines from the selected BOM
+            return {'domain': {'ing_limitante': [('bom_id', '=', self.producto.id)]}}
         else:
             self.ing_limitante = False
             self.cant_limitante = 0.0
-            return {'domain': {'ing_limitante': [('id', 'in', [])]}}
+            return {'domain': {'ing_limitante': [('id', '=', False)]}}
 
     def get_orden(self, codigo_producto):
         prefix = codigo_producto[:2]  # Tomar las dos primeras letras
