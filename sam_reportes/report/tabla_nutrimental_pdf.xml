@@ -172,14 +172,14 @@
                             </tr>
 
                             <!-- Calcula e imprime % totales -->
-                            <t t-set="tot_pct_proteina" t-value="(tot_proteina / tot_cantidad) *  100"/>
-                            <t t-set="tot_pct_grasa" t-value="(tot_grasa / tot_cantidad) * 100"/>
-                            <t t-set="tot_pct_grasa_sat" t-value="(tot_grasa_sat / tot_cantidad) * 100"/>
-                            <t t-set="tot_pct_grasa_trans" t-value="((tot_grasa_trans/1000000) / tot_cantidad) * 100"/>
-                            <t t-set="tot_pct_humedad" t-value="(tot_humedad / tot_cantidad) * 100"/>
-                            <t t-set="tot_pct_carbs" t-value="(tot_carbs / tot_cantidad) * 100"/>
-                            <t t-set="tot_pct_azucares" t-value="(tot_azucares / tot_cantidad) * 100"/>
-                            <t t-set="tot_pct_sodio" t-value="((tot_sodio / 1000000) / tot_cantidad) * 100"/>
+                            <t t-set="tot_pct_proteina" t-value="(tot_proteina / tot_cantidad) * 100 if tot_cantidad else 0"/>
+                            <t t-set="tot_pct_grasa" t-value="(tot_grasa / tot_cantidad) * 100 if tot_cantidad else 0"/>
+                            <t t-set="tot_pct_grasa_sat" t-value="(tot_grasa_sat / tot_cantidad) * 100 if tot_cantidad else 0"/>
+                            <t t-set="tot_pct_grasa_trans" t-value="((tot_grasa_trans/1000000) / tot_cantidad) * 100 if tot_cantidad else 0"/>
+                            <t t-set="tot_pct_humedad" t-value="(tot_humedad / tot_cantidad) * 100 if tot_cantidad else 0"/>
+                            <t t-set="tot_pct_carbs" t-value="(tot_carbs / tot_cantidad) * 100 if tot_cantidad else 0"/>
+                            <t t-set="tot_pct_azucares" t-value="(tot_azucares / tot_cantidad) * 100 if tot_cantidad else 0"/>
+                            <t t-set="tot_pct_sodio" t-value="((tot_sodio / 1000000) / tot_cantidad) * 100 if tot_cantidad else 0"/>
 
                             <t t-set="tot_pct_cantidad" t-value="tot_pct_proteina + tot_pct_grasa +
                                                                  tot_pct_humedad + tot_pct_carbs +
@@ -282,14 +282,14 @@
                                 </tr>
 
                                 <!-- Calcula e imprime % totales después de merma -->
-                                <t t-set="tm_pct_proteina" t-value="(tot_prot_merma / tot_cant_merma) *  100"/>
-                                <t t-set="tm_pct_grasa" t-value="(tot_gras_merma / tot_cant_merma) * 100"/>
-                                <t t-set="tm_pct_grasa_sat" t-value="(tot_gsat_merma / tot_cant_merma) * 100"/>
-                                <t t-set="tm_pct_grasa_trans" t-value="((tot_gtra_merma/1000000) / tot_cant_merma) * 100"/>
-                                <t t-set="tm_pct_humedad" t-value="(tot_hume_merma / tot_cant_merma) * 100"/>
-                                <t t-set="tm_pct_carbs" t-value="(tot_carb_merma / tot_cant_merma) * 100"/>
-                                <t t-set="tm_pct_azucares" t-value="(tot_azuc_merma / tot_cant_merma) * 100"/>
-                                <t t-set="tm_pct_sodio" t-value="((tot_sodi_merma / 1000000) / tot_cant_merma) * 100"/>
+                                <t t-set="tm_pct_proteina" t-value="(tot_prot_merma / tot_cant_merma) * 100 if tot_cant_merma else 0"/>
+                                <t t-set="tm_pct_grasa" t-value="(tot_gras_merma / tot_cant_merma) * 100 if tot_cant_merma else 0"/>
+                                <t t-set="tm_pct_grasa_sat" t-value="(tot_gsat_merma / tot_cant_merma) * 100 if tot_cant_merma else 0"/>
+                                <t t-set="tm_pct_grasa_trans" t-value="((tot_gtra_merma/1000000) / tot_cant_merma) * 100 if tot_cant_merma else 0"/>
+                                <t t-set="tm_pct_humedad" t-value="(tot_hume_merma / tot_cant_merma) * 100 if tot_cant_merma else 0"/>
+                                <t t-set="tm_pct_carbs" t-value="(tot_carb_merma / tot_cant_merma) * 100 if tot_cant_merma else 0"/>
+                                <t t-set="tm_pct_azucares" t-value="(tot_azuc_merma / tot_cant_merma) * 100 if tot_cant_merma else 0"/>
+                                <t t-set="tm_pct_sodio" t-value="((tot_sodi_merma / 1000000) / tot_cant_merma) * 100 if tot_cant_merma else 0"/>
 
                                 <t t-set="tm_pct_cantidad" t-value="tm_pct_proteina + tm_pct_grasa +
                                                                      tm_pct_humedad + tm_pct_carbs +
