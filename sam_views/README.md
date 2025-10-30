@@ -18,7 +18,7 @@ Este módulo contiene todas las personalizaciones de vistas y formularios utiliz
 #### Stock Move (stock.move)
 - **Vista**: Lista/Tree
 - **Personalización**: Agregado campo `x_studio_nombre_comercial` (Nombre Comercial)
-- **Ubicación**: Antes del campo "Documento origen" (origin)
+- **Ubicación**: Agregado a la vista de lista (el usuario puede reordenarlo arrastrando las columnas)
 - **Atributo**: `optional="show"` - El campo es visible por defecto pero el usuario puede ocultarlo
 
 ## Instalación
@@ -49,7 +49,8 @@ Una vez instalado el módulo, las vistas personalizadas se aplicarán automátic
 
 Para la vista de movimientos de inventario:
 1. Ir a **Inventario > Reportes > Movimientos de Producto**
-2. El campo "Nombre Comercial" aparecerá en la lista antes del campo "Documento origen"
+2. El campo "Nombre Comercial" aparecerá en la lista
+3. Puede reordenar las columnas arrastrándolas para posicionar el campo donde lo desee
 
 ## Notas Técnicas
 
