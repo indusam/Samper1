@@ -26,9 +26,11 @@
     'website': 'https://www.samper.com',
     'license': 'LGPL-3',
     'depends': [
+        'base',
         'stock',
     ],
     'data': [
+        'views/res_partner_views.xml',
     ],
     'installable': True,
     'application': False,
