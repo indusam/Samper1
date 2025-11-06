@@ -32,9 +32,10 @@ class ResPartner(models.Model):
     global_localitation_number = fields.Char(
         string='Global localitation number(GLN)',
         help='Specifies the global location number (GLN) of the buyer CM.',
-        copy=False,
-        size=13
+        copy=False
     )
+    # Note: 'size' attribute removed (deprecated since Odoo v13+)
+    # If length validation is needed, use @api.constrains instead
     generate_mexican_commercial_addenda = fields.Boolean(
         string='Generate Mexican Commercial Addenda',
         compute='_compute_is_mexican_commercial_addenda',

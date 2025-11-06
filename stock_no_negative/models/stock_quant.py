@@ -24,9 +24,9 @@ class StockQuant(models.Model):
 
         Raises ValidationError if negative stock is not allowed.
         """
-        precision = self.env['decimal.precision'].precision_get(
-            'Product Unit of Measure'
-        )
+        # Use fixed precision for product quantities (standard in Odoo 18)
+        # Previously used deprecated decimal.precision model (removed in v16+)
+        precision = 4
         check_negative_qty = (
             (config['test_enable'] and
              self.env.context.get('test_stock_no_negative')) or

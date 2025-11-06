@@ -85,7 +85,7 @@ class AccountMove(models.Model):
         zip_attachment = self.env['ir.attachment'].create({
             'name': 'facturas_xml_pdf.zip',
             'type': 'binary',
-            'raw': zip_data,  # En Odoo v18, usar 'raw' en lugar de 'datas' para escritura
+            'datas': zip_data,  # En Odoo v18, 'datas' es el campo estándar para contenido binario
             'mimetype': 'application/zip'
         })
 
