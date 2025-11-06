@@ -6,6 +6,79 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is an Odoo 18.0 custom modules repository for **Industrias Alimenticias SAM SA de CV (Samper)**, a food manufacturing company. The repository contains 10 custom modules that extend Odoo's manufacturing, inventory, accounting, and reporting capabilities with specialized functionality for food production, formula management, and Mexican retail integrations.
 
+## 🎯 Odoo Version Strategy
+
+### Current Version: **Odoo 18.0** (Stable, Recommended)
+
+**Decision Date:** November 2025
+**Status:** ✅ Active Production Version
+**Support Until:** October 2027
+
+### Why Odoo 18 (Not Odoo 19)?
+
+**CRITICAL BLOCKER:** The required OCA module `stock_no_negative` is **NOT available** for Odoo 19.
+
+**Decision Rationale:**
+1. **Module Availability** - OCA stock_no_negative only exists up to v18.0 (as of November 2025)
+2. **Version Maturity** - Odoo 19 was released September 2025 (only 2 months old)
+3. **Stability** - Odoo 18 is mature, stable, and all dependencies are available
+4. **Recent Migration** - All Samper modules were recently updated and tested for v18
+5. **Support Timeline** - Odoo 18 has 2 years of remaining support (until Oct 2027)
+
+### Migration Timeline to Odoo 19
+
+**Short Term (Nov 2025 - Mar 2026):**
+- ✅ Remain on Odoo 18.0
+- 🔍 Monitor OCA repository for stock_no_negative v19 release
+- 📊 Track Odoo 19 stability reports from early adopters
+
+**Medium Term (Apr 2026 - Sep 2026):**
+- 🔄 Re-evaluate migration when:
+  - `stock_no_negative` v19.0 is available and tested
+  - Odoo 19 has 6+ months of production maturity
+  - OCA has migrated majority of critical modules
+  - Community reports positive experiences
+
+**Long Term (2026-2027):**
+- 📅 Plan migration to Odoo 19 before October 2027 (v18 end-of-support)
+- ⏰ Recommended migration window: Q4 2026 or Q1 2027
+
+### Monitoring Checklist
+
+Check these resources quarterly to assess migration readiness:
+
+- [ ] **OCA Repository:** https://github.com/OCA/stock-logistics-workflow
+  - Look for `19.0` branch
+  - Verify `stock_no_negative` module exists and is stable
+- [ ] **Odoo Apps Store:** https://apps.odoo.com/apps/modules/browse?search=stock_no_negative
+  - Check for 19.0 version
+- [ ] **Community Forums:** Search for Odoo 19 migration experiences
+- [ ] **Release Notes:** Review Odoo 19.x bugfix updates
+
+**⚠️ DO NOT migrate to Odoo 19 until stock_no_negative is available. This module is critical for Samper's inventory control.**
+
+### Odoo 19 Breaking Changes (For Future Reference)
+
+When the time comes to migrate, be aware of these confirmed breaking changes:
+
+**Deprecated Methods:**
+- `model.name_get()` → Use `model.display_name` field instead
+- `model.read_group()` → Use `model._read_group()` or `model.formatted_read_group()`
+- `model.fields_get_keys()` → Removed
+- `model.get_xml_id()` → Deprecated
+- `model._mapped_cache()` → Removed
+
+**Removed Attributes:**
+- `Field.column_format` → Removed
+- `Field.deprecated` → Removed
+- `Model._sequence` → Removed (PostgreSQL handles sequences automatically)
+- `One2many/Many2many limit=` → Removed
+
+**Controller Changes:**
+- `@http.route(..., type='json')` → Change to `type='jsonrpc'`
+
+**Good News:** As of November 2025, Samper modules **do not use any** of these deprecated APIs, so migration should be straightforward once stock_no_negative is available.
+
 ## Development Environment
 
 ### Module Installation/Update
@@ -397,6 +470,29 @@ When referencing code locations:
 
 ## Important Warnings
 
+### 🚨 DO NOT Migrate to Odoo 19 (Yet)
+
+**CRITICAL:** As of November 2025, migration to Odoo 19 is **BLOCKED**.
+
+**Reason:** The OCA `stock_no_negative` module (critical for Samper) does NOT exist for Odoo 19.
+
+**What happens if you ignore this warning:**
+- Samper will lose the ability to prevent negative stock
+- Inventory control will be compromised
+- Production operations may be blocked or create data inconsistencies
+
+**When can we migrate to Odoo 19?**
+- Earliest: Q2 2026 (April-June) - when stock_no_negative v19 becomes available
+- Recommended: Q4 2026 / Q1 2027 - after Odoo 19 has matured
+- Latest: Before October 2027 - when Odoo 18 support ends
+
+**Monitoring:** Check the OCA repository quarterly for stock_no_negative v19 availability:
+https://github.com/OCA/stock-logistics-workflow
+
+See the "Odoo Version Strategy" section at the top of this document for detailed timeline and decision rationale.
+
+---
+
 ### ⚠️ Obsolete Files
 
 The following files may exist in parent directories but contain **INCORRECT** information:
@@ -411,4 +507,4 @@ The following files may exist in parent directories but contain **INCORRECT** in
 **Why the confusion?**
 Odoo intentionally allows negative stock by design to reveal inventory problems. Some developers mistakenly believed Odoo 18 would add native controls, but this never materialized. The OCA `stock_no_negative` module remains the industry-standard solution.
 
-**If you need to prevent negative stock in Odoo 18, you MUST use the `stock_no_negative` module or implement custom constraints. There is no native alternative.**
+**If you need to prevent negative stock in Odoo 18 or 19, you MUST use the `stock_no_negative` module or implement custom constraints. There is no native alternative in either version.**

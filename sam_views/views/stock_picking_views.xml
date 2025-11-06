@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Herencia de la vista de formulario de stock.picking para agregar fecha de caducidad -->
+    <record id="view_picking_form_inherit_sam_caducidad" model="ir.ui.view">
+        <field name="name">stock.picking.form.inherit.sam.caducidad</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <!-- Agregar campo de caducidad después del campo lot_ids en la lista de operaciones -->
+            <xpath expr="//field[@name='move_ids_without_package']/tree/field[@name='lot_ids']" position="after">
+                <field name="x_caducidad_display"
+                       string="Caducidad"
+                       optional="show"
+                       readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
