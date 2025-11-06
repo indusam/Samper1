@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Herencia de la vista de lista de facturas para agregar folio fiscal -->
+    <record id="view_invoice_tree_inherit_sam" model="ir.ui.view">
+        <field name="name">account.move.tree.inherit.sam</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_invoice_tree"/>
+        <field name="arch" type="xml">
+            <!-- Agregar folio fiscal después del campo "name" (Número) -->
+            <field name="name" position="after">
+                <field name="l10n_mx_edi_cfdi_uuid"
+                       string="Folio Fiscal"
+                       optional="show"/>
+            </field>
+        </field>
+    </record>
+</odoo>

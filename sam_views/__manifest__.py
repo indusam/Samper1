@@ -20,7 +20,8 @@
 
         Vistas personalizadas:
         ----------------------
-        * stock.move: Vista de lista con campo nombre comercial
+        * res.partner: Vista de lista con campos personalizados
+        * account.move: Vista de lista con folio fiscal
     """,
     'author': 'Samper',
     'website': 'https://www.samper.com',
@@ -28,9 +29,11 @@
     'depends': [
         'base',
         'stock',
+        'account',
     ],
     'data': [
         'views/res_partner_views.xml',
+        'views/account_move_views.xml',
     ],
     'installable': True,
     'application': False,
