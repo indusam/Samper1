@@ -1,3 +1,2 @@
 # -*- coding: utf-8 -*-
-
-from . import models
+# Este módulo solo contiene vistas XML, no requiere importar modelos Python

@@ -21,7 +21,6 @@
         Vistas personalizadas:
         ----------------------
         * stock.move: Vista de lista con campo nombre comercial
-        * stock.picking: Vista de formulario con fechas de caducidad de lotes
     """,
     'author': 'Samper',
     'website': 'https://www.samper.com',
@@ -32,7 +31,6 @@
     ],
     'data': [
         'views/res_partner_views.xml',
-        'views/stock_picking_views.xml',
     ],
     'installable': True,
     'application': False,
