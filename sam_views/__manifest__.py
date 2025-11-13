@@ -21,7 +21,12 @@
         Vistas personalizadas:
         ----------------------
         * res.partner: Vista de lista con campos personalizados
-        * account.move: Vista de lista con folio fiscal
+        * account.move: Corrección de templates de reportes para Odoo 18
+
+        Correcciones de compatibilidad:
+        --------------------------------
+        * Template de totales de impuestos compatible con Odoo 18
+        * Corrección automática de templates creados con Studio que usan 'formatted_amount'
     """,
     'author': 'Samper',
     'website': 'https://www.samper.com',
@@ -30,12 +35,12 @@
         'base',
         'stock',
         'account',
-        'l10n_mx_edi',
     ],
     'data': [
         'views/res_partner_views.xml',
-        'views/account_move_views.xml',
+        'views/account_report_views.xml',
     ],
+    'post_init_hook': 'post_init_hook',
     'installable': True,
     'application': False,
     'auto_install': False,
