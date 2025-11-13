@@ -1,2 +1,2 @@
 # -*- coding: utf-8 -*-
-from . import hooks
+# Este módulo solo contiene vistas XML, no requiere importar modelos Python
