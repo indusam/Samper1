@@ -13,13 +13,39 @@ Este módulo contiene todas las personalizaciones de vistas y formularios utiliz
 
 ## Características
 
+### Reportes Personalizados
+
+#### Factura SAM (account.move)
+- **Reporte**: Factura SAM
+- **Descripción**: Plantilla de factura personalizada con el formato corporativo de Samper
+- **Características**:
+  - Logo de Samper en el encabezado
+  - Diseño de dos columnas (empresa/cliente)
+  - Título en color bordó (#8B2332)
+  - Tabla de productos con columnas adicionales:
+    - Código de producto
+    - Lotes/NS/NL (dentro de la misma tabla, mostrando cantidad, número y fecha de caducidad)
+    - Pzas (piezas)
+    - Código de unidad SAT
+  - Información fiscal CFDI (para México):
+    - Folio Fiscal (UUID)
+    - Uso CFDI
+    - Forma de Pago
+    - Método de Pago
+  - Segunda página con información fiscal:
+    - Sello digital del emisor
+    - Sello digital del SAT
+    - Cadena original del CFDI
+    - Código QR
+    - Leyenda "Este documento es una representación impresa de un CFDI"
+- **Ubicación**: Disponible en el botón "Imprimir" de las facturas
+
 ### Vistas Personalizadas
 
-#### Stock Move (stock.move)
+#### Partner (res.partner)
 - **Vista**: Lista/Tree
-- **Personalización**: Agregado campo `x_studio_nombre_comercial` (Nombre Comercial)
-- **Ubicación**: Agregado a la vista de lista (el usuario puede reordenarlo arrastrando las columnas)
-- **Atributo**: `optional="show"` - El campo es visible por defecto pero el usuario puede ocultarlo
+- **Personalización**: Campos personalizados para vista de clientes/proveedores
+- **Ubicación**: Vista de lista de contactos
 
 ## Instalación
 
@@ -30,7 +56,9 @@ Este módulo contiene todas las personalizaciones de vistas y formularios utiliz
 
 ## Dependencias
 
+- `base`: Módulo base de Odoo
 - `stock`: Módulo de inventario de Odoo
+- `account`: Módulo de contabilidad de Odoo
 
 ## Estructura del Módulo
 
@@ -40,19 +68,67 @@ sam_views/
 ├── __manifest__.py
 ├── README.md
 └── views/
-    └── stock_move_views.xml
+    ├── res_partner_views.xml
+    └── factura_sam.xml
 ```
 
 ## Uso
 
-Una vez instalado el módulo, las vistas personalizadas se aplicarán automáticamente.
+### Imprimir Facturas con Formato SAM
 
-Para la vista de movimientos de inventario:
-1. Ir a **Inventario > Reportes > Movimientos de Producto**
-2. El campo "Nombre Comercial" aparecerá en la lista
-3. Puede reordenar las columnas arrastrándolas para posicionar el campo donde lo desee
+1. Ir a **Contabilidad > Clientes > Facturas**
+2. Abrir una factura
+3. Hacer clic en el botón **Imprimir**
+4. Seleccionar **Factura SAM**
+5. El PDF se generará con el formato personalizado de Samper
+
+El reporte incluirá automáticamente:
+- Logo de la empresa (configurado en Configuración > Empresas)
+- Información del cliente y dirección de entrega (si aplica)
+- Tabla de productos con códigos y lotes
+- Información fiscal CFDI (si la factura está timbrada)
+- Segunda página con sellos digitales y código QR (para facturas con UUID)
+
+### Vistas Personalizadas de Contactos
+
+Las vistas personalizadas de contactos se aplicarán automáticamente al instalar el módulo en:
+1. **Contactos > Clientes/Proveedores**
+2. Las columnas adicionales estarán disponibles y personalizables
 
 ## Notas Técnicas
+
+### Plantilla de Factura SAM
+
+La plantilla de factura utiliza herencia de QWeb con `primary="True"`, creando una versión completamente personalizada basada en `account.report_invoice_document`.
+
+**Estructura del reporte:**
+```xml
+<record id="report_invoice_sam" model="ir.actions.report">
+    <!-- Define el reporte en el menú de impresión -->
+</record>
+
+<template id="report_invoice_sam_main">
+    <!-- Template principal que itera sobre los documentos -->
+</template>
+
+<template id="report_invoice_document_sam" inherit_id="account.report_invoice_document" primary="True">
+    <!-- Template personalizado del documento -->
+</template>
+```
+
+**Campos CFDI utilizados:**
+- `l10n_mx_edi_cfdi_uuid`: Folio Fiscal (UUID)
+- `l10n_mx_edi_usage`: Uso CFDI
+- `l10n_mx_edi_payment_method_id`: Forma de Pago
+- `l10n_mx_edi_payment_policy`: Método de Pago
+- `l10n_mx_edi_cfdi_sat_seal`: Sello digital del SAT
+- `l10n_mx_edi_qr_code`: Código QR
+- `product_uom_id.l10n_mx_edi_code_sat_id`: Código de unidad SAT
+
+**Requisitos:**
+- El módulo de localización mexicana debe estar instalado (`l10n_mx_edi`)
+- La empresa debe tener un logo configurado para que aparezca en la factura
+- Para la segunda página fiscal, la factura debe estar timbrada (tener UUID)
 
 ### Herencia de Vistas
 
