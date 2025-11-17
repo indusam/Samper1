@@ -32,11 +32,13 @@ Este módulo contiene todas las personalizaciones de vistas y formularios utiliz
     - Uso CFDI
     - Forma de Pago
     - Método de Pago
-  - Segunda página con información fiscal:
+  - Segunda página con información fiscal (para facturas timbradas):
     - Sello digital del emisor
     - Sello digital del SAT
-    - Cadena original del CFDI
-    - Código QR
+    - Cadena original del complemento
+    - Certificados (emisor y SAT)
+    - Fecha de certificación
+    - Código QR (si está disponible)
     - Leyenda "Este documento es una representación impresa de un CFDI"
 - **Ubicación**: Disponible en el botón "Imprimir" de las facturas
 
@@ -85,9 +87,9 @@ sam_views/
 El reporte incluirá automáticamente:
 - Logo de la empresa (configurado en Configuración > Empresas)
 - Información del cliente y dirección de entrega (si aplica)
-- Tabla de productos con códigos y lotes
+- Tabla de productos con códigos, lotes y unidades SAT
 - Información fiscal CFDI (si la factura está timbrada)
-- Segunda página con sellos digitales y código QR (para facturas con UUID)
+- Segunda página con sellos digitales y código QR (para facturas timbradas)
 
 ### Vistas Personalizadas de Contactos
 
@@ -121,13 +123,21 @@ La plantilla de factura utiliza herencia de QWeb con `primary="True"`, creando u
 - `l10n_mx_edi_usage`: Uso CFDI
 - `l10n_mx_edi_payment_method_id`: Forma de Pago
 - `l10n_mx_edi_payment_policy`: Método de Pago
-- `l10n_mx_edi_cfdi_sat_seal`: Sello digital del SAT
-- `l10n_mx_edi_qr_code`: Código QR
-- `product_uom_id.l10n_mx_edi_code_sat_id`: Código de unidad SAT
+- `product_uom_id.unspsc_code_id.code`: Código de unidad UNSPSC/SAT
+
+**Campos computados personalizados (extraídos del XML del CFDI):**
+- `x_cfdi_sello_emisor`: Sello digital del emisor
+- `x_cfdi_sello_sat`: Sello digital del SAT
+- `x_cfdi_certificado_emisor`: Número de certificado del emisor
+- `x_cfdi_certificado_sat`: Número de certificado del SAT
+- `x_cfdi_fecha_certificacion`: Fecha de certificación del CFDI
+
+Estos campos se calculan automáticamente al parsear el XML del CFDI adjunto a la factura.
 
 **Requisitos:**
 - El módulo de localización mexicana debe estar instalado (`l10n_mx_edi`)
 - La empresa debe tener un logo configurado para que aparezca en la factura
+- Los productos deben tener códigos UNSPSC configurados para mostrar el código de unidad SAT
 - Para la segunda página fiscal, la factura debe estar timbrada (tener UUID)
 
 ### Herencia de Vistas

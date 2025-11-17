@@ -385,25 +385,25 @@
                             </div>
                         </div>
 
-                        <!-- Sellos digitales -->
+                        <!-- Sellos digitales extraídos del XML del CFDI -->
                         <div class="mb-4">
                             <h5>Sello digital del emisor</h5>
-                            <p style="font-size: 8pt; word-wrap: break-word; font-family: monospace;">
-                                <span t-if="o.l10n_mx_edi_cfdi_supplier_rfc" t-field="o.l10n_mx_edi_cfdi_supplier_rfc"/>
+                            <p style="font-size: 7pt; word-wrap: break-word; font-family: monospace;">
+                                <span t-field="o.x_cfdi_sello_emisor"/>
                             </p>
                         </div>
 
                         <div class="mb-4">
                             <h5>Sello digital del SAT</h5>
-                            <p style="font-size: 8pt; word-wrap: break-word; font-family: monospace;">
-                                <span t-if="o.l10n_mx_edi_cfdi_sat_seal" t-field="o.l10n_mx_edi_cfdi_sat_seal"/>
+                            <p style="font-size: 7pt; word-wrap: break-word; font-family: monospace;">
+                                <span t-field="o.x_cfdi_sello_sat"/>
                             </p>
                         </div>
 
                         <div class="mb-4">
                             <h5>Cadena original del complemento del certificado digital del SAT</h5>
                             <p style="font-size: 8pt; word-wrap: break-word; font-family: monospace;">
-                                ||1.1|<span t-field="o.l10n_mx_edi_cfdi_uuid"/>|<span t-field="o.l10n_mx_edi_cfdi_certificate_id.name"/>||
+                                ||1.1|<span t-field="o.l10n_mx_edi_cfdi_uuid"/>|<span t-field="o.x_cfdi_certificado_sat"/>||
                             </p>
                         </div>
 
@@ -411,21 +411,21 @@
                         <div class="mb-4">
                             <h5>Información Extra</h5>
                             <p style="font-size: 9pt;">
-                                <strong>Certificado del emisor:</strong> <span t-if="o.l10n_mx_edi_cfdi_certificate_id" t-field="o.l10n_mx_edi_cfdi_certificate_id.serial_number"/> |
+                                <strong>Certificado del emisor:</strong> <span t-field="o.x_cfdi_certificado_emisor"/> |
+                                <strong>Certificado SAT:</strong> <span t-field="o.x_cfdi_certificado_sat"/><br/>
+                                <strong>Lugar de expedición:</strong> <span t-field="o.company_id.zip"/> |
                                 <strong>Folio Fiscal:</strong> <span t-field="o.l10n_mx_edi_cfdi_uuid"/><br/>
                                 <strong>Fecha de Emisión:</strong> <span t-field="o.invoice_date"/> |
-                                <strong>Lugar de expedición:</strong> <span t-field="o.company_id.zip"/>
+                                <strong>Fecha de Certificación:</strong> <span t-field="o.x_cfdi_fecha_certificacion"/>
                             </p>
                         </div>
 
-                        <!-- Código QR -->
-                        <div class="row">
+                        <!-- Código QR (buscar en attachments) -->
+                        <t t-set="qr_attachment" t-value="o.env['ir.attachment'].search([('res_model', '=', 'account.move'), ('res_id', '=', o.id), ('mimetype', '=', 'image/png'), '|', ('name', 'ilike', 'qr'), ('name', 'ilike', 'QR')], limit=1)"/>
+                        <div class="row" t-if="qr_attachment">
                             <div class="col-4">
-                                <t t-if="o.l10n_mx_edi_cfdi_uuid">
-                                    <img t-if="o.l10n_mx_edi_qr_code"
-                                         t-att-src="image_data_uri(o.l10n_mx_edi_qr_code)"
-                                         style="width: 150px; height: 150px;"/>
-                                </t>
+                                <img t-att-src="image_data_uri(qr_attachment.datas)"
+                                     style="width: 150px; height: 150px;"/>
                             </div>
                             <div class="col-8">
                                 <!-- Espacio adicional -->
