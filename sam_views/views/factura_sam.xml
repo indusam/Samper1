@@ -234,8 +234,9 @@
 
                                         <!-- Código Unidad SAT -->
                                         <td class="text-center" style="border: 1px solid #000; vertical-align: top;">
-                                            <span t-if="line.product_uom_id.l10n_mx_edi_code_sat_id"
-                                                  t-field="line.product_uom_id.l10n_mx_edi_code_sat_id.code"/>
+                                            <!-- Mostrar el nombre de la unidad por ahora -->
+                                            <!-- TODO: Investigar campo correcto para código SAT en Odoo 18 -->
+                                            <span t-field="line.product_uom_id.name"/>
                                         </td>
 
                                         <!-- Impuestos -->
