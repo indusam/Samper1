@@ -194,15 +194,24 @@
 
                                         <!-- Lotes (en la misma tabla) -->
                                         <td style="border: 1px solid #000; vertical-align: top; font-size: 9pt;">
-                                            <t t-if="line.move_line_ids">
-                                                <t t-foreach="line.move_line_ids.filtered(lambda ml: ml.lot_id)" t-as="move_line">
-                                                    <div>
-                                                        <span t-field="move_line.quantity" t-options="{'widget': 'float', 'precision': 1}"/>
-                                                        <span t-field="move_line.lot_id.name"/><br/>
-                                                        <t t-if="move_line.lot_id.expiration_date">
-                                                            <span t-field="move_line.lot_id.expiration_date" t-options="{'widget': 'datetime', 'format': 'dd/MM/yyyy HH:mm:ss'}"/>
+                                            <!-- Acceder a lotes a través de sale_line_ids -> move_ids -> move_line_ids -->
+                                            <t t-if="line.sale_line_ids">
+                                                <t t-foreach="line.sale_line_ids" t-as="sale_line">
+                                                    <t t-if="sale_line.move_ids">
+                                                        <t t-foreach="sale_line.move_ids" t-as="stock_move">
+                                                            <t t-if="stock_move.move_line_ids">
+                                                                <t t-foreach="stock_move.move_line_ids.filtered(lambda ml: ml.lot_id)" t-as="move_line">
+                                                                    <div>
+                                                                        <span t-field="move_line.quantity" t-options="{'widget': 'float', 'precision': 1}"/>
+                                                                        <span t-field="move_line.lot_id.name"/><br/>
+                                                                        <t t-if="move_line.lot_id.expiration_date">
+                                                                            <span t-field="move_line.lot_id.expiration_date" t-options="{'widget': 'datetime', 'format': 'dd/MM/yyyy HH:mm:ss'}"/>
+                                                                        </t>
+                                                                    </div>
+                                                                </t>
+                                                            </t>
                                                         </t>
-                                                    </div>
+                                                    </t>
                                                 </t>
                                             </t>
                                         </td>
