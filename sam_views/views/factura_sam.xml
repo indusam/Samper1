@@ -417,30 +417,26 @@
                         <div style="display: table; width: 100%; margin-bottom: 20px;">
                             <!-- Código QR en la izquierda -->
                             <div style="display: table-cell; width: 30%; vertical-align: top; padding-right: 15px;">
-                                <!-- Intentar usar el campo directo del QR de la localización mexicana -->
-                                <div t-if="o.l10n_mx_edi_qr_code" style="text-align: center;">
-                                    <img t-att-src="image_data_uri(o.l10n_mx_edi_qr_code)"
+                                <!-- Buscar QR code en los attachments de la factura -->
+                                <t t-set="qr_attachment" t-value="o.env['ir.attachment'].search([
+                                    ('res_model', '=', 'account.move'),
+                                    ('res_id', '=', o.id),
+                                    ('mimetype', 'in', ['image/png', 'image/jpeg', 'image/jpg']),
+                                    '|', '|', '|', '|',
+                                    ('name', 'ilike', 'qr'),
+                                    ('name', 'ilike', 'QR'),
+                                    ('name', 'ilike', 'codigo'),
+                                    ('description', 'ilike', 'qr'),
+                                    ('name', '=like', '%.png')
+                                ], order='create_date desc', limit=1)"/>
+
+                                <div t-if="qr_attachment and qr_attachment.datas" style="text-align: center;">
+                                    <img t-att-src="image_data_uri(qr_attachment.datas)"
                                          style="width: 180px; height: 180px; border: 1px solid #ccc;" alt="QR Code CFDI"/>
                                 </div>
-                                <!-- Si no existe el campo directo, buscar en attachments -->
-                                <t t-else="">
-                                    <t t-set="qr_attachment" t-value="o.env['ir.attachment'].search([
-                                        ('res_model', '=', 'account.move'),
-                                        ('res_id', '=', o.id),
-                                        '|', '|',
-                                        ('name', 'ilike', '.png'),
-                                        ('name', 'ilike', 'qr'),
-                                        ('mimetype', 'in', ['image/png', 'image/jpeg'])
-                                    ], order='create_date desc', limit=1)"/>
-
-                                    <div t-if="qr_attachment and qr_attachment.datas" style="text-align: center;">
-                                        <img t-att-src="image_data_uri(qr_attachment.datas)"
-                                             style="width: 180px; height: 180px; border: 1px solid #ccc;" alt="QR Code"/>
-                                    </div>
-                                    <div t-else="" style="width: 180px; height: 180px; border: 1px dashed #ccc; display: flex; align-items: center; justify-content: center; font-size: 8pt; color: #999; text-align: center;">
-                                        QR no disponible
-                                    </div>
-                                </t>
+                                <div t-else="" style="width: 180px; height: 180px; border: 1px dashed #ccc; display: flex; align-items: center; justify-content: center; font-size: 8pt; color: #999; text-align: center;">
+                                    QR no disponible
+                                </div>
                             </div>
 
                             <!-- Información de certificados en la derecha -->
