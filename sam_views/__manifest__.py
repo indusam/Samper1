@@ -30,6 +30,7 @@
         'base',
         'stock',
         'account',
+        'l10n_mx_edi',
     ],
     'data': [
         'views/res_partner_views.xml',

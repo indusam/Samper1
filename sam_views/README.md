@@ -61,6 +61,7 @@ Este módulo contiene todas las personalizaciones de vistas y formularios utiliz
 - `base`: Módulo base de Odoo
 - `stock`: Módulo de inventario de Odoo
 - `account`: Módulo de contabilidad de Odoo
+- `l10n_mx_edi`: Módulo de facturación electrónica mexicana (CFDI)
 
 ## Estructura del Módulo
 
