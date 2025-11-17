@@ -234,9 +234,9 @@
 
                                         <!-- Código Unidad SAT -->
                                         <td class="text-center" style="border: 1px solid #000; vertical-align: top;">
-                                            <!-- Mostrar el nombre de la unidad por ahora -->
-                                            <!-- TODO: Investigar campo correcto para código SAT en Odoo 18 -->
-                                            <span t-field="line.product_uom_id.name"/>
+                                            <!-- Código UNSPSC usado por el SAT mexicano -->
+                                            <span t-if="line.product_uom_id.unspsc_code_id"
+                                                  t-field="line.product_uom_id.unspsc_code_id.code"/>
                                         </td>
 
                                         <!-- Impuestos -->
