@@ -40,80 +40,61 @@
                     <!-- ============================================ -->
                     <!-- ENCABEZADO -->
                     <!-- ============================================ -->
-                    <div class="row mb-2">
+                    <div class="row mb-3">
                         <!-- Columna izquierda: Logo + Empresa -->
                         <div class="col-6">
                             <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)"
-                                 style="max-height: 70px; max-width: 180px;" alt="Company Logo"/>
-                            <div style="font-size: 10pt; line-height: 1.2; margin-top: 5px;">
+                                 style="max-height: 80px; max-width: 200px;" alt="Company Logo"/>
+                            <div style="font-size: 9pt; line-height: 1.3; margin-top: 5px;">
                                 <strong><span t-field="o.company_id.name"/></strong><br/>
-                                <span t-field="o.company_id.street"/><br/>
+                                <span t-field="o.company_id.street"/>,
                                 <span t-field="o.company_id.zip"/>
                                 <span t-if="o.company_id.city" t-field="o.company_id.city"/>,
-                                <span t-if="o.company_id.state_id" t-field="o.company_id.state_id.code"/><br/>
+                                <span t-if="o.company_id.state_id" t-field="o.company_id.state_id.name"/>,
                                 <span t-if="o.company_id.country_id" t-field="o.company_id.country_id.name"/>
                             </div>
                         </div>
 
                         <!-- Columna derecha: Cliente -->
                         <div class="col-6">
-                            <!-- Dirección de entrega si existe -->
-                            <t t-if="o.partner_shipping_id and (o.partner_shipping_id != o.partner_id)">
-                                <div style="font-size: 9pt; line-height: 1.2; margin-bottom: 10px;">
-                                    <strong>Dirección de entrega:</strong><br/>
-                                    <span t-field="o.partner_shipping_id.name"/><br/>
-                                    <span t-field="o.partner_shipping_id.street"/><br/>
-                                    <span t-field="o.partner_shipping_id.zip"/>
-                                    <span t-if="o.partner_shipping_id.city" t-field="o.partner_shipping_id.city"/>,
-                                    <span t-if="o.partner_shipping_id.state_id" t-field="o.partner_shipping_id.state_id.code"/><br/>
-                                    <span t-if="o.partner_shipping_id.country_id" t-field="o.partner_shipping_id.country_id.name"/>
-                                </div>
-                            </t>
+                            <!-- Dirección de entrega si existe y es diferente -->
+                            <t t-set="has_shipping" t-value="o.partner_shipping_id and (o.partner_shipping_id != o.partner_id)"/>
+                            <div t-if="has_shipping" style="font-size: 9pt; line-height: 1.3; margin-bottom: 12px;">
+                                <strong>Dirección de entrega:</strong><br/>
+                                <span t-field="o.partner_shipping_id.name"/><br/>
+                                <span t-field="o.partner_shipping_id.street"/>
+                                <t t-if="o.partner_shipping_id.street2">, <span t-field="o.partner_shipping_id.street2"/></t><br/>
+                                <span t-field="o.partner_shipping_id.zip"/>
+                                <span t-if="o.partner_shipping_id.city" t-field="o.partner_shipping_id.city"/>,
+                                <span t-if="o.partner_shipping_id.state_id" t-field="o.partner_shipping_id.state_id.name"/>
+                            </div>
 
                             <!-- Dirección de facturación -->
-                            <div style="font-size: 10pt; line-height: 1.2;">
+                            <div style="font-size: 9pt; line-height: 1.3;">
+                                <strong t-if="has_shipping">Dirección de facturación:</strong>
                                 <strong><span t-field="o.partner_id.name"/></strong><br/>
-                                <span t-field="o.partner_id.street"/><br/>
-                                <t t-if="o.partner_id.street2">
-                                    <span t-field="o.partner_id.street2"/><br/>
-                                </t>
+                                <span t-field="o.partner_id.street"/>
+                                <t t-if="o.partner_id.street2">, <span t-field="o.partner_id.street2"/></t><br/>
                                 <span t-field="o.partner_id.zip"/>
                                 <span t-if="o.partner_id.city" t-field="o.partner_id.city"/>,
-                                <span t-if="o.partner_id.state_id" t-field="o.partner_id.state_id.code"/><br/>
-                                <span t-if="o.partner_id.country_id" t-field="o.partner_id.country_id.name"/><br/>
+                                <span t-if="o.partner_id.state_id" t-field="o.partner_id.state_id.name"/><br/>
                                 <t t-if="o.partner_id.vat">
-                                    <br/><strong>RFC: </strong><span t-field="o.partner_id.vat"/>
+                                    <strong>RFC: </strong><span t-field="o.partner_id.vat"/>
                                 </t>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Segunda línea: Logo pequeño + Info empresa | Info adicional cliente -->
-                    <div class="row mb-2 mt-3">
-                        <!-- Izquierda: Logo pequeño + Empresa -->
+                    <!-- Info adicional: Referencia cliente + Fecha/Hora -->
+                    <div class="row mb-2" style="font-size: 9pt;">
                         <div class="col-6">
-                            <div class="d-flex align-items-start">
-                                <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)"
-                                     style="max-height: 60px; max-width: 80px; margin-right: 10px;" alt="Company Logo"/>
-                                <div style="font-size: 9pt; line-height: 1.2;">
-                                    <strong><span t-field="o.company_id.name"/></strong><br/>
-                                    <span t-field="o.company_id.street"/><br/>
-                                    <span t-field="o.company_id.zip"/>
-                                    <span t-if="o.company_id.city">col. <span t-field="o.company_id.city"/></span>,
-                                    <span t-if="o.company_id.state_id" t-field="o.company_id.state_id.name"/>,
-                                    <span t-if="o.company_id.state_id" t-field="o.company_id.state_id.code"/><br/>
-                                    <span t-if="o.company_id.country_id" t-field="o.company_id.country_id.name"/>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Derecha: Info adicional del cliente (ej: TOKS NORTE/IZCALLI + fecha/hora) -->
-                        <div class="col-6" style="font-size: 9pt;">
                             <t t-if="o.partner_id.ref">
-                                <strong><span t-field="o.partner_id.ref"/></strong><br/>
+                                <strong>Ref. Cliente: </strong><span t-field="o.partner_id.ref"/>
                             </t>
+                        </div>
+                        <div class="col-6 text-end">
                             <t t-if="o.create_date">
-                                <span t-field="o.create_date" t-options="{'widget': 'datetime', 'format': 'dd/MM/yyyy HH:mm:ss'}"/>
+                                <strong>Fecha/Hora: </strong><span t-field="o.create_date" t-options="{'widget': 'datetime', 'format': 'dd/MM/yyyy HH:mm:ss'}"/>
                             </t>
                         </div>
                     </div>
@@ -185,18 +166,18 @@
                     <!-- ============================================ -->
                     <t t-set="display_discount" t-value="any(l.discount for l in o.invoice_line_ids)"/>
 
-                    <table class="table table-sm table-bordered" style="border: 2px solid #000;">
+                    <table class="table table-sm table-bordered" style="border: 2px solid #000; font-size: 9pt;">
                         <thead style="background-color: #f5f5f5;">
                             <tr>
-                                <th class="text-start" style="border: 1px solid #000;">Código<br/>Producto</th>
-                                <th class="text-start" style="border: 1px solid #000;">Descripción</th>
-                                <th class="text-start" style="border: 1px solid #000;">Lotes</th>
-                                <th class="text-end" style="border: 1px solid #000;">Cantidad</th>
-                                <th class="text-end" style="border: 1px solid #000;">Pzas</th>
-                                <th class="text-end" style="border: 1px solid #000;">Precio<br/>unitario</th>
-                                <th class="text-center" style="border: 1px solid #000;">Código<br/>Unidad</th>
-                                <th class="text-end" style="border: 1px solid #000;">Impuestos</th>
-                                <th class="text-end" style="border: 1px solid #000;">Importe</th>
+                                <th class="text-center" style="border: 1px solid #000; width: 6%;">Código<br/>SAT</th>
+                                <th class="text-start" style="border: 1px solid #000; width: 8%;">Código<br/>Producto</th>
+                                <th class="text-start" style="border: 1px solid #000; width: 20%;">Descripción</th>
+                                <th class="text-start" style="border: 1px solid #000; width: 15%;">Lotes</th>
+                                <th class="text-end" style="border: 1px solid #000; width: 8%;">Cantidad</th>
+                                <th class="text-end" style="border: 1px solid #000; width: 6%;">Pzas</th>
+                                <th class="text-end" style="border: 1px solid #000; width: 10%;">Precio<br/>unitario</th>
+                                <th class="text-end" style="border: 1px solid #000; width: 12%;">Impuestos</th>
+                                <th class="text-end" style="border: 1px solid #000; width: 10%;">Importe</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -205,6 +186,12 @@
                             <t t-foreach="lines" t-as="line">
                                 <t t-if="line.display_type == 'product'">
                                     <tr>
+                                        <!-- Código SAT (PRIMERA COLUMNA) -->
+                                        <td class="text-center" style="border: 1px solid #000; vertical-align: top; font-size: 8pt;">
+                                            <span t-if="line.product_uom_id.unspsc_code_id"
+                                                  t-field="line.product_uom_id.unspsc_code_id.code"/>
+                                        </td>
+
                                         <!-- Código de producto -->
                                         <td style="border: 1px solid #000; vertical-align: top;">
                                             <span t-if="line.product_id.default_code" t-field="line.product_id.default_code"/>
@@ -216,7 +203,7 @@
                                         </td>
 
                                         <!-- Lotes (en la misma tabla) -->
-                                        <td style="border: 1px solid #000; vertical-align: top; font-size: 9pt;">
+                                        <td style="border: 1px solid #000; vertical-align: top; font-size: 8pt;">
                                             <!-- Acceder a lotes a través de sale_line_ids -> move_ids -> move_line_ids -->
                                             <t t-if="line.sale_line_ids">
                                                 <t t-foreach="line.sale_line_ids" t-as="sale_line">
@@ -228,7 +215,7 @@
                                                                         <span t-field="move_line.quantity" t-options="{'widget': 'float', 'precision': 1}"/>
                                                                         <span t-field="move_line.lot_id.name"/><br/>
                                                                         <t t-if="move_line.lot_id.expiration_date">
-                                                                            <span t-field="move_line.lot_id.expiration_date" t-options="{'widget': 'datetime', 'format': 'dd/MM/yyyy HH:mm:ss'}"/>
+                                                                            <span t-field="move_line.lot_id.expiration_date" t-options="{'widget': 'date'}"/>
                                                                         </t>
                                                                     </div>
                                                                 </t>
@@ -241,7 +228,7 @@
 
                                         <!-- Cantidad -->
                                         <td class="text-end" style="border: 1px solid #000; vertical-align: top;">
-                                            <span t-field="line.quantity" t-options="{'widget': 'float', 'precision': 3}"/>
+                                            <span t-field="line.quantity" t-options="{'widget': 'float', 'precision': 2}"/>
                                             <span t-field="line.product_uom_id.name"/>
                                         </td>
 
@@ -252,14 +239,7 @@
 
                                         <!-- Precio unitario -->
                                         <td class="text-end" style="border: 1px solid #000; vertical-align: top;">
-                                            <span t-field="line.price_unit" t-options="{'widget': 'float', 'precision': 2}"/>
-                                        </td>
-
-                                        <!-- Código Unidad SAT -->
-                                        <td class="text-center" style="border: 1px solid #000; vertical-align: top;">
-                                            <!-- Código UNSPSC usado por el SAT mexicano -->
-                                            <span t-if="line.product_uom_id.unspsc_code_id"
-                                                  t-field="line.product_uom_id.unspsc_code_id.code"/>
+                                            <span t-field="line.price_unit" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
                                         </td>
 
                                         <!-- Impuestos -->
@@ -299,27 +279,24 @@
                     <!-- ============================================ -->
                     <div style="width: 100%; margin-top: 10px;">
                         <table style="width: 40%; margin-left: auto; font-size: 9pt; border-collapse: collapse;">
-                            <!-- Subtotal -->
-                            <tr t-if="o.tax_totals">
-                                <t t-foreach="o.tax_totals.get('subtotals', [])" t-as="subtotal">
-                                    <t t-set="subtotal_name" t-value="subtotal.get('name', 'Importe sin impuestos')"/>
-                                    <td style="text-align: right; padding: 4px 10px;">
-                                        <strong t-out="subtotal_name"/>
-                                    </td>
-                                    <td style="text-align: right; padding: 4px 10px;">
-                                        <span t-out="subtotal.get('formatted_amount', '0.00')"/>
-                                    </td>
-                                </t>
+                            <!-- Subtotal (Importe sin impuestos) -->
+                            <tr>
+                                <td style="text-align: right; padding: 4px 10px;">
+                                    <strong>Importe sin impuestos</strong>
+                                </td>
+                                <td style="text-align: right; padding: 4px 10px;">
+                                    <span t-field="o.amount_untaxed" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                </td>
                             </tr>
 
-                            <!-- Impuestos -->
+                            <!-- Impuestos (cada línea de impuesto) -->
                             <t t-if="o.tax_totals and o.tax_totals.get('groups_by_subtotal')">
                                 <t t-foreach="o.tax_totals['groups_by_subtotal'].values()" t-as="amount_by_group">
                                     <t t-foreach="amount_by_group" t-as="group">
                                         <tr>
                                             <td style="text-align: right; padding: 4px 10px;">
-                                                <span t-out="group.get('tax_group_name', '')"/>
-                                                <t t-if="group.get('tax_group_amount', 0) != 0">
+                                                <span t-out="group.get('tax_group_name', 'Impuesto')"/>
+                                                <t t-if="group.get('tax_group_base_amount_percent', 0) != 0">
                                                     <span t-out="' %.0f%%' % group.get('tax_group_base_amount_percent', 0)"/>
                                                 </t>
                                             </td>
@@ -423,11 +400,26 @@
                         <!-- Layout de dos columnas: QR a la izquierda, información a la derecha -->
                         <div style="display: table; width: 100%; margin-bottom: 20px;">
                             <!-- Código QR en la izquierda -->
-                            <t t-set="qr_attachment" t-value="o.env['ir.attachment'].search([('res_model', '=', 'account.move'), ('res_id', '=', o.id), ('mimetype', '=', 'image/png'), '|', ('name', 'ilike', 'qr'), ('name', 'ilike', 'QR')], limit=1)"/>
+                            <!-- Búsqueda ampliada del QR: buscar por varios criterios -->
+                            <t t-set="qr_attachment" t-value="o.env['ir.attachment'].search([
+                                ('res_model', '=', 'account.move'),
+                                ('res_id', '=', o.id),
+                                '|', '|', '|',
+                                ('name', 'ilike', 'qr'),
+                                ('name', 'ilike', 'QR'),
+                                ('name', 'ilike', 'MX-Invoice'),
+                                ('mimetype', 'in', ['image/png', 'image/jpeg', 'image/jpg'])
+                            ], order='create_date desc', limit=1)"/>
+
                             <div style="display: table-cell; width: 30%; vertical-align: top; padding-right: 15px;">
-                                <div t-if="qr_attachment" style="text-align: center;">
+                                <!-- Si se encuentra el QR -->
+                                <div t-if="qr_attachment and qr_attachment.mimetype and 'image' in qr_attachment.mimetype" style="text-align: center;">
                                     <img t-att-src="image_data_uri(qr_attachment.datas)"
-                                         style="width: 180px; height: 180px; border: 1px solid #ccc;"/>
+                                         style="width: 180px; height: 180px; border: 1px solid #ccc;" alt="QR Code"/>
+                                </div>
+                                <!-- Mensaje de debug si no se encuentra -->
+                                <div t-else="" style="width: 180px; height: 180px; border: 1px dashed #ccc; display: flex; align-items: center; justify-content: center; font-size: 8pt; color: #999; text-align: center;">
+                                    QR no disponible
                                 </div>
                             </div>
 
@@ -466,25 +458,30 @@
                         </div>
 
                         <!-- Sellos digitales extraídos del XML del CFDI -->
-                        <div style="margin-bottom: 15px;">
+                        <div style="margin-bottom: 12px;">
                             <strong style="font-size: 9pt;">Sello digital del emisor</strong>
-                            <p style="font-size: 6pt; word-wrap: break-word; font-family: monospace; margin: 5px 0; line-height: 1.2;">
-                                <span t-field="o.x_cfdi_sello_emisor"/>
-                            </p>
+                            <div style="font-size: 6pt; word-wrap: break-word; word-break: break-all; font-family: monospace; margin: 5px 0; line-height: 1.3; padding: 5px; background-color: #f9f9f9; border: 1px solid #ddd;">
+                                <span t-if="o.x_cfdi_sello_emisor" t-esc="o.x_cfdi_sello_emisor"/>
+                                <span t-else="" style="color: #999;">No disponible</span>
+                            </div>
                         </div>
 
-                        <div style="margin-bottom: 15px;">
+                        <div style="margin-bottom: 12px;">
                             <strong style="font-size: 9pt;">Sello digital del SAT</strong>
-                            <p style="font-size: 6pt; word-wrap: break-word; font-family: monospace; margin: 5px 0; line-height: 1.2;">
-                                <span t-field="o.x_cfdi_sello_sat"/>
-                            </p>
+                            <div style="font-size: 6pt; word-wrap: break-word; word-break: break-all; font-family: monospace; margin: 5px 0; line-height: 1.3; padding: 5px; background-color: #f9f9f9; border: 1px solid #ddd;">
+                                <span t-if="o.x_cfdi_sello_sat" t-esc="o.x_cfdi_sello_sat"/>
+                                <span t-else="" style="color: #999;">No disponible</span>
+                            </div>
                         </div>
 
-                        <div style="margin-bottom: 15px;">
+                        <div style="margin-bottom: 12px;">
                             <strong style="font-size: 9pt;">Cadena original del complemento del certificado digital del SAT</strong>
-                            <p style="font-size: 7pt; word-wrap: break-word; font-family: monospace; margin: 5px 0; line-height: 1.2;">
-                                ||1.1|<span t-field="o.l10n_mx_edi_cfdi_uuid"/>|<span t-field="o.x_cfdi_fecha_certificacion"/>|<span t-field="o.x_cfdi_certificado_sat"/>||
-                            </p>
+                            <div style="font-size: 6pt; word-wrap: break-word; word-break: break-all; font-family: monospace; margin: 5px 0; line-height: 1.3; padding: 5px; background-color: #f9f9f9; border: 1px solid #ddd;">
+                                <span t-if="o.l10n_mx_edi_cfdi_uuid and o.x_cfdi_fecha_certificacion and o.x_cfdi_certificado_sat">
+                                    ||1.1|<span t-esc="o.l10n_mx_edi_cfdi_uuid"/>|<span t-esc="o.x_cfdi_fecha_certificacion"/>|<span t-esc="o.x_cfdi_certificado_sat"/>||
+                                </span>
+                                <span t-else="" style="color: #999;">No disponible</span>
+                            </div>
                         </div>
 
                         <!-- Leyenda CFDI -->
