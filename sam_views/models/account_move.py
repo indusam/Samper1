@@ -13,30 +13,35 @@ class AccountMove(models.Model):
     x_cfdi_sello_emisor = fields.Text(
         string="Sello Digital Emisor",
         compute='_compute_cfdi_sellos',
+        store=True,
         help="Sello digital del emisor extraído del XML del CFDI"
     )
 
     x_cfdi_sello_sat = fields.Text(
         string="Sello Digital SAT",
         compute='_compute_cfdi_sellos',
+        store=True,
         help="Sello digital del SAT extraído del XML del CFDI"
     )
 
     x_cfdi_certificado_emisor = fields.Char(
         string="Certificado Emisor",
         compute='_compute_cfdi_sellos',
+        store=True,
         help="Número de certificado del emisor"
     )
 
     x_cfdi_certificado_sat = fields.Char(
         string="Certificado SAT",
         compute='_compute_cfdi_sellos',
+        store=True,
         help="Número de certificado del SAT"
     )
 
     x_cfdi_fecha_certificacion = fields.Char(
         string="Fecha Certificación",
         compute='_compute_cfdi_sellos',
+        store=True,
         help="Fecha de certificación del CFDI"
     )
 

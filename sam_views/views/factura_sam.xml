@@ -44,54 +44,49 @@
                     <t t-set="sale_order" t-value="o.invoice_line_ids.mapped('sale_line_ids.order_id')[:1] if o.invoice_line_ids else False"/>
                     <t t-set="shipping_partner" t-value="sale_order.partner_shipping_id if sale_order else False"/>
 
-                    <div class="row mb-3">
-                        <!-- Columna izquierda: Logo + Info empresa (compacto), luego dirección de entrega -->
-                        <div class="col-6">
-                            <!-- Logo + Info de empresa en línea compacta -->
-                            <div style="display: flex; align-items: flex-start; margin-bottom: 15px;">
-                                <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)"
-                                     style="max-height: 60px; max-width: 100px; margin-right: 10px;" alt="Company Logo"/>
-                                <div style="font-size: 9pt; line-height: 1.3;">
-                                    <strong><span t-field="o.company_id.name"/></strong><br/>
-                                    <span t-field="o.company_id.street"/>,
-                                    <span t-field="o.company_id.zip"/>
-                                    <span t-if="o.company_id.city">col. <span t-field="o.company_id.city"/></span>,
-                                    <span t-if="o.company_id.state_id" t-field="o.company_id.state_id.name"/>,
-                                    <span t-if="o.company_id.country_id" t-field="o.company_id.country_id.name"/>
-                                </div>
-                            </div>
+                    <!-- Logo centrado y info empresa -->
+                    <div style="text-align: center; margin-bottom: 10px;">
+                        <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)"
+                             style="max-height: 80px; margin-bottom: 5px;" alt="Company Logo"/>
+                        <div style="font-size: 9pt; line-height: 1.3;">
+                            <strong><span t-field="o.company_id.name"/></strong><br/>
+                            <span t-field="o.company_id.street"/><br/>
+                            <span t-field="o.company_id.zip"/>
+                            <span t-if="o.company_id.city" t-field="o.company_id.city"/>,
+                            <span t-if="o.company_id.state_id" t-field="o.company_id.state_id.code"/><br/>
+                            <span t-if="o.company_id.country_id" t-field="o.company_id.country_id.name"/>
+                        </div>
+                    </div>
 
-                            <!-- Dirección de entrega -->
+                    <!-- Línea separadora -->
+                    <hr style="border-top: 1px solid #000; margin: 10px 0;"/>
+
+                    <div class="row mb-3">
+                        <!-- Columna izquierda: Dirección de entrega -->
+                        <div class="col-6">
                             <div t-if="shipping_partner" style="font-size: 9pt; line-height: 1.3; margin-bottom: 8px;">
                                 <strong>Dirección de entrega:</strong><br/>
                                 <span t-field="shipping_partner.name"/><br/>
                                 <span t-field="shipping_partner.street"/>
-                                <t t-if="shipping_partner.street2">, <span t-field="shipping_partner.street2"/></t><br/>
+                                <t t-if="shipping_partner.street2"> <span t-field="shipping_partner.street2"/></t><br/>
                                 <span t-field="shipping_partner.zip"/>
                                 <span t-if="shipping_partner.city" t-field="shipping_partner.city"/>,
-                                <span t-if="shipping_partner.state_id" t-field="shipping_partner.state_id.name"/>
-                            </div>
-
-                            <!-- Nombre comercial (referencia del cliente) -->
-                            <div t-if="o.partner_id.ref" style="font-size: 9pt; margin-bottom: 5px;">
-                                <strong>Nombre comercial: </strong><span t-field="o.partner_id.ref"/>
-                            </div>
-
-                            <!-- Ruta (de la orden de venta si existe) -->
-                            <div t-if="sale_order and sale_order.name" style="font-size: 9pt;">
-                                <strong>Ruta: </strong><span t-field="sale_order.name"/>
+                                <span t-if="shipping_partner.state_id" t-field="shipping_partner.state_id.code"/><br/>
+                                <span t-if="shipping_partner.country_id" t-field="shipping_partner.country_id.name"/>
                             </div>
                         </div>
 
                         <!-- Columna derecha: Dirección de facturación -->
                         <div class="col-6">
                             <div style="font-size: 9pt; line-height: 1.3;">
-                                <strong>Dirección de facturación: </strong><strong><span t-field="o.partner_id.name"/></strong><br/>
+                                <strong><span t-field="o.partner_id.name"/></strong><br/>
                                 <span t-field="o.partner_id.street"/>
-                                <t t-if="o.partner_id.street2">, <span t-field="o.partner_id.street2"/></t><br/>
+                                <t t-if="o.partner_id.street2"> <span t-field="o.partner_id.street2"/></t><br/>
                                 <span t-field="o.partner_id.zip"/>
                                 <span t-if="o.partner_id.city" t-field="o.partner_id.city"/>,
-                                <span t-if="o.partner_id.state_id" t-field="o.partner_id.state_id.name"/><br/>
+                                <span t-if="o.partner_id.state_id" t-field="o.partner_id.state_id.code"/><br/>
+                                <span t-if="o.partner_id.country_id" t-field="o.partner_id.country_id.name"/>
+                                <br/>
                                 <t t-if="o.partner_id.vat">
                                     <strong>RFC: </strong><span t-field="o.partner_id.vat"/>
                                 </t>
@@ -99,22 +94,19 @@
                         </div>
                     </div>
 
-                    <!-- Info adicional: Referencia cliente + Fecha/Hora -->
+                    <!-- Nombre comercial y Fecha/Hora -->
                     <div class="row mb-2" style="font-size: 9pt;">
                         <div class="col-6">
                             <t t-if="o.partner_id.ref">
-                                <strong>Ref. Cliente: </strong><span t-field="o.partner_id.ref"/>
+                                <span t-field="o.partner_id.ref"/>
                             </t>
                         </div>
                         <div class="col-6 text-end">
                             <t t-if="o.create_date">
-                                <strong>Fecha/Hora: </strong><span t-field="o.create_date" t-options="{'widget': 'datetime', 'format': 'dd/MM/yyyy HH:mm:ss'}"/>
+                                <span t-field="o.create_date" t-options="{'widget': 'datetime', 'format': 'dd/MM/yyyy HH:mm:ss'}"/>
                             </t>
                         </div>
                     </div>
-
-                    <!-- Línea separadora -->
-                    <hr style="border-top: 1px solid #000; margin: 5px 0;"/>
 
                     <!-- ============================================ -->
                     <!-- TÍTULO DE LA FACTURA CON UUID -->
@@ -183,14 +175,14 @@
                     <table class="table table-sm table-bordered" style="border: 2px solid #000; font-size: 9pt;">
                         <thead style="background-color: #f5f5f5;">
                             <tr>
-                                <th class="text-center" style="border: 1px solid #000; width: 6%;">Código<br/>SAT</th>
                                 <th class="text-start" style="border: 1px solid #000; width: 8%;">Código<br/>Producto</th>
-                                <th class="text-start" style="border: 1px solid #000; width: 20%;">Descripción</th>
+                                <th class="text-start" style="border: 1px solid #000; width: 22%;">Descripción</th>
                                 <th class="text-start" style="border: 1px solid #000; width: 15%;">Lotes</th>
                                 <th class="text-end" style="border: 1px solid #000; width: 8%;">Cantidad</th>
-                                <th class="text-end" style="border: 1px solid #000; width: 6%;">Pzas</th>
-                                <th class="text-end" style="border: 1px solid #000; width: 10%;">Precio<br/>unitario</th>
-                                <th class="text-end" style="border: 1px solid #000; width: 12%;">Impuestos</th>
+                                <th class="text-end" style="border: 1px solid #000; width: 5%;">Pzas</th>
+                                <th class="text-end" style="border: 1px solid #000; width: 9%;">Precio<br/>unitario</th>
+                                <th class="text-center" style="border: 1px solid #000; width: 6%;">Código<br/>Unidad</th>
+                                <th class="text-center" style="border: 1px solid #000; width: 12%;">Impuestos</th>
                                 <th class="text-end" style="border: 1px solid #000; width: 10%;">Importe</th>
                             </tr>
                         </thead>
@@ -200,14 +192,8 @@
                             <t t-foreach="lines" t-as="line">
                                 <t t-if="line.display_type == 'product'">
                                     <tr>
-                                        <!-- Código SAT del producto (PRIMERA COLUMNA) -->
-                                        <td class="text-center" style="border: 1px solid #000; vertical-align: top; font-size: 8pt;">
-                                            <span t-if="line.product_id.unspsc_code_id"
-                                                  t-field="line.product_id.unspsc_code_id.code"/>
-                                        </td>
-
                                         <!-- Código de producto -->
-                                        <td style="border: 1px solid #000; vertical-align: top;">
+                                        <td style="border: 1px solid #000; vertical-align: top; font-size: 8pt;">
                                             <span t-if="line.product_id.default_code" t-field="line.product_id.default_code"/>
                                         </td>
 
@@ -229,7 +215,7 @@
                                                                         <span t-field="move_line.quantity" t-options="{'widget': 'float', 'precision': 1}"/>
                                                                         <span t-field="move_line.lot_id.name"/><br/>
                                                                         <t t-if="move_line.lot_id.expiration_date">
-                                                                            <span t-field="move_line.lot_id.expiration_date" t-options="{'widget': 'date'}"/>
+                                                                            <span t-field="move_line.lot_id.expiration_date" t-options="{'widget': 'datetime', 'format': 'dd/MM/yyyy HH:mm:ss'}"/> |
                                                                         </t>
                                                                     </div>
                                                                 </t>
@@ -242,7 +228,7 @@
 
                                         <!-- Cantidad -->
                                         <td class="text-end" style="border: 1px solid #000; vertical-align: top;">
-                                            <span t-field="line.quantity" t-options="{'widget': 'float', 'precision': 2}"/>
+                                            <span t-field="line.quantity" t-options="{'widget': 'float', 'precision': 3}"/>
                                             <span t-field="line.product_uom_id.name"/>
                                         </td>
 
@@ -253,11 +239,16 @@
 
                                         <!-- Precio unitario -->
                                         <td class="text-end" style="border: 1px solid #000; vertical-align: top;">
-                                            <span t-field="line.price_unit" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                            <span t-field="line.price_unit" t-options="{'widget': 'float', 'precision': 2}"/>
+                                        </td>
+
+                                        <!-- Código Unidad (SAT) -->
+                                        <td class="text-center" style="border: 1px solid #000; vertical-align: top; font-size: 8pt;">
+                                            <span t-if="line.product_uom_id.unspsc_code_id" t-field="line.product_uom_id.unspsc_code_id.code"/>
                                         </td>
 
                                         <!-- Impuestos -->
-                                        <td class="text-end" style="border: 1px solid #000; vertical-align: top;">
+                                        <td class="text-center" style="border: 1px solid #000; vertical-align: top;">
                                             <t t-set="taxes" t-value="', '.join([(tax.invoice_label or tax.name) for tax in line.tax_ids])"/>
                                             <span t-out="taxes"/>
                                         </td>
@@ -293,10 +284,10 @@
                     <!-- ============================================ -->
                     <div style="width: 100%; margin-top: 10px;">
                         <table style="width: 40%; margin-left: auto; font-size: 9pt; border-collapse: collapse;">
-                            <!-- Subtotal -->
+                            <!-- Importe sin impuestos -->
                             <tr>
-                                <td style="text-align: right; padding: 4px 10px;">
-                                    <strong>Subtotal</strong>
+                                <td style="text-align: right; padding: 4px 10px; color: #8B2332;">
+                                    <strong>Importe sin impuestos</strong>
                                 </td>
                                 <td style="text-align: right; padding: 4px 10px;">
                                     <span t-field="o.amount_untaxed" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
@@ -312,9 +303,7 @@
                                         <tr>
                                             <td style="text-align: right; padding: 4px 10px;">
                                                 <span t-out="group.get('tax_group_name', 'IVA')"/>
-                                                <t t-if="group.get('tax_group_base_amount_percent', 0) != 0">
-                                                    <span t-out="' %.0f%%' % group.get('tax_group_base_amount_percent', 0)"/>
-                                                </t>
+                                                <span t-out="' %.0f%%' % group.get('tax_group_base_amount_percent', 0)"/>
                                             </td>
                                             <td style="text-align: right; padding: 4px 10px;">
                                                 <span t-out="group.get('formatted_tax_group_amount', '0.00')"/>
@@ -327,7 +316,7 @@
                             <!-- Fallback: Si no hay detalles de impuestos, mostrar línea aunque sea 0 -->
                             <tr t-if="not has_tax_details">
                                 <td style="text-align: right; padding: 4px 10px;">
-                                    IVA 16%
+                                    IVA 0%
                                 </td>
                                 <td style="text-align: right; padding: 4px 10px;">
                                     <span t-field="o.amount_tax" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
@@ -348,33 +337,17 @@
                         </table>
                     </div>
 
+                    <!-- Referencia de pago -->
+                    <div class="mt-2" style="font-size: 9pt;">
+                        <t t-if="o.payment_reference or o.name">
+                            Utilice la siguiente referencia al realizar su pago: <strong><span t-field="o.payment_reference or o.name"/></strong>
+                        </t>
+                    </div>
+
                     <!-- Importe con letra -->
-                    <div class="mb-3">
+                    <div class="mt-2" style="font-size: 9pt;">
                         <t t-if="o.company_id.display_invoice_amount_total_words and o.amount_total_words">
-                            <strong>Importe total con letra:</strong><br/>
                             <span t-field="o.amount_total_words" style="text-transform: uppercase;"/>
-                        </t>
-                    </div>
-
-                    <!-- ============================================ -->
-                    <!-- TÉRMINOS DE PAGO -->
-                    <!-- ============================================ -->
-                    <div class="mt-3">
-                        <t t-if="o.invoice_payment_term_id">
-                            <strong>Plazo de pago: </strong>
-                            <span t-field="o.invoice_payment_term_id.name"/>
-                        </t>
-                    </div>
-
-                    <div class="mt-2">
-                        <t t-if="o.payment_reference">
-                            <strong>Referencia de pago: </strong>
-                            <span t-field="o.payment_reference"/>
-                        </t>
-                        <t t-if="o.partner_bank_id">
-                            <br/><strong>en esta cuenta: </strong>
-                            <span t-field="o.partner_bank_id.acc_number"/> -
-                            <span t-field="o.partner_bank_id.bank_id.name"/>
                         </t>
                     </div>
 
@@ -427,25 +400,25 @@
                         <div style="display: table; width: 100%; margin-bottom: 20px;">
                             <!-- Código QR en la izquierda -->
                             <div style="display: table-cell; width: 30%; vertical-align: top; padding-right: 15px;">
-                                <!-- Buscar QR code en los attachments de la factura -->
-                                <t t-set="qr_attachment" t-value="o.env['ir.attachment'].search([
-                                    ('res_model', '=', 'account.move'),
-                                    ('res_id', '=', o.id),
-                                    ('mimetype', 'in', ['image/png', 'image/jpeg', 'image/jpg']),
-                                    '|', '|', '|', '|',
-                                    ('name', 'ilike', 'qr'),
-                                    ('name', 'ilike', 'QR'),
-                                    ('name', 'ilike', 'codigo'),
-                                    ('description', 'ilike', 'qr'),
-                                    ('name', '=like', '%.png')
-                                ], order='create_date desc', limit=1)"/>
+                                <!-- Generar código QR dinámicamente del CFDI -->
+                                <t t-if="o.l10n_mx_edi_cfdi_uuid">
+                                    <!-- Construir URL de verificación del SAT -->
+                                    <t t-set="qr_value" t-value="'https://verificacfdi.facturaelectronica.sat.gob.mx/default.aspx?id=%s&amp;re=%s&amp;rr=%s&amp;tt=%s&amp;fe=%s' % (
+                                        o.l10n_mx_edi_cfdi_uuid,
+                                        (o.company_id.vat or '').replace(' ', ''),
+                                        (o.partner_id.vat or '').replace(' ', ''),
+                                        ('%.6f' % o.amount_total).replace('.', ''),
+                                        (o.x_cfdi_sello_emisor or '')[-8:] if o.x_cfdi_sello_emisor else ''
+                                    )"/>
 
-                                <div t-if="qr_attachment and qr_attachment.datas" style="text-align: center;">
-                                    <img t-att-src="image_data_uri(qr_attachment.datas)"
-                                         style="width: 180px; height: 180px; border: 1px solid #ccc;" alt="QR Code CFDI"/>
-                                </div>
+                                    <div style="text-align: center;">
+                                        <img t-att-src="'/report/barcode/?type=QR&amp;value=%s&amp;width=180&amp;height=180' % url_quote_plus(qr_value)"
+                                             style="width: 180px; height: 180px; border: 1px solid #ccc;"
+                                             alt="QR Code CFDI"/>
+                                    </div>
+                                </t>
                                 <div t-else="" style="width: 180px; height: 180px; border: 1px dashed #ccc; display: flex; align-items: center; justify-content: center; font-size: 8pt; color: #999; text-align: center;">
-                                    QR no disponible
+                                    QR no disponible<br/>(Factura sin timbrar)
                                 </div>
                             </div>
 

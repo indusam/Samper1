@@ -4,7 +4,8 @@
       "WebFetch(domain:github.com)",
       "Bash(python3 -m py_compile:*)",
       "Bash(xmllint:*)",
-      "WebSearch"
+      "WebSearch",
+      "WebFetch(domain:www.odoo.com)"
     ],
     "deny": [],
     "ask": []
