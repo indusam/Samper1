@@ -41,29 +41,30 @@
                     <!-- ENCABEZADO -->
                     <!-- ============================================ -->
                     <div class="row mb-3">
-                        <!-- Columna izquierda: Logo + Empresa -->
+                        <!-- Columna izquierda: Logo arriba, dirección de entrega abajo -->
                         <div class="col-6">
-                            <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)"
-                                 style="max-height: 80px; max-width: 200px;" alt="Company Logo"/>
-                            <div style="font-size: 9pt; line-height: 1.3; margin-top: 5px;">
+                            <!-- Logo de la empresa -->
+                            <div style="margin-bottom: 10px;">
+                                <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)"
+                                     style="max-height: 80px; max-width: 200px;" alt="Company Logo"/>
+                            </div>
+
+                            <!-- Información de la empresa -->
+                            <div style="font-size: 9pt; line-height: 1.3; margin-bottom: 15px;">
                                 <strong><span t-field="o.company_id.name"/></strong><br/>
                                 <span t-field="o.company_id.street"/>,
                                 <span t-field="o.company_id.zip"/>
-                                <span t-if="o.company_id.city" t-field="o.company_id.city"/>,
+                                <span t-if="o.company_id.city">col. <span t-field="o.company_id.city"/></span>,
                                 <span t-if="o.company_id.state_id" t-field="o.company_id.state_id.name"/>,
                                 <span t-if="o.company_id.country_id" t-field="o.company_id.country_id.name"/>
                             </div>
-                        </div>
 
-                        <!-- Columna derecha: Cliente -->
-                        <div class="col-6">
                             <!-- Obtener dirección de entrega de la orden de venta relacionada -->
                             <t t-set="sale_order" t-value="o.invoice_line_ids.mapped('sale_line_ids.order_id')[:1] if o.invoice_line_ids else False"/>
                             <t t-set="shipping_partner" t-value="sale_order.partner_shipping_id if sale_order else False"/>
-                            <t t-set="has_shipping" t-value="shipping_partner and (shipping_partner != o.partner_id)"/>
 
-                            <!-- Dirección de entrega si existe y es diferente -->
-                            <div t-if="has_shipping" style="font-size: 9pt; line-height: 1.3; margin-bottom: 12px;">
+                            <!-- Dirección de entrega (siempre mostrar si existe) -->
+                            <div t-if="shipping_partner" style="font-size: 9pt; line-height: 1.3;">
                                 <strong>Dirección de entrega:</strong><br/>
                                 <span t-field="shipping_partner.name"/><br/>
                                 <span t-field="shipping_partner.street"/>
@@ -72,11 +73,12 @@
                                 <span t-if="shipping_partner.city" t-field="shipping_partner.city"/>,
                                 <span t-if="shipping_partner.state_id" t-field="shipping_partner.state_id.name"/>
                             </div>
+                        </div>
 
-                            <!-- Dirección de facturación -->
+                        <!-- Columna derecha: Dirección de facturación -->
+                        <div class="col-6">
                             <div style="font-size: 9pt; line-height: 1.3;">
-                                <strong t-if="has_shipping">Dirección de facturación:</strong>
-                                <strong><span t-field="o.partner_id.name"/></strong><br/>
+                                <strong>Dirección de facturación: </strong><strong><span t-field="o.partner_id.name"/></strong><br/>
                                 <span t-field="o.partner_id.street"/>
                                 <t t-if="o.partner_id.street2">, <span t-field="o.partner_id.street2"/></t><br/>
                                 <span t-field="o.partner_id.zip"/>
@@ -314,8 +316,8 @@
                                 </t>
                             </t>
 
-                            <!-- Fallback: Si no hay detalles de impuestos pero sí hay monto de impuesto -->
-                            <tr t-if="not has_tax_details and o.amount_tax &gt; 0">
+                            <!-- Fallback: Si no hay detalles de impuestos, mostrar línea aunque sea 0 -->
+                            <tr t-if="not has_tax_details">
                                 <td style="text-align: right; padding: 4px 10px;">
                                     IVA 16%
                                 </td>
@@ -470,6 +472,19 @@
                                         </tr>
                                     </table>
                                 </div>
+                            </div>
+                        </div>
+
+                        <!-- Información Extra -->
+                        <div style="margin-bottom: 15px; margin-top: 20px;">
+                            <strong style="font-size: 9pt;">Información Extra</strong>
+                            <div style="font-size: 8pt; margin-top: 5px; line-height: 1.6;">
+                                <strong>Certificado del emisor:</strong> <span t-field="o.x_cfdi_certificado_emisor"/> |
+                                <strong>Certificado SAT:</strong> <span t-field="o.x_cfdi_certificado_sat"/><br/>
+                                <strong>Lugar de expedición:</strong> <span t-field="o.company_id.zip"/> |
+                                <strong>Folio Fiscal:</strong> <span t-field="o.l10n_mx_edi_cfdi_uuid"/><br/>
+                                <strong>Fecha de Emisión:</strong> <span t-field="o.invoice_date"/> |
+                                <strong>Fecha de Certificación:</strong> <span t-field="o.x_cfdi_fecha_certificacion"/>
                             </div>
                         </div>
 
