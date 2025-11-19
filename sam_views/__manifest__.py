@@ -34,7 +34,6 @@
     ],
     'data': [
         'views/res_partner_views.xml',
-        'views/factura_sam.xml',
     ],
     'installable': True,
     'application': False,
