@@ -38,86 +38,63 @@
             <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
                 <div class="page">
                     <!-- ============================================ -->
-                    <!-- ENCABEZADO -->
+                    <!-- ENCABEZADO ULTRA COMPACTO -->
                     <!-- ============================================ -->
                     <!-- Obtener orden de venta relacionada para datos adicionales -->
                     <t t-set="sale_order" t-value="o.invoice_line_ids.mapped('sale_line_ids.order_id')[:1] if o.invoice_line_ids else False"/>
                     <t t-set="shipping_partner" t-value="sale_order.partner_shipping_id if sale_order else False"/>
 
-                    <div class="row" style="margin-bottom: 5px;">
-                        <!-- Columna izquierda: Logo -->
-                        <div class="col-6">
+                    <div class="row" style="margin-bottom: 2px;">
+                        <!-- Columna izquierda: Logo + Info empresa -->
+                        <div class="col-7" style="font-size: 7pt; line-height: 1.1;">
                             <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)"
-                                 style="max-height: 60px;" alt="Company Logo"/>
-                        </div>
-
-                        <!-- Columna derecha: Info empresa -->
-                        <div class="col-6 text-end" style="font-size: 8pt; line-height: 1.2;">
+                                 style="max-height: 50px; margin-bottom: 2px;" alt="Company Logo"/><br/>
                             <strong><span t-field="o.company_id.name"/></strong><br/>
                             <span t-field="o.company_id.street"/><br/>
-                            <span t-field="o.company_id.zip"/>
-                            <span t-if="o.company_id.city">col. <span t-field="o.company_id.city"/></span>,
-                            <span t-if="o.company_id.state_id" t-field="o.company_id.state_id.name"/>,
-                            <span t-if="o.company_id.state_id" t-field="o.company_id.state_id.code"/><br/>
+                            <span t-field="o.company_id.zip"/> <span t-if="o.company_id.city" t-field="o.company_id.city"/>, <span t-if="o.company_id.state_id" t-field="o.company_id.state_id.code"/><br/>
                             <span t-if="o.company_id.country_id" t-field="o.company_id.country_id.name"/>
+                        </div>
+
+                        <!-- Columna derecha: Fecha/Hora -->
+                        <div class="col-5 text-end" style="font-size: 7pt;">
+                            <t t-if="o.create_date">
+                                <span t-field="o.create_date" t-options="{'widget': 'datetime', 'format': 'dd/MM/yyyy HH:mm:ss'}"/>
+                            </t>
                         </div>
                     </div>
 
-                    <!-- Línea separadora -->
-                    <hr style="border-top: 1px solid #000; margin: 3px 0 5px 0;"/>
+                    <hr style="border-top: 1px solid #000; margin: 2px 0;"/>
 
-                    <div class="row" style="margin-bottom: 3px;">
-                        <!-- Columna izquierda: Dirección de entrega -->
-                        <div class="col-6" style="font-size: 8pt; line-height: 1.2;">
+                    <div class="row" style="margin-bottom: 2px;">
+                        <!-- Columna izquierda: Dirección de entrega + Nombre comercial + Ruta -->
+                        <div class="col-6" style="font-size: 7pt; line-height: 1.1;">
                             <div t-if="shipping_partner">
                                 <strong>Dirección de entrega:</strong><br/>
                                 <span t-field="shipping_partner.name"/><br/>
-                                <span t-field="shipping_partner.street"/>
-                                <t t-if="shipping_partner.street2"> <span t-field="shipping_partner.street2"/></t><br/>
-                                <span t-field="shipping_partner.zip"/>
-                                <span t-if="shipping_partner.city" t-field="shipping_partner.city"/>,
-                                <span t-if="shipping_partner.state_id" t-field="shipping_partner.state_id.code"/><br/>
-                                <span t-if="shipping_partner.country_id" t-field="shipping_partner.country_id.name"/>
+                                <span t-field="shipping_partner.street"/> <t t-if="shipping_partner.street2"><span t-field="shipping_partner.street2"/></t><br/>
+                                <span t-field="shipping_partner.zip"/> <span t-if="shipping_partner.city" t-field="shipping_partner.city"/>, <span t-if="shipping_partner.state_id" t-field="shipping_partner.state_id.code"/>
                             </div>
-
-                            <!-- Nombre comercial -->
-                            <div t-if="o.partner_id.x_nombre_comercial" style="font-size: 11pt; margin-top: 3px;">
+                            <div t-if="o.partner_id.x_nombre_comercial" style="font-size: 11pt; margin-top: 2px; font-weight: bold;">
                                 <span t-field="o.partner_id.x_nombre_comercial"/>
                             </div>
-
-                            <!-- Ruta -->
-                            <div t-if="o.partner_id.x_ruta" style="font-size: 8pt;">
+                            <div t-if="o.partner_id.x_ruta" style="font-size: 7pt;">
                                 <span t-field="o.partner_id.x_ruta"/>
                             </div>
                         </div>
 
                         <!-- Columna derecha: Dirección de facturación -->
-                        <div class="col-6" style="font-size: 8pt; line-height: 1.2;">
+                        <div class="col-6" style="font-size: 7pt; line-height: 1.1;">
                             <strong><span t-field="o.partner_id.name"/></strong><br/>
-                            <span t-field="o.partner_id.street"/>
-                            <t t-if="o.partner_id.street2"> <span t-field="o.partner_id.street2"/></t><br/>
-                            <span t-field="o.partner_id.zip"/>
-                            <span t-if="o.partner_id.city" t-field="o.partner_id.city"/>,
-                            <span t-if="o.partner_id.state_id" t-field="o.partner_id.state_id.code"/><br/>
-                            <span t-if="o.partner_id.country_id" t-field="o.partner_id.country_id.name"/>
-                            <br/>
-                            <t t-if="o.partner_id.vat">
-                                <strong>RFC: </strong><span t-field="o.partner_id.vat"/>
-                            </t>
+                            <span t-field="o.partner_id.street"/> <t t-if="o.partner_id.street2"><span t-field="o.partner_id.street2"/></t><br/>
+                            <span t-field="o.partner_id.zip"/> <span t-if="o.partner_id.city" t-field="o.partner_id.city"/>, <span t-if="o.partner_id.state_id" t-field="o.partner_id.state_id.code"/><br/>
+                            <t t-if="o.partner_id.vat"><strong>RFC: </strong><span t-field="o.partner_id.vat"/></t>
                         </div>
-                    </div>
-
-                    <!-- Fecha/Hora -->
-                    <div class="text-end" style="font-size: 8pt; margin-bottom: 3px;">
-                        <t t-if="o.create_date">
-                            <span t-field="o.create_date" t-options="{'widget': 'datetime', 'format': 'dd/MM/yyyy HH:mm:ss'}"/>
-                        </t>
                     </div>
 
                     <!-- ============================================ -->
                     <!-- TÍTULO DE LA FACTURA CON UUID -->
                     <!-- ============================================ -->
-                    <h2 style="color: #8B2332; margin: 5px 0 3px 0; font-size: 18pt;">
+                    <div style="color: #8B2332; margin: 2px 0; font-size: 14pt; font-weight: bold;">
                         <t t-if="o.move_type == 'out_invoice' and o.state == 'posted'">Factura </t>
                         <t t-elif="o.move_type == 'out_invoice' and o.state == 'draft'">Borrador de Factura </t>
                         <t t-elif="o.move_type == 'out_invoice' and o.state == 'cancel'">Factura Cancelada </t>
@@ -125,50 +102,41 @@
                         <t t-elif="o.move_type == 'out_refund' and o.state == 'draft'">Borrador de Nota de Crédito </t>
                         <t t-elif="o.move_type == 'out_refund' and o.state == 'cancel'">Nota de Crédito Cancelada </t>
                         <span t-if="o.name and o.name != '/'" t-field="o.name"/>
-                    </h2>
+                    </div>
 
                     <!-- UUID/Folio Fiscal (si existe) -->
-                    <div t-if="o.l10n_mx_edi_cfdi_uuid" style="font-size: 9pt; margin-bottom: 5px;">
+                    <div t-if="o.l10n_mx_edi_cfdi_uuid" style="font-size: 7pt; margin-bottom: 2px;">
                         <span t-field="o.l10n_mx_edi_cfdi_uuid"/>
                     </div>
 
                     <!-- ============================================ -->
                     <!-- INFORMACIÓN DE LA FACTURA (Formato Compacto) -->
                     <!-- ============================================ -->
-                    <table style="width: 100%; font-size: 8pt; margin-bottom: 5px; border-collapse: collapse;">
+                    <table style="width: 100%; font-size: 7pt; margin-bottom: 3px; border-collapse: collapse;">
                         <tr>
-                            <td style="width: 16%; vertical-align: top; padding: 2px 5px 2px 0;">
-                                <strong>Fecha de factura:</strong><br/>
-                                <span t-field="o.invoice_date"/>
+                            <td style="width: 14%; vertical-align: top; padding: 1px 3px 1px 0;">
+                                <strong>Fecha:</strong> <span t-field="o.invoice_date"/>
                             </td>
-                            <td style="width: 16%; vertical-align: top; padding: 2px 5px;">
-                                <strong>Fecha límite:</strong><br/>
-                                <span t-if="o.invoice_date_due" t-field="o.invoice_date_due"/>
+                            <td style="width: 14%; vertical-align: top; padding: 1px 3px;">
+                                <strong>Límite:</strong> <span t-if="o.invoice_date_due" t-field="o.invoice_date_due"/>
                             </td>
-                            <td style="width: 16%; vertical-align: top; padding: 2px 5px;">
-                                <strong>Origen:</strong><br/>
-                                <span t-if="o.invoice_origin" t-field="o.invoice_origin"/>
+                            <td style="width: 12%; vertical-align: top; padding: 1px 3px;">
+                                <strong>Origen:</strong> <span t-if="o.invoice_origin" t-field="o.invoice_origin"/>
                             </td>
-                            <td style="width: 26%; vertical-align: top; padding: 2px 5px;">
-                                <strong>Uso:</strong><br/>
-                                <span t-if="o.l10n_mx_edi_usage" t-field="o.l10n_mx_edi_usage"/>
+                            <td style="width: 24%; vertical-align: top; padding: 1px 3px;">
+                                <strong>Uso:</strong> <span t-if="o.l10n_mx_edi_usage" t-field="o.l10n_mx_edi_usage"/>
                             </td>
-                            <td style="width: 13%; vertical-align: top; padding: 2px 5px;">
-                                <strong>Forma de Pago:</strong><br/>
+                            <td style="width: 18%; vertical-align: top; padding: 1px 3px;">
+                                <strong>F. Pago:</strong>
                                 <t t-if="o.l10n_mx_edi_payment_method_id">
-                                    <span t-field="o.l10n_mx_edi_payment_method_id.code"/> -
-                                    <span t-field="o.l10n_mx_edi_payment_method_id.name"/>
+                                    <span t-field="o.l10n_mx_edi_payment_method_id.code"/> - <span t-field="o.l10n_mx_edi_payment_method_id.name"/>
                                 </t>
                             </td>
-                            <td style="width: 13%; vertical-align: top; padding: 2px 5px;">
-                                <strong>Método de Pago:</strong><br/>
-                                <span t-if="o.l10n_mx_edi_payment_policy" t-field="o.l10n_mx_edi_payment_policy"/>
+                            <td style="width: 10%; vertical-align: top; padding: 1px 3px;">
+                                <strong>M. Pago:</strong> <span t-if="o.l10n_mx_edi_payment_policy" t-field="o.l10n_mx_edi_payment_policy"/>
                             </td>
-                        </tr>
-                        <tr t-if="o.ref">
-                            <td colspan="6" style="vertical-align: top; padding: 2px 5px 2px 0;">
-                                <strong>Referencia:</strong>
-                                <span t-field="o.ref"/>
+                            <td t-if="o.ref" style="width: 18%; vertical-align: top; padding: 1px 3px;">
+                                <strong>Ref:</strong> <span t-field="o.ref"/>
                             </td>
                         </tr>
                     </table>
@@ -358,42 +326,64 @@
                     </div>
 
                     <!-- Comentarios -->
-                    <div style="margin-top: 5px; font-size: 8pt;" t-if="o.narration">
+                    <div style="margin-top: 5px; font-size: 7pt;" t-if="o.narration">
                         <span t-field="o.narration"/>
                     </div>
 
+                    <!-- ============================================ -->
+                    <!-- QR Y SELLOS EN PÁGINA 1 (SOLO SI HAY POCOS PRODUCTOS) -->
+                    <!-- ============================================ -->
+                    <t t-set="num_products" t-value="len(o.invoice_line_ids.filtered(lambda l: l.display_type == 'product'))"/>
+                    <t t-if="o.l10n_mx_edi_cfdi_uuid and o.state == 'posted' and num_products &lt;= 3">
+                        <div style="margin-top: 10px; font-size: 7pt;">
+                            <div class="row">
+                                <!-- QR Code -->
+                                <div class="col-3">
+                                    <strong>QR CFDI:</strong><br/>
+                                    <t t-set="qr_data" t-value="'https://verificacfdi.facturaelectronica.sat.gob.mx/default.aspx?id=' + str(o.l10n_mx_edi_cfdi_uuid)"/>
+                                    <img t-att-src="'/report/barcode/?type=QR&amp;value=' + qr_data + '&amp;width=120&amp;height=120'"
+                                         style="width: 120px; height: 120px;"
+                                         alt="QR CFDI"/>
+                                </div>
+
+                                <!-- Información de Certificados -->
+                                <div class="col-9" style="font-size: 6pt; line-height: 1.2;">
+                                    <strong>Información de Certificados:</strong><br/>
+                                    <strong>Cert. Emisor:</strong> <span t-field="o.x_cfdi_certificado_emisor"/> |
+                                    <strong>Cert. SAT:</strong> <span t-field="o.x_cfdi_certificado_sat"/> |
+                                    <strong>Folio Fiscal:</strong> <span t-field="o.l10n_mx_edi_cfdi_uuid"/><br/>
+                                    <strong>Sello Emisor:</strong> <span t-if="o.x_cfdi_sello_emisor" t-esc="o.x_cfdi_sello_emisor[:100] + '...'"/><br/>
+                                    <strong>Sello SAT:</strong> <span t-if="o.x_cfdi_sello_sat" t-esc="o.x_cfdi_sello_sat[:100] + '...'"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+
                     <!-- Footer de la primera página -->
-                    <div style="width: 100%; text-align: center; font-size: 8pt; border-top: 1px solid #ccc; padding-top: 5px; margin-top: 10px;">
+                    <div style="width: 100%; text-align: center; font-size: 7pt; border-top: 1px solid #ccc; padding-top: 3px; margin-top: 8px;">
                         <span t-if="o.company_id.email"><span t-field="o.company_id.email"/> | </span>
                         <span t-if="o.company_id.website"><span t-field="o.company_id.website"/> | </span>
                         <span t-if="o.company_id.vat">RFC: <span t-field="o.company_id.vat"/></span>
-                        <div style="text-align: right; margin-top: 3px;">
-                            <t t-if="o.l10n_mx_edi_cfdi_uuid and o.state == 'posted'">
-                                Página 1 / 2
-                            </t>
-                            <t t-else="">
-                                Página 1 / 1
-                            </t>
-                        </div>
                     </div>
 
                 </div>
 
                 <!-- ============================================ -->
-                <!-- SEGUNDA PÁGINA: INFORMACIÓN FISCAL CFDI -->
+                <!-- SEGUNDA PÁGINA: INFORMACIÓN FISCAL CFDI (SOLO SI HAY MUCHOS PRODUCTOS) -->
                 <!-- ============================================ -->
-                <t t-if="o.l10n_mx_edi_cfdi_uuid and o.state == 'posted'">
-                    <div class="page" style="page-break-before: always; font-size: 9pt;">
-                        <!-- Encabezado página 2 -->
-                        <div style="margin-bottom: 15px;">
+                <t t-set="num_products" t-value="len(o.invoice_line_ids.filtered(lambda l: l.display_type == 'product'))"/>
+                <t t-if="o.l10n_mx_edi_cfdi_uuid and o.state == 'posted' and num_products &gt; 3">
+                    <div class="page" style="page-break-before: always; font-size: 7pt;">
+                        <!-- Encabezado compacto página 2 -->
+                        <div style="margin-bottom: 5px;">
                             <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)"
-                                 style="max-height: 60px; max-width: 150px;" alt="Company Logo"/>
+                                 style="max-height: 50px;" alt="Company Logo"/>
                         </div>
 
-                        <hr style="border-top: 2px solid #8B2332; margin-bottom: 15px;"/>
+                        <hr style="border-top: 1px solid #000; margin-bottom: 5px;"/>
 
                         <!-- Información de la empresa -->
-                        <div style="text-align: center; margin-bottom: 20px; font-size: 9pt;">
+                        <div style="text-align: center; margin-bottom: 10px; font-size: 7pt;">
                             <strong><span t-field="o.company_id.name"/></strong><br/>
                             <span t-field="o.company_id.street"/>,
                             <span t-field="o.company_id.zip"/>
@@ -403,30 +393,20 @@
                         </div>
 
                         <!-- Layout de dos columnas: QR a la izquierda, información a la derecha -->
-                        <div style="display: table; width: 100%; margin-bottom: 20px;">
+                        <div style="display: table; width: 100%; margin-bottom: 10px;">
                             <!-- Código QR en la izquierda -->
-                            <div style="display: table-cell; width: 30%; vertical-align: top; padding-right: 15px;">
+                            <div style="display: table-cell; width: 25%; vertical-align: top; padding-right: 10px;">
                                 <!-- Generar código QR dinámicamente del CFDI -->
                                 <t t-if="o.l10n_mx_edi_cfdi_uuid">
-                                    <!-- Construir componentes de la URL -->
-                                    <t t-set="uuid" t-value="o.l10n_mx_edi_cfdi_uuid or ''"/>
-                                    <t t-set="rfc_emisor" t-value="(o.company_id.vat or '').replace(' ', '')"/>
-                                    <t t-set="rfc_receptor" t-value="(o.partner_id.vat or '').replace(' ', '')"/>
-                                    <t t-set="total" t-value="'%.6f' % o.amount_total"/>
-                                    <t t-set="total_sin_punto" t-value="total.replace('.', '')"/>
-                                    <t t-set="sello_emisor" t-value="o.x_cfdi_sello_emisor or ''"/>
-                                    <t t-set="ultimos_8" t-value="sello_emisor[-8:] if len(sello_emisor) >= 8 else ''"/>
-
-                                    <!-- URL del SAT -->
-                                    <t t-set="qr_url" t-value="'https://verificacfdi.facturaelectronica.sat.gob.mx/default.aspx?id=' + uuid + '&amp;re=' + rfc_emisor + '&amp;rr=' + rfc_receptor + '&amp;tt=' + total_sin_punto + '&amp;fe=' + ultimos_8"/>
+                                    <t t-set="qr_data" t-value="'https://verificacfdi.facturaelectronica.sat.gob.mx/default.aspx?id=' + str(o.l10n_mx_edi_cfdi_uuid)"/>
 
                                     <div style="text-align: center;">
-                                        <img t-att-src="'/report/barcode/?type=QR&amp;value=' + qr_url + '&amp;width=180&amp;height=180'"
-                                             style="width: 180px; height: 180px; border: 1px solid #ccc;"
+                                        <img t-att-src="'/report/barcode/?type=QR&amp;value=' + qr_data + '&amp;width=150&amp;height=150'"
+                                             style="width: 150px; height: 150px; border: 1px solid #ccc;"
                                              alt="QR Code CFDI"/>
                                     </div>
                                 </t>
-                                <div t-else="" style="width: 180px; height: 180px; border: 1px dashed #ccc; display: flex; align-items: center; justify-content: center; font-size: 8pt; color: #999; text-align: center;">
+                                <div t-else="" style="width: 150px; height: 150px; border: 1px dashed #ccc; display: flex; align-items: center; justify-content: center; font-size: 7pt; color: #999; text-align: center;">
                                     QR no disponible<br/>(Factura sin timbrar)
                                 </div>
                             </div>
