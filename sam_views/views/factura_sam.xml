@@ -412,7 +412,7 @@
                                     )"/>
 
                                     <div style="text-align: center;">
-                                        <img t-att-src="'/report/barcode/?type=QR&amp;value=%s&amp;width=180&amp;height=180' % url_quote_plus(qr_value)"
+                                        <img t-attf-src="/report/barcode/?type=QR&amp;value={{qr_value}}&amp;width=180&amp;height=180"
                                              style="width: 180px; height: 180px; border: 1px solid #ccc;"
                                              alt="QR Code CFDI"/>
                                     </div>
