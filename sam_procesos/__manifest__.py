@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Samper - Procesos',
-    'version': '16.0.1.0.0',
+    'version': '18.0.1.0.0',
     'category': 'Purchase',
     'summary': 'Módulo para procesos personalizados de Samper',
     'description': """

@@ -32,7 +32,7 @@
     'summary': "Addenda Liverpool",
     'website': 'http://www.birtum.com/',
     'license': 'AGPL-3',
-    'version': '16.0',
+    'version': '18.0',
     'description': """
 Addenda Liverpool
 ===============================================================

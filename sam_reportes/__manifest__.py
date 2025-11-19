@@ -23,7 +23,7 @@
 {
     'name': 'Reportes SAM',
     'summary': 'Reportes para SAMPER',
-    'version': '2.0',
+    'version': '18.0.1.0.0',
     'category': 'MRP',
     'author': 'VBueno',
     'maintainer': 'Industrias Alimenticias SAM SA de CV',
