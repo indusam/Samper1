@@ -23,9 +23,9 @@ class FormulaBaseCarnicos(models.TransientModel):
 
     product_tmpl = fields.Many2one('product.template', string="Producto")
     producto = fields.Many2one('mrp.bom', string="Lista de Materiales", domain="[('product_tmpl_id', '=', product_tmpl)]")
-    cantidad = fields.Float(string="Total Cárnicos", digits=(12, 4))
-    ing_limitante = fields.Many2one('mrp.bom.line', string="Ingrediente limitante", domain="[('bom_id', '=', producto)]")
-    cant_limitante = fields.Float(string="Cantidad limitante", digits=(12, 4))
+    cantidad = fields.Float(string="Total Cárnicos")
+    ing_limitante = fields.Many2one('mrp.bom.line',string="Ingrediente limitante")
+    cant_limitante = fields.Float(string="Cantidad limitante")
     consolidado = fields.Boolean(string="Fórmula consolidada",  )
 
     # campos para consolidar
@@ -50,10 +50,8 @@ class FormulaBaseCarnicos(models.TransientModel):
     # permite seleccionar el ingrediente limitante.
     @api.onchange('producto')
     def onchange_producto(self):
-        if self.producto:
-            return {'domain': {'ing_limitante': [('bom_id', '=', self.producto.id)]}}
-        else:
-            return {'domain': {'ing_limitante': [('id', '=', False)]}}
+        nlista = self.producto.id
+        return {'domain': {'ing_limitante': [('bom_id', '=', nlista)]}}
 
     # imprime formula
     def imprime_formula_base_carnicos(self):

@@ -26,7 +26,7 @@
         <field name="name">Antiguedad de saldos detalle</field>
         <field name="res_model">ant.saldos.detalle.wizard</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="view_mode">form</field>
+        <field name="view_mode">tree,form</field>
         <field name="view_id" ref="report_wizard_ant_saldos_detalle_view_form"/>
         <field name="target">new</field>
     </record>

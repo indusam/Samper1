@@ -1,72 +1,40 @@
 # -*- coding: utf-8 -*-
-"""
-peso_cantidad_caja.py
-Captura de peso y cantidad por caja de un producto.
-VBueno 1903202411:29
-Actualizado para Odoo v18
-"""
+
+# peso_cantidad_caja.py
+# Captura de peso y cantidad por caja de un producto.
+# VBueno 1903202411:29
+# ...
 
 import logging
+from odoo.tools.float_utils import float_round
 from odoo import models, fields, api
 from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
 
+# Modelo 'wizard.pesocajacantidad' para capturar el peso y cantidad por caja de un producto.
 class PesoCantidadCaja(models.TransientModel):
-    """
-    Wizard para capturar el peso y cantidad por caja de un producto.
-    Actualizado para Odoo v18.
-    """
-    _name = 'wizard.pesocajacantidad'
-    _description = 'Peso y cantidad en caja'
+    _name = 'wizard.pesocajacantidad'  # Nombre del modelo
+    _description = 'Peso y cantidad en caja'  # Descripción del modelo
 
     # Campos del modelo:
-    producto = fields.Many2one(
-        'product.template',
-        string="Producto",
-        required=True
-    )
-    cantidad = fields.Char(
-        string="Cantidad por caja",
-        help="Cantidad de productos por caja"
-    )
-    peso = fields.Char(
-        string="Peso por caja",
-        help="Peso total de la caja"
-    )
+    producto = fields.Many2one('product.template', string="Producto")  # Relación con el producto
+    cantidad = fields.Char(string="Cantidad por caja")  # Cantidad de productos por caja
+    peso = fields.Char(string="Peso por caja")  # Peso total de la caja
 
+    # Método que se activa cuando se selecciona un producto:
     @api.onchange('producto')
     def _onchange_producto(self):
-        """
-        Al cambiar el producto, se cargan automáticamente el peso y cantidad
-        por caja del producto seleccionado.
-        """
-        if self.producto:
-            self.peso = str(self.producto.x_peso_por_caja) if hasattr(self.producto, 'x_peso_por_caja') else '0'
-            self.cantidad = str(self.producto.x_cantidad_por_caja) if hasattr(self.producto, 'x_cantidad_por_caja') else '0'
-        else:
-            self.peso = '0'
-            self.cantidad = '0'
+        # Al cambiar el producto, se asignan el peso y cantidad por caja del producto seleccionado
+        self.peso = self.producto.x_peso_por_caja if self.producto else 0
+        self.cantidad = self.producto.x_cantidad_por_caja if self.producto else 0
 
+    # Método para aplicar los cambios en el peso y cantidad por caja:
     def aplicar_peso_cantidad(self):
-        """
-        Aplica los cambios en el peso y cantidad por caja al producto seleccionado.
-
-        :raises UserError: Si no se ha seleccionado un producto
-        :return: True si se actualizó correctamente
-        """
-        self.ensure_one()
-
+        # Verifica que se haya seleccionado un producto
         if not self.producto:
             raise UserError("Debe seleccionar un producto.")
-
         # Actualiza los campos 'x_peso_por_caja' y 'x_cantidad_por_caja' en el producto
-        self.producto.write({
-            'x_peso_por_caja': self.peso,
-            'x_cantidad_por_caja': self.cantidad
-        })
-
-        _logger.info(f"Actualizado peso y cantidad por caja para producto {self.producto.name}")
-
-        return {'type': 'ir.actions.act_window_close'}
+        self.producto.write({'x_peso_por_caja': self.peso, 'x_cantidad_por_caja': self.cantidad})
+        return True
 

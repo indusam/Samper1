@@ -150,11 +150,8 @@ class AccountMoveLine(models.Model):
     _inherit = 'account.move.line'
 
     def get_price_gross(self):
-        taxes_line = self.filtered('price_subtotal').tax_ids
-        # flatten_taxes_hierarchy() was removed in Odoo v16+
-        # Taxes are now automatically flattened
-        if hasattr(taxes_line, 'flatten_taxes_hierarchy'):
-            taxes_line = taxes_line.flatten_taxes_hierarchy()
+        taxes_line = self.filtered(
+            'price_subtotal').tax_ids.flatten_taxes_hierarchy()
         transferred = taxes_line.filtered(lambda r: r.amount >= 0)
         price_net = self.price_unit * self.quantity
         price_gross = price_net

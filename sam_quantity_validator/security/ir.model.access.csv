@@ -1,4 +1,1 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_mrp_consumption_warning_line_user,access_mrp_consumption_warning_line_user,model_mrp_consumption_warning_line,mrp.group_mrp_user,1,1,1,1
-access_mrp_consumption_warning_line_manager,access_mrp_consumption_warning_line_manager,model_mrp_consumption_warning_line,mrp.group_mrp_manager,1,1,1,1
-access_quantity_validator_action_user,access_quantity_validator_action_user,model_quantity_validator_action,base.group_system,1,1,1,1
