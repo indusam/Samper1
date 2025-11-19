@@ -27,39 +27,30 @@
 {
     'name': 'Birtum | Addenda Liverpool',
     'author': 'Birtum ©',
-    'category': 'Accounting/Localizations/EDI',
+    'category': 'Account',
     'sequence': 50,
-    'summary': "Addenda Liverpool for Mexican CFDI 4.0",
-    'website': 'https://www.birtum.com/',
+    'summary': "Addenda Liverpool",
+    'website': 'http://www.birtum.com/',
     'license': 'AGPL-3',
-    'version': '18.0.1.0.0',
+    'version': '16.0',
     'description': """
 Addenda Liverpool
 ===============================================================
-This module adds the Liverpool addenda (detallista) to Mexican CFDI 4.0 invoices.
-
-Features:
-- Automatic addenda generation for Liverpool customer invoices
-- Support for CFDI 4.0 format
-- Configurable per partner
-- GLN (Global Location Number) support
-- Purchase order and delivery folio tracking
+This module adds the Liverpool addenda in signed invoices
     """,
     'depends': [
         'base',
         'account',
-        'l10n_mx_edi',
+        'l10n_mx_edi'
     ],
     'data': [
-        # Addenda is now generated programmatically in v18
-        # 'data/addenda_liverpool_v40.xml',  # Removed - not needed in v18
+        'data/addenda_liverpool_v40.xml',
         'views/inherit_res_partner_view.xml',
         'views/inherit_res_company_view.xml',
-        'views/inherit_account_move_view.xml',
+        'views/inherit_account_move_view.xml'
     ],
     'demo': [],
     'assets': {},
     'installable': True,
     'application': False,
-    'auto_install': False,
 }

@@ -23,32 +23,27 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ########################################################################
-from odoo import fields, models
+from odoo import models, fields, api, _
 
 
 class ResPartner(models.Model):
-    """Extend res.partner to add Liverpool addenda configuration fields."""
-
     _inherit = 'res.partner'
 
     global_localitation_number = fields.Char(
-        string='Global Location Number (GLN)',
+        string='Global localitation number(GLN)',
         help='Specifies the global location number (GLN) of the buyer.',
-        copy=False,
+        copy=False
     )
     person_order_department = fields.Char(
-        string='Purchase Contact',
-        help='Specify purchase contact information.',
-        copy=False,
+        string='Purchase contact',
+        help='specify purchase contact information',
+        copy=False
     )
     supplier_identification = fields.Char(
-        string='Supplier Identification',
+        string='Supplier identification',
         help='Specify the code to identify what type of secondary '
-             'identification is assigned to the provider.',
-        copy=False,
+             'identification is assigned to the provider'
     )
     generate_addenda_liverpool = fields.Boolean(
-        string='Generate Addenda Liverpool',
-        help='Check this field if you need to generate Liverpool addenda for this customer.',
-        default=False,
-    )
+        string='Generate addenda Liverpool',
+        help='Check this field if require generate addenda Liverpool')

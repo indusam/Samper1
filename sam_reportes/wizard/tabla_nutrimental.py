@@ -23,9 +23,9 @@ class TablaNutrimental(models.TransientModel):
     _description = 'Tabla Nutrimental'
 
     producto = fields.Many2one('mrp.bom', string="Producto")
-    cantidad = fields.Float(string="Cantidad", digits=(12, 4))
-    ing_limitante = fields.Many2one('mrp.bom.line', string="Ingrediente limitante", domain="[('bom_id', '=', producto)]")
-    cant_limitante = fields.Float(string="Cantidad limitante", digits=(12, 4))
+    cantidad = fields.Float(string="Cantidad")
+    ing_limitante = fields.Many2one('mrp.bom.line',string="Ingrediente limitante")
+    cant_limitante = fields.Float(string="Cantidad limitante")
     pct_merma = fields.Float(string='% Merma')
     consolidado = fields.Boolean(string="Fórmula consolidada", )
 
@@ -87,12 +87,11 @@ class TablaNutrimental(models.TransientModel):
     # permite seleccionar el ingrediente limitante.
     @api.onchange('producto')
     def onchange_producto(self):
-        if self.producto:
-            self.pct_merma = self.producto.product_tmpl_id.x_pct_merma
-            return {'domain': {'ing_limitante': [('bom_id', '=', self.producto.id)]}}
-        else:
-            self.pct_merma = 0.0
-            return {'domain': {'ing_limitante': [('id', '=', False)]}}
+        nlista = self.producto.id
+        self.pct_merma = self.producto.product_tmpl_id.x_pct_merma
+        for rec in self:
+            return {'domain': {'ing_limitante':
+                                   [('bom_id', '=', nlista)]}}
 
 
     # imprime la tabla nutrimental.

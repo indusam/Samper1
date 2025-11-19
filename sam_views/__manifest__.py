@@ -21,6 +21,7 @@
         Vistas personalizadas:
         ----------------------
         * res.partner: Vista de lista con campos personalizados
+        * account.move: Plantilla de factura personalizada con formato Samper
     """,
     'author': 'Samper',
     'website': 'https://www.samper.com',
@@ -28,6 +29,8 @@
     'depends': [
         'base',
         'stock',
+        'account',
+        'l10n_mx_edi',
     ],
     'data': [
         'views/res_partner_views.xml',

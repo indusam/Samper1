@@ -45,25 +45,25 @@ class StockMove(models.Model):
     def _action_assign(self, force_qty=None):
         """Override _action_assign to handle quantity validation."""
         res = super()._action_assign(force_qty=force_qty)
-
+        
         for move in self:
             try:
                 qty_to_validate = force_qty if force_qty is not None else (move.product_uom_qty or 0.0)
-
-                # Round to 4 decimal places
-                rounded_qty = round(float(qty_to_validate), 4)
-
+                
+                # Round to 6 decimal places
+                rounded_qty = round(float(qty_to_validate), 6)
+                
                 # If the rounded value is effectively 0, set to 0.0
-                if abs(rounded_qty) < 0.0001:
+                if abs(rounded_qty) < 0.000001:
                     rounded_qty = 0.0
-
+                
                 # Update the corresponding field
                 if force_qty is not None:
                     move.product_uom_qty = rounded_qty
                 else:
                     move.quantity_done = rounded_qty
-
+                    
             except Exception:
                 continue
-
+                
         return res

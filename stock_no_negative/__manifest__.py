@@ -5,27 +5,16 @@
 
 {
     'name': 'Stock Disallow Negative',
-    'version': '18.0.1.0.0',
-    'category': 'Inventory/Inventory',
+    'version': '12.0',
+    'category': 'Inventory, Logistic, Storage',
     'license': 'AGPL-3',
     'summary': 'Disallow negative stock levels by default',
-    'description': """
-Stock Disallow Negative
-========================
-By default, Odoo allows negative stock. This module allows you to disallow
-negative stock levels by default, with granular control:
-- By product (in product form)
-- By product category (in category configuration)
-- By location (in location configuration)
-    """,
-    'author': 'Akretion, Odoo Community Association (OCA), Samper',
-    'website': 'https://www.samper.mx',
+    'author': 'Akretion,Odoo Community Association (OCA)',
+    'website': 'https://github.com/OCA/stock-logistics-workflow',
     'depends': ['stock'],
     'data': [
         'views/product_product_views.xml',
         'views/stock_location_views.xml',
     ],
     'installable': True,
-    'application': False,
-    'auto_install': False,
 }

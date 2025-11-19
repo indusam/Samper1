@@ -1,3 +1,2 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_intermedios_empaques_user,access_intermedios_empaques_user,model_intermedios_empaques,mrp.group_mrp_user,1,1,1,1
-access_intermedios_empaques_manager,access_intermedios_empaques_manager,model_intermedios_empaques,mrp.group_mrp_manager,1,1,1,1
+access_intermedios_empaques,access_intermedios_empaques,model_intermedios_empaques,base.group_user,1,1,1,1

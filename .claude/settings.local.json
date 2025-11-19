@@ -3,7 +3,9 @@
     "allow": [
       "WebFetch(domain:github.com)",
       "Bash(python3 -m py_compile:*)",
-      "Bash(xmllint:*)"
+      "Bash(xmllint:*)",
+      "WebSearch",
+      "WebFetch(domain:www.odoo.com)"
     ],
     "deny": [],
     "ask": []
