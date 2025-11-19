@@ -27,13 +27,9 @@
     </template>
 
     <!-- Plantilla personalizada del documento de factura -->
-    <template id="report_invoice_document_sam" inherit_id="account.report_invoice_document" primary="True">
-
-        <!-- Reemplazar todo el contenido del documento -->
-        <xpath expr="//t[@t-call='web.external_layout']" position="replace">
-            <!-- No usar external_layout para tener control total del diseño -->
-            <t t-set="o" t-value="o.with_context(lang=lang)"/>
-            <t t-set="forced_vat" t-value="o.fiscal_position_id.foreign_vat"/>
+    <template id="report_invoice_document_sam">
+        <t t-set="o" t-value="o.with_context(lang=lang)"/>
+        <t t-set="forced_vat" t-value="o.fiscal_position_id.foreign_vat"/>
 
             <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
                 <div class="page">
@@ -340,8 +336,7 @@
                                 <!-- QR Code -->
                                 <div class="col-3">
                                     <strong>QR CFDI:</strong><br/>
-                                    <t t-set="qr_data" t-value="'https://verificacfdi.facturaelectronica.sat.gob.mx/default.aspx?id=' + str(o.l10n_mx_edi_cfdi_uuid)"/>
-                                    <img t-att-src="'/report/barcode/?type=QR&amp;value=' + qr_data + '&amp;width=120&amp;height=120'"
+                                    <img t-attf-src="/report/barcode/?type=QR&amp;value={{o.l10n_mx_edi_cfdi_uuid}}&amp;width=120&amp;height=120"
                                          style="width: 120px; height: 120px;"
                                          alt="QR CFDI"/>
                                 </div>
@@ -398,10 +393,8 @@
                             <div style="display: table-cell; width: 25%; vertical-align: top; padding-right: 10px;">
                                 <!-- Generar código QR dinámicamente del CFDI -->
                                 <t t-if="o.l10n_mx_edi_cfdi_uuid">
-                                    <t t-set="qr_data" t-value="'https://verificacfdi.facturaelectronica.sat.gob.mx/default.aspx?id=' + str(o.l10n_mx_edi_cfdi_uuid)"/>
-
                                     <div style="text-align: center;">
-                                        <img t-att-src="'/report/barcode/?type=QR&amp;value=' + qr_data + '&amp;width=150&amp;height=150'"
+                                        <img t-attf-src="/report/barcode/?type=QR&amp;value={{o.l10n_mx_edi_cfdi_uuid}}&amp;width=150&amp;height=150"
                                              style="width: 150px; height: 150px; border: 1px solid #ccc;"
                                              alt="QR Code CFDI"/>
                                     </div>
@@ -503,7 +496,5 @@
                 </t>
 
             </div>
-        </xpath>
-
     </template>
 </odoo>
