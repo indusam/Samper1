@@ -27,9 +27,10 @@
     </template>
 
     <!-- Plantilla personalizada del documento de factura -->
-    <template id="report_invoice_document_sam">
-        <t t-set="o" t-value="o.with_context(lang=lang)"/>
-        <t t-set="forced_vat" t-value="o.fiscal_position_id.foreign_vat"/>
+    <template id="report_invoice_document_sam" inherit_id="account.report_invoice_document" primary="True">
+        <xpath expr="." position="replace">
+            <t t-set="o" t-value="o.with_context(lang=lang)"/>
+            <t t-set="forced_vat" t-value="o.fiscal_position_id.foreign_vat"/>
 
             <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
                 <div class="page">
@@ -496,5 +497,6 @@
                 </t>
 
             </div>
+        </xpath>
     </template>
 </odoo>
