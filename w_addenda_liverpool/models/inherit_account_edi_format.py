@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models
+from odoo import models, api
 from lxml import etree
+from lxml.objectify import fromstring
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -9,6 +10,27 @@ _logger = logging.getLogger(__name__)
 
 class AccountEdiFormat(models.Model):
     _inherit = 'account.edi.format'
+
+    @api.model
+    def _l10n_mx_edi_cfdi_append_addenda(self, move, cfdi, addenda):
+        ''' Append an additional block to the signed CFDI passed as parameter.
+        :param move:    The account.move record.
+        :param cfdi:    The invoice's CFDI as a string.
+        :param addenda: The addenda to add as a string.
+        :return cfdi:   The cfdi including the addenda.
+        '''
+        cfdi_node = fromstring(cfdi)
+        if addenda.id == self.env.ref('w_addenda_liverpool.liverpool_addenda').id:
+            addenda_values = {'record': move, 'cfdi': cfdi}
+            addenda = addenda._render(values=addenda_values).strip()
+            if not addenda:
+                return cfdi
+            addenda_node = fromstring(addenda)
+            cfdi_node.append(addenda_node)
+            return etree.tostring(cfdi_node, pretty_print=True, xml_declaration=True, encoding='UTF-8')
+        else:
+            return super(AccountEdiFormat, self)._l10n_mx_edi_cfdi_append_addenda(
+                move, cfdi, addenda)
 
     def _l10n_mx_edi_export_invoice_cfdi(self, invoice):
         """Override to add detallista namespace to CFDI when Liverpool addenda is required."""
