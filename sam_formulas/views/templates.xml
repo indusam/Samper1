@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Vista list independiente para intermedios.empaques -->
+    <!--
+    TEMPORALMENTE DESHABILITADO - Funcionalidad de Intermedios y Empaques
+    Se deshabilitó durante la migración a Odoo 18 para completar primero la actualización base.
+    Será reactivado y corregido después de completar la migración exitosa.
+    -->
+
+    <!--
     <record id="view_intermedios_empaques_list" model="ir.ui.view">
         <field name="name">intermedios.empaques.list</field>
         <field name="model">intermedios.empaques</field>
@@ -14,7 +20,6 @@
         </field>
     </record>
 
-    <!-- Vista form independiente para intermedios.empaques -->
     <record id="view_intermedios_empaques_form" model="ir.ui.view">
         <field name="name">intermedios.empaques.form</field>
         <field name="model">intermedios.empaques</field>
@@ -36,7 +41,6 @@
         </field>
     </record>
 
-    <!-- Extensión de la vista de lista de materiales para agregar pestaña de Intermedios y Empaques -->
     <record id="view_mrp_bom_form_inherit_intermedios_empaques" model="ir.ui.view">
         <field name="name">mrp.bom.form.inherit.intermedios.empaques</field>
         <field name="model">mrp.bom</field>
@@ -49,4 +53,5 @@
             </xpath>
         </field>
     </record>
+    -->
 </odoo>

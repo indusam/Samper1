@@ -1,3 +1,4 @@
 # -*- coding: utf-8 -*-
 # 2
-from . import models, intermedios_empaques
+from . import models
+# TEMPORALMENTE DESHABILITADO: from . import intermedios_empaques
