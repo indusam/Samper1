@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "sam_contabildad",
+    'name': "sam_contabilidad",
 
     'summary': """
         Adecuaciones al módulo de contabilidad de Samper""",
 
     'description': """
-        Modificaciones al módulo de contabiliadad para Samper.
+        Modificaciones al módulo de contabilidad para Samper.
     """,
 
     'author': "VBueno",

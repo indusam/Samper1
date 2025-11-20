@@ -27,6 +27,9 @@ from odoo import models, fields, api, _
 import base64
 from lxml.objectify import fromstring
 from lxml import etree
+import logging
+
+_logger = logging.getLogger(__name__)
 import unidecode
 from datetime import timedelta
 
@@ -69,7 +72,7 @@ class AccountMove(models.Model):
                     lambda x: x.type == 'contact')[0]
                 contact_name = contact_id.name
             except Exception as e:
-                print(e)
+                _logger.warning("Error al obtener contacto para factura %s: %s", invoice.name, str(e))
             return contact_name
 
     def getting_delivery_date(self):
@@ -79,7 +82,7 @@ class AccountMove(models.Model):
                 sale_line_id = invoice.invoice_line_ids.mapped('sale_line_ids')[0]
                 commitment_date = sale_line_id.order_id.commitment_date.date()
             except Exception as e:
-                print(e)
+                _logger.warning("Error al obtener fecha de entrega para factura %s: %s", invoice.name, str(e))
             return commitment_date
 
     def getting_days_of_payment(self):
@@ -100,14 +103,6 @@ class AccountMove(models.Model):
     def _compute_amount_in_letters(self):
         for move in self:
             move.amount_letters = move._l10n_mx_edi_cfdi_amount_to_text()
-
-    @api.depends('currency_id', 'company_currency_id')
-    def get_rate(self):
-        for move in self:
-            if move.currency_id == move.company_currency_id:
-                return 1.00
-            else:
-                return "%.2f" % round(move.currency_id.rate, 2)
 
     def get_percent(self):
         price_sub = 0

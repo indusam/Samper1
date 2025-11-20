@@ -145,8 +145,9 @@ class ListaMaterialesHeader(models.Model):
                         break  # Salimos del bucle una vez que encontramos el porcentaje
             
             # Asignar el porcentaje al campo calculado
-            bom.write({'x_percentage_of_product': percentage,
-                        'x_qty_of_product': qty})
+            # CORREGIDO: No usar write() en métodos compute - causa loops infinitos
+            bom.x_percentage_of_product = percentage
+            bom.x_qty_of_product = qty
 
 
     @api.onchange('x_cantidad_il')

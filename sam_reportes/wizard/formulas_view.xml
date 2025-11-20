@@ -9,26 +9,18 @@
                 <group>
                     <group>
                         <field name="product_tmpl" required="1"/>
-                        <field name="producto" required="1" attrs="{'required': [('product_tmpl', '!=', False)]}"/>
-                         
-                        <field name="partidas" attrs="{'readonly': ['|', '|', '|',
-                                                       ('cantidad','>',0),
-                                                       ('ing_limitante','!=',False),
-                                                       ('product_tmpl','=',False),
-                                                       ('cant_limitante','>',0)]}"/>
-                                                       
-                        <field name="cantidad" attrs="{'readonly': ['|','|','|',
-                                                       ('ing_limitante','!=',False),
-                                                       ('partidas','>',0),
-                                                       ('cant_limitante','>',0),
-                                                       ('product_tmpl','=',False)]}"/>
+                        <field name="producto" required="product_tmpl != False"/>
+
+                        <field name="partidas" readonly="cantidad > 0 or ing_limitante != False or product_tmpl == False or cant_limitante > 0"/>
+
+                        <field name="cantidad" readonly="ing_limitante != False or partidas > 0 or cant_limitante > 0 or product_tmpl == False"/>
 
                         <field name="consolidado" />
                     </group>
 
                     <group>
-                        <field name="ing_limitante" attrs="{'readonly': ['|', '|', ('cantidad','>',0), ('partidas','>',0), ('product_tmpl','=',False)]}"/>
-                        <field name="cant_limitante" attrs="{'readonly': ['|', '|', ('cantidad','>',0), ('partidas','>',0), ('product_tmpl','=',False)]}"/>
+                        <field name="ing_limitante" readonly="cantidad > 0 or partidas > 0 or product_tmpl == False"/>
+                        <field name="cant_limitante" readonly="cantidad > 0 or partidas > 0 or product_tmpl == False"/>
                     </group>
 
                 </group>
