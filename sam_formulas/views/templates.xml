@@ -12,7 +12,7 @@
                     <field name="intermedios_empaques_ids" nolabel="1" context="{'default_lista_materiales': active_id}">
                         <tree editable="bottom" string="Intermedios y Empaques">
                             <field name="product_id" required="1"/>
-                            <field name="product_uom_name" string="Unidad" readonly="1"/>
+                            <field name="product_uom_name" string="Unidad" force_save="0"/>
                             <field name="kgs_unidad" string="Kgs/Unidad"/>
                             <field name="unidad_pza" string="Unidad/Pieza"/>
                             <field name="proceso" string="Proceso"/>
@@ -25,7 +25,7 @@
                                         <field name="kgs_unidad" string="Kgs/Unidad"/>
                                     </group>
                                     <group>
-                                        <field name="product_uom_name" string="Unidad" readonly="1"/>
+                                        <field name="product_uom_name" string="Unidad" force_save="0"/>
                                         <field name="unidad_pza" string="Unidad/Pieza"/>
                                         <field name="proceso" string="Proceso"/>
                                     </group>
