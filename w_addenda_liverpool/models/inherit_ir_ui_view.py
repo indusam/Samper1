@@ -23,8 +23,15 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ########################################################################
-from . import inherit_ir_ui_view
-from . import inherit_account_move
-from . import inherit_res_partner
-from . import inherit_res_company
-from . import inherit_account_edi_format
+from odoo import models, fields
+
+
+class IrUiView(models.Model):
+    _inherit = 'ir.ui.view'
+
+    # Flag to mark views as EDI Addenda templates
+    # If l10n_mx_edi doesn't define it, we create it here
+    l10n_mx_edi_addenda_flag = fields.Boolean(
+        string='Is EDI Addenda',
+        help='Mark this view as an EDI addenda template for Mexican invoices'
+    )

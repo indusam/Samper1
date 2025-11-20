@@ -29,6 +29,15 @@ from odoo import models, fields, api, _
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
+    # Campo para seleccionar la addenda EDI
+    # Si l10n_mx_edi no lo define, lo creamos aquí
+    l10n_mx_edi_addenda = fields.Many2one(
+        'ir.ui.view',
+        string='EDI Addenda',
+        help='Select the EDI addenda template for this partner',
+        domain=[('l10n_mx_edi_addenda_flag', '=', True)]
+    )
+
     global_localitation_number = fields.Char(
         string='Global localitation number(GLN)',
         help='Specifies the global location number (GLN) of the buyer.',
