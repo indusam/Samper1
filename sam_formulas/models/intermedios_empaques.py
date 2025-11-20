@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# lo corregire despues
 
 import logging
 from odoo import models, fields, api, _
