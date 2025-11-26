@@ -11,26 +11,15 @@ _logger = logging.getLogger(__name__)
 class AccountEdiFormat(models.Model):
     _inherit = 'account.edi.format'
 
-    @api.model
-    def _l10n_mx_edi_cfdi_append_addenda(self, move, cfdi, addenda):
-        ''' Append an additional block to the signed CFDI passed as parameter.
+    def _l10n_mx_edi_get_invoice_addenda(self, move):
+        ''' Get the addenda template for a given invoice.
         :param move:    The account.move record.
-        :param cfdi:    The invoice's CFDI as a string.
-        :param addenda: The addenda to add as a string.
-        :return cfdi:   The cfdi including the addenda.
+        :return:        The ir.ui.view record for the addenda, or False if none.
         '''
-        cfdi_node = fromstring(cfdi)
-        if addenda.id == self.env.ref('w_addenda_liverpool.liverpool_addenda').id:
-            addenda_values = {'record': move, 'cfdi': cfdi}
-            addenda = addenda._render(values=addenda_values).strip()
-            if not addenda:
-                return cfdi
-            addenda_node = fromstring(addenda)
-            cfdi_node.append(addenda_node)
-            return etree.tostring(cfdi_node, pretty_print=True, xml_declaration=True, encoding='UTF-8')
-        else:
-            return super(AccountEdiFormat, self)._l10n_mx_edi_cfdi_append_addenda(
-                move, cfdi, addenda)
+        # Check if Liverpool addenda should be added
+        if move.partner_id.generate_addenda_liverpool:
+            return self.env.ref('w_addenda_liverpool.liverpool_addenda', raise_if_not_found=False)
+        return super()._l10n_mx_edi_get_invoice_addenda(move)
 
     def _l10n_mx_edi_export_invoice_cfdi(self, invoice):
         """Override to add detallista namespace to CFDI when Liverpool addenda is required."""

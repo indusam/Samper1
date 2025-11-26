@@ -23,7 +23,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ########################################################################
-from . import inherit_ir_ui_view
 from . import inherit_account_move
 from . import inherit_res_partner
 from . import inherit_res_company

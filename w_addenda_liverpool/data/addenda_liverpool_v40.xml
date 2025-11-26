@@ -78,8 +78,4 @@
         </cfdi:Addenda>
     </template>
 
-    <record id="liverpool_addenda" model="ir.ui.view">
-        <field name="l10n_mx_edi_addenda_flag">True</field>
-    </record>
-
 </odoo>

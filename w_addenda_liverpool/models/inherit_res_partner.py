@@ -29,15 +29,6 @@ from odoo import models, fields, api, _
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
-    # Campo para seleccionar la addenda EDI
-    # Si l10n_mx_edi no lo define, lo creamos aquí
-    l10n_mx_edi_addenda = fields.Many2one(
-        'ir.ui.view',
-        string='EDI Addenda',
-        help='Select the EDI addenda template for this partner',
-        domain=[('l10n_mx_edi_addenda_flag', '=', True)]
-    )
-
     global_localitation_number = fields.Char(
         string='Global localitation number(GLN)',
         help='Specifies the global location number (GLN) of the buyer.',
@@ -55,16 +46,4 @@ class ResPartner(models.Model):
     )
     generate_addenda_liverpool = fields.Boolean(
         string='Generate addenda Liverpool',
-        compute='_compute_is_addenda_liverpool',
         help='Check this field if require generate addenda Liverpool')
-
-    @api.depends('l10n_mx_edi_addenda', 'commercial_partner_id.l10n_mx_edi_addenda')
-    def _compute_is_addenda_liverpool(self):
-        for rec in self:
-            addenda = (rec.l10n_mx_edi_addenda or
-                    rec.commercial_partner_id.l10n_mx_edi_addenda)
-            if addenda.id == self.env.ref(
-                'w_addenda_liverpool.liverpool_addenda').id:
-                rec.generate_addenda_liverpool = True
-            else:
-                rec.generate_addenda_liverpool = False
