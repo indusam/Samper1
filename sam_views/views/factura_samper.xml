@@ -74,17 +74,14 @@
             </td>
         </xpath>
 
-        <!-- Agregar sección de pago al final -->
-        <xpath expr="//div[@id='payment_term']" position="before">
-            <div style="clear: both; margin-top: 20px; padding-top: 10px; border-top: 1px solid #ddd; font-size: 11px;">
-                <strong>Referencia de pago:</strong> <span t-field="o.name"/><br/>
-               <!-- 
-                <span t-if="o.amount_total_words">
-                    <strong>Total en letra:</strong> <span t-field="o.amount_total_words"/> M.N
-                </span>
-                -->
-            </div>
+        <!-- Ocultar la sección de totales en medio (antes del div total final) -->
+        <xpath expr="//div[@id='total']" position="before">
+            <style>
+                /* Ocultar tabla resumen de productos si existe */
+                .o_report_layout_standard table:not([name='invoice_line_table']):not(.o_total_table) {
+                    display: none !important;
+                }
+            </style>
         </xpath>
-
     </template>
 </odoo>
