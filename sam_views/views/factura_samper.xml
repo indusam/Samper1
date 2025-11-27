@@ -8,12 +8,12 @@
             <style>
                 .samper-customer-box {
                     background-color: #f9f9f9;
-                    padding: 10px;
+                    padding: 15px;
                     border: 1px solid #ddd;
                     margin-bottom: 15px;
                 }
                 .samper-info-text {
-                    font-size: 13px;
+                    font-size: 15px;
                     line-height: 1.5;
                 }
                 .table-samper th {
@@ -40,9 +40,6 @@
                         <strong>RFC:</strong> <span t-field="o.partner_id.vat"/>
                     </div>
                     <div class="col-6">
-                        <span t-if="o.partner_id.x_lp">
-                            <strong>LP:</strong> <span t-field="o.partner_id.x_lp"/><br/>
-                        </span>
                         <span t-if="o.partner_id.x_ruta">
                             <strong>Ruta:</strong> <span t-field="o.partner_id.x_ruta"/><br/>
                         </span>
