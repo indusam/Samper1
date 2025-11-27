@@ -32,7 +32,7 @@
         <xpath expr="//div[@class='row']" position="after">
             <div class="samper-customer-box">
                 <div class="row samper-info-text">
-                    <div class="col-6">
+                    <div class="col-12">
                     <strong>UUID:</strong> <span t-field="o.l10n_mx_edi_cfdi_uuid"/>
                         <strong>NOMBRE COMERCIAL:</strong> <span t-field="o.partner_id.x_nombre_comercial"/><br/>
                         <strong>RUTA:</strong> <span t-field="o.partner_id.x_ruta"/><br/>
