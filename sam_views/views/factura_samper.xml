@@ -33,17 +33,10 @@
             <div class="samper-customer-box">
                 <div class="row samper-info-text">
                     <div class="col-6">
-                        <strong>Cliente:</strong> <span t-field="o.partner_id.name"/><br/>
-                        <span t-field="o.partner_id.street"/><br/>
-                        <span t-if="o.partner_id.street2"><span t-field="o.partner_id.street2"/><br/></span>
-                        <span t-field="o.partner_id.zip"/> <span t-field="o.partner_id.city"/><br/>
-                        <strong>RFC:</strong> <span t-field="o.partner_id.vat"/>
-                    </div>
-                    <div class="col-6">
-                        <span t-if="o.partner_id.x_ruta">
-                            <strong>Ruta:</strong> <span t-field="o.partner_id.x_ruta"/><br/>
-                        </span>
-                        <strong>Fecha:</strong> <span t-field="o.create_date" t-options='{"widget": "datetime", "format": "dd/MM/yyyy HH:mm:ss"}'/>
+                    <strong>UUID:</strong> <span t-field="o.l10n_mx_edi_cfdi_uuid"/>
+                        <strong>NOMBRE COMERCIAL:</strong> <span t-field="o.partner_id.x_nombre_comercial"/><br/>
+                        <strong>RUTA:</strong> <span t-field="o.partner_id.x_ruta"/><br/>
+                        <strong>FECHA:</strong> <span t-field="o.create_date" t-options='{"widget": "datetime", "format": "dd/MM/yyyy HH:mm:ss"}'/>
                     </div>
                 </div>
             </div>
@@ -78,13 +71,12 @@
         <!-- Agregar sección de pago al final -->
         <xpath expr="//div[@id='payment_term']" position="before">
             <div style="clear: both; margin-top: 20px; padding-top: 10px; border-top: 1px solid #ddd; font-size: 11px;">
-                <div t-if="o.l10n_mx_edi_cfdi_uuid" style="margin-bottom: 10px;">
-                    <strong>UUID:</strong> <span t-field="o.l10n_mx_edi_cfdi_uuid"/>
-                </div>
                 <strong>Referencia de pago:</strong> <span t-field="o.name"/><br/>
+               <!-- 
                 <span t-if="o.amount_total_words">
                     <strong>Total en letra:</strong> <span t-field="o.amount_total_words"/> M.N
                 </span>
+                -->
             </div>
         </xpath>
 
