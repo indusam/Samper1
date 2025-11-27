@@ -34,7 +34,7 @@
         </xpath>
 
         <!-- Modificar el título de la factura -->
-        <xpath expr="//t[@t-set='layout_document_title']//span[@t-if='o.name and o.name != \"/\"']" position="replace">
+        <xpath expr="//t[@t-set='layout_document_title']//span[@t-if='o.name and o.name != &quot;/&quot;']" position="replace">
             <span class="samper-invoice-title">Factura <span t-field="o.name">INV/2023/0001</span></span>
         </xpath>
 
