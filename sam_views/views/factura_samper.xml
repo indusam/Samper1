@@ -17,7 +17,7 @@
                     line-height: 1.5;
                 }
                 .samper-uuid-line {
-                    font-size: 14px;
+                    font-size: 18px;
                 }
                 .table-samper th {
                     background-color: #e0e0e0;
