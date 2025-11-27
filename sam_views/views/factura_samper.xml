@@ -1,283 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!-- Template personalizado para facturas Samper -->
-    <template id="report_invoice_document_inherit_samper" inherit_id="account.report_invoice_document" priority="20">
+    <template id="report_invoice_document_inherit_samper" inherit_id="account.report_invoice_document" priority="99">
 
-        <xpath expr="//t[@t-set='layout_document_title']" position="replace">
-            <t t-set="layout_document_title">
-                <style>
-                    .samper-invoice-title {
-                        color: #c41e3a;
-                        font-size: 22px;
-                        font-weight: bold;
-                        display: inline-block;
-                    }
-                    .samper-uuid {
-                        font-size: 10px;
-                        color: #333;
-                        margin-top: 5px;
-                    }
-                </style>
-                <span class="samper-invoice-title">Factura <span t-field="o.name"/></span>
-                <div t-if="o.l10n_mx_edi_cfdi_uuid" class="samper-uuid">
-                    <span t-field="o.l10n_mx_edi_cfdi_uuid"/>
-                </div>
-            </t>
-        </xpath>
-
-        <!-- Agregar estilos globales -->
-        <xpath expr="//div[@class='page mb-4']" position="before">
+        <!-- Agregar estilos CSS personalizados -->
+        <xpath expr="//div[@class='clearfix invoice_main']" position="before">
             <style>
                 .samper-customer-box {
-                    margin-top: 10px;
-                    margin-bottom: 20px;
                     background-color: #f9f9f9;
                     padding: 10px;
                     border: 1px solid #ddd;
+                    margin-bottom: 15px;
                 }
-                .samper-company-info {
+                .samper-info-text {
                     font-size: 10px;
                     line-height: 1.5;
                 }
-                .samper-details-table {
-                    width: 100%;
-                    font-size: 10px;
-                    margin-top: 15px;
-                    margin-bottom: 15px;
+                .samper-invoice-title {
+                    color: #c41e3a;
+                    font-size: 20px;
+                    font-weight: bold;
                 }
-                .samper-details-table td {
-                    padding: 3px 5px;
-                    vertical-align: top;
-                }
-                .samper-table {
-                    width: 100%;
-                    border-collapse: collapse;
-                    margin-top: 15px;
-                    font-size: 9px;
-                }
-                .samper-table th {
+                .table-samper th {
                     background-color: #e0e0e0;
                     border: 1px solid #666;
-                    padding: 6px 4px;
-                    text-align: left;
-                    font-weight: bold;
                     font-size: 9px;
                 }
-                .samper-table td {
+                .table-samper td {
                     border: 1px solid #666;
-                    padding: 6px 4px;
                     font-size: 9px;
-                }
-                .samper-totals {
-                    margin-top: 20px;
-                    page-break-inside: avoid;
-                }
-                .samper-totals table {
-                    width: 350px;
-                    float: right;
-                    border-collapse: collapse;
-                    font-size: 10px;
-                }
-                .samper-totals td {
-                    padding: 5px 10px;
-                    border: 1px solid #666;
-                }
-                .samper-totals .total-row {
-                    font-weight: bold;
-                    background-color: #e0e0e0;
-                }
-                .samper-payment-reference {
-                    clear: both;
-                    margin-top: 30px;
-                    padding-top: 10px;
-                    font-size: 10px;
-                    font-weight: bold;
-                    border-top: 1px solid #ddd;
-                }
-                .samper-amount-text {
-                    margin-top: 8px;
-                    font-size: 10px;
-                    font-weight: bold;
-                    text-transform: uppercase;
-                }
-                .text-right-custom {
-                    text-align: right !important;
                 }
             </style>
         </xpath>
 
-        <!-- Ocultar dirección del partner original y agregar la personalizada -->
+        <!-- Modificar el título de la factura -->
+        <xpath expr="//t[@t-set='layout_document_title']//span[@t-if='o.name and o.name != \"/\"']" position="replace">
+            <span class="samper-invoice-title">Factura <span t-field="o.name">INV/2023/0001</span></span>
+        </xpath>
+
+        <!-- Agregar UUID después del título -->
+        <xpath expr="//t[@t-set='layout_document_title']" position="after">
+            <div t-if="o.l10n_mx_edi_cfdi_uuid" class="samper-info-text" style="margin-top: 5px;">
+                <strong>UUID:</strong> <span t-field="o.l10n_mx_edi_cfdi_uuid"/>
+            </div>
+        </xpath>
+
+        <!-- Agregar información adicional del cliente después de la dirección -->
         <xpath expr="//div[@class='row']" position="after">
             <div class="samper-customer-box">
-                <div class="row">
+                <div class="row samper-info-text">
                     <div class="col-6">
-                        <div class="samper-company-info">
-                            <strong><span t-field="o.partner_id.name"/></strong><br/>
-                            <span t-field="o.partner_id.street"/><br/>
-                            <span t-if="o.partner_id.street2"><span t-field="o.partner_id.street2"/><br/></span>
-                            <span t-field="o.partner_id.zip"/> <span t-field="o.partner_id.city"/>, <span t-field="o.partner_id.state_id.code"/><br/>
-                            <span t-field="o.partner_id.country_id.name"/><br/><br/>
-                            <strong>RFC: <span t-field="o.partner_id.vat"/></strong>
-                        </div>
+                        <strong>Cliente:</strong> <span t-field="o.partner_id.name"/><br/>
+                        <span t-field="o.partner_id.street"/><br/>
+                        <span t-if="o.partner_id.street2"><span t-field="o.partner_id.street2"/><br/></span>
+                        <span t-field="o.partner_id.zip"/> <span t-field="o.partner_id.city"/>, <span t-field="o.partner_id.state_id.code"/><br/>
+                        <strong>RFC:</strong> <span t-field="o.partner_id.vat"/>
                     </div>
                     <div class="col-6">
-                        <div class="samper-company-info">
-                            <span t-if="o.partner_id.x_lp">
-                                <strong><span t-field="o.partner_id.x_lp"/></strong><br/>
-                            </span>
-                            <span t-if="o.partner_id.x_ruta">
-                                <span t-field="o.partner_id.x_ruta"/><br/>
-                                <span t-field="o.partner_id.x_ruta"/><br/>
-                            </span>
-                            <span t-field="o.create_date" t-options='{"widget": "datetime", "format": "dd/MM/yyyy HH:mm:ss"}'/>
-                        </div>
+                        <span t-if="o.partner_id.x_lp">
+                            <strong>LP:</strong> <span t-field="o.partner_id.x_lp"/><br/>
+                        </span>
+                        <span t-if="o.partner_id.x_ruta">
+                            <strong>Ruta:</strong> <span t-field="o.partner_id.x_ruta"/><br/>
+                        </span>
+                        <strong>Fecha de creación:</strong> <span t-field="o.create_date" t-options='{"widget": "datetime", "format": "dd/MM/yyyy HH:mm:ss"}'/>
                     </div>
                 </div>
             </div>
         </xpath>
 
-        <!-- Ocultar el div original de dirección -->
+        <!-- Ocultar la dirección original -->
         <xpath expr="//div[@class='row']" position="attributes">
             <attribute name="style">display: none;</attribute>
         </xpath>
 
-        <!-- Agregar detalles CFDI después de informations -->
-        <xpath expr="//div[@id='informations']" position="after">
-            <div class="row">
-                <div class="col-12">
-                    <table class="samper-details-table">
-                        <tr>
-                            <td style="width: 15%;"><strong>Fecha de factura:</strong></td>
-                            <td style="width: 18%;"><span t-field="o.invoice_date"/></td>
-
-                            <td style="width: 12%;"><strong>Origen:</strong></td>
-                            <td style="width: 18%;"><span t-field="o.invoice_origin"/></td>
-
-                            <td style="width: 10%;"><strong>Uso:</strong></td>
-                            <td style="width: 27%;">
-                                <span t-field="o.l10n_mx_edi_usage"/> -
-                                <t t-if="o.l10n_mx_edi_usage == 'G01'">Adquisición de mercancías</t>
-                                <t t-elif="o.l10n_mx_edi_usage == 'G03'">Gastos en general</t>
-                                <t t-elif="o.l10n_mx_edi_usage == 'P01'">Por definir</t>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><strong>Fecha límite:</strong></td>
-                            <td><span t-field="o.invoice_date_due"/></td>
-
-                            <td><strong>Código de cliente:</strong></td>
-                            <td><span t-field="o.partner_id.ref"/></td>
-
-                            <td><strong>Forma de Pago:</strong></td>
-                            <td>
-                                <span t-if="o.l10n_mx_edi_payment_method_id">
-                                    <span t-field="o.l10n_mx_edi_payment_method_id.code"/> - <span t-field="o.l10n_mx_edi_payment_method_id.name"/>
-                                </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"></td>
-                            <td colspan="2"></td>
-                            <td><strong>Método de Pago:</strong></td>
-                            <td><span t-field="o.l10n_mx_edi_payment_policy"/></td>
-                        </tr>
-                        <tr t-if="o.ref">
-                            <td colspan="2"></td>
-                            <td colspan="2"></td>
-                            <td><strong>Referencia:</strong></td>
-                            <td><span t-field="o.ref"/></td>
-                        </tr>
-                    </table>
-                </div>
+        <!-- Agregar información de CFDI mexicano en informations -->
+        <xpath expr="//div[@id='informations']" position="inside">
+            <div class="col" t-if="o.l10n_mx_edi_usage" name="l10n_mx_usage">
+                <strong>Uso CFDI</strong>
+                <div><span t-field="o.l10n_mx_edi_usage"/></div>
+            </div>
+            <div class="col" t-if="o.l10n_mx_edi_payment_method_id" name="l10n_mx_payment_method">
+                <strong>Forma de Pago</strong>
+                <div><span t-field="o.l10n_mx_edi_payment_method_id.code"/> - <span t-field="o.l10n_mx_edi_payment_method_id.name"/></div>
+            </div>
+            <div class="col" t-if="o.l10n_mx_edi_payment_policy" name="l10n_mx_payment_policy">
+                <strong>Método de Pago</strong>
+                <div><span t-field="o.l10n_mx_edi_payment_policy"/></div>
             </div>
         </xpath>
 
-        <!-- Ocultar información original -->
-        <xpath expr="//div[@id='informations']" position="attributes">
-            <attribute name="style">display: none;</attribute>
+        <!-- Aplicar estilos a la tabla -->
+        <xpath expr="//table[@name='invoice_line_table']" position="attributes">
+            <attribute name="class">table-samper table table-sm</attribute>
         </xpath>
 
-        <!-- Reemplazar tabla de líneas -->
-        <xpath expr="//table[@name='invoice_line_table']" position="replace">
-            <table class="samper-table" name="invoice_line_table">
-                <thead>
-                    <tr>
-                        <th style="width: 10%;">Código Producto</th>
-                        <th style="width: 23%;">Descripción</th>
-                        <th style="width: 15%;">Lotes</th>
-                        <th style="width: 8%;">Cantidad</th>
-                        <th style="width: 5%;">Pzas</th>
-                        <th style="width: 10%;">Precio unitario</th>
-                        <th style="width: 7%;">Código Unidad</th>
-                        <th style="width: 10%;">Impuestos</th>
-                        <th style="width: 12%;" class="text-end">Importe</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <t t-set="lines" t-value="o.invoice_line_ids.filtered(lambda l: not l.display_type)"/>
-                    <tr t-foreach="lines" t-as="line">
-                        <td><span t-field="line.product_id.default_code"/></td>
-                        <td><span t-field="line.name" t-options='{"widget": "text"}'/></td>
-                        <td>
-                            <t t-set="sale_line" t-value="line.sale_line_ids[:1]"/>
-                            <t t-if="sale_line and sale_line.move_ids">
-                                <t t-foreach="sale_line.move_ids.mapped('move_line_ids').filtered(lambda ml: ml.lot_id)" t-as="move_line">
-                                    <span t-esc="'%.3f' % move_line.quantity"/> <span t-field="move_line.lot_id.name"/>
-                                    <t t-if="move_line.lot_id.expiration_date">
-                                        <br/><span t-field="move_line.lot_id.expiration_date" t-options='{"widget": "datetime", "format": "dd/MM/yyyy HH:mm:ss"}'/>
-                                    </t>
-                                    <t t-if="not move_line_last"> | </t>
-                                </t>
-                            </t>
-                        </td>
-                        <td class="text-right-custom">
-                            <span t-esc="'%.3f' % line.quantity"/> <span t-field="line.product_uom_id.name"/>
-                        </td>
-                        <td><span t-field="line.product_id.unspsc_code_id.code"/></td>
-                        <td class="text-right-custom"><span t-esc="'%.2f' % line.price_unit"/></td>
-                        <td><span t-field="line.product_uom_id.l10n_mx_edi_code_sat"/></td>
-                        <td>
-                            <t t-foreach="line.tax_ids" t-as="tax">
-                                <span t-field="tax.name"/><t t-if="not tax_last">, </t>
-                            </t>
-                        </td>
-                        <td class="text-right-custom">$ <span t-esc="'%.2f' % line.price_subtotal"/></td>
-                    </tr>
-                </tbody>
-            </table>
+        <!-- Agregar columna de Código de Producto antes de Description -->
+        <xpath expr="//th[@name='th_description']" position="before">
+            <th name="th_default_code" class="text-start">Código</th>
         </xpath>
 
-        <!-- Reemplazar totales -->
-        <xpath expr="//div[@id='total']" position="replace">
-            <div id="total" class="samper-totals">
-                <table>
-                    <tr>
-                        <td style="width: 200px;"><strong>Importe sin impuestos</strong></td>
-                        <td style="width: 150px;" class="text-right-custom">$ <span t-esc="'%.2f' % o.amount_untaxed"/></td>
-                    </tr>
-                    <t t-if="o.amount_by_group">
-                        <tr t-foreach="o.amount_by_group" t-as="amount_by_group">
-                            <td><span t-esc="amount_by_group[0]"/></td>
-                            <td class="text-right-custom">$ <span t-esc="'%.2f' % amount_by_group[1]"/></td>
-                        </tr>
+        <xpath expr="//td[@name='account_invoice_line_name']" position="before">
+            <td name="td_default_code">
+                <span t-field="line.product_id.default_code"/>
+            </td>
+        </xpath>
+
+        <!-- Agregar columna de Lotes después de Description -->
+        <xpath expr="//th[@name='th_description']" position="after">
+            <th name="th_lots" class="text-start">Lotes</th>
+        </xpath>
+
+        <xpath expr="//td[@name='account_invoice_line_name']" position="after">
+            <td name="td_lots">
+                <t t-set="sale_line" t-value="line.sale_line_ids[:1]"/>
+                <t t-if="sale_line and sale_line.move_ids">
+                    <t t-foreach="sale_line.move_ids.mapped('move_line_ids').filtered(lambda ml: ml.lot_id)" t-as="move_line">
+                        <span t-esc="'%.0f' % move_line.quantity"/> <span t-field="move_line.lot_id.name"/>
+                        <t t-if="move_line.lot_id.expiration_date">
+                            <br/><small><span t-field="move_line.lot_id.expiration_date" t-options='{"widget": "date"}'/></small>
+                        </t>
+                        <t t-if="not move_line_last"><br/></t>
                     </t>
-                    <tr class="total-row">
-                        <td><strong>Total</strong></td>
-                        <td class="text-right-custom"><strong>$ <span t-esc="'%.2f' % o.amount_total"/></strong></td>
-                    </tr>
-                </table>
-            </div>
+                </t>
+            </td>
         </xpath>
 
-        <!-- Agregar referencia de pago -->
+        <!-- Agregar columna Código UNSPSC después de Quantity -->
+        <xpath expr="//th[@name='th_quantity']" position="after">
+            <th name="th_unspsc" class="text-start">Cve. SAT</th>
+        </xpath>
+
+        <xpath expr="//td[@name='td_quantity']" position="after">
+            <td name="td_unspsc">
+                <span t-field="line.product_id.unspsc_code_id.code"/>
+            </td>
+        </xpath>
+
+        <!-- Agregar columna Código Unidad SAT después de Unit Price -->
+        <xpath expr="//th[@name='th_priceunit']" position="after">
+            <th name="th_uom_sat" class="text-start">Unidad SAT</th>
+        </xpath>
+
+        <xpath expr="//td[@name='td_price_unit']" position="after">
+            <td name="td_uom_sat">
+                <span t-field="line.product_uom_id.l10n_mx_edi_code_sat"/>
+            </td>
+        </xpath>
+
+        <!-- Agregar sección de pago al final -->
         <xpath expr="//div[@id='payment_term']" position="before">
-            <div class="samper-payment-reference">
-                <div>
-                    Utilice la siguiente referencia al realizar su pago: <strong><span t-field="o.name"/></strong>
-                </div>
-                <div class="samper-amount-text">
-                    <span t-field="o.amount_total_words"/> M.N
-                </div>
+            <div style="clear: both; margin-top: 20px; padding-top: 10px; border-top: 1px solid #ddd; font-size: 11px;">
+                <strong>Referencia de pago:</strong> <span t-field="o.name"/><br/>
+                <strong>Total en letra:</strong> <span t-field="o.amount_total_words"/> M.N
             </div>
         </xpath>
 
