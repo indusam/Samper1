@@ -62,17 +62,6 @@
             <attribute name="class">table-samper table table-sm</attribute>
         </xpath>
 
-        <!-- Agregar columna "Código del producto" ANTES de Description -->
-        <xpath expr="//th[@name='th_description']" position="before">
-            <th name="th_product_code" class="text-start">Código del producto</th>
-        </xpath>
-
-        <xpath expr="//td[@name='account_invoice_line_name']" position="before">
-            <td name="td_product_code">
-                <span t-if="line.product_id" t-field="line.product_id.default_code"/>
-            </td>
-        </xpath>
-
         <!-- Cambiar título de Description a "Descripción" -->
         <xpath expr="//th[@name='th_description']/span" position="replace">
             <span>Descripción</span>
