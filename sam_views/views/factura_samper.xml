@@ -37,8 +37,8 @@
                 <div class="row samper-info-text">
                     <div class="col-12">
                     <span class="samper-uuid-line"><strong>UUID:</strong> <span t-field="o.l10n_mx_edi_cfdi_uuid"/></span><br/>
-                    <span class="samper-uuid-line"><strong>NOMBRE COMERCIAL:</strong> <span t-field="o.partner_id.x_nombre_comercial"/></span><br/>
-                        <span t-if="o.partner_id.x_ruta"><strong>RUTA:</strong> <span t-esc="dict(o.partner_id._fields['x_ruta']._description_selection(o.env)).get(o.partner_id.x_ruta, o.partner_id.x_ruta)"/><br/></span>
+                    <span class="samper-uuid-line"> <span t-field="o.partner_id.x_nombre_comercial"/></span><br/>
+                        <strong>RUTA:</strong> <span t-field="o.partner_id.x_ruta"/><br/>
                         <strong>FECHA:</strong> <span t-field="o.create_date" t-options='{"widget": "datetime", "format": "dd/MM/yyyy HH:mm:ss"}'/>
                     </div>
                 </div>
