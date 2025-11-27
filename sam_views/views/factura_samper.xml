@@ -8,12 +8,12 @@
             <style>
                 .samper-customer-box {
                     background-color: #f9f9f9;
-                    padding: 13px;
+                    padding: 10px;
                     border: 1px solid #ddd;
                     margin-bottom: 15px;
                 }
                 .samper-info-text {
-                    font-size: 10px;
+                    font-size: 13px;
                     line-height: 1.5;
                 }
                 .table-samper th {
