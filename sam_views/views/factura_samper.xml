@@ -19,6 +19,9 @@
                 .samper-uuid-line {
                     font-size: 18px;
                 }
+                .samper-nombrecomercial-line {
+                    font-size: 20px;
+                }
                 .table-samper th {
                     background-color: #e0e0e0;
                     border: 1px solid #666;
@@ -37,7 +40,7 @@
                 <div class="row samper-info-text">
                     <div class="col-12">
                     <span class="samper-uuid-line"><strong>UUID:</strong> <span t-field="o.l10n_mx_edi_cfdi_uuid"/></span><br/>
-                    <span class="samper-uuid-line"> <span t-field="o.partner_id.x_nombre_comercial"/></span><br/>
+                    <span class="samper-nombrecomercial-line"> <span t-field="o.partner_id.x_nombre_comercial"/></span><br/>
                         <strong>RUTA:</strong> <span t-field="o.partner_id.x_ruta"/><br/>
                         <strong>FECHA:</strong> <span t-field="o.create_date" t-options='{"widget": "datetime", "format": "dd/MM/yyyy HH:mm:ss"}'/>
                     </div>
