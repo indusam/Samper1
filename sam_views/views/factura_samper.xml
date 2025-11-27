@@ -41,7 +41,7 @@
                     <div class="col-12">
                     <span class="samper-uuid-line"><strong>UUID:</strong> <span t-field="o.l10n_mx_edi_cfdi_uuid"/></span><br/>
                     <span class="samper-nombrecomercial-line"> <span t-field="o.partner_id.x_nombre_comercial"/></span><br/>
-                        <strong>RUTA:</strong> <span t-field="o.partner_id.x_ruta"/><br/>
+                        <strong>RUTA:</strong> <span t-field="o.partner_shipping_id.x_ruta"/><br/>
                         <strong>FECHA:</strong> <span t-field="o.create_date" t-options='{"widget": "datetime", "format": "dd/MM/yyyy HH:mm:ss"}'/>
                     </div>
                 </div>
