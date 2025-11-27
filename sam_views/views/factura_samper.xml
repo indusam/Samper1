@@ -62,24 +62,36 @@
             <attribute name="class">table-samper table table-sm</attribute>
         </xpath>
 
-        <!-- Agregar columna de Código de Producto antes de Description -->
-        <xpath expr="//th[@name='th_description']" position="before">
-            <th name="th_default_code" class="text-start">Código</th>
+        <!-- Cambiar título de th_description a "Código del producto" -->
+        <xpath expr="//th[@name='th_description']/span" position="replace">
+            <span>Código del producto</span>
         </xpath>
 
-        <xpath expr="//span[@t-if='line.name'][@t-field='line.name']" position="before">
+        <!-- Reemplazar el contenido de la celda de descripción con el código -->
+        <xpath expr="//td[@name='account_invoice_line_name']/span[@t-field='line.name']" position="replace">
             <span t-if="line.product_id" t-field="line.product_id.default_code"/>
         </xpath>
 
-        <!-- Agregar columna de Lotes después de Description -->
+        <!-- Agregar columna de Descripción después de Código -->
         <xpath expr="//th[@name='th_description']" position="after">
+            <th name="th_product_name" class="text-start">Descripción</th>
+        </xpath>
+
+        <xpath expr="//td[@name='account_invoice_line_name']" position="after">
+            <td name="td_product_name">
+                <span t-if="line.name" t-field="line.name" t-options='{"widget": "text"}'/>
+            </td>
+        </xpath>
+
+        <!-- Agregar columna de Lotes después de Descripción -->
+        <xpath expr="//th[@name='th_product_name']" position="after">
             <th name="th_lots" class="text-start">Lotes</th>
         </xpath>
 
-        <xpath expr="//span[@t-if='line.name'][@t-field='line.name']" position="after">
-            <div>
-                <!-- Placeholder para lotes - se puede agregar lógica después -->
-            </div>
+        <xpath expr="//td[@name='td_product_name']" position="after">
+            <td name="td_lots">
+                <span t-if="line.x_lotes" t-field="line.x_lotes"/>
+            </td>
         </xpath>
 
         <!-- Agregar sección de pago al final -->
