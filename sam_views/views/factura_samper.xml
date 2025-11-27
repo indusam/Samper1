@@ -33,14 +33,19 @@
             </style>
         </xpath>
 
-        <!-- Modificar el título de la factura -->
-        <xpath expr="//t[@t-set='layout_document_title']//span[@t-if='o.name and o.name != &quot;/&quot;']" position="replace">
-            <span class="samper-invoice-title">Factura <span t-field="o.name">INV/2023/0001</span></span>
+        <!-- Modificar el título de la factura agregando estilo -->
+        <xpath expr="//t[@t-set='layout_document_title']" position="inside">
+            <style>
+                .o_report_layout_standard h2 span {
+                    color: #c41e3a !important;
+                    font-size: 20px !important;
+                }
+            </style>
         </xpath>
 
-        <!-- Agregar UUID después del título -->
-        <xpath expr="//t[@t-set='layout_document_title']" position="after">
-            <div t-if="o.l10n_mx_edi_cfdi_uuid" class="samper-info-text" style="margin-top: 5px;">
+        <!-- Agregar UUID después del título del documento -->
+        <xpath expr="//div[@class='page mb-4']" position="inside">
+            <div t-if="o.l10n_mx_edi_cfdi_uuid" class="samper-info-text" style="margin-top: 5px; margin-bottom: 10px;">
                 <strong>UUID:</strong> <span t-field="o.l10n_mx_edi_cfdi_uuid"/>
             </div>
         </xpath>
