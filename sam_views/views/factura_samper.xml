@@ -16,11 +16,6 @@
                     font-size: 10px;
                     line-height: 1.5;
                 }
-                .samper-invoice-title {
-                    color: #c41e3a;
-                    font-size: 20px;
-                    font-weight: bold;
-                }
                 .table-samper th {
                     background-color: #e0e0e0;
                     border: 1px solid #666;
@@ -33,23 +28,6 @@
             </style>
         </xpath>
 
-        <!-- Modificar el título de la factura agregando estilo -->
-        <xpath expr="//t[@t-set='layout_document_title']" position="inside">
-            <style>
-                .o_report_layout_standard h2 span {
-                    color: #c41e3a !important;
-                    font-size: 20px !important;
-                }
-            </style>
-        </xpath>
-
-        <!-- Agregar UUID después del título del documento -->
-        <xpath expr="//div[@class='page mb-4']" position="inside">
-            <div t-if="o.l10n_mx_edi_cfdi_uuid" class="samper-info-text" style="margin-top: 5px; margin-bottom: 10px;">
-                <strong>UUID:</strong> <span t-field="o.l10n_mx_edi_cfdi_uuid"/>
-            </div>
-        </xpath>
-
         <!-- Agregar información adicional del cliente después de la dirección -->
         <xpath expr="//div[@class='row']" position="after">
             <div class="samper-customer-box">
@@ -58,7 +36,7 @@
                         <strong>Cliente:</strong> <span t-field="o.partner_id.name"/><br/>
                         <span t-field="o.partner_id.street"/><br/>
                         <span t-if="o.partner_id.street2"><span t-field="o.partner_id.street2"/><br/></span>
-                        <span t-field="o.partner_id.zip"/> <span t-field="o.partner_id.city"/>, <span t-field="o.partner_id.state_id.code"/><br/>
+                        <span t-field="o.partner_id.zip"/> <span t-field="o.partner_id.city"/><br/>
                         <strong>RFC:</strong> <span t-field="o.partner_id.vat"/>
                     </div>
                     <div class="col-6">
@@ -68,7 +46,7 @@
                         <span t-if="o.partner_id.x_ruta">
                             <strong>Ruta:</strong> <span t-field="o.partner_id.x_ruta"/><br/>
                         </span>
-                        <strong>Fecha de creación:</strong> <span t-field="o.create_date" t-options='{"widget": "datetime", "format": "dd/MM/yyyy HH:mm:ss"}'/>
+                        <strong>Fecha:</strong> <span t-field="o.create_date" t-options='{"widget": "datetime", "format": "dd/MM/yyyy HH:mm:ss"}'/>
                     </div>
                 </div>
             </div>
@@ -77,22 +55,6 @@
         <!-- Ocultar la dirección original -->
         <xpath expr="//div[@class='row']" position="attributes">
             <attribute name="style">display: none;</attribute>
-        </xpath>
-
-        <!-- Agregar información de CFDI mexicano en informations -->
-        <xpath expr="//div[@id='informations']" position="inside">
-            <div class="col" t-if="o.l10n_mx_edi_usage" name="l10n_mx_usage">
-                <strong>Uso CFDI</strong>
-                <div><span t-field="o.l10n_mx_edi_usage"/></div>
-            </div>
-            <div class="col" t-if="o.l10n_mx_edi_payment_method_id" name="l10n_mx_payment_method">
-                <strong>Forma de Pago</strong>
-                <div><span t-field="o.l10n_mx_edi_payment_method_id.code"/> - <span t-field="o.l10n_mx_edi_payment_method_id.name"/></div>
-            </div>
-            <div class="col" t-if="o.l10n_mx_edi_payment_policy" name="l10n_mx_payment_policy">
-                <strong>Método de Pago</strong>
-                <div><span t-field="o.l10n_mx_edi_payment_policy"/></div>
-            </div>
         </xpath>
 
         <!-- Aplicar estilos a la tabla -->
@@ -105,10 +67,8 @@
             <th name="th_default_code" class="text-start">Código</th>
         </xpath>
 
-        <xpath expr="//td[@name='account_invoice_line_name']" position="before">
-            <td name="td_default_code">
-                <span t-field="line.product_id.default_code"/>
-            </td>
+        <xpath expr="//span[@t-if='line.name'][@t-field='line.name']" position="before">
+            <span t-if="line.product_id" t-field="line.product_id.default_code"/>
         </xpath>
 
         <!-- Agregar columna de Lotes después de Description -->
@@ -116,48 +76,22 @@
             <th name="th_lots" class="text-start">Lotes</th>
         </xpath>
 
-        <xpath expr="//td[@name='account_invoice_line_name']" position="after">
-            <td name="td_lots">
-                <t t-set="sale_line" t-value="line.sale_line_ids[:1]"/>
-                <t t-if="sale_line and sale_line.move_ids">
-                    <t t-foreach="sale_line.move_ids.mapped('move_line_ids').filtered(lambda ml: ml.lot_id)" t-as="move_line">
-                        <span t-esc="'%.0f' % move_line.quantity"/> <span t-field="move_line.lot_id.name"/>
-                        <t t-if="move_line.lot_id.expiration_date">
-                            <br/><small><span t-field="move_line.lot_id.expiration_date" t-options='{"widget": "date"}'/></small>
-                        </t>
-                        <t t-if="not move_line_last"><br/></t>
-                    </t>
-                </t>
-            </td>
-        </xpath>
-
-        <!-- Agregar columna Código UNSPSC después de Quantity -->
-        <xpath expr="//th[@name='th_quantity']" position="after">
-            <th name="th_unspsc" class="text-start">Cve. SAT</th>
-        </xpath>
-
-        <xpath expr="//td[@name='td_quantity']" position="after">
-            <td name="td_unspsc">
-                <span t-field="line.product_id.unspsc_code_id.code"/>
-            </td>
-        </xpath>
-
-        <!-- Agregar columna Código Unidad SAT después de Unit Price -->
-        <xpath expr="//th[@name='th_priceunit']" position="after">
-            <th name="th_uom_sat" class="text-start">Unidad SAT</th>
-        </xpath>
-
-        <xpath expr="//td[@name='td_price_unit']" position="after">
-            <td name="td_uom_sat">
-                <span t-field="line.product_uom_id.l10n_mx_edi_code_sat"/>
-            </td>
+        <xpath expr="//span[@t-if='line.name'][@t-field='line.name']" position="after">
+            <div>
+                <!-- Placeholder para lotes - se puede agregar lógica después -->
+            </div>
         </xpath>
 
         <!-- Agregar sección de pago al final -->
         <xpath expr="//div[@id='payment_term']" position="before">
             <div style="clear: both; margin-top: 20px; padding-top: 10px; border-top: 1px solid #ddd; font-size: 11px;">
+                <div t-if="o.l10n_mx_edi_cfdi_uuid" style="margin-bottom: 10px;">
+                    <strong>UUID:</strong> <span t-field="o.l10n_mx_edi_cfdi_uuid"/>
+                </div>
                 <strong>Referencia de pago:</strong> <span t-field="o.name"/><br/>
-                <strong>Total en letra:</strong> <span t-field="o.amount_total_words"/> M.N
+                <span t-if="o.amount_total_words">
+                    <strong>Total en letra:</strong> <span t-field="o.amount_total_words"/> M.N
+                </span>
             </div>
         </xpath>
 
