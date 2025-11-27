@@ -1,15 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!-- Template personalizado para facturas Samper -->
-    <template id="report_invoice_document_inherit_samper" inherit_id="account.report_invoice_document">
+    <template id="report_invoice_document_inherit_samper" inherit_id="account.report_invoice_document" priority="20">
 
-        <!-- Ocultar dirección del partner en el encabezado -->
-        <xpath expr="//div[@class='row']" position="attributes">
-            <attribute name="style">display: none;</attribute>
+        <xpath expr="//t[@t-set='layout_document_title']" position="replace">
+            <t t-set="layout_document_title">
+                <style>
+                    .samper-invoice-title {
+                        color: #c41e3a;
+                        font-size: 22px;
+                        font-weight: bold;
+                        display: inline-block;
+                    }
+                    .samper-uuid {
+                        font-size: 10px;
+                        color: #333;
+                        margin-top: 5px;
+                    }
+                </style>
+                <span class="samper-invoice-title">Factura <span t-field="o.name"/></span>
+                <div t-if="o.l10n_mx_edi_cfdi_uuid" class="samper-uuid">
+                    <span t-field="o.l10n_mx_edi_cfdi_uuid"/>
+                </div>
+            </t>
         </xpath>
 
-        <!-- Reemplazar información antes de la tabla de productos -->
-        <xpath expr="//div[@id='informations']" position="replace">
+        <!-- Agregar estilos globales -->
+        <xpath expr="//div[@class='page mb-4']" position="before">
             <style>
                 .samper-customer-box {
                     margin-top: 10px;
@@ -22,17 +39,6 @@
                     font-size: 10px;
                     line-height: 1.5;
                 }
-                .samper-invoice-title {
-                    color: #c41e3a;
-                    font-size: 22px;
-                    font-weight: bold;
-                    margin: 15px 0 5px 0;
-                }
-                .samper-uuid {
-                    font-size: 10px;
-                    color: #333;
-                    margin-bottom: 15px;
-                }
                 .samper-details-table {
                     width: 100%;
                     font-size: 10px;
@@ -43,9 +49,65 @@
                     padding: 3px 5px;
                     vertical-align: top;
                 }
+                .samper-table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-top: 15px;
+                    font-size: 9px;
+                }
+                .samper-table th {
+                    background-color: #e0e0e0;
+                    border: 1px solid #666;
+                    padding: 6px 4px;
+                    text-align: left;
+                    font-weight: bold;
+                    font-size: 9px;
+                }
+                .samper-table td {
+                    border: 1px solid #666;
+                    padding: 6px 4px;
+                    font-size: 9px;
+                }
+                .samper-totals {
+                    margin-top: 20px;
+                    page-break-inside: avoid;
+                }
+                .samper-totals table {
+                    width: 350px;
+                    float: right;
+                    border-collapse: collapse;
+                    font-size: 10px;
+                }
+                .samper-totals td {
+                    padding: 5px 10px;
+                    border: 1px solid #666;
+                }
+                .samper-totals .total-row {
+                    font-weight: bold;
+                    background-color: #e0e0e0;
+                }
+                .samper-payment-reference {
+                    clear: both;
+                    margin-top: 30px;
+                    padding-top: 10px;
+                    font-size: 10px;
+                    font-weight: bold;
+                    border-top: 1px solid #ddd;
+                }
+                .samper-amount-text {
+                    margin-top: 8px;
+                    font-size: 10px;
+                    font-weight: bold;
+                    text-transform: uppercase;
+                }
+                .text-right-custom {
+                    text-align: right !important;
+                }
             </style>
+        </xpath>
 
-            <!-- Información del cliente -->
+        <!-- Ocultar dirección del partner original y agregar la personalizada -->
+        <xpath expr="//div[@class='row']" position="after">
             <div class="samper-customer-box">
                 <div class="row">
                     <div class="col-6">
@@ -59,7 +121,6 @@
                         </div>
                     </div>
                     <div class="col-6">
-                        <!-- Información adicional del cliente -->
                         <div class="samper-company-info">
                             <span t-if="o.partner_id.x_lp">
                                 <strong><span t-field="o.partner_id.x_lp"/></strong><br/>
@@ -73,21 +134,16 @@
                     </div>
                 </div>
             </div>
+        </xpath>
 
-            <!-- Título de factura y UUID -->
+        <!-- Ocultar el div original de dirección -->
+        <xpath expr="//div[@class='row']" position="attributes">
+            <attribute name="style">display: none;</attribute>
+        </xpath>
+
+        <!-- Agregar detalles CFDI después de informations -->
+        <xpath expr="//div[@id='informations']" position="after">
             <div class="row">
-                <div class="col-12">
-                    <div class="samper-invoice-title">
-                        Factura <span t-field="o.name"/>
-                    </div>
-                    <div t-if="o.l10n_mx_edi_cfdi_uuid" class="samper-uuid">
-                        <span t-field="o.l10n_mx_edi_cfdi_uuid"/>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Detalles de la factura -->
-            <div id="informations" class="row mb-4">
                 <div class="col-12">
                     <table class="samper-details-table">
                         <tr>
@@ -103,7 +159,6 @@
                                 <t t-if="o.l10n_mx_edi_usage == 'G01'">Adquisición de mercancías</t>
                                 <t t-elif="o.l10n_mx_edi_usage == 'G03'">Gastos en general</t>
                                 <t t-elif="o.l10n_mx_edi_usage == 'P01'">Por definir</t>
-                                <t t-else=""><span t-esc="dict(o._fields['l10n_mx_edi_usage']._description_selection(o.env)).get(o.l10n_mx_edi_usage, '')"/></t>
                             </td>
                         </tr>
                         <tr>
@@ -137,33 +192,13 @@
             </div>
         </xpath>
 
-        <!-- Reemplazar tabla de productos -->
-        <xpath expr="//table[@name='invoice_line_table']" position="replace">
-            <style>
-                .samper-table {
-                    width: 100%;
-                    border-collapse: collapse;
-                    margin-top: 15px;
-                    font-size: 9px;
-                }
-                .samper-table th {
-                    background-color: #e0e0e0;
-                    border: 1px solid #666;
-                    padding: 6px 4px;
-                    text-align: left;
-                    font-weight: bold;
-                    font-size: 9px;
-                }
-                .samper-table td {
-                    border: 1px solid #666;
-                    padding: 6px 4px;
-                    font-size: 9px;
-                }
-                .text-right-custom {
-                    text-align: right !important;
-                }
-            </style>
+        <!-- Ocultar información original -->
+        <xpath expr="//div[@id='informations']" position="attributes">
+            <attribute name="style">display: none;</attribute>
+        </xpath>
 
+        <!-- Reemplazar tabla de líneas -->
+        <xpath expr="//table[@name='invoice_line_table']" position="replace">
             <table class="samper-table" name="invoice_line_table">
                 <thead>
                     <tr>
@@ -184,7 +219,6 @@
                         <td><span t-field="line.product_id.default_code"/></td>
                         <td><span t-field="line.name" t-options='{"widget": "text"}'/></td>
                         <td>
-                            <!-- Lotes si existen desde stock moves -->
                             <t t-set="sale_line" t-value="line.sale_line_ids[:1]"/>
                             <t t-if="sale_line and sale_line.move_ids">
                                 <t t-foreach="sale_line.move_ids.mapped('move_line_ids').filtered(lambda ml: ml.lot_id)" t-as="move_line">
@@ -213,29 +247,8 @@
             </table>
         </xpath>
 
-        <!-- Reemplazar sección de totales -->
+        <!-- Reemplazar totales -->
         <xpath expr="//div[@id='total']" position="replace">
-            <style>
-                .samper-totals {
-                    margin-top: 20px;
-                    page-break-inside: avoid;
-                }
-                .samper-totals table {
-                    width: 350px;
-                    float: right;
-                    border-collapse: collapse;
-                    font-size: 10px;
-                }
-                .samper-totals td {
-                    padding: 5px 10px;
-                    border: 1px solid #666;
-                }
-                .samper-totals .total-row {
-                    font-weight: bold;
-                    background-color: #e0e0e0;
-                }
-            </style>
-
             <div id="total" class="samper-totals">
                 <table>
                     <tr>
@@ -256,25 +269,8 @@
             </div>
         </xpath>
 
-        <!-- Agregar referencia de pago después de totales -->
+        <!-- Agregar referencia de pago -->
         <xpath expr="//div[@id='payment_term']" position="before">
-            <style>
-                .samper-payment-reference {
-                    clear: both;
-                    margin-top: 30px;
-                    padding-top: 10px;
-                    font-size: 10px;
-                    font-weight: bold;
-                    border-top: 1px solid #ddd;
-                }
-                .samper-amount-text {
-                    margin-top: 8px;
-                    font-size: 10px;
-                    font-weight: bold;
-                    text-transform: uppercase;
-                }
-            </style>
-
             <div class="samper-payment-reference">
                 <div>
                     Utilice la siguiente referencia al realizar su pago: <strong><span t-field="o.name"/></strong>
