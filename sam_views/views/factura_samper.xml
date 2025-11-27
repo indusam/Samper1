@@ -19,11 +19,11 @@
                 .table-samper th {
                     background-color: #e0e0e0;
                     border: 1px solid #666;
-                    font-size: 9px;
+                    font-size: 11px;
                 }
                 .table-samper td {
                     border: 1px solid #666;
-                    font-size: 9px;
+                    font-size: 11px;
                 }
             </style>
         </xpath>
@@ -62,35 +62,41 @@
             <attribute name="class">table-samper table table-sm</attribute>
         </xpath>
 
-        <!-- Cambiar título de th_description a "Código del producto" -->
-        <xpath expr="//th[@name='th_description']/span" position="replace">
-            <span>Código del producto</span>
+        <!-- Agregar columna de Código SAT antes de Description -->
+        <xpath expr="//th[@name='th_description']" position="before">
+            <th name="th_product_code" class="text-start">Código del producto</th>
         </xpath>
 
-        <!-- Reemplazar el contenido de la celda de descripción con el código -->
-        <xpath expr="//td[@name='account_invoice_line_name']/span[@t-field='line.name']" position="replace">
-            <span t-if="line.product_id" t-field="line.product_id.default_code"/>
-        </xpath>
-
-        <!-- Agregar columna de Descripción después de Código -->
-        <xpath expr="//th[@name='th_description']" position="after">
-            <th name="th_product_name" class="text-start">Descripción</th>
-        </xpath>
-
-        <xpath expr="//td[@name='account_invoice_line_name']" position="after">
-            <td name="td_product_name">
-                <span t-if="line.name" t-field="line.name" t-options='{"widget": "text"}'/>
+        <xpath expr="//td[@name='account_invoice_line_name']" position="before">
+            <td name="td_product_code">
+                <span t-if="line.product_id" t-field="line.product_id.default_code"/>
             </td>
         </xpath>
 
-        <!-- Agregar columna de Lotes después de Descripción -->
-        <xpath expr="//th[@name='th_product_name']" position="after">
+        <!-- Cambiar título de th_description a "Descripción" -->
+        <xpath expr="//th[@name='th_description']/span" position="replace">
+            <span>Descripción</span>
+        </xpath>
+
+        <!-- Agregar columna de Lotes después de Description -->
+        <xpath expr="//th[@name='th_description']" position="after">
             <th name="th_lots" class="text-start">Lotes</th>
         </xpath>
 
-        <xpath expr="//td[@name='td_product_name']" position="after">
+        <xpath expr="//td[@name='account_invoice_line_name']" position="after">
             <td name="td_lots">
                 <span t-if="line.x_lotes" t-field="line.x_lotes"/>
+            </td>
+        </xpath>
+
+        <!-- Agregar columna de Código de Unidad después de Quantity -->
+        <xpath expr="//th[@name='th_quantity']" position="after">
+            <th name="th_uom_code" class="text-start">Cód. Unidad</th>
+        </xpath>
+
+        <xpath expr="//td[@name='td_quantity']" position="after">
+            <td name="td_uom_code">
+                <span t-if="line.product_uom_id" t-field="line.product_uom_id.name"/>
             </td>
         </xpath>
 
