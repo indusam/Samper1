@@ -46,4 +46,13 @@ class ResPartner(models.Model):
     )
     generate_addenda_liverpool = fields.Boolean(
         string='Generate addenda Liverpool',
+        compute='_compute_is_liverpool_addenda',
         help='Check this field if require generate addenda Liverpool')
+
+    @api.depends('l10n_mx_edi_addenda', 'commercial_partner_id.l10n_mx_edi_addenda')
+    def _compute_is_liverpool_addenda(self):
+        """Check if the partner has Liverpool addenda configured."""
+        liverpool_addenda = self.env.ref('w_addenda_liverpool.liverpool_addenda_appendix', raise_if_not_found=False)
+        for partner in self:
+            addenda = partner.l10n_mx_edi_addenda or partner.commercial_partner_id.l10n_mx_edi_addenda
+            partner.generate_addenda_liverpool = liverpool_addenda and addenda == liverpool_addenda

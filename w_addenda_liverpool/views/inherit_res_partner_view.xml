@@ -6,10 +6,14 @@
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='category_id']" position="after">
-                <field name="generate_addenda_liverpool"/>
+                <field name="generate_addenda_liverpool" invisible="1"/>
                 <field name="global_localitation_number" invisible="not generate_addenda_liverpool"/>
                 <field name="person_order_department" invisible="not generate_addenda_liverpool"/>
                 <field name="supplier_identification" invisible="not generate_addenda_liverpool"/>
+            </xpath>
+            <!-- Add l10n_mx_edi_addenda field to Mexican localization section if exists -->
+            <xpath expr="//field[@name='l10n_mx_edi_addenda']" position="attributes">
+                <attribute name="domain">[('model', '=', 'account.move')]</attribute>
             </xpath>
         </field>
       </record>
