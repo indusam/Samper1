@@ -28,7 +28,7 @@
                     font-size: 11px;
                 }
                 .table-samper td {
-                    border: 1px solid #666;
+                    border: 1px solid #666666ff;
                     font-size: 11px;
                 }
             </style>

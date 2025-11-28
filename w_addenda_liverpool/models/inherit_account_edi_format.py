@@ -12,16 +12,18 @@ class AccountEdiFormat(models.Model):
     _inherit = 'account.edi.format'
 
     def _l10n_mx_edi_export_invoice_cfdi(self, invoice):
-        """Override to add detallista namespace to CFDI when Liverpool addenda is required."""
+        """Override to add detallista namespace and Liverpool addenda to CFDI."""
         # Get the CFDI from parent method - this returns a dict with 'cfdi_str' and 'errors'
         res = super()._l10n_mx_edi_export_invoice_cfdi(invoice)
 
-        _logger.info('Export CFDI for invoice %s, require_addenda_liverpool: %s', invoice.name, invoice.require_addenda_liverpool)
+        # Check if Liverpool addenda is required based on partner configuration
+        require_liverpool = invoice.partner_id.generate_addenda_liverpool
+        _logger.info('Export CFDI for invoice %s, partner generate_addenda_liverpool: %s', invoice.name, require_liverpool)
 
         # Only modify if Liverpool addenda is required and CFDI was generated successfully
-        if invoice.require_addenda_liverpool and res.get('cfdi_str'):
+        if require_liverpool and res.get('cfdi_str'):
             try:
-                _logger.info('Adding detallista namespace to CFDI for invoice %s', invoice.name)
+                _logger.info('Adding detallista namespace and Liverpool addenda to CFDI for invoice %s', invoice.name)
 
                 # Parse the CFDI XML - cfdi_str is already bytes
                 cfdi_node = etree.fromstring(res['cfdi_str'])
@@ -68,12 +70,40 @@ class AccountEdiFormat(models.Model):
                     cfdi_node.set(schema_loc_key, new_schema.strip())
                     _logger.info('New schema location: %s', cfdi_node.get(schema_loc_key))
 
+                # Render and add the Liverpool addenda
+                _logger.info('Rendering Liverpool addenda template')
+                addenda_template = self.env.ref('w_addenda_liverpool.liverpool_addenda_appendix', raise_if_not_found=False)
+                if addenda_template:
+                    addenda_values = {'record': invoice}
+                    addenda_str = addenda_template._render(values=addenda_values).strip()
+
+                    if addenda_str:
+                        _logger.info('Liverpool addenda rendered successfully, adding to CFDI')
+                        addenda_node = fromstring(addenda_str)
+
+                        # Find the Complemento element
+                        cfdi_ns = 'http://www.sat.gob.mx/cfd/4'
+                        complemento = cfdi_node.find('{%s}Complemento' % cfdi_ns)
+
+                        if complemento is None:
+                            # Create Complemento if it doesn't exist (shouldn't happen)
+                            _logger.warning('Complemento not found, creating one')
+                            complemento = etree.SubElement(cfdi_node, '{%s}Complemento' % cfdi_ns)
+
+                        # Insert the addenda as the first child of Complemento (before TimbreFiscalDigital)
+                        complemento.insert(0, addenda_node)
+                        _logger.info('Liverpool addenda added to Complemento')
+                    else:
+                        _logger.warning('Liverpool addenda template rendered empty')
+                else:
+                    _logger.warning('Liverpool addenda template not found')
+
                 # Convert back to bytes - PAC expects bytes, not string
                 res['cfdi_str'] = etree.tostring(cfdi_node, encoding='utf-8', pretty_print=False)
-                _logger.info('CFDI updated successfully')
+                _logger.info('CFDI updated successfully with Liverpool addenda')
 
             except Exception as e:
-                _logger.error('Error adding detallista namespace to CFDI for invoice %s: %s', invoice.name, str(e), exc_info=True)
+                _logger.error('Error adding Liverpool addenda to CFDI for invoice %s: %s', invoice.name, str(e), exc_info=True)
 
         return res
 
