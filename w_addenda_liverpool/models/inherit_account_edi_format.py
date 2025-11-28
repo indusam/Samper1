@@ -16,9 +16,9 @@ class AccountEdiFormat(models.Model):
         # Get the CFDI from parent method - this returns a dict with 'cfdi_str' and 'errors'
         res = super()._l10n_mx_edi_export_invoice_cfdi(invoice)
 
-        # Check if Liverpool addenda is required based on partner configuration
-        require_liverpool = invoice.partner_id.generate_addenda_liverpool
-        _logger.info('Export CFDI for invoice %s, partner generate_addenda_liverpool: %s', invoice.name, require_liverpool)
+        # Check if Liverpool addenda is required based on invoice configuration
+        require_liverpool = invoice.require_addenda_liverpool
+        _logger.info('Export CFDI for invoice %s, require_addenda_liverpool: %s', invoice.name, require_liverpool)
 
         # Only modify if Liverpool addenda is required and CFDI was generated successfully
         if require_liverpool and res.get('cfdi_str'):

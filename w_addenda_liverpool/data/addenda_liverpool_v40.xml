@@ -76,6 +76,7 @@
                 </detallista:TotalAllowanceCharge>
             </detallista:detallista>
         </t>
+        </t>
     </template>
 
 </odoo>
