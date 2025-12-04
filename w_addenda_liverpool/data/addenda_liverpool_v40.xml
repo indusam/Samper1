@@ -76,4 +76,9 @@
         </detallista:detallista>
     </template>
 
+    <!-- Mark this template as an addenda so Odoo's l10n_mx_edi can discover it -->
+    <record id="liverpool_addenda_appendix" model="ir.ui.view">
+        <field name="l10n_mx_edi_addenda_flag" eval="True"/>
+    </record>
+
 </odoo>
