@@ -24,6 +24,8 @@
 #
 ########################################################################
 from odoo import models, fields, api
+from lxml import etree
+from lxml.objectify import fromstring
 import logging
 import unidecode
 
@@ -32,6 +34,59 @@ _logger = logging.getLogger(__name__)
 
 class AccountMove(models.Model):
     _inherit = 'account.move'
+
+    def _l10n_mx_edi_cfdi_invoice_append_addenda(self, cfdi, addenda):
+        """Override to add Liverpool addenda to CFDI."""
+        _logger.warning('=' * 80)
+        _logger.warning('w_addenda_liverpool: _l10n_mx_edi_cfdi_invoice_append_addenda called for invoice %s', self.name)
+        _logger.warning('=' * 80)
+
+        # Check if Liverpool addenda is required
+        if not self.require_addenda_liverpool:
+            _logger.warning('Liverpool addenda not required for this invoice')
+            return super()._l10n_mx_edi_cfdi_invoice_append_addenda(cfdi, addenda)
+
+        try:
+            _logger.warning('Adding Liverpool addenda to CFDI')
+
+            # Parse the CFDI XML
+            cfdi_node = fromstring(cfdi)
+
+            # Render the addenda template
+            addenda_template = self.env.ref('w_addenda_liverpool.liverpool_addenda_appendix', raise_if_not_found=False)
+            if not addenda_template:
+                _logger.error('Liverpool addenda template not found')
+                return cfdi
+
+            addenda_values = {'record': self}
+            addenda_str = addenda_template._render(values=addenda_values).strip()
+
+            if not addenda_str:
+                _logger.warning('Liverpool addenda template rendered empty')
+                return cfdi
+
+            # Parse the rendered addenda
+            addenda_node = fromstring(addenda_str)
+
+            # Find the Complemento element
+            cfdi_ns = 'http://www.sat.gob.mx/cfd/4'
+            complemento = cfdi_node.find('{%s}Complemento' % cfdi_ns)
+
+            if complemento is None:
+                _logger.info('Creating Complemento element')
+                complemento = etree.SubElement(cfdi_node, '{%s}Complemento' % cfdi_ns)
+
+            # Insert the addenda as the first child of Complemento (before TimbreFiscalDigital)
+            complemento.insert(0, addenda_node)
+
+            _logger.warning('Liverpool addenda added successfully')
+
+            # Return as bytes with UTF-8 encoding
+            return etree.tostring(cfdi_node, pretty_print=False, xml_declaration=True, encoding='UTF-8')
+
+        except Exception as e:
+            _logger.error('Error adding Liverpool addenda to CFDI: %s', str(e), exc_info=True)
+            return cfdi
 
     purchase_order_liv =  fields.Char(
         string='Purchase order liverpool',

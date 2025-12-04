@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!--This is the addenda liverpool for CFDI 4.0-->
-    <!-- In Odoo 18, addendas are appended to the XML after CFDI generation via the appendix mechanism -->
+
+    <!-- Create the addenda record that will appear in the dropdown -->
+    <record id="addenda_liverpool" model="l10n_mx_edi.addenda">
+        <field name="name">Liverpool</field>
+        <field name="view_id" ref="liverpool_addenda_appendix"/>
+    </record>
+
+    <!-- The addenda template -->
     <template id="liverpool_addenda_appendix" name="Liverpool Addenda Appendix">
         <detallista:detallista xmlns:detallista="http://www.sat.gob.mx/detallista" contentVersion="1.3.1" documentStructureVersion="AMC8.1" type="SimpleInvoiceType" documentStatus="ORIGINAL">
                 <detallista:requestForPaymentIdentification>
