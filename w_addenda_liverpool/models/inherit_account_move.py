@@ -114,6 +114,11 @@ class AccountMove(models.Model):
     def _compute_require_addenda_liverpool(self):
         for move in self:
             move.require_addenda_liverpool = move.partner_id.generate_addenda_liverpool
+            # Auto-select Liverpool addenda when partner has it enabled
+            if move.partner_id.generate_addenda_liverpool and not move.l10n_mx_edi_addenda_id:
+                liverpool_addenda = self.env.ref('w_addenda_liverpool.addenda_liverpool', raise_if_not_found=False)
+                if liverpool_addenda:
+                    move.l10n_mx_edi_addenda_id = liverpool_addenda
 
     def unescape_characters(self, value):
         return unidecode.unidecode(value)
