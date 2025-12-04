@@ -5,7 +5,6 @@
     <!-- Create the addenda record that will appear in the dropdown -->
     <record id="addenda_liverpool" model="l10n_mx_edi.addenda">
         <field name="name">Liverpool</field>
-        <field name="view_id" ref="liverpool_addenda_appendix"/>
     </record>
 
     <!-- The addenda template -->
