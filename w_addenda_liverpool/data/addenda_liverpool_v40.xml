@@ -3,8 +3,7 @@
     <!--This is the addenda liverpool for CFDI 4.0-->
     <!-- In Odoo 18, addendas are appended to the XML after CFDI generation via the appendix mechanism -->
     <template id="liverpool_addenda_appendix" name="Liverpool Addenda Appendix">
-        <t t-if="record.require_addenda_liverpool">
-            <detallista:detallista xmlns:detallista="http://www.sat.gob.mx/detallista" contentVersion="1.3.1" documentStructureVersion="AMC8.1" type="SimpleInvoiceType" documentStatus="ORIGINAL">
+        <detallista:detallista xmlns:detallista="http://www.sat.gob.mx/detallista" contentVersion="1.3.1" documentStructureVersion="AMC8.1" type="SimpleInvoiceType" documentStatus="ORIGINAL">
                 <detallista:requestForPaymentIdentification>
                     <t t-if="record.move_type in ('out_invoice', 'in_invoice')">
                         <detallista:entityType>INVOICE</detallista:entityType>
@@ -74,8 +73,7 @@
                 <detallista:TotalAllowanceCharge allowanceOrChargeType="ALLOWANCE">
                     <detallista:Amount>0.00</detallista:Amount>
                 </detallista:TotalAllowanceCharge>
-            </detallista:detallista>
-        </t>
+        </detallista:detallista>
     </template>
 
 </odoo>
