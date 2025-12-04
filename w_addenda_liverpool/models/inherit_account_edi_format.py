@@ -11,14 +11,24 @@ _logger = logging.getLogger(__name__)
 class AccountEdiFormat(models.Model):
     _inherit = 'account.edi.format'
 
+    def __init__(self, pool, cr):
+        super().__init__(pool, cr)
+        _logger.info('=' * 80)
+        _logger.info('w_addenda_liverpool: AccountEdiFormat model loaded successfully')
+        _logger.info('=' * 80)
+
     def _l10n_mx_edi_export_invoice_cfdi(self, invoice):
         """Override to add detallista namespace and Liverpool addenda to CFDI."""
+        _logger.warning('=' * 80)
+        _logger.warning('w_addenda_liverpool: _l10n_mx_edi_export_invoice_cfdi called for invoice %s', invoice.name)
+        _logger.warning('=' * 80)
+
         # Get the CFDI from parent method - this returns a dict with 'cfdi_str' and 'errors'
         res = super()._l10n_mx_edi_export_invoice_cfdi(invoice)
 
         # Check if Liverpool addenda is required based on invoice configuration
         require_liverpool = invoice.require_addenda_liverpool
-        _logger.info('Export CFDI for invoice %s, require_addenda_liverpool: %s', invoice.name, require_liverpool)
+        _logger.warning('Export CFDI for invoice %s, require_addenda_liverpool: %s', invoice.name, require_liverpool)
 
         # Only modify if Liverpool addenda is required and CFDI was generated successfully
         if require_liverpool and res.get('cfdi_str'):
