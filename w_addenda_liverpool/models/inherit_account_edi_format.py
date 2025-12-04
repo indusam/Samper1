@@ -11,12 +11,6 @@ _logger = logging.getLogger(__name__)
 class AccountEdiFormat(models.Model):
     _inherit = 'account.edi.format'
 
-    def __init__(self, pool, cr):
-        super().__init__(pool, cr)
-        _logger.info('=' * 80)
-        _logger.info('w_addenda_liverpool: AccountEdiFormat model loaded successfully')
-        _logger.info('=' * 80)
-
     def _l10n_mx_edi_export_invoice_cfdi(self, invoice):
         """Override to add detallista namespace and Liverpool addenda to CFDI."""
         _logger.warning('=' * 80)
