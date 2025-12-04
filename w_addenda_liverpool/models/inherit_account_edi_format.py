@@ -11,6 +11,23 @@ _logger = logging.getLogger(__name__)
 class AccountEdiFormat(models.Model):
     _inherit = 'account.edi.format'
 
+    def _post_invoice_edi(self, invoices):
+        """Override to check if this method is called."""
+        _logger.warning('=' * 80)
+        _logger.warning('w_addenda_liverpool: _post_invoice_edi called for %s invoices', len(invoices))
+        _logger.warning('=' * 80)
+        return super()._post_invoice_edi(invoices)
+
+    def _needs_web_services(self):
+        """Override to check if this method is called."""
+        _logger.warning('w_addenda_liverpool: _needs_web_services called')
+        return super()._needs_web_services()
+
+    def _support_batching(self, move, state, company):
+        """Override to check if this method is called."""
+        _logger.warning('w_addenda_liverpool: _support_batching called for move %s', move.name if move else 'None')
+        return super()._support_batching(move, state, company)
+
     def _l10n_mx_edi_export_invoice_cfdi(self, invoice):
         """Override to add detallista namespace and Liverpool addenda to CFDI."""
         _logger.warning('=' * 80)
