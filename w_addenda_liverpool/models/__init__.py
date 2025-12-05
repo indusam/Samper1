@@ -23,7 +23,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ########################################################################
-from . import inherit_account_move
+from . import account_move
 from . import inherit_res_partner
 from . import inherit_res_company
-from . import inherit_account_edi_format
