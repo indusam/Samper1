@@ -37,53 +37,11 @@ class AccountMove(models.Model):
                     move.l10n_mx_edi_addenda_id = liverpool_addenda
 
     def _l10n_mx_edi_addenda_liverpool(self):
-        """Generate Liverpool addenda XML with line items."""
+        """Generate Liverpool addenda by calling the addenda model method."""
         self.ensure_one()
-
-        # Build line items XML
-        line_items_xml = ''
-        line_count = 0
-
-        for line in self.invoice_line_ids.filtered(lambda l: l.product_id and not l.display_type):
-            line_count += 1
-            barcode = line.product_id.barcode or '00000000000000'
-            code = line.product_id.default_code or str(line.product_id.id)
-            name = self.unescape_characters((line.product_id.name or line.name or 'PRODUCTO')[:35])
-            quantity = line.get_quantity()
-            unit = line.product_uom_id.name
-            price_gross = line.get_price_gross()
-            price_net = line.get_price_net()
-            amount_gross = line.get_gross_amount()
-            amount_net = line.get_net_amount()
-
-            line_items_xml += f'''
-                        <detallista:lineItem type="SimpleInvoiceLineItemType" number="{line_count}">
-                            <detallista:tradeItemIdentification>
-                                <detallista:gtin>{barcode}</detallista:gtin>
-                            </detallista:tradeItemIdentification>
-                            <detallista:alternateTradeItemIdentification type="SUPPLIER_ASSIGNED">{code}</detallista:alternateTradeItemIdentification>
-                            <detallista:tradeItemDescriptionInformation language="ES">
-                                <detallista:longText>{name}</detallista:longText>
-                            </detallista:tradeItemDescriptionInformation>
-                            <detallista:invoicedQuantity unitOfMeasure="{unit}">{quantity}</detallista:invoicedQuantity>
-                            <detallista:grossPrice>
-                                <detallista:Amount>{price_gross}</detallista:Amount>
-                            </detallista:grossPrice>
-                            <detallista:netPrice>
-                                <detallista:Amount>{price_net}</detallista:Amount>
-                            </detallista:netPrice>
-                            <detallista:totalLineAmount>
-                                <detallista:grossAmount>
-                                    <detallista:Amount>{amount_gross}</detallista:Amount>
-                                </detallista:grossAmount>
-                                <detallista:netAmount>
-                                    <detallista:Amount>{amount_net}</detallista:Amount>
-                                </detallista:netAmount>
-                            </detallista:totalLineAmount>
-                        </detallista:lineItem>'''
-
-        # Return the line items XML to be inserted
-        return line_items_xml
+        if self.l10n_mx_edi_addenda_id and self.l10n_mx_edi_addenda_id.name == 'Liverpool':
+            return self.l10n_mx_edi_addenda_id._l10n_mx_edi_render_addenda_liverpool(self)
+        return ''
 
     def unescape_characters(self, value):
         """Remove accents and special characters from text."""
