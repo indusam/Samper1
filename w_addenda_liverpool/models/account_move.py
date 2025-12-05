@@ -1,9 +1,5 @@
 # -*- encoding: utf-8 -*-
 from odoo import models, fields, api
-from lxml import etree
-import logging
-
-_logger = logging.getLogger(__name__)
 
 
 class AccountMove(models.Model):
@@ -38,10 +34,12 @@ class AccountMove(models.Model):
 
     def _l10n_mx_edi_addenda_liverpool(self):
         """Generate Liverpool addenda by calling the addenda model method."""
+        from markupsafe import Markup
         self.ensure_one()
         if self.l10n_mx_edi_addenda_id and self.l10n_mx_edi_addenda_id.name == 'Liverpool':
-            return self.l10n_mx_edi_addenda_id._l10n_mx_edi_render_addenda_liverpool(self)
-        return ''
+            xml_content = self.l10n_mx_edi_addenda_id._l10n_mx_edi_render_addenda_liverpool(self)
+            return Markup(xml_content)
+        return Markup('')
 
     def unescape_characters(self, value):
         """Remove accents and special characters from text."""

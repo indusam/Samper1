@@ -5,7 +5,7 @@
         <record id="addenda_liverpool" model="l10n_mx_edi.addenda">
             <field name="name">Liverpool</field>
             <field name="arch" type="xml">
-                <t t-raw="record._l10n_mx_edi_addenda_liverpool()"/>
+                <t t-out="record._l10n_mx_edi_addenda_liverpool()"/>
             </field>
         </record>
     </data>

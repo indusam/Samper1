@@ -1,8 +1,5 @@
 # -*- encoding: utf-8 -*-
 from odoo import models, api
-import logging
-
-_logger = logging.getLogger(__name__)
 
 
 class L10nMxEdiAddenda(models.Model):
@@ -20,9 +17,6 @@ class L10nMxEdiAddenda(models.Model):
             lambda l: l.product_id and l.display_type in (False, 'product')
         )
 
-        _logger.info(f"Liverpool Addenda - Total invoice lines: {len(move.invoice_line_ids)}")
-        _logger.info(f"Liverpool Addenda - Filtered lines with products: {len(invoice_lines)}")
-
         for line in invoice_lines:
             line_count += 1
             barcode = line.product_id.barcode or '00000000000000'
@@ -36,7 +30,7 @@ class L10nMxEdiAddenda(models.Model):
             amount_net = line.get_net_amount()
 
             line_items_xml += f'''
-                        <detallista:lineItem type="SimpleInvoiceLineItemType" number="{line_count}">
+                        <detallista:lineItem number="{line_count}" type="SimpleInvoiceLineItemType">
                             <detallista:tradeItemIdentification>
                                 <detallista:gtin>{barcode}</detallista:gtin>
                             </detallista:tradeItemIdentification>
