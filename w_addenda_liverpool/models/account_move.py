@@ -36,25 +36,23 @@ class AccountMove(models.Model):
                 if liverpool_addenda:
                     move.l10n_mx_edi_addenda_id = liverpool_addenda
 
-    def _l10n_mx_edi_add_addenda_namespace(self, cfdi_values):
-        """Add detallista namespace for Liverpool addenda."""
-        res = super()._l10n_mx_edi_add_addenda_namespace(cfdi_values)
-        _logger.warning('=' * 80)
-        _logger.warning('w_addenda_liverpool: _l10n_mx_edi_add_addenda_namespace called')
-        _logger.warning('=' * 80)
-        if self.l10n_mx_edi_addenda_id and self.l10n_mx_edi_addenda_id.name == 'Liverpool':
-            if res is None:
-                res = {}
-            res['detallista'] = 'http://www.sat.gob.mx/detallista'
-        return res
+    def _l10n_mx_edi_render_addenda(self):
+        """Render addenda template with QWeb."""
+        self.ensure_one()
+        if not self.l10n_mx_edi_addenda_id:
+            return super()._l10n_mx_edi_render_addenda() if hasattr(super(), '_l10n_mx_edi_render_addenda') else None
 
-    def _l10n_mx_edi_cfdi_append_addenda(self, cfdi_node, addenda):
-        """Append addenda to CFDI."""
-        _logger.warning('=' * 80)
-        _logger.warning('w_addenda_liverpool: _l10n_mx_edi_cfdi_append_addenda called for %s', self.name)
-        _logger.warning('Addenda: %s', addenda.name if addenda else 'None')
-        _logger.warning('=' * 80)
-        return super()._l10n_mx_edi_cfdi_append_addenda(cfdi_node, addenda)
+        # Get the addenda record
+        addenda = self.l10n_mx_edi_addenda_id
+
+        # Render the template using QWeb with the invoice as context
+        try:
+            rendered = self.env['ir.qweb']._render(addenda.id, {'record': self})
+            _logger.info('Liverpool addenda rendered successfully for invoice %s', self.name)
+            return rendered
+        except Exception as e:
+            _logger.error('Error rendering Liverpool addenda: %s', str(e))
+            return super()._l10n_mx_edi_render_addenda() if hasattr(super(), '_l10n_mx_edi_render_addenda') else None
 
     def unescape_characters(self, value):
         """Remove accents and special characters from text."""
