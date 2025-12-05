@@ -36,23 +36,54 @@ class AccountMove(models.Model):
                 if liverpool_addenda:
                     move.l10n_mx_edi_addenda_id = liverpool_addenda
 
-    def _l10n_mx_edi_render_addenda(self):
-        """Render addenda template with QWeb."""
+    def _l10n_mx_edi_addenda_liverpool(self):
+        """Generate Liverpool addenda XML with line items."""
         self.ensure_one()
-        if not self.l10n_mx_edi_addenda_id:
-            return super()._l10n_mx_edi_render_addenda() if hasattr(super(), '_l10n_mx_edi_render_addenda') else None
 
-        # Get the addenda record
-        addenda = self.l10n_mx_edi_addenda_id
+        # Build line items XML
+        line_items_xml = ''
+        line_count = 0
 
-        # Render the template using QWeb with the invoice as context
-        try:
-            rendered = self.env['ir.qweb']._render(addenda.id, {'record': self})
-            _logger.info('Liverpool addenda rendered successfully for invoice %s', self.name)
-            return rendered
-        except Exception as e:
-            _logger.error('Error rendering Liverpool addenda: %s', str(e))
-            return super()._l10n_mx_edi_render_addenda() if hasattr(super(), '_l10n_mx_edi_render_addenda') else None
+        for line in self.invoice_line_ids.filtered(lambda l: l.product_id and not l.display_type):
+            line_count += 1
+            barcode = line.product_id.barcode or '00000000000000'
+            code = line.product_id.default_code or str(line.product_id.id)
+            name = self.unescape_characters((line.product_id.name or line.name or 'PRODUCTO')[:35])
+            quantity = line.get_quantity()
+            unit = line.product_uom_id.name
+            price_gross = line.get_price_gross()
+            price_net = line.get_price_net()
+            amount_gross = line.get_gross_amount()
+            amount_net = line.get_net_amount()
+
+            line_items_xml += f'''
+                        <detallista:lineItem type="SimpleInvoiceLineItemType" number="{line_count}">
+                            <detallista:tradeItemIdentification>
+                                <detallista:gtin>{barcode}</detallista:gtin>
+                            </detallista:tradeItemIdentification>
+                            <detallista:alternateTradeItemIdentification type="SUPPLIER_ASSIGNED">{code}</detallista:alternateTradeItemIdentification>
+                            <detallista:tradeItemDescriptionInformation language="ES">
+                                <detallista:longText>{name}</detallista:longText>
+                            </detallista:tradeItemDescriptionInformation>
+                            <detallista:invoicedQuantity unitOfMeasure="{unit}">{quantity}</detallista:invoicedQuantity>
+                            <detallista:grossPrice>
+                                <detallista:Amount>{price_gross}</detallista:Amount>
+                            </detallista:grossPrice>
+                            <detallista:netPrice>
+                                <detallista:Amount>{price_net}</detallista:Amount>
+                            </detallista:netPrice>
+                            <detallista:totalLineAmount>
+                                <detallista:grossAmount>
+                                    <detallista:Amount>{amount_gross}</detallista:Amount>
+                                </detallista:grossAmount>
+                                <detallista:netAmount>
+                                    <detallista:Amount>{amount_net}</detallista:Amount>
+                                </detallista:netAmount>
+                            </detallista:totalLineAmount>
+                        </detallista:lineItem>'''
+
+        # Return the line items XML to be inserted
+        return line_items_xml
 
     def unescape_characters(self, value):
         """Remove accents and special characters from text."""

@@ -42,34 +42,7 @@
                         <detallista:gln><t t-out="record.company_id.global_localitation_number or '0000000000000'"/></detallista:gln>
                         <detallista:alternatePartyIdentification type="SELLER_ASSIGNED_IDENTIFIER_FOR_A_PARTY"><t t-out="record.partner_id.supplier_identification or record.company_id.vat or 'N/A'"/></detallista:alternatePartyIdentification>
                     </detallista:seller>
-                    <t t-set="line_counts" t-value="0"/>
-                    <t t-foreach="record.invoice_line_ids.filtered(lambda l: l.product_id and not l.display_type)" t-as="line">
-                        <t t-set="line_counts" t-value="line_counts + 1"/>
-                        <detallista:lineItem t-att-number="line_counts" type="SimpleInvoiceLineItemType">
-                            <detallista:tradeItemIdentification>
-                                <detallista:gtin><t t-out="line.product_id.barcode or '00000000000000'"/></detallista:gtin>
-                            </detallista:tradeItemIdentification>
-                            <detallista:alternateTradeItemIdentification type="SUPPLIER_ASSIGNED"><t t-out="line.product_id.default_code or str(line.product_id.id)"/></detallista:alternateTradeItemIdentification>
-                            <detallista:tradeItemDescriptionInformation language="ES">
-                                <detallista:longText><t t-out="record.unescape_characters((line.product_id.name or line.name or 'PRODUCTO')[:35])"/></detallista:longText>
-                            </detallista:tradeItemDescriptionInformation>
-                            <detallista:invoicedQuantity t-att-unitOfMeasure="line.product_uom_id.name"><t t-out="line.get_quantity()"/></detallista:invoicedQuantity>
-                            <detallista:grossPrice>
-                                <detallista:Amount><t t-out="line.get_price_gross()"/></detallista:Amount>
-                            </detallista:grossPrice>
-                            <detallista:netPrice>
-                                <detallista:Amount><t t-out="line.get_price_net()"/></detallista:Amount>
-                            </detallista:netPrice>
-                            <detallista:totalLineAmount>
-                                <detallista:grossAmount>
-                                    <detallista:Amount><t t-out="line.get_gross_amount()"/></detallista:Amount>
-                                </detallista:grossAmount>
-                                <detallista:netAmount>
-                                    <detallista:Amount><t t-out="line.get_net_amount()"/></detallista:Amount>
-                                </detallista:netAmount>
-                            </detallista:totalLineAmount>
-                        </detallista:lineItem>
-                    </t>
+                    <t t-raw="record._l10n_mx_edi_addenda_liverpool()"/>
                     <detallista:totalAmount>
                         <detallista:Amount><t t-out="record.get_total_amount()"/></detallista:Amount>
                     </detallista:totalAmount>
