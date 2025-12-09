@@ -106,8 +106,8 @@ class ComisionVendedor(models.TransientModel):
         data = {
             'form_data': self.read()[0],
             'vendedor_nombre': self.vendedor_id.name,
-            'fecha_inicio': self.fecha_inicio,
-            'fecha_fin': self.fecha_fin,
+            'fecha_inicio': self.fecha_inicio.strftime('%d/%m/%Y') if self.fecha_inicio else '',
+            'fecha_fin': self.fecha_fin.strftime('%d/%m/%Y') if self.fecha_fin else '',
             'clientes': clientes_list,
             'total_general_ventas': total_general_ventas,
             'total_general_comisiones': total_general_comisiones
