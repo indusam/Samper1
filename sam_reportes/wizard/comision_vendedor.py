@@ -21,7 +21,7 @@ class ComisionVendedor(models.TransientModel):
         'res.partner',
         string='Vendedor',
         required=True,
-        domain=[('x_studio_vendedor', '!=', False)]
+        domain=[('x_studio_vendedor_sam', '!=', False)]
     )
     fecha_inicio = fields.Date(
         string='Fecha Inicio',
@@ -47,7 +47,7 @@ class ComisionVendedor(models.TransientModel):
             ('invoice_status', '=', 'invoiced'),
             ('create_date', '>=', self.fecha_inicio),
             ('create_date', '<=', self.fecha_fin),
-            ('partner_id.x_studio_vendedor', '=', self.vendedor_id.id)
+            ('partner_id.x_studio_vendedor_sam', '=', self.vendedor_id.id)
         ]
 
         ordenes = self.env['sale.order'].search(domain, order='partner_id, create_date')
