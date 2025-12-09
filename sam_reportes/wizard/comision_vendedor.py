@@ -21,7 +21,7 @@ class ComisionVendedor(models.TransientModel):
         'res.partner',
         string='Vendedor',
         required=True,
-        domain=[('x_studio_vendedor_sam', '!=', False)]
+        domain=[('function', '=', 'vendedor sam')]
     )
     fecha_inicio = fields.Date(
         string='Fecha Inicio',
