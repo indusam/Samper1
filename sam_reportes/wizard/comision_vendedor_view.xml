@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Formulario para reporte de comisiones por vendedor.
+    vbueno 2025-12-05
+-->
+<odoo>
+    <record id="report_wizard_comision_vendedor_view_form" model="ir.ui.view">
+        <field name="name">report.wizard.comision.vendedor.view.form</field>
+        <field name="model">comision.vendedor.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="vendedor_id" options="{'no_create': True, 'no_open': True}"/>
+                        <field name="fecha_inicio"/>
+                        <field name="fecha_fin"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="imprime_comision_vendedor" type="object" string="Imprimir" class="oe_highlight"/>
+                    <button special="cancel" string="Cancelar"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_comision_vendedor_wizard" model="ir.actions.act_window">
+        <field name="name">Comisiones por vendedor</field>
+        <field name="res_model">comision.vendedor.wizard</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="report_wizard_comision_vendedor_view_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem
+        id="comision_vendedor_menu"
+        name="Comisiones por vendedor"
+        action="action_comision_vendedor_wizard"
+        parent="sale.menu_sale_report"
+        groups="base.group_user"
+        sequence="10"/>
+</odoo>

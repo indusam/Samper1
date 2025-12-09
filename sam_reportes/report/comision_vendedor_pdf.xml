@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="comision_vendedor_template">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <div style="text-align:left;color:black!important;">
+                        <strong>
+                            <h5>
+                                Comisiones por Vendedor
+                                <br/>
+                                Vendedor: <span t-out="vendedor_nombre"/>
+                                <br/>
+                                Período: <span t-out="fecha_inicio"/> al <span t-out="fecha_fin"/>
+                            </h5>
+                        </strong>
+                    </div>
+                    <br/>
+                </div>
+
+                <!-- Iterar por cada cliente -->
+                <t t-foreach="clientes" t-as="cliente">
+                    <div style="margin-bottom: 20px;">
+                        <h6 style="background-color: #f0f0f0; padding: 5px;">
+                            Cliente: <span t-out="cliente['partner_name']"/> - Comisión: <span t-out="cliente['comision_pct']"/>%
+                        </h6>
+
+                        <table class="table table-sm table-condensed">
+                            <thead>
+                                <tr>
+                                    <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Fecha</th>
+                                    <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Pedido</th>
+                                    <th style="text-align:center;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Facturas</th>
+                                    <th style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Venta Neta</th>
+                                    <th style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">% Com</th>
+                                    <th style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Comisión</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="cliente['ordenes']" t-as="orden">
+                                    <tr>
+                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                            <t t-out="orden['create_date'].strftime('%Y-%m-%d')"/>
+                                        </td>
+                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                            <t t-out="orden['name']"/>
+                                        </td>
+                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:9px">
+                                            <t t-out="orden['invoice_ids']"/>
+                                        </td>
+                                        <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                            <t t-out="'{0:,.2f}'.format(orden['amount_untaxed'])"/>
+                                        </td>
+                                        <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                            <t t-out="'{0:.2f}'.format(orden['comision_pct'])"/>%
+                                        </td>
+                                        <td style="text-align:right;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                            <t t-out="'{0:,.2f}'.format(orden['monto_comision'])"/>
+                                        </td>
+                                    </tr>
+                                </t>
+
+                                <!-- Total por cliente -->
+                                <tr style="border-top: 2px solid #333;">
+                                    <td colspan="3" style="text-align:right;border-style:none;padding-top:2px;padding-bottom:2px;font-size:10px">
+                                        <strong>Subtotal Cliente:</strong>
+                                    </td>
+                                    <td style="text-align:right;border-style:none;padding-top:2px;padding-bottom:2px;font-size:10px">
+                                        <strong><t t-out="'{0:,.2f}'.format(cliente['total_ventas'])"/></strong>
+                                    </td>
+                                    <td style="border-style:none;"></td>
+                                    <td style="text-align:right;border-style:none;padding-top:2px;padding-bottom:2px;font-size:10px">
+                                        <strong><t t-out="'{0:,.2f}'.format(cliente['total_comision'])"/></strong>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+
+                <!-- Total general -->
+                <div style="margin-top: 30px; border-top: 3px solid #000; padding-top: 10px;">
+                    <table class="table table-sm">
+                        <tr>
+                            <td style="text-align:right; width: 70%; font-size:12px">
+                                <strong>TOTAL GENERAL VENTAS:</strong>
+                            </td>
+                            <td style="text-align:right; width: 30%; font-size:12px">
+                                <strong><t t-out="'{0:,.2f}'.format(total_general_ventas)"/></strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:right; font-size:12px">
+                                <strong>TOTAL GENERAL COMISIONES:</strong>
+                            </td>
+                            <td style="text-align:right; font-size:12px">
+                                <strong><t t-out="'{0:,.2f}'.format(total_general_comisiones)"/></strong>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+            </t>
+        </t>
+    </template>
+</odoo>

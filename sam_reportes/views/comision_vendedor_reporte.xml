@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="comision_vendedor_reporte" model="ir.actions.report">
+            <field name="name">Comisiones por Vendedor</field>
+            <field name="model">comision.vendedor.wizard</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">sam_reportes.comision_vendedor_template</field>
+            <field name="report_file">sam_reportes.comision_vendedor_template</field>
+            <field name="binding_model_id" ref="model_comision_vendedor_wizard"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>
