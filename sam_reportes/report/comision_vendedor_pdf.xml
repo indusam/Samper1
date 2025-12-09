@@ -40,7 +40,7 @@
                                 <t t-foreach="cliente['ordenes']" t-as="orden">
                                     <tr>
                                         <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                            <t t-out="orden['create_date'].strftime('%Y-%m-%d')"/>
+                                            <t t-out="orden['create_date']"/>
                                         </td>
                                         <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                             <t t-out="orden['name']"/>

@@ -82,7 +82,7 @@ class ComisionVendedor(models.TransientModel):
 
             # Agregar orden a los datos del cliente
             clientes_data[partner_id]['ordenes'].append({
-                'create_date': orden.create_date,
+                'create_date': orden.create_date.strftime('%Y-%m-%d') if orden.create_date else '',
                 'name': orden.name,
                 'invoice_ids': facturas,
                 'amount_untaxed': orden.amount_untaxed,
