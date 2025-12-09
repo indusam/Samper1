@@ -62,7 +62,7 @@ class ComisionVendedor(models.TransientModel):
 
         for orden in ordenes:
             partner_id = orden.partner_id.id
-            partner_name = orden.partner_id.name
+            partner_name = orden.partner_id.x_nombre_comercial or orden.partner_id.name
             comision_pct = orden.partner_id.x_studio_comisin_ or 0.0
 
             if partner_id not in clientes_data:
