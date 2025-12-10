@@ -146,9 +146,9 @@ class MrpProduction(models.Model):
 
         # Crear stock.move.line según el tipo de tracking
         if product.tracking == 'serial':
-            self._sam_assign_serial_numbers(move, available_lots, qty_to_assign, precision)
+            self._sam_assign_serial_numbers_raw(move, available_lots, qty_to_assign, precision)
         else:  # tracking == 'lot'
-            self._sam_assign_lot_numbers(move, available_lots, qty_to_assign, precision)
+            self._sam_assign_lot_numbers_raw(move, available_lots, qty_to_assign, precision)
 
     def _sam_assign_lots_to_finished_move(self, move):
         """
@@ -228,12 +228,12 @@ class MrpProduction(models.Model):
 
         return available_lots
 
-    def _sam_assign_serial_numbers(self, move, available_lots, qty_to_assign, precision):
+    def _sam_assign_serial_numbers_raw(self, move, available_lots, qty_to_assign, precision):
         """
-        Asigna números de serie (uno por unidad) al movimiento.
+        Asigna números de serie (uno por unidad) al movimiento de componente.
 
         Args:
-            move: stock.move
+            move: stock.move - Movimiento de componente
             available_lots: list - Lista de lotes disponibles
             qty_to_assign: float - Cantidad a asignar
             precision: int - Precisión decimal
@@ -243,7 +243,7 @@ class MrpProduction(models.Model):
 
         if len(available_lots) < units_needed:
             raise UserError(_(
-                "No hay suficientes números de serie disponibles para el producto '%s'.\n\n"
+                "No hay suficientes números de serie disponibles para el componente '%s'.\n\n"
                 "Requeridos: %s\n"
                 "Disponibles: %s\n\n"
                 "Por favor, cree o importe los números de serie necesarios antes de finalizar la orden."
@@ -253,27 +253,34 @@ class MrpProduction(models.Model):
         for i in range(units_needed):
             lot_info = available_lots[i]
 
-            # Usar el método estándar de Odoo para crear move.line con lote
-            move._update_reserved_quantity(
-                need=1.0,
-                available_quantity=1.0,
-                location_id=move.location_id,
-                lot_id=lot_info['lot'],
-                package_id=False,
-                owner_id=False,
-                strict=False
-            )
+            # Crear move.line directamente para componentes
+            self.env['stock.move.line'].create({
+                'move_id': move.id,
+                'product_id': move.product_id.id,
+                'lot_id': lot_info['lot'].id,
+                'quantity': 1.0,
+                'product_uom_id': move.product_id.uom_id.id,
+                'location_id': move.location_id.id,
+                'location_dest_id': move.location_dest_id.id,
+            })
 
             _logger.info(
-                f"Asignado número de serie {lot_info['lot'].name} a movimiento {move.id}"
+                f"Asignado número de serie {lot_info['lot'].name} a componente {move.product_id.name}"
             )
 
-    def _sam_assign_lot_numbers(self, move, available_lots, qty_to_assign, precision):
+    def _sam_assign_serial_numbers(self, move, available_lots, qty_to_assign, precision):
         """
-        Asigna lotes (pueden contener múltiples unidades) al movimiento.
+        DEPRECATED: Usar _sam_assign_serial_numbers_raw para componentes.
+        Este método se mantiene para compatibilidad pero ya no se usa.
+        """
+        pass
+
+    def _sam_assign_lot_numbers_raw(self, move, available_lots, qty_to_assign, precision):
+        """
+        Asigna lotes (pueden contener múltiples unidades) al movimiento de componente.
 
         Args:
-            move: stock.move
+            move: stock.move - Movimiento de componente
             available_lots: list - Lista de lotes disponibles
             qty_to_assign: float - Cantidad a asignar
             precision: int - Precisión decimal
@@ -287,38 +294,45 @@ class MrpProduction(models.Model):
             # Cantidad a tomar de este lote (mínimo entre lo que queda y lo disponible)
             qty_to_take = min(qty_remaining, lot_info['qty_available'])
 
-            # Usar el método estándar de Odoo para crear move.line con lote
-            move._update_reserved_quantity(
-                need=qty_to_take,
-                available_quantity=qty_to_take,
-                location_id=move.location_id,
-                lot_id=lot_info['lot'],
-                package_id=False,
-                owner_id=False,
-                strict=False
-            )
+            # Crear move.line directamente para componentes
+            self.env['stock.move.line'].create({
+                'move_id': move.id,
+                'product_id': move.product_id.id,
+                'lot_id': lot_info['lot'].id,
+                'quantity': qty_to_take,
+                'product_uom_id': move.product_id.uom_id.id,
+                'location_id': move.location_id.id,
+                'location_dest_id': move.location_dest_id.id,
+            })
 
             qty_remaining -= qty_to_take
 
             _logger.info(
                 f"Asignado lote {lot_info['lot'].name} con cantidad {qty_to_take} "
-                f"a movimiento {move.id}"
+                f"a componente {move.product_id.name}"
             )
 
         # Verificar que se asignó toda la cantidad
         if not float_is_zero(qty_remaining, precision_digits=precision):
             raise UserError(_(
-                "No hay suficiente cantidad disponible en lotes para el producto '%s'.\n\n"
+                "No hay suficiente cantidad disponible en lotes para el componente '%s'.\n\n"
                 "Requerido: %s %s\n"
                 "Asignado: %s %s\n"
                 "Faltante: %s %s\n\n"
-                "Por favor, verifique que haya suficiente stock con lotes en la ubicación de destino."
+                "Por favor, verifique que haya suficiente stock con lotes en la ubicación de origen."
             ) % (
                 move.product_id.name,
                 qty_to_assign, move.product_id.uom_id.name,
                 qty_to_assign - qty_remaining, move.product_id.uom_id.name,
                 qty_remaining, move.product_id.uom_id.name
             ))
+
+    def _sam_assign_lot_numbers(self, move, available_lots, qty_to_assign, precision):
+        """
+        DEPRECATED: Usar _sam_assign_lot_numbers_raw para componentes.
+        Este método se mantiene para compatibilidad pero ya no se usa.
+        """
+        pass
 
     def _sam_create_serial_numbers_for_finished(self, move, qty_to_assign, precision):
         """
