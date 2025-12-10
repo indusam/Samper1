@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vista de formulario personalizada para mrp.production -->
+    <record id="view_mrp_production_form_inherit_auto_lot" model="ir.ui.view">
+        <field name="name">mrp.production.form.inherit.auto.lot</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <!-- Agregar el campo después del campo product_id en la pestaña principal -->
+            <xpath expr="//field[@name='product_id']" position="after">
+                <field name="sam_auto_assign_lots"
+                       string="Auto-asignar Lotes"
+                       widget="boolean_toggle"
+                       help="Si está activado, el sistema asignará automáticamente lotes existentes al producto terminado sin mostrar el asistente de números de serie."/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Vista opcional: agregar filtro en la búsqueda -->
+    <record id="view_mrp_production_search_inherit_auto_lot" model="ir.ui.view">
+        <field name="name">mrp.production.search.inherit.auto.lot</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.view_mrp_production_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='todo']" position="after">
+                <separator/>
+                <filter string="Con Auto-asignación de Lotes"
+                        name="auto_assign_lots"
+                        domain="[('sam_auto_assign_lots', '=', True)]"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

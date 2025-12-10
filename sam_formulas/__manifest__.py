@@ -21,13 +21,14 @@
     'version': '18.0.1.0.0',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'mrp'],
+    'depends': ['base', 'mrp', 'stock'],
 
     # always loaded
     'data': [
         'security/ir.model.access.csv',
         'views/views.xml',
         'views/templates.xml',
+        'views/mrp_production_auto_lot_views.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
