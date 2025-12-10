@@ -64,13 +64,15 @@ class MrpProduction(models.Model):
 
     def _sam_auto_assign_lots_to_finished_moves(self):
         """
-        Método auxiliar que asigna automáticamente lotes a los movimientos de producto terminado.
+        Método auxiliar que asigna automáticamente lotes a los movimientos de producto terminado
+        y componentes consumidos.
 
         Lógica:
-        1. Identifica los movimientos de salida del producto terminado (move_finished_ids)
-        2. Para cada movimiento, busca lotes disponibles en stock.quant usando estrategia FIFO
-        3. Crea stock.move.line con lot_id asignado automáticamente
-        4. Maneja tracking por lote (varios productos por lote) y por serie (uno por lote)
+        1. Identifica los movimientos de componentes consumidos (move_raw_ids) con tracking
+        2. Identifica los movimientos de producto terminado (move_finished_ids) con tracking
+        3. Para cada movimiento, busca lotes disponibles en stock.quant usando estrategia FIFO
+        4. Crea stock.move.line con lot_id asignado automáticamente
+        5. Maneja tracking por lote (varios productos por lote) y por serie (uno por lote)
 
         Raises:
             UserError: Si no hay suficientes lotes disponibles para cubrir la cantidad producida
@@ -79,28 +81,34 @@ class MrpProduction(models.Model):
 
         _logger.info(f"Iniciando auto-asignación de lotes para MO {self.name}")
 
-        # 1. Identificar movimientos de producto terminado
-        # En Odoo 18, move_finished_ids contiene los movimientos del producto terminado
+        # 1. Asignar lotes a componentes consumidos (move_raw_ids)
+        # IMPORTANTE: Los componentes deben tener lotes asignados ANTES del producto terminado
+        raw_moves = self.move_raw_ids.filtered(
+            lambda m: m.state not in ('done', 'cancel') and m.product_id.tracking != 'none'
+        )
+
+        _logger.info(f"Movimientos de componentes con tracking: {len(raw_moves)}")
+        for move in raw_moves:
+            self._sam_assign_lots_to_raw_move(move)
+
+        # 2. Asignar lotes a producto terminado (move_finished_ids)
         finished_moves = self.move_finished_ids.filtered(
             lambda m: m.state not in ('done', 'cancel') and m.product_id.tracking != 'none'
         )
 
-        if not finished_moves:
-            _logger.info(f"No hay movimientos de producto terminado con tracking para MO {self.name}")
-            return
-
-        # 2. Para cada movimiento, asignar lotes automáticamente
+        _logger.info(f"Movimientos de producto terminado con tracking: {len(finished_moves)}")
         for move in finished_moves:
-            self._sam_assign_lots_to_move(move)
+            self._sam_assign_lots_to_finished_move(move)
 
-    def _sam_assign_lots_to_move(self, move):
+    def _sam_assign_lots_to_raw_move(self, move):
         """
-        Asigna lotes a un movimiento específico.
+        Asigna lotes a un movimiento de componente (materia prima).
 
         Args:
-            move: stock.move - Movimiento al que se asignarán los lotes
+            move: stock.move - Movimiento de componente al que se asignarán los lotes
 
         Estrategia:
+        - Busca lotes en la ubicación de ORIGEN (location_id) que es donde están los componentes
         - Para tracking 'serial': Crear una stock.move.line por unidad con lotes diferentes
         - Para tracking 'lot': Usar lotes existentes permitiendo múltiples unidades por lote
         - FIFO: Los lotes más antiguos (menor create_date) se usan primero
@@ -117,31 +125,65 @@ class MrpProduction(models.Model):
             return
 
         _logger.info(
-            f"Asignando {qty_to_assign} {product.uom_id.name} de {product.name} "
+            f"Asignando {qty_to_assign} {product.uom_id.name} de componente {product.name} "
             f"(tracking: {product.tracking})"
         )
 
-        # 3. Buscar lotes disponibles en la ubicación de destino
-        # Para productos terminados, la ubicación es move.location_dest_id (almacén de productos terminados)
+        # Para componentes, buscar lotes en la ubicación de ORIGEN (donde están almacenados)
         available_lots = self._sam_get_available_lots_for_product(
             product,
-            move.location_dest_id,
+            move.location_id,  # Ubicación de origen (stock)
             qty_to_assign
         )
 
         if not available_lots:
             raise UserError(_(
-                "No se encontraron lotes disponibles para el producto '%s' en la ubicación '%s'.\n\n"
+                "No se encontraron lotes disponibles para el componente '%s' en la ubicación '%s'.\n\n"
                 "Para que el sistema pueda asignar automáticamente, debe haber stock con lotes "
-                "disponibles en la ubicación de destino.\n\n"
+                "disponibles en la ubicación de origen.\n\n"
                 "Cantidad requerida: %s %s"
-            ) % (product.name, move.location_dest_id.complete_name, qty_to_assign, product.uom_id.name))
+            ) % (product.name, move.location_id.complete_name, qty_to_assign, product.uom_id.name))
 
-        # 4. Crear stock.move.line según el tipo de tracking
+        # Crear stock.move.line según el tipo de tracking
         if product.tracking == 'serial':
             self._sam_assign_serial_numbers(move, available_lots, qty_to_assign, precision)
         else:  # tracking == 'lot'
             self._sam_assign_lot_numbers(move, available_lots, qty_to_assign, precision)
+
+    def _sam_assign_lots_to_finished_move(self, move):
+        """
+        Asigna lotes a un movimiento de producto terminado.
+
+        Args:
+            move: stock.move - Movimiento de producto terminado al que se asignarán los lotes
+
+        Estrategia:
+        - Para productos terminados, NO buscamos lotes existentes porque se están produciendo
+        - En su lugar, CREAMOS lotes nuevos automáticamente
+        - Para tracking 'serial': Crear un serial por unidad
+        - Para tracking 'lot': Crear un lote para toda la cantidad
+        """
+        product = move.product_id
+        # En Odoo 18, el campo correcto es 'quantity' no 'quantity_done'
+        qty_to_assign = move.product_uom_qty - move.quantity
+
+        # Precision decimal del producto para comparaciones float
+        precision = self.env['decimal.precision'].precision_get('Product Unit of Measure')
+
+        if float_is_zero(qty_to_assign, precision_digits=precision):
+            _logger.info(f"Movimiento {move.id} ya tiene cantidad asignada completa")
+            return
+
+        _logger.info(
+            f"Creando lotes para {qty_to_assign} {product.uom_id.name} de producto terminado {product.name} "
+            f"(tracking: {product.tracking})"
+        )
+
+        # Para productos terminados, CREAR lotes nuevos en lugar de buscar existentes
+        if product.tracking == 'serial':
+            self._sam_create_serial_numbers_for_finished(move, qty_to_assign, precision)
+        else:  # tracking == 'lot'
+            self._sam_create_lot_for_finished(move, qty_to_assign, precision)
 
     def _sam_get_available_lots_for_product(self, product, location, qty_needed):
         """
@@ -277,6 +319,105 @@ class MrpProduction(models.Model):
                 qty_to_assign - qty_remaining, move.product_id.uom_id.name,
                 qty_remaining, move.product_id.uom_id.name
             ))
+
+    def _sam_create_serial_numbers_for_finished(self, move, qty_to_assign, precision):
+        """
+        Crea números de serie automáticamente para el producto terminado.
+
+        Args:
+            move: stock.move - Movimiento de producto terminado
+            qty_to_assign: float - Cantidad a asignar (número de seriales a crear)
+            precision: int - Precisión decimal
+        """
+        units_needed = int(qty_to_assign)
+
+        for i in range(units_needed):
+            # Crear un nuevo número de serie
+            serial_name = self._sam_generate_lot_name(move.product_id, is_serial=True)
+
+            new_serial = self.env['stock.lot'].create({
+                'name': serial_name,
+                'product_id': move.product_id.id,
+                'company_id': self.env.company.id,
+            })
+
+            # Crear move.line con el serial
+            self.env['stock.move.line'].create({
+                'move_id': move.id,
+                'product_id': move.product_id.id,
+                'lot_id': new_serial.id,
+                'quantity': 1.0,
+                'product_uom_id': move.product_id.uom_id.id,
+                'location_id': move.location_id.id,
+                'location_dest_id': move.location_dest_id.id,
+            })
+
+            _logger.info(
+                f"Creado número de serie {serial_name} para producto terminado {move.product_id.name}"
+            )
+
+    def _sam_create_lot_for_finished(self, move, qty_to_assign, precision):
+        """
+        Crea un lote automáticamente para el producto terminado.
+
+        Args:
+            move: stock.move - Movimiento de producto terminado
+            qty_to_assign: float - Cantidad a asignar
+            precision: int - Precisión decimal
+        """
+        # Crear un nuevo lote
+        lot_name = self._sam_generate_lot_name(move.product_id, is_serial=False)
+
+        new_lot = self.env['stock.lot'].create({
+            'name': lot_name,
+            'product_id': move.product_id.id,
+            'company_id': self.env.company.id,
+        })
+
+        # Crear move.line con el lote
+        self.env['stock.move.line'].create({
+            'move_id': move.id,
+            'product_id': move.product_id.id,
+            'lot_id': new_lot.id,
+            'quantity': qty_to_assign,
+            'product_uom_id': move.product_id.uom_id.id,
+            'location_id': move.location_id.id,
+            'location_dest_id': move.location_dest_id.id,
+        })
+
+        _logger.info(
+            f"Creado lote {lot_name} con cantidad {qty_to_assign} "
+            f"para producto terminado {move.product_id.name}"
+        )
+
+    def _sam_generate_lot_name(self, product, is_serial=False):
+        """
+        Genera un nombre de lote/serial automáticamente.
+
+        Args:
+            product: product.product - Producto
+            is_serial: bool - True si es número de serie, False si es lote
+
+        Returns:
+            str: Nombre del lote/serial generado
+        """
+        # Usar secuencia de Odoo para generar número único
+        if is_serial:
+            seq = self.env['ir.sequence'].next_by_code('stock.lot.serial') or self.env['ir.sequence'].next_by_code('stock.lot.tracking')
+        else:
+            seq = self.env['ir.sequence'].next_by_code('stock.lot.tracking')
+
+        # Si no existe la secuencia, usar formato manual
+        if not seq:
+            from datetime import datetime
+            timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
+            prefix = 'SN' if is_serial else 'LOT'
+            code = product.default_code or 'PROD'
+            return f"{prefix}-{code}-{timestamp}"
+
+        # Si existe secuencia, usar formato: CODIGO-SECUENCIA
+        code = product.default_code or product.name[:10].upper()
+        return f"{code}-{seq}"
 
 
 class StockMove(models.Model):
