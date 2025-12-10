@@ -106,7 +106,8 @@ class MrpProduction(models.Model):
         - FIFO: Los lotes más antiguos (menor create_date) se usan primero
         """
         product = move.product_id
-        qty_to_assign = move.product_uom_qty - move.quantity_done
+        # En Odoo 18, el campo correcto es 'quantity' no 'quantity_done'
+        qty_to_assign = move.product_uom_qty - move.quantity
 
         # Precision decimal del producto para comparaciones float
         precision = self.env['decimal.precision'].precision_get('Product Unit of Measure')
