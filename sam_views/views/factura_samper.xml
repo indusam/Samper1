@@ -74,6 +74,17 @@
             </td>
         </xpath>
 
+        <!-- Agregar columna de Piezas después de Quantity -->
+        <xpath expr="//th[@name='th_quantity']" position="after">
+            <th name="th_piezas" class="text-end">Piezas</th>
+        </xpath>
+
+        <xpath expr="//td[@name='td_quantity']" position="after">
+            <td name="td_piezas" class="text-end">
+                <span t-if="line.x_piezas" t-field="line.x_piezas"/>
+            </td>
+        </xpath>
+
         <!-- Ocultar la sección de totales en medio (antes del div total final) -->
         <xpath expr="//div[@id='total']" position="before">
             <style>
