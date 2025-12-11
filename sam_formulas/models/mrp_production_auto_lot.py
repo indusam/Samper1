@@ -259,6 +259,7 @@ class MrpProduction(models.Model):
                 'product_id': move.product_id.id,
                 'lot_id': lot_info['lot'].id,
                 'quantity': 1.0,
+                'picked': True,  # IMPORTANTE: Marcar como picked para que Odoo no pida lotes
                 'product_uom_id': move.product_id.uom_id.id,
                 'location_id': move.location_id.id,
                 'location_dest_id': move.location_dest_id.id,
@@ -300,6 +301,7 @@ class MrpProduction(models.Model):
                 'product_id': move.product_id.id,
                 'lot_id': lot_info['lot'].id,
                 'quantity': qty_to_take,
+                'picked': True,  # IMPORTANTE: Marcar como picked para que Odoo no pida lotes
                 'product_uom_id': move.product_id.uom_id.id,
                 'location_id': move.location_id.id,
                 'location_dest_id': move.location_dest_id.id,
@@ -361,6 +363,7 @@ class MrpProduction(models.Model):
                 'product_id': move.product_id.id,
                 'lot_id': new_serial.id,
                 'quantity': 1.0,
+                'picked': True,  # IMPORTANTE: Marcar como picked
                 'product_uom_id': move.product_id.uom_id.id,
                 'location_id': move.location_id.id,
                 'location_dest_id': move.location_dest_id.id,
@@ -394,6 +397,7 @@ class MrpProduction(models.Model):
             'product_id': move.product_id.id,
             'lot_id': new_lot.id,
             'quantity': qty_to_assign,
+            'picked': True,  # IMPORTANTE: Marcar como picked
             'product_uom_id': move.product_id.uom_id.id,
             'location_id': move.location_id.id,
             'location_dest_id': move.location_dest_id.id,

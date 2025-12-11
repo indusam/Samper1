@@ -335,7 +335,16 @@ En Odoo 18, el asistente de números de serie se maneja de manera diferente que 
 Para mantener toda la lógica estándar de Odoo (validaciones, actualizaciones de estado, triggers, etc.). Solo agregamos la asignación de lotes antes, pero dejamos que Odoo complete el resto del proceso.
 
 ### ¿Cómo se evita el asistente de lotes?
-Al crear las stock.move.line con lot_id antes de llamar al super(), Odoo detecta que los movimientos ya tienen asignaciones completas y no muestra el asistente.
+Al crear las stock.move.line con lot_id **Y** `picked=True` antes de llamar al super(), Odoo detecta que los movimientos ya tienen asignaciones completas y no muestra el asistente.
+
+**CRÍTICO**: El campo `picked` debe estar en `True` en cada `stock.move.line` creada. Según el código fuente de Odoo 18 (mrp_production.py línea 2806), la validación verifica:
+
+```python
+if move.has_tracking in ('serial', 'lot') and (not move.picked or any(not line.lot_id for line in move.move_line_ids if line.quantity and line.picked)):
+    # Muestra error pidiendo lotes
+```
+
+Sin `picked=True`, Odoo asume que los componentes no han sido "consumidos" aunque tengan `lot_id` asignado.
 
 ## Roadmap / Mejoras Futuras
 
