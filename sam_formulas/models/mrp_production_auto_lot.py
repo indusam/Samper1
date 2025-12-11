@@ -438,30 +438,3 @@ class MrpProduction(models.Model):
         return f"{code}-{seq}"
 
 
-class StockMove(models.Model):
-    _inherit = 'stock.move'
-
-    def _update_reserved_quantity(self, need, available_quantity, location_id, lot_id=None,
-                                   package_id=None, owner_id=None, strict=True):
-        """
-        Sobrescribe el método estándar para permitir la creación de move.line con lote específico.
-
-        Este método es el punto de entrada estándar de Odoo para crear/actualizar stock.move.line
-        con asignaciones específicas de lote, paquete, propietario, etc.
-
-        IMPORTANTE: Este método ya existe en Odoo y normalmente maneja la creación de move.line.
-        La sobreescritura aquí es para asegurar que funcione correctamente con nuestra lógica
-        de auto-asignación, especialmente cuando lot_id está presente.
-        """
-        # Llamar al super para mantener toda la lógica estándar
-        result = super(StockMove, self)._update_reserved_quantity(
-            need=need,
-            available_quantity=available_quantity,
-            location_id=location_id,
-            lot_id=lot_id,
-            package_id=package_id,
-            owner_id=owner_id,
-            strict=strict
-        )
-
-        return result
