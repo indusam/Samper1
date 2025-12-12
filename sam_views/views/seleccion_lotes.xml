@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Heredar vista de operaciones de stock.move.line para agregar fecha de expiración -->
-    <record id="view_stock_move_line_operation_tree_inherit_expiration" model="ir.ui.view">
-        <field name="name">stock.move.line.operations.tree.inherit.expiration</field>
-        <field name="model">stock.move.line</field>
-        <field name="inherit_id" ref="stock.view_stock_move_line_operation_tree"/>
+    <!-- Heredar vista de selección de lotes (stock.quant) para agregar fecha de expiración -->
+    <record id="view_stock_quant_tree_simple_inherit_expiration" model="ir.ui.view">
+        <field name="name">stock.quant.tree.simple.inherit.expiration</field>
+        <field name="model">stock.quant</field>
+        <field name="inherit_id" ref="stock.view_stock_quant_tree_simple"/>
         <field name="arch" type="xml">
             <!-- Agregar campo expiration_date después de lot_id -->
             <xpath expr="//field[@name='lot_id']" position="after">
