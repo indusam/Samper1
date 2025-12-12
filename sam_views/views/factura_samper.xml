@@ -41,6 +41,11 @@
                 div[name='shipping_address_block'] div {
                     font-weight: bold;
                 }
+                /* Ocultar plazo de pago */
+                div[name='due_date'],
+                div#payment_term {
+                    display: none !important;
+                }
             </style>
         </xpath>
 
