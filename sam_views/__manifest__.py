@@ -36,6 +36,7 @@
         'views/res_partner_views.xml',
         'views/factura_samper.xml',
         'views/stock_picking_form_views.xml',
+        'views/seleccion_lotes.xml',
     ],
     'installable': True,
     'application': False,
