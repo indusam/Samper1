@@ -31,6 +31,16 @@
                     border: 1px solid #666666ff;
                     font-size: 11px;
                 }
+                /* Resaltar sección de dirección de entrega */
+                div[name='shipping_address_block'] {
+                    background-color: #e8e8e8;
+                    padding: 10px;
+                    border-radius: 4px;
+                }
+                div[name='shipping_address_block'] strong,
+                div[name='shipping_address_block'] div {
+                    font-weight: bold;
+                }
             </style>
         </xpath>
 
