@@ -37,6 +37,7 @@
         'views/factura_samper.xml',
         'views/stock_picking_form_views.xml',
         'views/seleccion_lotes.xml',
+        'views/account_payment_fix.xml',
     ],
     'installable': True,
     'application': False,
