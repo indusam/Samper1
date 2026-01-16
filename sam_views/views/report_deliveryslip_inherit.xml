@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Heredar el reporte de delivery slip para agregar espacios de firmas -->
+    <template id="report_delivery_document_inherit_signatures" inherit_id="stock.report_delivery_document">
+        <!-- Agregar sección de firmas al final del documento, antes del cierre del div.page -->
+        <xpath expr="//div[@class='page']" position="inside">
+            <!-- Espacios de firmas -->
+            <div class="row mt-5" style="margin-top: 80px !important;">
+                <div class="col-4 text-center">
+                    <div style="border-top: 1px solid #000; width: 80%; margin: 0 auto; padding-top: 5px;">
+                        <strong>Entregó</strong><br/>
+                        <span style="font-size: 10px;">Nombre y firma</span>
+                    </div>
+                </div>
+                <div class="col-4 text-center">
+                    <div style="border-top: 1px solid #000; width: 80%; margin: 0 auto; padding-top: 5px;">
+                        <strong>Transportó</strong><br/>
+                        <span style="font-size: 10px;">Nombre y firma</span>
+                    </div>
+                </div>
+                <div class="col-4 text-center">
+                    <div style="border-top: 1px solid #000; width: 80%; margin: 0 auto; padding-top: 5px;">
+                        <strong>Recibió</strong><br/>
+                        <span style="font-size: 10px;">Nombre y firma</span>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>
