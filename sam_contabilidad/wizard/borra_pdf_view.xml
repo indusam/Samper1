@@ -52,8 +52,8 @@
         <!-- Tipo de acción: ventana emergente (wizard) -->
         <field name="type">ir.actions.act_window</field>
         
-        <!-- Modo de vista: árbol (lista) y formulario -->
-        <field name="view_mode">tree,form</field>
+        <!-- Modo de vista: lista y formulario -->
+        <field name="view_mode">list,form</field>
         
         <!-- Referencia a la vista del formulario -->
         <field name="view_id" ref="report_wizard_borra_pdf_view_form"/>

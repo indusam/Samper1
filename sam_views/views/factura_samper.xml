@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Template personalizado para facturas Samper -->
+    <template id="report_invoice_document_inherit_samper" inherit_id="account.report_invoice_document" priority="99">
+
+        <!-- Agregar estilos CSS personalizados -->
+        <xpath expr="//div[@class='clearfix invoice_main']" position="before">
+            <style>
+                .samper-customer-box {
+                    background-color: #f9f9f9;
+                    padding: 15px;
+                    border: 1px solid #ddd;
+                    margin-bottom: 15px;
+                }
+                .samper-info-text {
+                    font-size: 15px;
+                    line-height: 1.5;
+                }
+                .samper-uuid-line {
+                    font-size: 18px;
+                }
+                .samper-nombrecomercial-line {
+                    font-size: 20px;
+                }
+                .table-samper th {
+                    background-color: #e0e0e0;
+                    border: 1px solid #666;
+                    font-size: 11px;
+                }
+                .table-samper td {
+                    border: 1px solid #666666ff;
+                    font-size: 11px;
+                }
+                /* Resaltar sección de dirección de entrega */
+                div[name='shipping_address_block'] {
+                    background-color: #e8e8e8;
+                    padding: 10px;
+                    border-radius: 4px;
+                }
+                div[name='shipping_address_block'] strong,
+                div[name='shipping_address_block'] div {
+                    font-weight: bold;
+                }
+                /* Ocultar plazo de pago */
+                div[name='due_date'],
+                div#payment_term {
+                    display: none !important;
+                }
+            </style>
+        </xpath>
+
+        <!-- Agregar información adicional del cliente después de la dirección -->
+        <xpath expr="//div[@class='row']" position="after">
+            <div class="samper-customer-box">
+                <div class="row samper-info-text">
+                    <div class="col-12">
+                    <span class="samper-uuid-line"><strong>UUID:</strong> <span t-field="o.l10n_mx_edi_cfdi_uuid"/></span><br/>
+                    <span class="samper-nombrecomercial-line"> <span t-field="o.partner_id.x_nombre_comercial"/></span><br/>
+                        <strong>RUTA:</strong> <span t-field="o.partner_shipping_id.x_ruta"/><br/>
+                        <strong>FECHA:</strong> <span t-field="o.create_date" t-options='{"widget": "datetime", "format": "dd/MM/yyyy HH:mm:ss"}'/>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+
+        <!-- Ocultar la dirección original -->
+        <xpath expr="//div[@class='row']" position="attributes">
+            <attribute name="style">display: none;</attribute>
+        </xpath>
+
+        <!-- Aplicar estilos a la tabla -->
+        <xpath expr="//table[@name='invoice_line_table']" position="attributes">
+            <attribute name="class">table-samper table table-sm</attribute>
+        </xpath>
+
+        <!-- Cambiar título de Description a "Descripción" -->
+        <xpath expr="//th[@name='th_description']/span" position="replace">
+            <span>Descripción</span>
+        </xpath>
+
+        <!-- Agregar columna de Lotes después de Description -->
+        <xpath expr="//th[@name='th_description']" position="after">
+            <th name="th_lots" class="text-start">Lotes</th>
+        </xpath>
+
+        <xpath expr="//td[@name='account_invoice_line_name']" position="after">
+            <td name="td_lots">
+                <span t-if="line.x_lotes" t-field="line.x_lotes"/>
+            </td>
+        </xpath>
+
+        <!-- Agregar columna de Piezas después de Quantity -->
+        <xpath expr="//th[@name='th_quantity']" position="after">
+            <th name="th_piezas" class="text-end">Piezas</th>
+        </xpath>
+
+        <xpath expr="//td[@name='td_quantity']" position="after">
+            <td name="td_piezas" class="text-end">
+                <span t-if="line.x_piezas" t-field="line.x_piezas"/>
+            </td>
+        </xpath>
+
+        <!-- Ocultar la sección de totales en medio (antes del div total final) -->
+        <xpath expr="//div[@id='total']" position="before">
+            <style>
+                /* Ocultar tabla resumen de productos si existe */
+                .o_report_layout_standard table:not([name='invoice_line_table']):not(.o_total_table) {
+                    display: none !important;
+                }
+            </style>
+        </xpath>
+    </template>
+</odoo>

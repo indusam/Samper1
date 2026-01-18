@@ -7,9 +7,9 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='category_id']" position="after">
                 <field name="generate_addenda_liverpool"/>
-                <field name="global_localitation_number" attrs="{'invisible': [('generate_addenda_liverpool', '=', False)]}"/>
-                <field name="person_order_department" attrs="{'invisible': [('generate_addenda_liverpool', '=', False)]}"/>
-                <field name="supplier_identification" attrs="{'invisible': [('generate_addenda_liverpool', '=', False)]}"/>
+                <field name="global_localitation_number" invisible="not generate_addenda_liverpool"/>
+                <field name="person_order_department" invisible="not generate_addenda_liverpool"/>
+                <field name="supplier_identification" invisible="not generate_addenda_liverpool"/>
             </xpath>
         </field>
       </record>

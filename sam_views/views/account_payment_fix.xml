@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Parche para corregir el error al enviar recibos de pago por correo en Odoo 18 -->
+    <!-- El problema es que la acción usa default_res_id (obsoleto) en lugar de default_res_ids -->
+
+    <!-- Actualizar la acción existente para agregar default_res_ids y default_model -->
+    <record id="account.account_send_payment_receipt_by_email_action" model="ir.actions.act_window">
+        <field name="context">{'mail_post_autofollow': True, 'default_composition_mode': 'comment', 'default_model': 'account.payment', 'default_res_ids': active_ids, 'default_template_id': %(account.mail_template_data_payment_receipt)d, 'default_email_layout_xmlid': 'mail.mail_notification_light'}</field>
+    </record>
+
+    <!-- También actualizar la acción multi para envío masivo -->
+    <record id="account.account_send_payment_receipt_by_email_action_multi" model="ir.actions.act_window">
+        <field name="context">{'mailing_document_based': True, 'mail_post_autofollow': True, 'default_composition_mode': 'mass_mail', 'default_model': 'account.payment', 'default_res_ids': active_ids, 'default_template_id': %(account.mail_template_data_payment_receipt)d, 'default_email_layout_xmlid': 'mail.mail_notification_light'}</field>
+    </record>
+</odoo>

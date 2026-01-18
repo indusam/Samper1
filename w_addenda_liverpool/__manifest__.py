@@ -32,7 +32,7 @@
     'summary': "Addenda Liverpool",
     'website': 'http://www.birtum.com/',
     'license': 'AGPL-3',
-    'version': '16.0',
+    'version': '18.0',
     'description': """
 Addenda Liverpool
 ===============================================================
@@ -44,6 +44,7 @@ This module adds the Liverpool addenda in signed invoices
         'l10n_mx_edi'
     ],
     'data': [
+        'views/liverpool_addenda_template.xml',
         'data/addenda_liverpool_v40.xml',
         'views/inherit_res_partner_view.xml',
         'views/inherit_res_company_view.xml',

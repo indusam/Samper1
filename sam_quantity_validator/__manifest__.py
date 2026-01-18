@@ -1,6 +1,6 @@
 {
     'name': 'Validador de Cantidades',
-    'version': '16.0.1.0.0',
+    'version': '18.0.1.0.0',
     'summary': 'Valida y ajusta cantidades en todo el sistema',
     'description': """
         Módulo para establecer cantidades menores a 0.0001 a cero en:

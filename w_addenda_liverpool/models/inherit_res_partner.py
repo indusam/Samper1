@@ -30,7 +30,7 @@ class ResPartner(models.Model):
     _inherit = 'res.partner'
 
     global_localitation_number = fields.Char(
-        string='Global localitation number(GLN) SAM',
+        string='Global localitation number(GLN)',
         help='Specifies the global location number (GLN) of the buyer.',
         copy=False
     )

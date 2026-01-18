@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vista de lista personalizada para res.partner -->
+    <record id="view_partner_tree_inherit_sam" model="ir.ui.view">
+        <field name="name">res.partner.tree.inherit.sam</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <field name="complete_name" position="after">
+                <field name="x_nombre_comercial" optional="show"/>
+                <field name="x_lp" optional="show"/>
+                <field name="x_ruta" optional="show"/>
+            </field>
+        </field>
+    </record>
+</odoo>
