@@ -19,7 +19,9 @@
                     </group>
 
                     <group>
-                        <field name="ing_limitante" readonly="cantidad > 0 or partidas > 0 or product_tmpl == False"/>
+                        <field name="ing_limitante"
+                               readonly="cantidad > 0 or partidas > 0 or product_tmpl == False"
+                               options="{'no_create': True, 'no_open': True}"/>
                         <field name="cant_limitante" readonly="cantidad > 0 or partidas > 0 or product_tmpl == False"/>
                     </group>
 
