@@ -38,15 +38,28 @@ class AccountMove(models.Model):
             ('name', 'ilike', '.xml')
         ])
 
-        # Buscar los adjuntos PDF asociados a las facturas seleccionadas
+        # Buscar los adjuntos PDF directamente en account.move
         pdf_attachments = self.env['ir.attachment'].search([
             ('res_model', '=', 'account.move'),
             ('res_id', 'in', selected_moves.ids),
             ('mimetype', '=', 'application/pdf')
         ])
 
-        # Combinar los adjuntos XML y PDF
-        attachments = xml_attachments + pdf_attachments
+        # Buscar PDFs en los mensajes del chatter (mail.message)
+        messages = self.env['mail.message'].search([
+            ('model', '=', 'account.move'),
+            ('res_id', 'in', selected_moves.ids),
+        ])
+        pdf_from_messages = self.env['ir.attachment']
+        if messages:
+            pdf_from_messages = self.env['ir.attachment'].search([
+                ('res_model', '=', 'mail.message'),
+                ('res_id', 'in', messages.ids),
+                ('mimetype', '=', 'application/pdf')
+            ])
+
+        # Combinar todos los adjuntos XML y PDF
+        attachments = xml_attachments + pdf_attachments + pdf_from_messages
 
         # Depuración: Verificar si se encontraron adjuntos
         if not attachments:
