@@ -7,7 +7,9 @@ Este módulo extiende el modelo `account.move` para agregar una función que per
 descargar los archivos adjuntos XML y PDF de las facturas seleccionadas.
 """
 
-from odoo import models
+from datetime import timedelta
+
+from odoo import models, fields
 from odoo.exceptions import UserError
 import base64
 import zipfile
