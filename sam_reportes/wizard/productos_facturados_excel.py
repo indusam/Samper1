@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 # productos_facturados_excel.py
-# Reporte de productos facturados en Excel agrupados por cliente y producto.
+# Reporte de productos facturados en Excel agrupados por categoría de cliente y cliente.
 # VBueno 2025-12-18
 
 import base64
@@ -60,45 +60,47 @@ class ProductosFacturadosExcel(models.TransientModel):
         if not lineas:
             raise UserError('No se encontraron facturas en el rango de fechas seleccionado.')
 
-        # Agrupar datos por cliente (x_nombre_comercial) y producto
-        clientes_data = {}
+        # Agrupar datos por categoría de cliente y cliente
+        categorias_data = {}
 
         for linea in lineas:
-            # Obtener nombre comercial del cliente
-            nombre_comercial = linea.move_id.partner_id.x_nombre_comercial or linea.move_id.partner_id.name or 'Sin nombre'
+            partner = linea.move_id.partner_id
 
-            # Obtener nombre del producto
-            producto_nombre = linea.product_id.display_name if linea.product_id else 'Sin producto'
+            # Obtener categoría del cliente (puede tener múltiples, tomamos la primera)
+            categoria_nombre = partner.category_id[0].name if partner.category_id else 'Sin categoría'
+
+            # Obtener nombre comercial del cliente
+            nombre_comercial = partner.x_nombre_comercial or partner.name or 'Sin nombre'
 
             # Importe (price_subtotal es el importe sin impuestos)
             importe = linea.price_subtotal or 0.0
 
-            # Inicializar cliente si no existe
-            if nombre_comercial not in clientes_data:
-                clientes_data[nombre_comercial] = {
-                    'productos': {},
-                    'total_cliente': 0.0
+            # Inicializar categoría si no existe
+            if categoria_nombre not in categorias_data:
+                categorias_data[categoria_nombre] = {
+                    'clientes': {},
+                    'total_categoria': 0.0
                 }
 
-            # Inicializar producto si no existe
-            if producto_nombre not in clientes_data[nombre_comercial]['productos']:
-                clientes_data[nombre_comercial]['productos'][producto_nombre] = 0.0
+            # Inicializar cliente si no existe
+            if nombre_comercial not in categorias_data[categoria_nombre]['clientes']:
+                categorias_data[categoria_nombre]['clientes'][nombre_comercial] = 0.0
 
             # Acumular importe
-            clientes_data[nombre_comercial]['productos'][producto_nombre] += importe
-            clientes_data[nombre_comercial]['total_cliente'] += importe
+            categorias_data[categoria_nombre]['clientes'][nombre_comercial] += importe
+            categorias_data[categoria_nombre]['total_categoria'] += importe
 
-        # Ordenar clientes por total descendente (mejor cliente primero)
-        clientes_ordenados = sorted(
-            clientes_data.items(),
-            key=lambda x: x[1]['total_cliente'],
+        # Ordenar categorías por total descendente (mejor categoría primero)
+        categorias_ordenadas = sorted(
+            categorias_data.items(),
+            key=lambda x: x[1]['total_categoria'],
             reverse=True
         )
 
         # Crear archivo Excel
         output = io.BytesIO()
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
-        worksheet = workbook.add_worksheet('Productos Facturados')
+        worksheet = workbook.add_worksheet('Ventas por Categoría')
 
         # Formatos
         formato_titulo = workbook.add_format({
@@ -117,13 +119,14 @@ class ProductosFacturadosExcel(models.TransientModel):
             'bg_color': '#D9E2F3',
             'border': 1
         })
-        formato_cliente = workbook.add_format({
+        formato_categoria = workbook.add_format({
             'bold': True,
             'font_size': 11,
-            'bg_color': '#E2EFDA',
+            'bg_color': '#4472C4',
+            'font_color': 'white',
             'border': 1
         })
-        formato_producto = workbook.add_format({
+        formato_cliente = workbook.add_format({
             'font_size': 10,
             'border': 1
         })
@@ -133,11 +136,12 @@ class ProductosFacturadosExcel(models.TransientModel):
             'border': 1,
             'align': 'right'
         })
-        formato_total_cliente = workbook.add_format({
+        formato_total_categoria = workbook.add_format({
             'bold': True,
             'font_size': 10,
             'num_format': '#,##0.00',
-            'bg_color': '#E2EFDA',
+            'bg_color': '#4472C4',
+            'font_color': 'white',
             'border': 1,
             'align': 'right'
         })
@@ -145,49 +149,49 @@ class ProductosFacturadosExcel(models.TransientModel):
             'bold': True,
             'font_size': 12,
             'num_format': '#,##0.00',
-            'bg_color': '#4472C4',
+            'bg_color': '#2F5496',
             'font_color': 'white',
             'border': 1,
             'align': 'right'
         })
 
         # Configurar anchos de columna
-        worksheet.set_column('A:A', 50)  # Nombre comercial / Producto
+        worksheet.set_column('A:A', 50)  # Categoría / Cliente
         worksheet.set_column('B:B', 18)  # Importe
 
         # Título
-        worksheet.merge_range('A1:B1', 'PRODUCTOS FACTURADOS', formato_titulo)
+        worksheet.merge_range('A1:B1', 'VENTAS POR CATEGORÍA DE CLIENTE', formato_titulo)
         worksheet.write('A2', f'Período: {self.fecha_inicio.strftime("%d/%m/%Y")} - {self.fecha_fin.strftime("%d/%m/%Y")}')
 
         # Encabezados
         row = 3
-        worksheet.write(row, 0, 'Nombre Comercial / Producto', formato_encabezado)
+        worksheet.write(row, 0, 'Categoría / Cliente', formato_encabezado)
         worksheet.write(row, 1, 'Importe Total', formato_encabezado)
 
         row += 1
         total_general = 0.0
 
         # Escribir datos
-        for nombre_comercial, datos in clientes_ordenados:
-            # Escribir nombre del cliente
-            worksheet.write(row, 0, nombre_comercial, formato_cliente)
-            worksheet.write(row, 1, datos['total_cliente'], formato_total_cliente)
+        for categoria_nombre, datos in categorias_ordenadas:
+            # Escribir nombre de la categoría
+            worksheet.write(row, 0, categoria_nombre, formato_categoria)
+            worksheet.write(row, 1, datos['total_categoria'], formato_total_categoria)
             row += 1
 
-            # Ordenar productos por importe descendente (mejor producto primero)
-            productos_ordenados = sorted(
-                datos['productos'].items(),
+            # Ordenar clientes por importe descendente (mejor cliente primero)
+            clientes_ordenados = sorted(
+                datos['clientes'].items(),
                 key=lambda x: x[1],
                 reverse=True
             )
 
-            # Escribir productos
-            for producto_nombre, importe in productos_ordenados:
-                worksheet.write(row, 0, f"    {producto_nombre}", formato_producto)
+            # Escribir clientes
+            for nombre_cliente, importe in clientes_ordenados:
+                worksheet.write(row, 0, f"    {nombre_cliente}", formato_cliente)
                 worksheet.write(row, 1, importe, formato_importe)
                 row += 1
 
-            total_general += datos['total_cliente']
+            total_general += datos['total_categoria']
 
         # Total general
         row += 1
