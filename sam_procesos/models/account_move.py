@@ -81,9 +81,16 @@ class AccountMove(models.Model):
 
         # Si hay múltiples archivos, crear un ZIP
         zip_buffer = io.BytesIO()
+        used_names = set()
         with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zip_file:
             for attachment in attachments:
-                zip_file.writestr(attachment.name, base64.b64decode(attachment.datas))
+                # Evitar nombres duplicados en el ZIP
+                filename = attachment.name
+                if filename in used_names:
+                    name, ext = filename.rsplit('.', 1) if '.' in filename else (filename, '')
+                    filename = f"{name}_{attachment.id}.{ext}" if ext else f"{name}_{attachment.id}"
+                used_names.add(filename)
+                zip_file.writestr(filename, base64.b64decode(attachment.datas))
 
         zip_buffer.seek(0)
         zip_data = base64.b64encode(zip_buffer.getvalue())
