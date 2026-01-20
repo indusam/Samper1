@@ -4,6 +4,7 @@
 # Reporte de productos facturados en Excel agrupados por cliente y producto.
 # VBueno 2025-12-18
 
+import base64
 import io
 import logging
 
@@ -201,7 +202,7 @@ class ProductosFacturadosExcel(models.TransientModel):
         attachment = self.env['ir.attachment'].create({
             'name': filename,
             'type': 'binary',
-            'datas': io.BytesIO(output.read()).getvalue(),
+            'datas': base64.b64encode(output.getvalue()),
             'res_model': self._name,
             'res_id': self.id,
             'mimetype': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
