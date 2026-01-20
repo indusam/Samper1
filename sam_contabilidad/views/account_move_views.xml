@@ -8,7 +8,7 @@
     
     <record id="action_download_xml" model="ir.actions.server">
         <!-- Nombre de la acción que aparecerá en la interfaz de Odoo -->
-        <field name="name">Descargar XML_PDF</field>
+        <field name="name">Descargar XML PDF</field>
         
         <!-- Modelo sobre el que se ejecutará la acción, en este caso, "account.move" -->
         <field name="model_id" ref="account.model_account_move"/>
