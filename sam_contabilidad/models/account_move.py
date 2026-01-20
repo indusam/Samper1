@@ -40,26 +40,16 @@ class AccountMove(models.Model):
         if not selected_moves:
             raise UserError('No se pudieron cargar las facturas seleccionadas.')
 
-        # Buscar adjuntos XML asociados a las facturas seleccionadas
-        # Los XML de CFDI pueden tener mimetype 'application/xml', 'text/xml' o 'text/plain'
-        xml_attachments = self.env['ir.attachment'].search([
+        # Buscar todos los adjuntos asociados a las facturas seleccionadas
+        all_attachments = self.env['ir.attachment'].search([
             ('res_model', '=', 'account.move'),
             ('res_id', 'in', selected_moves.ids),
-            '|', '|',
-            ('mimetype', '=', 'application/xml'),
-            ('mimetype', '=', 'text/xml'),
-            ('name', '=like', '%.xml')
         ])
 
-        # Buscar adjuntos PDF asociados a las facturas seleccionadas
-        pdf_attachments = self.env['ir.attachment'].search([
-            ('res_model', '=', 'account.move'),
-            ('res_id', 'in', selected_moves.ids),
-            ('mimetype', '=', 'application/pdf')  # Tipo MIME para PDF
-        ])
-
-        # Combinar los adjuntos XML y PDF
-        attachments = xml_attachments + pdf_attachments
+        # Filtrar XML (por extensión) y PDF (por mimetype)
+        attachments = all_attachments.filtered(
+            lambda a: a.name.lower().endswith('.xml') or a.mimetype == 'application/pdf'
+        )
 
         if not attachments:
             debug_message = f"Facturas seleccionadas: {selected_moves.mapped('name')}\nNo se encontraron archivos XML o PDF para estas facturas."
