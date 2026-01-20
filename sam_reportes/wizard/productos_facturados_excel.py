@@ -67,28 +67,38 @@ class ProductosFacturadosExcel(models.TransientModel):
             partner = linea.move_id.partner_id
 
             # Obtener categoría del cliente (puede tener múltiples, tomamos la primera)
-            categoria_complete = partner.category_id[0].display_name if partner.category_id else 'Clientes sin categoría'
+            categoria_nombre = partner.category_id[0].display_name if partner.category_id else 'Clientes sin categoría'
+
+            # Obtener complete_name del partner (jerarquía)
+            partner_complete_name = partner.complete_name or partner.name or 'Sin nombre'
 
             # Obtener nombre comercial del cliente
             nombre_comercial = partner.x_nombre_comercial or partner.name or 'Sin nombre'
+
+            # Clave única para el cliente (usando partner_id)
+            cliente_key = partner.id
 
             # Importe (price_subtotal es el importe sin impuestos)
             importe = linea.price_subtotal or 0.0
 
             # Inicializar categoría si no existe
-            if categoria_complete not in categorias_data:
-                categorias_data[categoria_complete] = {
+            if categoria_nombre not in categorias_data:
+                categorias_data[categoria_nombre] = {
                     'clientes': {},
                     'total_categoria': 0.0
                 }
 
             # Inicializar cliente si no existe
-            if nombre_comercial not in categorias_data[categoria_complete]['clientes']:
-                categorias_data[categoria_complete]['clientes'][nombre_comercial] = 0.0
+            if cliente_key not in categorias_data[categoria_nombre]['clientes']:
+                categorias_data[categoria_nombre]['clientes'][cliente_key] = {
+                    'complete_name': partner_complete_name,
+                    'nombre_comercial': nombre_comercial,
+                    'importe': 0.0
+                }
 
             # Acumular importe
-            categorias_data[categoria_complete]['clientes'][nombre_comercial] += importe
-            categorias_data[categoria_complete]['total_categoria'] += importe
+            categorias_data[categoria_nombre]['clientes'][cliente_key]['importe'] += importe
+            categorias_data[categoria_nombre]['total_categoria'] += importe
 
         # Ordenar categorías por total descendente (mejor categoría primero)
         categorias_ordenadas = sorted(
@@ -140,19 +150,21 @@ class ProductosFacturadosExcel(models.TransientModel):
         })
 
         # Configurar anchos de columna
-        worksheet.set_column('A:A', 40)  # Categoría
-        worksheet.set_column('B:B', 40)  # Cliente
-        worksheet.set_column('C:C', 18)  # Importe
+        worksheet.set_column('A:A', 35)  # Categoría
+        worksheet.set_column('B:B', 45)  # Cliente (complete_name)
+        worksheet.set_column('C:C', 35)  # Nombre Comercial
+        worksheet.set_column('D:D', 18)  # Importe
 
         # Título
-        worksheet.merge_range('A1:C1', 'VENTAS POR CATEGORÍA DE CLIENTE', formato_titulo)
+        worksheet.merge_range('A1:D1', 'VENTAS POR CATEGORÍA DE CLIENTE', formato_titulo)
         worksheet.write('A2', f'Período: {self.fecha_inicio.strftime("%d/%m/%Y")} - {self.fecha_fin.strftime("%d/%m/%Y")}')
 
         # Encabezados
         row = 3
         worksheet.write(row, 0, 'Categoría', formato_encabezado)
         worksheet.write(row, 1, 'Cliente', formato_encabezado)
-        worksheet.write(row, 2, 'Importe Total', formato_encabezado)
+        worksheet.write(row, 2, 'Nombre Comercial', formato_encabezado)
+        worksheet.write(row, 3, 'Importe Total', formato_encabezado)
 
         row += 1
         total_general = 0.0
@@ -162,23 +174,24 @@ class ProductosFacturadosExcel(models.TransientModel):
             # Ordenar clientes por importe descendente (mejor cliente primero)
             clientes_ordenados = sorted(
                 datos['clientes'].items(),
-                key=lambda x: x[1],
+                key=lambda x: x[1]['importe'],
                 reverse=True
             )
 
             # Escribir clientes con su categoría
-            for nombre_cliente, importe in clientes_ordenados:
+            for _, cliente_data in clientes_ordenados:
                 worksheet.write(row, 0, categoria_nombre, formato_cliente)
-                worksheet.write(row, 1, nombre_cliente, formato_cliente)
-                worksheet.write(row, 2, importe, formato_importe)
+                worksheet.write(row, 1, cliente_data['complete_name'], formato_cliente)
+                worksheet.write(row, 2, cliente_data['nombre_comercial'], formato_cliente)
+                worksheet.write(row, 3, cliente_data['importe'], formato_importe)
                 row += 1
 
             total_general += datos['total_categoria']
 
         # Total general
         row += 1
-        worksheet.merge_range(row, 0, row, 1, 'TOTAL GENERAL', formato_total_general)
-        worksheet.write(row, 2, total_general, formato_total_general)
+        worksheet.merge_range(row, 0, row, 2, 'TOTAL GENERAL', formato_total_general)
+        worksheet.write(row, 3, total_general, formato_total_general)
 
         workbook.close()
         output.seek(0)
