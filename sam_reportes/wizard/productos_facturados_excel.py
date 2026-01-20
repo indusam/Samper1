@@ -51,7 +51,6 @@ class ProductosFacturadosExcel(models.TransientModel):
             ('move_id.l10n_mx_edi_cfdi_uuid', '!=', False),  # Con folio fiscal
             ('move_id.invoice_date', '>=', self.fecha_inicio),
             ('move_id.invoice_date', '<=', self.fecha_fin),
-            ('display_type', '=', False),  # Solo líneas de producto, no secciones/notas
         ]
 
         lineas = self.env['account.move.line'].search(domain)
