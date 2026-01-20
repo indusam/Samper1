@@ -129,6 +129,22 @@ class ProductosFacturadosExcel(models.TransientModel):
             'bg_color': '#D9E2F3',
             'border': 1
         })
+        formato_categoria = workbook.add_format({
+            'bold': True,
+            'font_size': 11,
+            'bg_color': '#4472C4',
+            'font_color': 'white',
+            'border': 1
+        })
+        formato_total_categoria = workbook.add_format({
+            'bold': True,
+            'font_size': 11,
+            'num_format': '#,##0.00',
+            'bg_color': '#4472C4',
+            'font_color': 'white',
+            'border': 1,
+            'align': 'right'
+        })
         formato_cliente = workbook.add_format({
             'font_size': 10,
             'border': 1
@@ -169,8 +185,13 @@ class ProductosFacturadosExcel(models.TransientModel):
         row += 1
         total_general = 0.0
 
-        # Escribir datos
+        # Escribir datos agrupados por categoría
         for categoria_nombre, datos in categorias_ordenadas:
+            # Escribir encabezado de categoría con su total
+            worksheet.merge_range(row, 0, row, 2, categoria_nombre, formato_categoria)
+            worksheet.write(row, 3, datos['total_categoria'], formato_total_categoria)
+            row += 1
+
             # Ordenar clientes por importe descendente (mejor cliente primero)
             clientes_ordenados = sorted(
                 datos['clientes'].items(),
@@ -178,9 +199,9 @@ class ProductosFacturadosExcel(models.TransientModel):
                 reverse=True
             )
 
-            # Escribir clientes con su categoría
+            # Escribir clientes de esta categoría
             for _, cliente_data in clientes_ordenados:
-                worksheet.write(row, 0, categoria_nombre, formato_cliente)
+                worksheet.write(row, 0, '', formato_cliente)  # Categoría vacía (ya está en el encabezado)
                 worksheet.write(row, 1, cliente_data['complete_name'], formato_cliente)
                 worksheet.write(row, 2, cliente_data['nombre_comercial'], formato_cliente)
                 worksheet.write(row, 3, cliente_data['importe'], formato_importe)
