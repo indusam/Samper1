@@ -18,60 +18,41 @@ class AccountMove(models.Model):
     _inherit = 'account.move'
 
     def action_download_xml(self):
-        """
-        Descarga los archivos XML y PDF de las facturas seleccionadas.
-
-        Si hay un solo archivo, se descarga directamente. Si hay múltiples archivos,
-        se comprimen en un archivo ZIP antes de la descarga.
-        """
+        """Descarga los archivos XML y PDF de las facturas seleccionadas."""
         active_ids = self.env.context.get('active_ids', [])
         if not active_ids:
             raise UserError('Debe seleccionar al menos una factura')
 
         selected_moves = self.browse(active_ids)
+
+        # Depuración: Verificar las facturas seleccionadas
         if not selected_moves:
             raise UserError('No se pudieron cargar las facturas seleccionadas.')
 
-        # Buscar adjuntos directamente asociados a las facturas (XML del CFDI)
-        direct_attachments = self.env['ir.attachment'].search([
+        # Buscar los adjuntos XML asociados a las facturas seleccionadas
+        xml_attachments = self.env['ir.attachment'].search([
             ('res_model', '=', 'account.move'),
             ('res_id', 'in', selected_moves.ids),
+            ('name', 'ilike', '.xml')
         ])
 
-        # Buscar adjuntos en los mensajes del chatter (PDFs)
-        # Los PDFs se adjuntan a mail.message, no directamente a account.move
-        messages = self.env['mail.message'].search([
-            ('model', '=', 'account.move'),
+        # Buscar los adjuntos PDF asociados a las facturas seleccionadas
+        pdf_attachments = self.env['ir.attachment'].search([
+            ('res_model', '=', 'account.move'),
             ('res_id', 'in', selected_moves.ids),
+            ('mimetype', '=', 'application/pdf')
         ])
-        message_attachments = self.env['ir.attachment'].search([
-            ('res_model', '=', 'mail.message'),
-            ('res_id', 'in', messages.ids),
-        ]) if messages else self.env['ir.attachment']
 
-        # Combinar todos los adjuntos
-        all_attachments = direct_attachments | message_attachments
+        # Combinar los adjuntos XML y PDF
+        attachments = xml_attachments + pdf_attachments
 
-        if not all_attachments:
-            raise UserError(
-                f"Facturas seleccionadas: {selected_moves.mapped('name')}\n"
-                f"No se encontraron adjuntos para estas facturas."
-            )
-
-        # Filtrar XML y PDF
-        attachments = all_attachments.filtered(
-            lambda a: a.name.lower().endswith('.xml') or
-                      a.name.lower().endswith('.pdf') or
-                      a.mimetype == 'application/pdf'
-        )
-
+        # Depuración: Verificar si se encontraron adjuntos
         if not attachments:
-            raise UserError(
-                f"Facturas seleccionadas: {selected_moves.mapped('name')}\n"
-                f"No se encontraron archivos XML o PDF para estas facturas."
-            )
+            debug_message = f"Facturas seleccionadas: {selected_moves.mapped('name')}\nNo se encontraron archivos XML o PDF para estas facturas."
+            raise UserError(debug_message)
 
         if len(attachments) == 1:
+            # Descargar directamente el único archivo encontrado
             attachment = attachments[0]
             return {
                 'type': 'ir.actions.act_url',
@@ -79,27 +60,31 @@ class AccountMove(models.Model):
                 'target': 'self',
             }
 
-        # Si hay múltiples archivos, crear un ZIP
+        # Limpiar archivos ZIP temporales antiguos (más de 1 hora)
+        old_zips = self.env['ir.attachment'].search([
+            ('name', '=', 'facturas_xml_pdf.zip'),
+            ('res_model', '=', False),
+            ('create_date', '<', fields.Datetime.now() - timedelta(hours=1))
+        ])
+        old_zips.unlink()
+
+        # Si son múltiples archivos, crea un archivo ZIP
         zip_buffer = io.BytesIO()
-        used_names = set()
         with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zip_file:
             for attachment in attachments:
-                # Evitar nombres duplicados en el ZIP
-                filename = attachment.name
-                if filename in used_names:
-                    name, ext = filename.rsplit('.', 1) if '.' in filename else (filename, '')
-                    filename = f"{name}_{attachment.id}.{ext}" if ext else f"{name}_{attachment.id}"
-                used_names.add(filename)
-                zip_file.writestr(filename, base64.b64decode(attachment.datas))
+                zip_file.writestr(attachment.name, base64.b64decode(attachment.datas))
 
-        zip_buffer.seek(0)
+        # Codifica el ZIP en base64
         zip_data = base64.b64encode(zip_buffer.getvalue())
 
+        # Crea un adjunto temporal con el ZIP (sin modelo asociado para facilitar limpieza)
         zip_attachment = self.env['ir.attachment'].create({
             'name': 'facturas_xml_pdf.zip',
             'type': 'binary',
             'datas': zip_data,
-            'mimetype': 'application/zip'
+            'mimetype': 'application/zip',
+            'res_model': False,
+            'res_id': False
         })
 
         return {
