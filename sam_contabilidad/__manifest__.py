@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "sam_contabilidad",
+    'name': "SAM Contabilidad",
 
-    'summary': """
-        Adecuaciones al módulo de contabilidad de Samper""",
+    'summary': "Adecuaciones al módulo de contabilidad de Samper",
 
     'description': """
         Modificaciones al módulo de contabilidad para Samper.
+        - Descarga de archivos XML y PDF de facturas
+        - Borrado de PDF de facturas
     """,
 
     'author': "VBueno",
