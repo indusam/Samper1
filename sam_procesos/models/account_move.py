@@ -38,17 +38,30 @@ class AccountMove(models.Model):
             ('res_id', 'in', selected_moves.ids),
         ])
 
-        # Filtrar XML (por extensión) y PDF (por extensión o mimetype)
+        # DEBUG: Mostrar todos los archivos encontrados
+        if not all_attachments:
+            raise UserError(
+                f"Facturas seleccionadas: {selected_moves.mapped('name')}\n"
+                f"No se encontraron adjuntos para estas facturas."
+            )
+
+        # Listar todos los adjuntos para depuración
+        debug_info = "Archivos encontrados:\n"
+        for att in all_attachments:
+            debug_info += f"- {att.name} | mimetype: {att.mimetype} | res_id: {att.res_id}\n"
+
+        # Filtrar XML y PDF
         attachments = all_attachments.filtered(
             lambda a: a.name.lower().endswith('.xml') or
                       a.name.lower().endswith('.pdf') or
-                      a.mimetype == 'application/pdf'
+                      a.mimetype == 'application/pdf' or
+                      'pdf' in (a.mimetype or '').lower()
         )
 
         if not attachments:
             raise UserError(
                 f"Facturas seleccionadas: {selected_moves.mapped('name')}\n"
-                f"No se encontraron archivos XML o PDF para estas facturas."
+                f"No se encontraron archivos XML o PDF.\n\n{debug_info}"
             )
 
         if len(attachments) == 1:
