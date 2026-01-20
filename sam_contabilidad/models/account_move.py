@@ -41,10 +41,14 @@ class AccountMove(models.Model):
             raise UserError('No se pudieron cargar las facturas seleccionadas.')
 
         # Buscar adjuntos XML asociados a las facturas seleccionadas
+        # Los XML de CFDI pueden tener mimetype 'application/xml', 'text/xml' o 'text/plain'
         xml_attachments = self.env['ir.attachment'].search([
             ('res_model', '=', 'account.move'),
             ('res_id', 'in', selected_moves.ids),
-            ('mimetype', '=', 'text/plain')  # Tipo MIME para XML
+            '|', '|',
+            ('mimetype', '=', 'application/xml'),
+            ('mimetype', '=', 'text/xml'),
+            ('name', '=like', '%.xml')
         ])
 
         # Buscar adjuntos PDF asociados a las facturas seleccionadas
