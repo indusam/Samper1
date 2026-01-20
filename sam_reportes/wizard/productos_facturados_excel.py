@@ -66,8 +66,8 @@ class ProductosFacturadosExcel(models.TransientModel):
         for linea in lineas:
             partner = linea.move_id.partner_id
 
-            # Obtener categoría del cliente (puede tener múltiples, tomamos la primera)
-            categoria_nombre = partner.category_id[0].name if partner.category_id else 'Clientes sin categoría'
+            # Obtener categoría del cliente con complete_name (puede tener múltiples, tomamos la primera)
+            categoria_complete = partner.category_id[0].complete_name if partner.category_id else 'Clientes sin categoría'
 
             # Obtener nombre comercial del cliente
             nombre_comercial = partner.x_nombre_comercial or partner.name or 'Sin nombre'
@@ -76,19 +76,19 @@ class ProductosFacturadosExcel(models.TransientModel):
             importe = linea.price_subtotal or 0.0
 
             # Inicializar categoría si no existe
-            if categoria_nombre not in categorias_data:
-                categorias_data[categoria_nombre] = {
+            if categoria_complete not in categorias_data:
+                categorias_data[categoria_complete] = {
                     'clientes': {},
                     'total_categoria': 0.0
                 }
 
             # Inicializar cliente si no existe
-            if nombre_comercial not in categorias_data[categoria_nombre]['clientes']:
-                categorias_data[categoria_nombre]['clientes'][nombre_comercial] = 0.0
+            if nombre_comercial not in categorias_data[categoria_complete]['clientes']:
+                categorias_data[categoria_complete]['clientes'][nombre_comercial] = 0.0
 
             # Acumular importe
-            categorias_data[categoria_nombre]['clientes'][nombre_comercial] += importe
-            categorias_data[categoria_nombre]['total_categoria'] += importe
+            categorias_data[categoria_complete]['clientes'][nombre_comercial] += importe
+            categorias_data[categoria_complete]['total_categoria'] += importe
 
         # Ordenar categorías por total descendente (mejor categoría primero)
         categorias_ordenadas = sorted(
@@ -119,13 +119,6 @@ class ProductosFacturadosExcel(models.TransientModel):
             'bg_color': '#D9E2F3',
             'border': 1
         })
-        formato_categoria = workbook.add_format({
-            'bold': True,
-            'font_size': 11,
-            'bg_color': '#4472C4',
-            'font_color': 'white',
-            'border': 1
-        })
         formato_cliente = workbook.add_format({
             'font_size': 10,
             'border': 1
@@ -133,15 +126,6 @@ class ProductosFacturadosExcel(models.TransientModel):
         formato_importe = workbook.add_format({
             'font_size': 10,
             'num_format': '#,##0.00',
-            'border': 1,
-            'align': 'right'
-        })
-        formato_total_categoria = workbook.add_format({
-            'bold': True,
-            'font_size': 10,
-            'num_format': '#,##0.00',
-            'bg_color': '#4472C4',
-            'font_color': 'white',
             'border': 1,
             'align': 'right'
         })
@@ -156,28 +140,25 @@ class ProductosFacturadosExcel(models.TransientModel):
         })
 
         # Configurar anchos de columna
-        worksheet.set_column('A:A', 50)  # Categoría / Cliente
-        worksheet.set_column('B:B', 18)  # Importe
+        worksheet.set_column('A:A', 40)  # Categoría
+        worksheet.set_column('B:B', 40)  # Cliente
+        worksheet.set_column('C:C', 18)  # Importe
 
         # Título
-        worksheet.merge_range('A1:B1', 'VENTAS POR CATEGORÍA DE CLIENTE', formato_titulo)
+        worksheet.merge_range('A1:C1', 'VENTAS POR CATEGORÍA DE CLIENTE', formato_titulo)
         worksheet.write('A2', f'Período: {self.fecha_inicio.strftime("%d/%m/%Y")} - {self.fecha_fin.strftime("%d/%m/%Y")}')
 
         # Encabezados
         row = 3
-        worksheet.write(row, 0, 'Categoría / Cliente', formato_encabezado)
-        worksheet.write(row, 1, 'Importe Total', formato_encabezado)
+        worksheet.write(row, 0, 'Categoría', formato_encabezado)
+        worksheet.write(row, 1, 'Cliente', formato_encabezado)
+        worksheet.write(row, 2, 'Importe Total', formato_encabezado)
 
         row += 1
         total_general = 0.0
 
         # Escribir datos
         for categoria_nombre, datos in categorias_ordenadas:
-            # Escribir nombre de la categoría
-            worksheet.write(row, 0, categoria_nombre, formato_categoria)
-            worksheet.write(row, 1, datos['total_categoria'], formato_total_categoria)
-            row += 1
-
             # Ordenar clientes por importe descendente (mejor cliente primero)
             clientes_ordenados = sorted(
                 datos['clientes'].items(),
@@ -185,18 +166,19 @@ class ProductosFacturadosExcel(models.TransientModel):
                 reverse=True
             )
 
-            # Escribir clientes
+            # Escribir clientes con su categoría
             for nombre_cliente, importe in clientes_ordenados:
-                worksheet.write(row, 0, f"    {nombre_cliente}", formato_cliente)
-                worksheet.write(row, 1, importe, formato_importe)
+                worksheet.write(row, 0, categoria_nombre, formato_cliente)
+                worksheet.write(row, 1, nombre_cliente, formato_cliente)
+                worksheet.write(row, 2, importe, formato_importe)
                 row += 1
 
             total_general += datos['total_categoria']
 
         # Total general
         row += 1
-        worksheet.write(row, 0, 'TOTAL GENERAL', formato_total_general)
-        worksheet.write(row, 1, total_general, formato_total_general)
+        worksheet.merge_range(row, 0, row, 1, 'TOTAL GENERAL', formato_total_general)
+        worksheet.write(row, 2, total_general, formato_total_general)
 
         workbook.close()
         output.seek(0)
