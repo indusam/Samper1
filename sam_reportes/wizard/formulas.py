@@ -24,7 +24,8 @@ class Formulas(models.TransientModel):
     product_tmpl = fields.Many2one('product.template', string="Producto")
     producto = fields.Many2one('mrp.bom', string="Lista de Materiales", domain="[('product_tmpl_id', '=', product_tmpl)]")
     cantidad = fields.Float(string="Cantidad", digits=(12, 4))
-    ing_limitante = fields.Many2one('mrp.bom.line', string="Ingrediente limitante")
+    ing_limitante = fields.Many2one('mrp.bom.line', string="Ingrediente limitante",
+                                     domain="[('bom_id', '=', producto)]")
     cant_limitante = fields.Float(string="Cantidad limitante", digits=(12, 4))
     consolidado = fields.Boolean(string="Fórmula consolidada")
     partidas = fields.Integer(string="Partidas")
@@ -50,20 +51,9 @@ class Formulas(models.TransientModel):
     # permite seleccionar el ingrediente limitante.
     @api.onchange('producto')
     def onchange_producto(self):
-        if self.producto:
-            # Reset ing_limitante when producto changes
-            self.ing_limitante = False
-            self.cant_limitante = 0.0
-            
-            # Get all BOM lines for the selected BOM
-            bom_lines = self.env['mrp.bom.line'].search([('bom_id', '=', self.producto.id)])
-            
-            # Set domain to only show BOM lines from the selected BOM
-            return {'domain': {'ing_limitante': [('id', 'in', bom_lines.ids)]}}
-        else:
-            self.ing_limitante = False
-            self.cant_limitante = 0.0
-            return {'domain': {'ing_limitante': [('id', 'in', [])]}}
+        # Reset ing_limitante when producto changes
+        self.ing_limitante = False
+        self.cant_limitante = 0.0
 
     def get_orden(self, codigo_producto):
         prefix = codigo_producto[:2]  # Tomar las dos primeras letras
