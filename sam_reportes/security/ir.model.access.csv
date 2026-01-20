@@ -8,3 +8,4 @@ access.wizard.formula.base.salmueras,access_wizard_formula_base_salmuera,sam_rep
 access.wizard.tabla.nutrimental,access_wizard_tabla_nutrimental,sam_reportes.model_wizard_tabla_nutrimental,base.group_user,1,1,1,1
 access.wizard.formulas.costo,access_wizard_formulas_costo,sam_reportes.model_wizard_formulas_costo,base.group_user,1,1,1,1
 access.comision.vendedor,access_comision_vendedor_wizard,sam_reportes.model_comision_vendedor_wizard,base.group_user,1,1,1,1
+access.productos.facturados.excel,access_productos_facturados_excel_wizard,sam_reportes.model_productos_facturados_excel_wizard,base.group_user,1,1,1,1

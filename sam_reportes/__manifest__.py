@@ -51,6 +51,7 @@
         'wizard/formula_base_carnicos_view.xml',
         'wizard/formula_base_salmuera_view.xml',
         'wizard/comision_vendedor_view.xml',
+        'wizard/productos_facturados_excel_view.xml',
         'report/saldos_clientes_pdf.xml',
         'report/certificado_calidad_pdf.xml',
         'report/contenido_energetico_pdf.xml',
