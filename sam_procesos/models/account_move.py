@@ -32,36 +32,43 @@ class AccountMove(models.Model):
         if not selected_moves:
             raise UserError('No se pudieron cargar las facturas seleccionadas.')
 
-        # Buscar todos los adjuntos asociados a las facturas seleccionadas
-        all_attachments = self.env['ir.attachment'].search([
+        # Buscar adjuntos directamente asociados a las facturas (XML del CFDI)
+        direct_attachments = self.env['ir.attachment'].search([
             ('res_model', '=', 'account.move'),
             ('res_id', 'in', selected_moves.ids),
         ])
 
-        # DEBUG: Mostrar todos los archivos encontrados
+        # Buscar adjuntos en los mensajes del chatter (PDFs)
+        # Los PDFs se adjuntan a mail.message, no directamente a account.move
+        messages = self.env['mail.message'].search([
+            ('model', '=', 'account.move'),
+            ('res_id', 'in', selected_moves.ids),
+        ])
+        message_attachments = self.env['ir.attachment'].search([
+            ('res_model', '=', 'mail.message'),
+            ('res_id', 'in', messages.ids),
+        ]) if messages else self.env['ir.attachment']
+
+        # Combinar todos los adjuntos
+        all_attachments = direct_attachments | message_attachments
+
         if not all_attachments:
             raise UserError(
                 f"Facturas seleccionadas: {selected_moves.mapped('name')}\n"
                 f"No se encontraron adjuntos para estas facturas."
             )
 
-        # Listar todos los adjuntos para depuración
-        debug_info = "Archivos encontrados:\n"
-        for att in all_attachments:
-            debug_info += f"- {att.name} | mimetype: {att.mimetype} | res_id: {att.res_id}\n"
-
         # Filtrar XML y PDF
         attachments = all_attachments.filtered(
             lambda a: a.name.lower().endswith('.xml') or
                       a.name.lower().endswith('.pdf') or
-                      a.mimetype == 'application/pdf' or
-                      'pdf' in (a.mimetype or '').lower()
+                      a.mimetype == 'application/pdf'
         )
 
         if not attachments:
             raise UserError(
                 f"Facturas seleccionadas: {selected_moves.mapped('name')}\n"
-                f"No se encontraron archivos XML o PDF.\n\n{debug_info}"
+                f"No se encontraron archivos XML o PDF para estas facturas."
             )
 
         if len(attachments) == 1:
