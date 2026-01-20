@@ -67,7 +67,7 @@ class ProductosFacturadosExcel(models.TransientModel):
             partner = linea.move_id.partner_id
 
             # Obtener categoría del cliente (puede tener múltiples, tomamos la primera)
-            categoria_nombre = partner.category_id[0].name if partner.category_id else 'Sin categoría'
+            categoria_nombre = partner.category_id[0].name if partner.category_id else 'Clientes sin categoría'
 
             # Obtener nombre comercial del cliente
             nombre_comercial = partner.x_nombre_comercial or partner.name or 'Sin nombre'
