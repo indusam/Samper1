@@ -42,40 +42,40 @@
                                                 <table>
                                                     <!-- Certificado No. -->
                                                     <tr>
-                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                                             <span>
                                                                 <strong>Certificado No.</strong>
                                                             </span>
                                                         </td>
-                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                                             <span>:</span>
                                                         </td>
-                                                         <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                         <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                                             <span t-field="o.x_name"/>
                                                         </td>   
                                                     </tr>
                                                     <!-- Fecha -->
                                                      <tr>
-                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                                             <span>
                                                                 <strong>Fecha</strong>
                                                             </span>
                                                         </td>
-                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                                             <span>:</span>
                                                         </td>
-                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                                             <span t-field="o.x_studio_fecha"/>
                                                         </td>   
                                                     </tr>
                                                     <!-- Producto -->
                                                      <tr>
-                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                                             <span>
                                                                 <strong>Producto</strong>
                                                             </span>
                                                         </td>
-                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                                             <span>:</span>
                                                         </td>
                                                         <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -84,29 +84,29 @@
                                                     </tr>
                                                     <!-- Código -->
                                                      <tr>
-                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                                             <span>
                                                                 <strong>Código</strong>
                                                             </span>
                                                         </td>
-                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                                             <span>:</span>
                                                         </td>
-                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                                             <span t-field="o.x_studio_codigo"/>
                                                         </td>
                                                     </tr>
                                                     <!-- Lote pieza -->
                                                      <tr>
-                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                                             <span>
                                                                 <strong>Lote pieza</strong>
                                                             </span>
                                                         </td>
-                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                                             <span>:</span>
                                                         </td>
-                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                                             <span t-field="o.x_studio_lote_pieza"/>
                                                         </td>
                                                     </tr>
@@ -117,10 +117,10 @@
                                                                 <strong>Fecha de último análisis de producto en pieza</strong>
                                                             </span>
                                                         </td>
-                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                                             <span>:</span>
                                                         </td>
-                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                                             <span t-field="o.x_studio_fecha_analisis"/>
                                                         </td>
                                                     </tr>
@@ -131,57 +131,57 @@
                                                 <table>
                                                     <!-- Especie/T.E. -->
                                                     <tr>
-                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                                             <span>
                                                                 <strong>Especie/T.E.</strong>
                                                             </span>
                                                         </td>
-                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                                             <span>:</span>
                                                         </td>
-                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                                             <span t-field="o.x_studio_especie"/>
                                                         </td>
                                                     </tr>
                                                     <!-- Lote -->
                                                      <tr>
-                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                                             <span>
                                                                 <strong>Lote</strong>
                                                             </span>
                                                         </td>
-                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                                             <span>:</span>
                                                         </td>
-                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                                             <span t-field="o.x_studio_lote"/>
                                                         </td>
                                                     </tr>
                                                     <!-- Elaboración -->
                                                      <tr>
-                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                                             <span>
                                                                 <strong>Elaboración</strong>
                                                             </span>
                                                         </td>
-                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                                             <span>:</span>
                                                         </td>
-                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                                             <span t-field="o.x_elaboracion"/>
                                                         </td>
                                                     </tr>
                                                     <!-- Caducidad -->
                                                      <tr>
-                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                                             <span>
                                                                 <strong>Caducidad</strong>
                                                             </span>
                                                         </td>
-                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                                             <span>:</span>
                                                         </td>
-                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:12px">
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                                             <span t-field="o.x_caducidad"/>
                                                         </td>
                                                     </tr>
