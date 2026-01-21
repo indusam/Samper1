@@ -1,20 +1,25 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'Samper - Procesos',
+    'name': 'SAM Procesos',
     'version': '18.0.1.0.0',
-    'category': 'Purchase',
-    'summary': 'Módulo para procesos personalizados de Samper',
+    'category': 'Tools',
+    'summary': 'Procesos y herramientas personalizadas para Samper',
     'description': """
-        Módulo que incluye validaciones personalizadas para procesos de compras
+        Módulo que incluye procesos personalizados para Samper:
+        - Descarga de archivos XML y PDF de facturas
+        - Borrado de archivos PDF antiguos
+        - Validación de costos en órdenes de compra
     """,
-    'author': 'Samper',
-    'website': 'https://www.samper.com',
-    'depends': ['purchase'],
+    'author': 'VBueno',
+    'website': 'https://www.samper.mx',
+    'license': 'LGPL-3',
+    'depends': ['base', 'account', 'purchase'],
     'data': [
-        # Aquí se agregarán los archivos XML de vistas si son necesarios
+        'security/ir.model.access.csv',
+        'views/account_move_views.xml',
+        'wizard/borra_pdf_view.xml',
     ],
     'installable': True,
     'application': False,
     'auto_install': False,
-    'license': 'LGPL-3',
 }

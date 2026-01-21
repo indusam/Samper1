@@ -1,5 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- Heredar el reporte de delivery slip para agregar campos de ubicación -->
+    <template id="report_delivery_document_inherit_locations" inherit_id="stock.report_delivery_document">
+        <!-- Agregar location_id y location_dest_id después de la fecha -->
+        <xpath expr="//div[@id='informations']//div[@name='div_sched_date']" position="after">
+            <div class="col col-3 mw-100 mb-2" name="div_location">
+                <strong>Ubicación Origen</strong>
+                <div t-field="o.location_id" class="m-0"/>
+            </div>
+            <div class="col col-3 mw-100 mb-2" name="div_location_dest">
+                <strong>Ubicación Destino</strong>
+                <div t-field="o.location_dest_id" class="m-0"/>
+            </div>
+        </xpath>
+    </template>
+
+    <!-- Reducir tamaño de letra en tablas de detalle -->
+    <template id="report_delivery_document_inherit_font_size" inherit_id="stock.report_delivery_document">
+        <!-- Tabla de movimientos (estado != done) -->
+        <xpath expr="//table[@name='stock_move_table']" position="attributes">
+            <attribute name="style">font-size: 11px;</attribute>
+        </xpath>
+        <!-- Tabla de líneas de movimiento (estado == done) -->
+        <xpath expr="//table[@name='stock_move_line_table']" position="attributes">
+            <attribute name="style">font-size: 11px;</attribute>
+        </xpath>
+    </template>
+
     <!-- Heredar el reporte de delivery slip para agregar espacios de firmas -->
     <template id="report_delivery_document_inherit_signatures" inherit_id="stock.report_delivery_document">
         <!-- Agregar sección de firmas al final del documento, antes del cierre del div.page -->

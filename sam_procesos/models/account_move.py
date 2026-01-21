@@ -1,0 +1,113 @@
+# -*- coding: utf-8 -*-
+"""
+vbueno 1102202510:52
+Módulo para la descarga de archivos XML y PDF asociados a facturas en Odoo.
+
+Este módulo extiende el modelo `account.move` para agregar una función que permite
+descargar los archivos adjuntos XML y PDF de las facturas seleccionadas.
+"""
+
+from datetime import timedelta
+
+from odoo import models, fields
+from odoo.exceptions import UserError
+import base64
+import zipfile
+import io
+
+
+class AccountMove(models.Model):
+    _inherit = 'account.move'
+
+    def action_download_xml(self):
+        """Descarga los archivos XML y PDF de las facturas seleccionadas."""
+        active_ids = self.env.context.get('active_ids', [])
+        if not active_ids:
+            raise UserError('Debe seleccionar al menos una factura')
+
+        selected_moves = self.browse(active_ids)
+
+        # Depuración: Verificar las facturas seleccionadas
+        if not selected_moves:
+            raise UserError('No se pudieron cargar las facturas seleccionadas.')
+
+        # Buscar los adjuntos XML asociados a las facturas seleccionadas
+        xml_attachments = self.env['ir.attachment'].search([
+            ('res_model', '=', 'account.move'),
+            ('res_id', 'in', selected_moves.ids),
+            ('name', 'ilike', '.xml')
+        ])
+
+        # Buscar los adjuntos PDF directamente en account.move
+        pdf_attachments = self.env['ir.attachment'].search([
+            ('res_model', '=', 'account.move'),
+            ('res_id', 'in', selected_moves.ids),
+            ('mimetype', '=', 'application/pdf')
+        ])
+
+        # Buscar PDFs en los mensajes del chatter (mail.message)
+        messages = self.env['mail.message'].search([
+            ('model', '=', 'account.move'),
+            ('res_id', 'in', selected_moves.ids),
+        ])
+        pdf_from_messages = self.env['ir.attachment']
+        if messages:
+            pdf_from_messages = self.env['ir.attachment'].search([
+                ('res_model', '=', 'mail.message'),
+                ('res_id', 'in', messages.ids),
+                ('mimetype', '=', 'application/pdf')
+            ])
+
+        # Combinar todos los adjuntos XML y PDF
+        attachments = xml_attachments + pdf_attachments + pdf_from_messages
+
+        # Depuración: Verificar si se encontraron adjuntos
+        if not attachments:
+            debug_message = f"Facturas seleccionadas: {selected_moves.mapped('name')}\nNo se encontraron archivos XML o PDF para estas facturas."
+            raise UserError(debug_message)
+
+        if len(attachments) == 1:
+            # Descargar directamente el único archivo encontrado
+            attachment = attachments[0]
+            return {
+                'type': 'ir.actions.act_url',
+                'url': f'/web/content/{attachment.id}?download=true',
+                'target': 'self',
+            }
+
+        # Limpiar archivos ZIP temporales antiguos (más de 1 hora)
+        old_zips = self.env['ir.attachment'].search([
+            ('name', '=', 'facturas_xml_pdf.zip'),
+            ('res_model', '=', False),
+            ('create_date', '<', fields.Datetime.now() - timedelta(hours=1))
+        ])
+        old_zips.unlink()
+
+        # Si son múltiples archivos, crea un archivo ZIP
+        # Evitar archivos duplicados por nombre
+        zip_buffer = io.BytesIO()
+        used_names = set()
+        with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zip_file:
+            for attachment in attachments:
+                if attachment.name not in used_names:
+                    used_names.add(attachment.name)
+                    zip_file.writestr(attachment.name, base64.b64decode(attachment.datas))
+
+        # Codifica el ZIP en base64
+        zip_data = base64.b64encode(zip_buffer.getvalue())
+
+        # Crea un adjunto temporal con el ZIP (sin modelo asociado para facilitar limpieza)
+        zip_attachment = self.env['ir.attachment'].create({
+            'name': 'facturas_xml_pdf.zip',
+            'type': 'binary',
+            'datas': zip_data,
+            'mimetype': 'application/zip',
+            'res_model': False,
+            'res_id': False
+        })
+
+        return {
+            'type': 'ir.actions.act_url',
+            'url': f'/web/content/{zip_attachment.id}?download=true',
+            'target': 'self',
+        }
