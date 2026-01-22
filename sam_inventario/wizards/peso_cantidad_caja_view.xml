@@ -28,7 +28,7 @@
         <field name="name">Peso y cantidad por caja</field> <!-- Nombre de la acción -->
         <field name="res_model">wizard.pesocajacantidad</field> <!-- Modelo asociado al wizard -->
         <field name="type">ir.actions.act_window</field> <!-- Tipo de acción que abre una ventana -->
-        <field name="view_mode">tree,form</field> <!-- Tipos de vista disponibles: lista y formulario -->
+        <field name="view_mode">list,form</field> <!-- Tipos de vista disponibles: lista y formulario -->
         <field name="view_id" ref="wizard_peso_cantidad_caja_view_form"/> <!-- Referencia a la vista del wizard -->
         <field name="target">new</field> <!-- Abrir la acción en una ventana emergente -->
     </record>
