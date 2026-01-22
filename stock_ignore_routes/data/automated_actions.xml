@@ -7,7 +7,7 @@
             <field name="model_id" ref="stock.model_stock_picking"/>
             <field name="trigger">on_write</field>
             <field name="trigger_field_ids" eval="[(6, 0, [ref('stock.field_stock_picking__state')])]"/>
-            <field name="filter_domain">[('picking_type_id.x_ignorar_rutas', '=', True), ('state', 'in', ['confirmed', 'assigned'])]</field>
+            <field name="filter_domain">[('x_ignorar_rutas', '=', True), ('state', 'in', ['confirmed', 'assigned'])]</field>
             <field name="active" eval="True"/>
         </record>
 
@@ -21,7 +21,7 @@
 # Cancelar movimientos automáticos generados por rutas
 # Solo aplica cuando el tipo de operación tiene marcado "Ignorar rutas automáticas"
 for record in records:
-    if record.picking_type_id.x_ignorar_rutas and record.group_id:
+    if record.x_ignorar_rutas and record.group_id:
         # Buscar pickings relacionados en el mismo grupo de procuración
         movimientos_auto = env['stock.picking'].search([
             ('group_id', '=', record.group_id.id),
