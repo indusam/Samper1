@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Heredar vista form de stock.picking.type para agregar campo x_ignorar_rutas -->
+    <record id="view_picking_type_form_inherit_ignore_routes" model="ir.ui.view">
+        <field name="name">stock.picking.type.form.inherit.ignore.routes</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form"/>
+        <field name="arch" type="xml">
+            <!-- Agregar campo después de "Tipo de devolución" -->
+            <xpath expr="//field[@name='return_picking_type_id']" position="after">
+                <field name="x_ignorar_rutas"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

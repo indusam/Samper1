@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <!-- Acción automatizada: Cancelar rutas automáticas -->
+        <record id="action_cancel_auto_routes" model="base.automation">
+            <field name="name">Cancelar rutas automáticas</field>
+            <field name="model_id" ref="stock.model_stock_picking"/>
+            <field name="trigger">on_write</field>
+            <field name="trigger_field_ids" eval="[(6, 0, [ref('stock.field_stock_picking__state')])]"/>
+            <field name="filter_domain">[('picking_type_id.x_ignorar_rutas', '=', True), ('state', 'in', ['confirmed', 'assigned'])]</field>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+# Cancelar movimientos automáticos generados por rutas
+# Solo aplica cuando el tipo de operación tiene marcado "Ignorar rutas automáticas"
+for record in records:
+    if record.picking_type_id.x_ignorar_rutas and record.group_id:
+        # Buscar pickings relacionados en el mismo grupo de procuración
+        movimientos_auto = env['stock.picking'].search([
+            ('group_id', '=', record.group_id.id),
+            ('id', '!=', record.id),
+            ('state', 'in', ['waiting', 'confirmed', 'assigned', 'draft'])
+        ])
+
+        # Cancelar movimientos secundarios si existen
+        if movimientos_auto:
+            try:
+                movimientos_auto.action_cancel()
+            except Exception as e:
+                # Registrar el error pero no fallar el proceso principal
+                log('Error al cancelar movimientos automáticos: %s' % str(e))
+]]></field>
+        </record>
+    </data>
+</odoo>
