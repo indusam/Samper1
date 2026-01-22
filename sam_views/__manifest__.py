@@ -30,6 +30,7 @@
         'base',
         'stock',
         'account',
+        'sale',
         'l10n_mx_edi',
     ],
     'data': [
@@ -38,6 +39,7 @@
         'views/stock_picking_form_views.xml',
         'views/seleccion_lotes.xml',
         'views/report_deliveryslip_inherit.xml',
+        'views/report_saleorder_inherit.xml',
     ],
     'installable': True,
     'application': False,

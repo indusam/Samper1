@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Template personalizado para órdenes de venta Samper -->
+    <template id="report_saleorder_document_inherit_samper" inherit_id="sale.report_saleorder_document">
+
+        <!-- Agregar client_order_ref a la derecha del vendedor -->
+        <xpath expr="//div[@t-if='doc.user_id.name']" position="after">
+            <div t-if="doc.client_order_ref" class="col">
+                <strong>Referencia Cliente</strong>
+                <div t-field="doc.client_order_ref"/>
+            </div>
+        </xpath>
+
+        <!-- Agregar columna de Lotes después de Description -->
+        <xpath expr="//th[@name='th_description']" position="after">
+            <th name="th_lots" class="text-start">Lotes</th>
+        </xpath>
+
+        <!-- Agregar celda de Lotes en las líneas de producto -->
+        <xpath expr="//td[@name='td_name']" position="after">
+            <td name="td_lots">
+                <t t-set="lots" t-value="line.move_ids.move_line_ids.lot_id"/>
+                <t t-if="lots">
+                    <t t-foreach="lots" t-as="lot">
+                        <span t-field="lot.name"/>
+                        <t t-if="lot.expiration_date">
+                            (<span t-field="lot.expiration_date" t-options='{"widget": "date"}'/>)
+                        </t>
+                        <t t-if="not lot_last"><br/></t>
+                    </t>
+                </t>
+            </td>
+        </xpath>
+
+    </template>
+</odoo>
