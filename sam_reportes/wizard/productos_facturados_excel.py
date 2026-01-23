@@ -88,12 +88,17 @@ class ProductosFacturadosExcel(models.TransientModel):
                     'total_categoria': 0.0
                 }
 
+            # Obtener lista de precios del cliente
+            x_lp_field = partner.x_lp
+            x_lp = x_lp_field.display_name if hasattr(x_lp_field, 'display_name') else (x_lp_field or '')
+
             # Inicializar cliente si no existe
             if cliente_key not in categorias_data[categoria_nombre]['clientes']:
                 categorias_data[categoria_nombre]['clientes'][cliente_key] = {
                     'complete_name': partner_complete_name,
                     'nombre_comercial': nombre_comercial,
-                    'importe': 0.0
+                    'importe': 0.0,
+                    'x_lp': x_lp,
                 }
 
             # Acumular importe
@@ -170,9 +175,11 @@ class ProductosFacturadosExcel(models.TransientModel):
         worksheet.set_column('B:B', 45)  # Cliente (complete_name)
         worksheet.set_column('C:C', 35)  # Nombre Comercial
         worksheet.set_column('D:D', 18)  # Importe
+        worksheet.set_column('E:E', 20)  # Lista de Precios
+        worksheet.set_column('F:F', 25)  # Observaciones
 
         # Título
-        worksheet.merge_range('A1:D1', 'VENTAS POR CATEGORÍA DE CLIENTE', formato_titulo)
+        worksheet.merge_range('A1:F1', 'VENTAS POR CATEGORÍA DE CLIENTE', formato_titulo)
         worksheet.write('A2', f'Período: {self.fecha_inicio.strftime("%d/%m/%Y")} - {self.fecha_fin.strftime("%d/%m/%Y")}')
 
         # Encabezados
@@ -181,6 +188,8 @@ class ProductosFacturadosExcel(models.TransientModel):
         worksheet.write(row, 1, 'Cliente', formato_encabezado)
         worksheet.write(row, 2, 'Nombre Comercial', formato_encabezado)
         worksheet.write(row, 3, 'Importe Total', formato_encabezado)
+        worksheet.write(row, 4, 'Lista de Precios', formato_encabezado)
+        worksheet.write(row, 5, 'Observaciones', formato_encabezado)
 
         row += 1
         total_general = 0.0
@@ -190,6 +199,8 @@ class ProductosFacturadosExcel(models.TransientModel):
             # Escribir encabezado de categoría con su total
             worksheet.merge_range(row, 0, row, 2, categoria_nombre, formato_categoria)
             worksheet.write(row, 3, datos['total_categoria'], formato_total_categoria)
+            worksheet.write(row, 4, '', formato_categoria)
+            worksheet.write(row, 5, '', formato_categoria)
             row += 1
 
             # Ordenar clientes por importe descendente (mejor cliente primero)
@@ -205,6 +216,8 @@ class ProductosFacturadosExcel(models.TransientModel):
                 worksheet.write(row, 1, cliente_data['complete_name'], formato_cliente)
                 worksheet.write(row, 2, cliente_data['nombre_comercial'], formato_cliente)
                 worksheet.write(row, 3, cliente_data['importe'], formato_importe)
+                worksheet.write(row, 4, cliente_data['x_lp'], formato_cliente)
+                worksheet.write(row, 5, '', formato_cliente)  # Observaciones vacía
                 row += 1
 
             total_general += datos['total_categoria']
@@ -213,6 +226,8 @@ class ProductosFacturadosExcel(models.TransientModel):
         row += 1
         worksheet.merge_range(row, 0, row, 2, 'TOTAL GENERAL', formato_total_general)
         worksheet.write(row, 3, total_general, formato_total_general)
+        worksheet.write(row, 4, '', formato_total_general)
+        worksheet.write(row, 5, '', formato_total_general)
 
         workbook.close()
         output.seek(0)
