@@ -7,10 +7,9 @@
     'author': 'Samper',
     'website': 'https://www.samper.mx',
     'license': 'LGPL-3',
-    'depends': ['stock', 'base_automation'],
+    'depends': ['stock'],
     'data': [
         'views/stock_picking_type_views.xml',
-        'data/automated_actions.xml',
     ],
     'installable': True,
     'application': False,
