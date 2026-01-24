@@ -138,13 +138,9 @@
             </style>
         </xpath>
 
-        <!-- Términos y condiciones a la izquierda, en la misma línea que importe con letra -->
-        <xpath expr="//div[@id='total']" position="attributes">
-            <attribute name="class">row</attribute>
-        </xpath>
-
-        <xpath expr="//div[@id='total']/div" position="before">
-            <div class="col-6" style="font-size: 11px; line-height: 1.4; color: #000000; font-weight: bold;">
+        <!-- Términos y condiciones a la extrema izquierda, flotando junto a los totales -->
+        <xpath expr="//div[@id='total']" position="before">
+            <div style="float: left; width: 45%; font-size: 11px; line-height: 1.4; color: #000000; font-weight: bold;">
                 <t t-if="o.narration">
                     <strong>Términos y condiciones:</strong>
                     <div t-field="o.narration"/>
