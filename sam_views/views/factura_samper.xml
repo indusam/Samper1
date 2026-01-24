@@ -122,13 +122,9 @@
             </style>
         </xpath>
 
-        <!-- Cambiar totales a row con 2 columnas: términos a la izquierda, totales a la derecha -->
-        <xpath expr="//div[@id='total']" position="attributes">
-            <attribute name="class">row</attribute>
-        </xpath>
-
-        <xpath expr="//div[@id='total']" position="inside">
-            <div class="col-6" style="order: -1; font-size: 10px; line-height: 1.4; color: #000000; font-weight: bold;">
+        <!-- Términos y condiciones después del importe con letra -->
+        <xpath expr="//div[@id='total']" position="after">
+            <div style="font-size: 11px; line-height: 1.4; color: #000000; font-weight: bold; margin-top: 10px;">
                 <t t-if="o.narration">
                     <strong>Términos y condiciones:</strong>
                     <div t-field="o.narration"/>
