@@ -58,6 +58,11 @@
                 div#payment_term {
                     display: none !important;
                 }
+                /* Ocultar columna original de Código del producto (4ta posición) */
+                .table-samper th:nth-child(4),
+                .table-samper td:nth-child(4) {
+                    display: none !important;
+                }
             </style>
         </xpath>
 
@@ -83,6 +88,17 @@
         <!-- Aplicar estilos a la tabla -->
         <xpath expr="//table[@name='invoice_line_table']" position="attributes">
             <attribute name="class">table-samper table table-sm</attribute>
+        </xpath>
+
+        <!-- Agregar columna Código del producto al inicio de la tabla -->
+        <xpath expr="//th[@name='th_description']" position="before">
+            <th name="th_codigo_producto" class="text-start">Código del producto</th>
+        </xpath>
+
+        <xpath expr="//td[@name='account_invoice_line_name']" position="before">
+            <td name="td_codigo_producto">
+                <span t-field="line.product_id.unspsc_code_id.code"/>
+            </td>
         </xpath>
 
         <!-- Cambiar título de Description a "Descripción" -->
@@ -122,9 +138,13 @@
             </style>
         </xpath>
 
-        <!-- Términos y condiciones después del importe con letra -->
-        <xpath expr="//div[@id='total']" position="after">
-            <div style="font-size: 11px; line-height: 1.4; color: #000000; font-weight: bold; margin-top: 10px;">
+        <!-- Términos y condiciones a la izquierda, en la misma línea que importe con letra -->
+        <xpath expr="//div[@id='total']" position="attributes">
+            <attribute name="class">row</attribute>
+        </xpath>
+
+        <xpath expr="//div[@id='total']/div" position="before">
+            <div class="col-6" style="font-size: 11px; line-height: 1.4; color: #000000; font-weight: bold;">
                 <t t-if="o.narration">
                     <strong>Términos y condiciones:</strong>
                     <div t-field="o.narration"/>
