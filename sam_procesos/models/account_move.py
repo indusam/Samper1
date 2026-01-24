@@ -75,13 +75,28 @@ class AccountMove(models.Model):
                         invoices_with_pdf.add(move_name)
                         attachments_to_download += pdf
 
-        if not attachments_to_download:
+        # Para facturas sin PDF en ningún lado, generar el PDF al vuelo
+        moves_still_without_pdf = selected_moves.filtered(lambda m: m.name not in invoices_with_pdf)
+        generated_pdfs = {}  # {move_name: pdf_content}
+        if moves_still_without_pdf:
+            report = self.env.ref('account.account_invoices')
+            for move in moves_still_without_pdf:
+                try:
+                    pdf_content, _ = self.env['ir.actions.report']._render_qweb_pdf(
+                        report, [move.id]
+                    )
+                    generated_pdfs[move.name] = pdf_content
+                    invoices_with_pdf.add(move.name)
+                except Exception:
+                    pass  # Si falla la generación, se omite
+
+        if not attachments_to_download and not generated_pdfs:
             raise UserError(
                 f"Facturas seleccionadas: {selected_moves.mapped('name')}\n"
                 f"No se encontraron archivos XML o PDF para estas facturas."
             )
 
-        if len(attachments_to_download) == 1:
+        if len(attachments_to_download) == 1 and not generated_pdfs:
             attachment = attachments_to_download[0]
             return {
                 'type': 'ir.actions.act_url',
@@ -99,27 +114,32 @@ class AccountMove(models.Model):
 
         # Crear ZIP evitando duplicados por número de factura en el nombre
         zip_buffer = io.BytesIO()
-        used_invoice_numbers = {}  # {invoice_number: {ext: filename}}
+        used_invoice_numbers = {}
         with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zip_file:
+            # Agregar archivos de adjuntos existentes
             for attachment in attachments_to_download:
-                # Extraer número de factura del nombre del archivo
                 fname = attachment.name
                 ext = 'xml' if '.xml' in fname.lower() else 'pdf'
 
-                # Buscar si algún número de factura está en el nombre
                 invoice_key = None
                 for move in selected_moves:
                     if move.name and move.name in fname:
                         invoice_key = f"{move.name}_{ext}"
                         break
 
-                # Si no se encontró número de factura, usar el nombre completo como clave
                 if not invoice_key:
                     invoice_key = fname
 
                 if invoice_key not in used_invoice_numbers:
                     used_invoice_numbers[invoice_key] = True
                     zip_file.writestr(fname, base64.b64decode(attachment.datas))
+
+            # Agregar PDFs generados al vuelo
+            for move_name, pdf_content in generated_pdfs.items():
+                invoice_key = f"{move_name}_pdf"
+                if invoice_key not in used_invoice_numbers:
+                    used_invoice_numbers[invoice_key] = True
+                    zip_file.writestr(f"{move_name}.pdf", pdf_content)
 
         zip_data = base64.b64encode(zip_buffer.getvalue())
         zip_attachment = self.env['ir.attachment'].create({
