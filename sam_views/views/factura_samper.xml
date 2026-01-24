@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- Acción de reporte para Facturas Samper -->
+    <record id="report_invoice_sam" model="ir.actions.report">
+        <field name="name">Facturas Samper</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">sam_views.report_invoice_sam_main</field>
+        <field name="report_file">sam_views.report_invoice_sam_main</field>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- Template principal para Facturas Samper (usa el template base ya modificado) -->
+    <template id="report_invoice_sam_main">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-set="lang" t-value="o.partner_id.lang"/>
+                <t t-set="o" t-value="o.with_context(lang=lang)"/>
+                <t t-call="account.report_invoice_document" t-lang="lang"/>
+            </t>
+        </t>
+    </template>
+
     <!-- Template personalizado para facturas Samper -->
     <template id="report_invoice_document_inherit_samper" inherit_id="account.report_invoice_document" priority="99">
 
@@ -109,5 +131,20 @@
                 }
             </style>
         </xpath>
+
+        <!-- Cambiar totales a row con 2 columnas: términos a la izquierda, totales a la derecha -->
+        <xpath expr="//div[@id='total']" position="attributes">
+            <attribute name="class">row</attribute>
+        </xpath>
+
+        <xpath expr="//div[@id='total']" position="inside">
+            <div class="col-6" style="order: -1; font-size: 10px; line-height: 1.4;">
+                <t t-if="o.narration">
+                    <strong>Términos y condiciones:</strong>
+                    <div t-field="o.narration"/>
+                </t>
+            </div>
+        </xpath>
+
     </template>
 </odoo>
