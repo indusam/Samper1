@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- Desactivar cacheo del PDF estándar para que siempre re-renderice el template -->
+    <record id="account.account_invoices" model="ir.actions.report">
+        <field name="attachment_use">False</field>
+        <field name="attachment" eval="False"/>
+        <field name="print_report_name">'%s' % (object.name)</field>
+    </record>
+
+    <record id="account.account_invoices_without_payment" model="ir.actions.report">
+        <field name="attachment_use">False</field>
+        <field name="attachment" eval="False"/>
+        <field name="print_report_name">'%s' % (object.name)</field>
+    </record>
+
     <!-- Acción de reporte para Facturas Samper -->
     <record id="report_invoice_sam" model="ir.actions.report">
         <field name="name">Facturas Samper</field>
@@ -58,6 +71,11 @@
                 div#payment_term {
                     display: none !important;
                 }
+                /* Ocultar columna original de Código del producto (4ta posición) */
+                .table-samper th:nth-child(4),
+                .table-samper td:nth-child(4) {
+                    display: none !important;
+                }
             </style>
         </xpath>
 
@@ -83,6 +101,17 @@
         <!-- Aplicar estilos a la tabla -->
         <xpath expr="//table[@name='invoice_line_table']" position="attributes">
             <attribute name="class">table-samper table table-sm</attribute>
+        </xpath>
+
+        <!-- Agregar columna Código del producto al inicio de la tabla -->
+        <xpath expr="//th[@name='th_description']" position="before">
+            <th name="th_codigo_producto" class="text-start">Código del producto</th>
+        </xpath>
+
+        <xpath expr="//td[@name='account_invoice_line_name']" position="before">
+            <td name="td_codigo_producto">
+                <span t-field="line.product_id.unspsc_code_id.code"/>
+            </td>
         </xpath>
 
         <!-- Cambiar título de Description a "Descripción" -->
@@ -122,13 +151,9 @@
             </style>
         </xpath>
 
-        <!-- Cambiar totales a row con 2 columnas: términos a la izquierda, totales a la derecha -->
-        <xpath expr="//div[@id='total']" position="attributes">
-            <attribute name="class">row</attribute>
-        </xpath>
-
-        <xpath expr="//div[@id='total']" position="inside">
-            <div class="col-6" style="order: -1; font-size: 10px; line-height: 1.4;">
+        <!-- Términos y condiciones a la extrema izquierda, flotando junto a los totales -->
+        <xpath expr="//div[@id='total']" position="before">
+            <div style="float: left; width: 45%; font-size: 11px; line-height: 1.4; color: #000000; font-weight: bold;">
                 <t t-if="o.narration">
                     <strong>Términos y condiciones:</strong>
                     <div t-field="o.narration"/>
