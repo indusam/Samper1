@@ -23,8 +23,13 @@ class AccountMove(models.Model):
         """Descarga los archivos XML y PDF de las facturas seleccionadas.
 
         Los XMLs se obtienen de ir.attachment (son los CFDI timbrados).
-        Los PDFs se generan siempre al vuelo para asegurar el formato correcto.
+        Los PDFs se obtienen de attachments, excepto si:
+        - No existe PDF en attachments, o
+        - La fecha de la factura está entre 19/01/2026 y 24/01/2026 (formato incorrecto)
+        En esos casos se genera el PDF al vuelo.
         """
+        from datetime import date
+
         active_ids = self.env.context.get('active_ids', [])
         if not active_ids:
             raise UserError('Debe seleccionar al menos una factura')
@@ -33,6 +38,10 @@ class AccountMove(models.Model):
         if not selected_moves:
             raise UserError('No se pudieron cargar las facturas seleccionadas.')
 
+        # Fechas del período con formato incorrecto
+        fecha_inicio_incorrecto = date(2026, 1, 19)
+        fecha_fin_incorrecto = date(2026, 1, 24)
+
         # Buscar XMLs en ir.attachment (uno por factura)
         xml_attachments = self.env['ir.attachment'].search([
             ('res_model', '=', 'account.move'),
@@ -40,19 +49,51 @@ class AccountMove(models.Model):
             ('name', 'ilike', '.xml')
         ])
 
-        # Generar TODOS los PDFs al vuelo para asegurar formato correcto
-        generated_pdfs = {}
-        report = self.env.ref('account.account_invoices')
-        for move in selected_moves:
-            try:
-                pdf_content, _ = self.env['ir.actions.report']._render_qweb_pdf(
-                    report, [move.id]
-                )
-                generated_pdfs[move.name] = pdf_content
-            except Exception:
-                pass  # Si falla la generación, se omite
+        # Buscar PDFs existentes en ir.attachment
+        pdf_attachments = self.env['ir.attachment'].search([
+            ('res_model', '=', 'account.move'),
+            ('res_id', 'in', selected_moves.ids),
+            ('mimetype', '=', 'application/pdf')
+        ])
 
-        if not xml_attachments and not generated_pdfs:
+        # Mapear PDFs por move_id (solo uno por factura)
+        pdf_by_move = {}
+        for pdf in pdf_attachments:
+            if pdf.res_id not in pdf_by_move:
+                pdf_by_move[pdf.res_id] = pdf
+
+        # Determinar qué PDFs usar de attachments y cuáles generar al vuelo
+        pdf_attachments_to_use = self.env['ir.attachment']
+        moves_to_generate_pdf = self.env['account.move']
+
+        for move in selected_moves:
+            move_date = move.invoice_date or move.date
+            needs_regeneration = (
+                move_date and
+                fecha_inicio_incorrecto <= move_date <= fecha_fin_incorrecto
+            )
+
+            if needs_regeneration or move.id not in pdf_by_move:
+                # Generar al vuelo si está en período incorrecto o no tiene PDF
+                moves_to_generate_pdf += move
+            else:
+                # Usar PDF existente
+                pdf_attachments_to_use += pdf_by_move[move.id]
+
+        # Generar PDFs al vuelo solo para los que lo necesitan
+        generated_pdfs = {}
+        if moves_to_generate_pdf:
+            report = self.env.ref('account.account_invoices')
+            for move in moves_to_generate_pdf:
+                try:
+                    pdf_content, _ = self.env['ir.actions.report']._render_qweb_pdf(
+                        report, [move.id]
+                    )
+                    generated_pdfs[move.name] = pdf_content
+                except Exception:
+                    pass  # Si falla la generación, se omite
+
+        if not xml_attachments and not pdf_attachments_to_use and not generated_pdfs:
             raise UserError(
                 f"Facturas seleccionadas: {selected_moves.mapped('name')}\n"
                 f"No se encontraron archivos XML y no se pudieron generar PDFs."
@@ -84,6 +125,14 @@ class AccountMove(models.Model):
                 if invoice_key not in used_keys:
                     used_keys.add(invoice_key)
                     zip_file.writestr(fname, base64.b64decode(attachment.datas))
+
+            # Agregar PDFs de attachments existentes
+            for pdf in pdf_attachments_to_use:
+                move = self.browse(pdf.res_id)
+                invoice_key = f"{move.name}_pdf"
+                if invoice_key not in used_keys:
+                    used_keys.add(invoice_key)
+                    zip_file.writestr(f"{move.name}.pdf", base64.b64decode(pdf.datas))
 
             # Agregar PDFs generados al vuelo
             for move_name, pdf_content in generated_pdfs.items():
