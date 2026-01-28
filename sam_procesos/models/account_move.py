@@ -49,11 +49,12 @@ class AccountMove(models.Model):
             ('name', 'ilike', '.xml')
         ])
 
-        # Buscar PDFs existentes en ir.attachment
+        # Buscar PDFs existentes en ir.attachment (solo los que empiezan con INV)
         pdf_attachments = self.env['ir.attachment'].search([
             ('res_model', '=', 'account.move'),
             ('res_id', 'in', selected_moves.ids),
-            ('mimetype', '=', 'application/pdf')
+            ('mimetype', '=', 'application/pdf'),
+            ('name', '=like', 'INV%')
         ])
 
         # Mapear PDFs por move_id (solo uno por factura)
