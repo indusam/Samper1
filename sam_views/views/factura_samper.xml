@@ -13,6 +13,11 @@
         <field name="print_report_name">'%s' % (object.name)</field>
     </record>
 
+    <!-- Configurar nombre del PDF para recibos de pago (complementos de pago) -->
+    <record id="account.action_report_payment_receipt" model="ir.actions.report">
+        <field name="print_report_name">'%s' % (object.name)</field>
+    </record>
+
     <!-- Acción de reporte para Facturas Samper -->
     <record id="report_invoice_sam" model="ir.actions.report">
         <field name="name">Facturas Samper</field>
