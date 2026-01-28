@@ -5,6 +5,7 @@ Módulo para la descarga de archivos XML y PDF asociados a facturas en Odoo.
 
 Este módulo extiende el modelo `account.move` para agregar una función que permite
 descargar los archivos adjuntos XML y PDF de las facturas seleccionadas.
+
 """
 
 from datetime import timedelta
