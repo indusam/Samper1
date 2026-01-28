@@ -5,6 +5,7 @@ Módulo para la descarga de archivos XML y PDF asociados a facturas en Odoo.
 
 Este módulo extiende el modelo `account.move` para agregar una función que permite
 descargar los archivos adjuntos XML y PDF de las facturas seleccionadas.
+
 """
 
 from datetime import timedelta
@@ -49,18 +50,29 @@ class AccountMove(models.Model):
             ('name', 'ilike', '.xml')
         ])
 
-        # Buscar PDFs existentes en ir.attachment
-        pdf_attachments = self.env['ir.attachment'].search([
-            ('res_model', '=', 'account.move'),
-            ('res_id', 'in', selected_moves.ids),
-            ('mimetype', '=', 'application/pdf')
-        ])
+        # Construir lista de nombres de PDF esperados basados en los XMLs
+        # El PDF tiene el mismo nombre que el XML pero con extensión .pdf
+        # Ejemplo: INV-SAM0124086-MX-Invoice-4.0.xml -> INV-SAM0124086-MX-Invoice-4.0.pdf
+        xml_to_move = {}  # Mapea nombre base del XML al move_id
+        pdf_names_to_search = []
+        for xml_att in xml_attachments:
+            if xml_att.name.lower().endswith('.xml'):
+                pdf_name = xml_att.name[:-4] + '.pdf'
+                pdf_names_to_search.append(pdf_name)
+                xml_to_move[pdf_name] = xml_att.res_id
 
-        # Mapear PDFs por move_id (solo uno por factura)
+        # Buscar PDFs por nombre exacto (pueden estar en mail.message)
         pdf_by_move = {}
-        for pdf in pdf_attachments:
-            if pdf.res_id not in pdf_by_move:
-                pdf_by_move[pdf.res_id] = pdf
+        if pdf_names_to_search:
+            pdf_attachments = self.env['ir.attachment'].search([
+                ('name', 'in', pdf_names_to_search),
+                ('mimetype', '=', 'application/pdf')
+            ])
+            # Mapear PDFs por move_id usando la relación XML->move
+            for pdf in pdf_attachments:
+                move_id = xml_to_move.get(pdf.name)
+                if move_id and move_id not in pdf_by_move:
+                    pdf_by_move[move_id] = pdf
 
         # Determinar qué PDFs usar de attachments y cuáles generar al vuelo
         pdf_attachments_to_use = self.env['ir.attachment']
@@ -127,12 +139,17 @@ class AccountMove(models.Model):
                     zip_file.writestr(fname, base64.b64decode(attachment.datas))
 
             # Agregar PDFs de attachments existentes
+            # Crear mapeo inverso: pdf.id -> move_id
+            pdf_to_move_id = {pdf.id: move_id for move_id, pdf in pdf_by_move.items()}
             for pdf in pdf_attachments_to_use:
-                move = self.browse(pdf.res_id)
-                invoice_key = f"{move.name}_pdf"
-                if invoice_key not in used_keys:
-                    used_keys.add(invoice_key)
-                    zip_file.writestr(f"{move.name}.pdf", base64.b64decode(pdf.datas))
+                move_id = pdf_to_move_id.get(pdf.id)
+                if move_id:
+                    move = self.browse(move_id)
+                    invoice_key = f"{move.name}_pdf"
+                    if invoice_key not in used_keys:
+                        used_keys.add(invoice_key)
+                        # Usar el nombre original del PDF (INV-...)
+                        zip_file.writestr(pdf.name, base64.b64decode(pdf.datas))
 
             # Agregar PDFs generados al vuelo
             for move_name, pdf_content in generated_pdfs.items():
