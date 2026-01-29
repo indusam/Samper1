@@ -81,6 +81,7 @@
                 .table-samper td[name="l10n_mx_edi_product_code_cell"] {
                     display: none !important;
                 }
+            </style>
         </xpath>
 
         <!-- Agregar información adicional del cliente después de la dirección -->
