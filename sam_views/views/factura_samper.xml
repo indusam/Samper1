@@ -76,12 +76,11 @@
                 div#payment_term {
                     display: none !important;
                 }
-                /* Ocultar columna original de Código del producto (4ta posición) */
-                .table-samper th:nth-child(4),
-                .table-samper td:nth-child(4) {
+                /* Ocultar columna duplicada de Código del producto de l10n_mx_edi */
+                .table-samper th[name="l10n_mx_edi_product_code_header"],
+                .table-samper td[name="l10n_mx_edi_product_code_cell"] {
                     display: none !important;
                 }
-            </style>
         </xpath>
 
         <!-- Agregar información adicional del cliente después de la dirección -->
@@ -144,19 +143,6 @@
             <td name="td_piezas" class="text-end">
                 <span t-if="line.x_piezas" t-field="line.x_piezas"/>
             </td>
-        </xpath>
-
-        <!-- En proforma (draft), la 4ta columna es Quantity (kilos), no la de l10n_mx_edi.
-             Forzar que se muestre cuando la factura no está publicada. -->
-        <xpath expr="//div[@class='clearfix invoice_main']" position="inside">
-            <t t-if="o.state != 'posted'">
-                <style>
-                    .table-samper th:nth-child(4),
-                    .table-samper td:nth-child(4) {
-                        display: table-cell !important;
-                    }
-                </style>
-            </t>
         </xpath>
 
         <!-- Ocultar la sección de totales en medio (antes del div total final) -->
