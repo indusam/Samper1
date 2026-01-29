@@ -146,6 +146,19 @@
             </td>
         </xpath>
 
+        <!-- En proforma (draft), la 4ta columna es Quantity (kilos), no la de l10n_mx_edi.
+             Forzar que se muestre cuando la factura no está publicada. -->
+        <xpath expr="//div[@class='clearfix invoice_main']" position="inside">
+            <t t-if="o.state != 'posted'">
+                <style>
+                    .table-samper th:nth-child(4),
+                    .table-samper td:nth-child(4) {
+                        display: table-cell !important;
+                    }
+                </style>
+            </t>
+        </xpath>
+
         <!-- Ocultar la sección de totales en medio (antes del div total final) -->
         <xpath expr="//div[@id='total']" position="before">
             <style>
