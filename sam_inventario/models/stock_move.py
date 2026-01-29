@@ -26,15 +26,13 @@ class StockMove(models.Model):
         - Establece el nombre del movimiento como 'Nuevo' si se selecciona un producto.
         """
         if self.product_id:
-            # Busca la cantidad disponible del producto en la ubicación de origen
-            stock_quant = self.env['stock.quant'].search([
-                ('product_id', '=', self.product_id.id), 
+            # Suma la cantidad de todos los lotes del producto en la ubicación de origen
+            stock_quants = self.env['stock.quant'].search([
+                ('product_id', '=', self.product_id.id),
                 ('location_id', '=', self.location_id.id)
-            ], limit=1)
-            
-            # Si hay existencia, la asigna al campo x_exis_origen
-            if stock_quant.quantity > 0:
-                self.x_exis_origen = stock_quant.quantity
+            ])
+            total_qty = sum(stock_quants.mapped('quantity'))
+            self.x_exis_origen = total_qty if total_qty > 0 else 0
             
             # Asigna un nombre por defecto al movimiento
             self.name = 'Nuevo'  # La descripción es obligatoria
