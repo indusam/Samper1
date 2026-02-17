@@ -40,6 +40,7 @@
         'views/seleccion_lotes.xml',
         'views/report_deliveryslip_inherit.xml',
         'views/report_saleorder_inherit.xml',
+        'views/sale_order_views.xml',
     ],
     'installable': True,
     'application': False,
