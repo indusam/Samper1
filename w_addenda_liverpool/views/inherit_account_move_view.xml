@@ -6,7 +6,7 @@
             <field name="model">account.move</field>
             <field name="inherit_id" ref="account.view_move_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//page[@name='other_info']" position="after">
+                <xpath expr="//notebook" position="inside">
                     <page name="addenda_liverpool" invisible="move_type == 'entry'" string="Addenda Liverpool">
                         <group name="principal_group">
                             <group name="left_group">
