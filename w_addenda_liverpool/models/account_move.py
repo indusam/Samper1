@@ -27,10 +27,29 @@ class AccountMove(models.Model):
     def _compute_require_addenda_liverpool(self):
         for move in self:
             move.require_addenda_liverpool = move.partner_id.generate_addenda_liverpool
-            if move.partner_id.generate_addenda_liverpool and not move.l10n_mx_edi_addenda_id:
-                liverpool_addenda = self.env.ref('w_addenda_liverpool.addenda_liverpool', raise_if_not_found=False)
-                if liverpool_addenda:
+
+    @api.onchange('partner_id')
+    def _onchange_partner_set_addenda_liverpool(self):
+        """Assign Liverpool addenda when partner requires it (UI changes)."""
+        if self.partner_id.generate_addenda_liverpool and not self.l10n_mx_edi_addenda_id:
+            liverpool_addenda = self.env.ref('w_addenda_liverpool.addenda_liverpool', raise_if_not_found=False)
+            if liverpool_addenda:
+                self.l10n_mx_edi_addenda_id = liverpool_addenda
+        elif not self.partner_id.generate_addenda_liverpool and self.l10n_mx_edi_addenda_id:
+            addenda_liv = self.env.ref('w_addenda_liverpool.addenda_liverpool', raise_if_not_found=False)
+            if addenda_liv and self.l10n_mx_edi_addenda_id == addenda_liv:
+                self.l10n_mx_edi_addenda_id = False
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        """Assign Liverpool addenda on programmatic creation (e.g. from sale orders)."""
+        moves = super().create(vals_list)
+        liverpool_addenda = self.env.ref('w_addenda_liverpool.addenda_liverpool', raise_if_not_found=False)
+        if liverpool_addenda:
+            for move in moves:
+                if move.partner_id.generate_addenda_liverpool and not move.l10n_mx_edi_addenda_id:
                     move.l10n_mx_edi_addenda_id = liverpool_addenda
+        return moves
 
     def _l10n_mx_edi_addenda_liverpool(self):
         """Generate Liverpool addenda by calling the addenda model method."""
