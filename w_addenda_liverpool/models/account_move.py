@@ -19,14 +19,8 @@ class AccountMove(models.Model):
     )
     require_addenda_liverpool = fields.Boolean(
         string="Use Addenda Liverpool",
-        compute='_compute_require_addenda_liverpool',
-        store=True
+        related='partner_id.generate_addenda_liverpool',
     )
-
-    @api.depends('partner_id', 'partner_id.generate_addenda_liverpool')
-    def _compute_require_addenda_liverpool(self):
-        for move in self:
-            move.require_addenda_liverpool = move.partner_id.generate_addenda_liverpool
 
     @api.onchange('partner_id')
     def _onchange_partner_set_addenda_liverpool(self):
