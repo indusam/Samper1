@@ -7,7 +7,8 @@
             <field name="inherit_id" ref="account.view_move_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//notebook" position="inside">
-                    <page name="addenda_liverpool" invisible="move_type == 'entry'" string="Addenda Liverpool">
+                    <page name="addenda_liverpool" invisible="not show_addenda_liverpool or move_type == 'entry'" string="Addenda Liverpool">
+                        <field name="show_addenda_liverpool" invisible="1"/>
                         <group name="principal_group">
                             <group name="left_group">
                                 <field name="purchase_order_liv"/>

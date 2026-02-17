@@ -17,6 +17,10 @@ class AccountMove(models.Model):
         string='Date delivery',
         copy=False
     )
+    show_addenda_liverpool = fields.Boolean(
+        string="Show Addenda Liverpool",
+        related='partner_id.generate_addenda_liverpool',
+    )
     require_addenda_liverpool = fields.Boolean(
         string="Use Addenda Liverpool",
         compute='_compute_require_addenda_liverpool',
