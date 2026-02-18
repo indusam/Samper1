@@ -17,20 +17,34 @@ class AccountMove(models.Model):
         string='Date delivery',
         copy=False
     )
+    show_addenda_liverpool = fields.Boolean(
+        string="Show Addenda Liverpool",
+        related='partner_id.generate_addenda_liverpool',
+    )
     require_addenda_liverpool = fields.Boolean(
         string="Use Addenda Liverpool",
         compute='_compute_require_addenda_liverpool',
-        store=True
+        store=True,
     )
 
-    @api.depends('partner_id', 'partner_id.generate_addenda_liverpool')
+    @api.depends('purchase_order_liv', 'delivery_folio', 'date_delivery')
     def _compute_require_addenda_liverpool(self):
         for move in self:
-            move.require_addenda_liverpool = move.partner_id.generate_addenda_liverpool
-            if move.partner_id.generate_addenda_liverpool and not move.l10n_mx_edi_addenda_id:
-                liverpool_addenda = self.env.ref('w_addenda_liverpool.addenda_liverpool', raise_if_not_found=False)
-                if liverpool_addenda:
-                    move.l10n_mx_edi_addenda_id = liverpool_addenda
+            move.require_addenda_liverpool = bool(
+                move.purchase_order_liv or move.delivery_folio or move.date_delivery
+            )
+
+    @api.onchange('purchase_order_liv', 'delivery_folio', 'date_delivery')
+    def _onchange_addenda_liverpool_fields(self):
+        """Auto-assign Liverpool addenda when any addenda field has data."""
+        liverpool_addenda = self.env.ref('w_addenda_liverpool.addenda_liverpool', raise_if_not_found=False)
+        if not liverpool_addenda:
+            return
+        has_data = self.purchase_order_liv or self.delivery_folio or self.date_delivery
+        if has_data and not self.l10n_mx_edi_addenda_id:
+            self.l10n_mx_edi_addenda_id = liverpool_addenda
+        elif not has_data and self.l10n_mx_edi_addenda_id == liverpool_addenda:
+            self.l10n_mx_edi_addenda_id = False
 
     def _l10n_mx_edi_addenda_liverpool(self):
         """Generate Liverpool addenda by calling the addenda model method."""
