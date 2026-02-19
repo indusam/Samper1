@@ -72,7 +72,6 @@
                     font-weight: bold;
                 }
                 /* Ocultar plazo de pago */
-                div[name='due_date'],
                 div#payment_term {
                     display: none !important;
                 }
@@ -167,6 +166,19 @@
                     <strong>Términos y condiciones:</strong>
                     <div t-field="o.narration"/>
                 </t>
+            </div>
+        </xpath>
+
+        <!-- Mostrar Due Date siempre (sin restricción de posted) -->
+        <xpath expr="//div[@name='due_date']" position="attributes">
+            <attribute name="t-if">o.invoice_date_due and o.move_type == 'out_invoice'</attribute>
+        </xpath>
+
+        <!-- Reemplazar Delivery Date por Fecha de Vencimiento -->
+        <xpath expr="//div[@name='delivery_date']" position="replace">
+            <div class="col" t-if="o.invoice_date_due" name="delivery_date">
+                <strong>Fecha de Vencimiento</strong>
+                <div t-field="o.invoice_date_due"/>
             </div>
         </xpath>
 
