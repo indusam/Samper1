@@ -169,9 +169,9 @@
             </div>
         </xpath>
 
-        <!-- Mostrar Due Date siempre (sin restricción de posted) -->
+        <!-- Ocultar Fecha límite original (due_date) -->
         <xpath expr="//div[@name='due_date']" position="attributes">
-            <attribute name="t-if">o.invoice_date_due and o.move_type == 'out_invoice'</attribute>
+            <attribute name="t-if">False</attribute>
         </xpath>
 
         <!-- Reemplazar Delivery Date por Fecha de Vencimiento -->
