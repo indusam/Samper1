@@ -46,6 +46,7 @@ This module adds the Liverpool addenda in signed invoices
     'data': [
         'views/liverpool_addenda_template.xml',
         'data/addenda_liverpool.xml',
+        'data/addenda_liverpool_v40.xml',
         'views/inherit_res_partner_view.xml',
         'views/inherit_res_company_view.xml',
         'views/inherit_account_move_view.xml'
