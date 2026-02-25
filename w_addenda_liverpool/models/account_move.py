@@ -27,6 +27,10 @@ class AccountMove(models.Model):
         store=True,
     )
 
+    def _l10n_mx_edi_cfdi_invoice_try_send(self):
+        self = self.with_context(l10n_mx_edi_cfdi_record=self)
+        return super()._l10n_mx_edi_cfdi_invoice_try_send()
+
     @api.depends('purchase_order_liv', 'delivery_folio', 'date_delivery')
     def _compute_require_addenda_liverpool(self):
         for move in self:

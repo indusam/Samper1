@@ -27,3 +27,4 @@ from . import account_move
 from . import inherit_res_partner
 from . import inherit_res_company
 from . import l10n_mx_edi_addenda
+from . import inherit_ir_qweb

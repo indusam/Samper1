@@ -1,127 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!--This is the addenda liverpool-->
-    <template id="cfdiv33_liverpool" name="Addenda Liverpool" inherit_id="l10n_mx_edi.cfdiv33">
+    <!-- Addenda Liverpool para CFDI 4.0 - Inyecta detallista en cfdi:Complemento -->
+    <template id="cfdiv40_liverpool" name="Addenda Liverpool CFDI 4.0" inherit_id="l10n_mx_edi.cfdiv40">
         <xpath expr="//*[name()='cfdi:Comprobante']" position="replace">
             <cfdi:Comprobante
-                xsi:schemaLocation="http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv33.xsd http://www.sat.gob.mx/ComercioExterior11 http://www.sat.gob.mx/sitio_internet/cfd/ComercioExterior11/ComercioExterior11.xsd http://www.sat.gob.mx/detallista http://www.sat.gob.mx/sitio_internet/cfd/detallista/detallista.xsd"
-                xmlns:cfdi="http://www.sat.gob.mx/cfd/3"
+                xmlns:cfdi="http://www.sat.gob.mx/cfd/4"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xmlns:cce11="http://www.sat.gob.mx/ComercioExterior11"
+                xmlns:cce20="http://www.sat.gob.mx/ComercioExterior20"
+                xmlns:implocal="http://www.sat.gob.mx/implocal"
                 xmlns:detallista="http://www.sat.gob.mx/detallista"
-                Version="3.3"
-                t-att-Fecha="cfdi_date"
-                t-att-Folio="format_string(folio_number, 40)"
-                t-att-Serie="format_string(serie_number, 25)"
-                Sello=""
-                t-att-FormaPago="payment_method_code"
-                t-att-NoCertificado="certificate_number"
-                t-att-Certificado="certificate_key"
-                t-att-CondicionesDePago="format_string(record.invoice_payment_term_id.name, 1000)"
-                t-att-SubTotal="format_float(total_price_subtotal_before_discount, currency_precision)"
-                t-att-Descuento="format_float(total_price_discount, currency_precision) if not record.currency_id.is_zero(total_price_discount) else None"
-                t-att-Moneda="currency_name"
-                t-att-TipoCambio="format_float(currency_conversion_rate, 6)"
-                t-att-Total="format_float(record.amount_total, currency_precision)"
-                t-att-TipoDeComprobante="document_type"
-                t-att-MetodoPago="payment_policy"
-                t-att-LugarExpedicion="issued_address.zip or supplier.zip">
-                <t t-if="origin_uuids">
-                    <cfdi:CfdiRelacionados t-att-TipoRelacion="origin_type">
-                        <t t-foreach="origin_uuids" t-as="uuid">
-                            <cfdi:CfdiRelacionado t-att-UUID="uuid"/>
-                        </t>
-                    </cfdi:CfdiRelacionados>
-                </t>
+                xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd http://www.sat.gob.mx/Pagos20 http://www.sat.gob.mx/sitio_internet/cfd/Pagos/Pagos20.xsd http://www.sat.gob.mx/ComercioExterior20 http://www.sat.gob.mx/sitio_internet/cfd/ComercioExterior20/ComercioExterior20.xsd http://www.sat.gob.mx/implocal http://www.sat.gob.mx/sitio_internet/cfd/implocal/implocal.xsd http://www.sat.gob.mx/detallista http://www.sat.gob.mx/sitio_internet/cfd/detallista/detallista.xsd"
+                Version="4.0"
+                t-att-Fecha="fecha"
+                t-att-Folio="format_string(folio, 25)"
+                t-att-Serie="format_string(serie, 40)"
+                Sello="TO BE INJECTED"
+                t-att-FormaPago="forma_pago"
+                t-att-NoCertificado="no_certificado"
+                t-att-Certificado="certificado"
+                t-att-CondicionesDePago="format_string(condiciones_de_pago, 100)"
+                t-att-SubTotal="format_float(subtotal)"
+                t-att-Descuento="format_float(descuento)"
+                t-att-Moneda="moneda"
+                t-att-TipoCambio="format_float(tipo_cambio, precision=6)"
+                t-att-Total="format_float(total)"
+                t-att-TipoDeComprobante="tipo_de_comprobante"
+                t-att-Exportacion="exportacion"
+                t-att-MetodoPago="metodo_pago"
+                t-att-LugarExpedicion="lugar_expedicion">
+                <cfdi:InformacionGlobal t-if="information_global"
+                    t-att-Periodicidad="information_global['periodicidad']"
+                    t-att-Meses="information_global['meses']"
+                    t-att-Año="information_global['ano']"/>
+                <cfdi:CfdiRelacionados t-if="tipo_relacion and cfdi_relationado_list" t-att-TipoRelacion="tipo_relacion">
+                    <t t-foreach="cfdi_relationado_list" t-as="cfdi_relationado">
+                        <cfdi:CfdiRelacionado t-att-UUID="cfdi_relationado"/>
+                    </t>
+                </cfdi:CfdiRelacionados>
                 <cfdi:Emisor
-                    t-att-Rfc="supplier.vat"
-                    t-att-Nombre="format_string(supplier.name, 254)"
-                    t-att-RegimenFiscal="record.company_id.l10n_mx_edi_fiscal_regime"/>
+                    t-att-Rfc="emisor['rfc']"
+                    t-att-Nombre="format_string(emisor['nombre'], 254)"
+                    t-att-RegimenFiscal="emisor['regimen_fiscal']"/>
                 <cfdi:Receptor
-                    t-att-Rfc="customer_rfc"
-                    t-att-Nombre="format_string(customer.commercial_partner_id.name, 254)"
-                    t-att-ResidenciaFiscal="customer_fiscal_residence"
-                    t-att-UsoCFDI="record.l10n_mx_edi_usage"/>
+                    t-att-Rfc="receptor['rfc']"
+                    t-att-Nombre="format_string(receptor['nombre'], 254)"
+                    t-att-ResidenciaFiscal="receptor['residencia_fiscal']"
+                    t-att-DomicilioFiscalReceptor="receptor['domicilio_fiscal_receptor']"
+                    t-att-RegimenFiscalReceptor="receptor['regimen_fiscal_receptor']"
+                    t-att-UsoCFDI="receptor['uso_cfdi']"/>
                 <cfdi:Conceptos>
-                    <t t-foreach="invoice_line_vals_list" t-as="line_vals">
-                        <t t-set="line" t-value="line_vals['line']"/>
+                    <t t-foreach="conceptos_list" t-as="line_values">
                         <cfdi:Concepto
-                            t-att-ClaveProdServ="line.product_id.unspsc_code_id.code"
-                            t-att-NoIdentificacion="format_string(line.product_id.default_code)"
-                            t-att-Cantidad="format_float(line.quantity, 6)"
-                            t-att-ClaveUnidad="line.product_uom_id.unspsc_code_id.code"
-                            t-att-Unidad="format_string(line.product_uom_id.name, 20)"
-                            t-att-Descripcion="format_string(line.name, 1000)"
-                            t-att-ValorUnitario="format_float(line_vals['gross_price_total_unit'], currency_precision)"
-                            t-att-Importe="format_float(line_vals['price_subtotal_before_discount'], currency_precision)"
-                            t-att-Descuento="format_float(line_vals['price_discount'], currency_precision) if not record.currency_id.is_zero(line_vals['price_discount']) else None">
-                            <t t-set="tax_detail_transferred" t-value="tax_details_transferred['invoice_line_tax_details'][line]"/>
-                            <t t-set="tax_detail_withholding" t-value="tax_details_withholding['invoice_line_tax_details'][line]"/>
-                            <t t-if="tax_detail_transferred['tax_details'] or tax_detail_withholding['tax_details']">
-                                <cfdi:Impuestos>
-                                    <t t-if="tax_detail_transferred['tax_details']">
-                                        <cfdi:Traslados>
-                                            <t t-foreach="tax_detail_transferred['tax_details'].values()" t-as="tax_detail_vals">
-                                                <t t-set="tax" t-value="tax_detail_vals['tax']"/>
-                                                <cfdi:Traslado
-                                                    t-att-Base="format_float(balance_multiplicator * tax_detail_vals['base_amount_currency'], currency_precision)"
-                                                    t-att-Impuesto="get_tax_cfdi_name(tax_detail_vals)"
-                                                    t-att-TipoFactor="tax.l10n_mx_tax_type"
-                                                    t-att-TasaOCuota="format_float(tax_detail_vals['tax_rate_transferred'], 6)"
-                                                    t-att-Importe="format_float(balance_multiplicator * tax_detail_vals['tax_amount_currency'], 2) if tax.l10n_mx_tax_type != 'Exento' else False"/>
-                                            </t>
-                                        </cfdi:Traslados>
+                            t-att-ClaveProdServ="line_values['clave_prod_serv']"
+                            t-att-NoIdentificacion="format_string(line_values['no_identificacion'], 100)"
+                            t-att-Cantidad="format_float(line_values['cantidad'], precision=6)"
+                            t-att-ClaveUnidad="line_values['clave_unidad']"
+                            t-att-Unidad="format_string(line_values['unidad'], 20)"
+                            t-att-Descripcion="format_string(line_values['description'], 1000)"
+                            t-att-ValorUnitario="format_float(line_values['valor_unitario'], precision=6)"
+                            t-att-Importe="format_float(line_values['importe'], precision=6)"
+                            t-att-ObjetoImp="line_values['objeto_imp']"
+                            t-att-Descuento="format_float(line_values['descuento'], precision=6)">
+                            <cfdi:Impuestos t-if="line_values['traslados_list'] or line_values['retenciones_list']">
+                                <cfdi:Traslados t-if="line_values['traslados_list']">
+                                    <t t-foreach="line_values['traslados_list']" t-as="tax_values">
+                                        <cfdi:Traslado
+                                            t-att-Base="format_float(tax_values['base'], precision=6)"
+                                            t-att-Importe="format_float(tax_values['importe'], precision=6)"
+                                            t-att-Impuesto="tax_values['impuesto']"
+                                            t-att-TipoFactor="tax_values['tipo_factor']"
+                                            t-att-TasaOCuota="format_float(tax_values['tasa_o_cuota'], precision=6)"/>
                                     </t>
-                                    <t t-if="tax_detail_withholding['tax_details']">
-                                        <cfdi:Retenciones>
-                                            <t t-foreach="tax_detail_withholding['tax_details'].values()" t-as="tax_detail_vals">
-                                                <t t-set="tax" t-value="tax_detail_vals['tax']"/>
-                                                <cfdi:Retencion
-                                                    t-att-Base="format_float(balance_multiplicator * tax_detail_vals['base_amount_currency'], currency_precision)"
-                                                    t-att-Impuesto="get_tax_cfdi_name(tax_detail_vals)"
-                                                    t-att-TipoFactor="tax.l10n_mx_tax_type"
-                                                    t-att-TasaOCuota="format_float(-tax.amount / 100.0, 6)"
-                                                    t-att-Importe="format_float(-balance_multiplicator * tax_detail_vals['tax_amount_currency'], 2)"/>
-                                            </t>
-                                        </cfdi:Retenciones>
+                                </cfdi:Traslados>
+                                <cfdi:Retenciones t-if="line_values['retenciones_list']">
+                                    <t t-foreach="line_values['retenciones_list']" t-as="tax_values">
+                                        <cfdi:Retencion
+                                            t-att-Base="format_float(tax_values['base'], precision=6)"
+                                            t-att-Importe="format_float(tax_values['importe'], precision=6)"
+                                            t-att-Impuesto="tax_values['impuesto']"
+                                            t-att-TipoFactor="tax_values['tipo_factor']"
+                                            t-att-TasaOCuota="format_float(tax_values['tasa_o_cuota'], precision=6)"/>
                                     </t>
-                                </cfdi:Impuestos>
-                            </t>
+                                </cfdi:Retenciones>
+                            </cfdi:Impuestos>
+                            <cfdi:CuentaPredial t-if="line_values['cuenta_predial']" t-att-Numero="line_values['cuenta_predial']"/>
                         </cfdi:Concepto>
                     </t>
                 </cfdi:Conceptos>
-                <t t-if="has_tax_details_transferred_no_exento or has_tax_details_withholding_no_exento">
-                    <cfdi:Impuestos
-                        t-att-TotalImpuestosTrasladados="format_float(balance_multiplicator * tax_details_transferred['tax_amount_currency'], currency_precision) if tax_details_transferred['tax_details'] else None"
-                        t-att-TotalImpuestosRetenidos="format_float(-balance_multiplicator * tax_details_withholding['tax_amount_currency'], currency_precision) if tax_details_withholding['tax_details'] else None">
-                        <t t-if="has_tax_details_withholding_no_exento">
-                            <cfdi:Retenciones>
-                                <t t-foreach="tax_details_withholding['tax_details'].values()" t-as="tax_detail_vals">
-                                    <t t-set="tax" t-value="tax_detail_vals['tax']"/>
-                                    <t t-if="tax.l10n_mx_tax_type != 'Exento'">
-                                        <cfdi:Retencion
-                                            t-att-Importe="format_float(-balance_multiplicator * tax_detail_vals['tax_amount_currency'], currency_precision)"
-                                            t-att-Impuesto="get_tax_cfdi_name(tax_detail_vals)"/>
-                                    </t>
-                                </t>
-                            </cfdi:Retenciones>
+                <cfdi:Impuestos t-if="retenciones_reduced_list or traslados_list"
+                    t-att-TotalImpuestosTrasladados="format_float(total_impuestos_trasladados)"
+                    t-att-TotalImpuestosRetenidos="format_float(total_impuestos_retenidos)">
+                    <cfdi:Retenciones t-if="retenciones_reduced_list">
+                        <t t-foreach="retenciones_reduced_list" t-as="tax_values">
+                            <cfdi:Retencion
+                                t-att-Importe="format_float(tax_values['importe'])"
+                                t-att-Impuesto="tax_values['impuesto']"/>
                         </t>
-                        <t t-if="has_tax_details_transferred_no_exento">
-                            <cfdi:Traslados>
-                                <t t-foreach="tax_details_transferred['tax_details'].values()" t-as="tax_detail_vals">
-                                    <t t-set="tax" t-value="tax_detail_vals['tax']"/>
-                                    <t t-if="tax.l10n_mx_tax_type != 'Exento'">
-                                        <cfdi:Traslado
-                                            t-att-Importe="format_float(balance_multiplicator * tax_detail_vals['tax_amount_currency'], currency_precision)"
-                                            t-att-Impuesto="get_tax_cfdi_name(tax_detail_vals)"
-                                            t-att-TipoFactor="tax.l10n_mx_tax_type"
-                                            t-att-TasaOCuota="format_float(tax_detail_vals['tax_rate_transferred'], 6)"/>
-                                    </t>
-                                </t>
-                            </cfdi:Traslados>
+                    </cfdi:Retenciones>
+                    <cfdi:Traslados t-if="traslados_list">
+                        <t t-foreach="traslados_list" t-as="tax_values">
+                            <cfdi:Traslado
+                                t-att-Base="format_float(tax_values['base'])"
+                                t-att-Importe="format_float(tax_values['importe'])"
+                                t-att-Impuesto="tax_values['impuesto']"
+                                t-att-TipoFactor="tax_values['tipo_factor']"
+                                t-att-TasaOCuota="format_float(tax_values['tasa_o_cuota'], precision=6)"/>
                         </t>
-                    </cfdi:Impuestos>
-                </t>
+                    </cfdi:Traslados>
+                </cfdi:Impuestos>
+                <!-- Complemento: impuestos locales -->
+                <cfdi:Complemento t-if="local_retenciones_list or local_traslados_list">
+                    <implocal:ImpuestosLocales
+                        t-att-TotaldeRetenciones="format_float(total_local_impuestos_retenidos, 2)"
+                        t-att-TotaldeTraslados="format_float(total_local_impuestos_trasladados, 2)"
+                        t-att-version="1.0">
+                        <t t-foreach="local_retenciones_list" t-as="tax_values">
+                            <implocal:RetencionesLocales
+                                t-att-ImpLocRetenido="tax_values['local_tax_name']"
+                                t-att-Importe="format_float(tax_values['importe'], 2)"
+                                t-att-TasadeRetencion="format_float(tax_values['tasade'], 2)"/>
+                        </t>
+                        <t t-foreach="local_traslados_list" t-as="tax_values">
+                            <implocal:TrasladosLocales
+                                t-att-ImpLocTrasladado="tax_values['local_tax_name']"
+                                t-att-Importe="format_float(tax_values['importe'], 2)"
+                                t-att-TasadeTraslado="format_float(tax_values['tasade'], 2)"/>
+                        </t>
+                    </implocal:ImpuestosLocales>
+                </cfdi:Complemento>
+                <!-- Complemento detallista Liverpool -->
                 <t t-if="record.require_addenda_liverpool">
                     <cfdi:Complemento>
                         <detallista:detallista contentVersion="1.3.1" documentStructureVersion="AMC8.1" type="SimpleInvoiceType" documentStatus="ORIGINAL">
@@ -134,40 +141,40 @@
                                 </t>
                             </detallista:requestForPaymentIdentification>
                             <detallista:specialInstruction code="ZZZ">
-                                <detallista:text><t if="record._l10n_mx_edi_cfdi_amount_to_text()" t-esc="record.unescape_characters(record._l10n_mx_edi_cfdi_amount_to_text())"/></detallista:text>
+                                <detallista:text><t t-esc="record.unescape_characters(record._l10n_mx_edi_cfdi_amount_to_text() or '')[:500]"/></detallista:text>
                             </detallista:specialInstruction>
                             <detallista:orderIdentification>
-                                <detallista:referenceIdentification type="ON"><t t-if="record.purchase_order_liv" t-esc="record.unescape_characters(record.purchase_order_liv)"/></detallista:referenceIdentification>
+                                <detallista:referenceIdentification type="ON"><t t-esc="record.unescape_characters(record.purchase_order_liv or 'N/A')[:35]"/></detallista:referenceIdentification>
                             </detallista:orderIdentification>
                             <detallista:AdditionalInformation>
-                                <detallista:referenceIdentification type="IV"><t t-if="record.name" t-esc="record.unescape_characters(record.name)"/></detallista:referenceIdentification>
+                                <detallista:referenceIdentification type="IV"><t t-esc="record.unescape_characters(record.name or '')[:35]"/></detallista:referenceIdentification>
                             </detallista:AdditionalInformation>
                             <detallista:DeliveryNote>
-                                <detallista:referenceIdentification><t t-if="record.delivery_folio" t-esc="record.unescape_characters(record.delivery_folio)"/></detallista:referenceIdentification>
-                                <detallista:ReferenceDate><t t-esc="record.date_delivery"/></detallista:ReferenceDate>
+                                <detallista:referenceIdentification><t t-esc="record.unescape_characters(record.delivery_folio or 'N/A')[:35]"/></detallista:referenceIdentification>
+                                <detallista:ReferenceDate><t t-esc="record.date_delivery or record.invoice_date"/></detallista:ReferenceDate>
                             </detallista:DeliveryNote>
                             <detallista:buyer>
-                                <detallista:gln><t t-if="record.partner_id.global_localitation_number" t-esc="record.unescape_characters(record.partner_id.global_localitation_number)"/></detallista:gln>
+                                <detallista:gln><t t-esc="(record.partner_id.global_localitation_number or '0000000000000')[:13]"/></detallista:gln>
                                 <detallista:contactInformation>
                                     <detallista:personOrDepartmentName>
-                                        <detallista:text><t t-if="record.partner_id.person_order_department" t-esc="record.unescape_characters(record.partner_id.person_order_department)"/></detallista:text>
+                                        <detallista:text><t t-esc="record.unescape_characters(record.partner_id.person_order_department or '')[:35]"/></detallista:text>
                                     </detallista:personOrDepartmentName>
                                 </detallista:contactInformation>
                             </detallista:buyer>
                             <detallista:seller>
-                                <detallista:gln><t t-if="record.company_id.global_localitation_number" t-esc="record.unescape_characters(record.company_id.global_localitation_number)"/></detallista:gln>
-                                <detallista:alternatePartyIdentification type="SELLER_ASSIGNED_IDENTIFIER_FOR_A_PARTY"><t t-if="record.partner_id.supplier_identification" t-esc="record.unescape_characters(record.partner_id.supplier_identification)"/></detallista:alternatePartyIdentification>
+                                <detallista:gln><t t-esc="(record.company_id.global_localitation_number or '0000000000000')[:13]"/></detallista:gln>
+                                <detallista:alternatePartyIdentification type="SELLER_ASSIGNED_IDENTIFIER_FOR_A_PARTY"><t t-esc="record.unescape_characters(record.partner_id.supplier_identification or record.company_id.vat or 'N/A')[:35]"/></detallista:alternatePartyIdentification>
                             </detallista:seller>
                             <t t-set="line_counts" t-value="0"/>
-                            <t t-foreach="record.invoice_line_ids.filtered(lambda inv: not inv.display_type)" t-as="line">
+                            <t t-foreach="record.invoice_line_ids.filtered(lambda inv: inv.display_type in (False, 'product'))" t-as="line">
                                 <t t-set="line_counts" t-value="line_counts + 1"/>
                                 <detallista:lineItem t-att-number="line_counts" type="SimpleInvoiceLineItemType">
                                     <detallista:tradeItemIdentification>
-                                        <detallista:gtin><t t-esc="line.product_id.barcode"/></detallista:gtin>
+                                        <detallista:gtin><t t-esc="(line.product_id.barcode or '00000000000000')[:14]"/></detallista:gtin>
                                     </detallista:tradeItemIdentification>
-                                    <detallista:alternateTradeItemIdentification type="SUPPLIER_ASSIGNED"><t t-if="line.product_id.default_code" t-esc="record.unescape_characters(line.product_id.default_code)"/></detallista:alternateTradeItemIdentification>
+                                    <detallista:alternateTradeItemIdentification type="SUPPLIER_ASSIGNED"><t t-esc="record.unescape_characters(line.product_id.default_code or str(line.product_id.id))[:35]"/></detallista:alternateTradeItemIdentification>
                                     <detallista:tradeItemDescriptionInformation language="ES">
-                                        <detallista:longText><t t-if="line.product_id.name" t-esc="record.unescape_characters(line.product_id.name)"/></detallista:longText>
+                                        <detallista:longText><t t-if="line.product_id.name" t-esc="record.unescape_characters(line.product_id.name)[:35]"/></detallista:longText>
                                     </detallista:tradeItemDescriptionInformation>
                                     <detallista:invoicedQuantity t-att-unitOfMeasure="line.product_uom_id.name"><t t-esc="line.get_quantity()"/></detallista:invoicedQuantity>
                                     <detallista:grossPrice>
@@ -190,7 +197,7 @@
                                 <detallista:Amount><t t-esc="record.get_total_amount()"/></detallista:Amount>
                             </detallista:totalAmount>
                             <detallista:TotalAllowanceCharge allowanceOrChargeType="ALLOWANCE">
-                                <detallista:Amount>0.00 </detallista:Amount>
+                                <detallista:Amount>0.00</detallista:Amount>
                             </detallista:TotalAllowanceCharge>
                         </detallista:detallista>
                     </cfdi:Complemento>
@@ -198,9 +205,5 @@
             </cfdi:Comprobante>
         </xpath>
     </template>
-
-    <record id="addenda_liverpool" model="ir.ui.view">
-        <field name="l10n_mx_edi_addenda_flag">True</field>
-    </record>
 
 </odoo>

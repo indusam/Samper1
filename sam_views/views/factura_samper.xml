@@ -169,6 +169,21 @@
             </div>
         </xpath>
 
+        <!-- Forzar 2 decimales en precio unitario -->
+        <xpath expr="//td[@name='td_price_unit']//span[@t-field='line.price_unit']" position="attributes">
+            <attribute name="t-options">{"widget": "monetary", "display_currency": o.currency_id}</attribute>
+        </xpath>
+
+        <!-- Forzar 2 decimales en subtotal de línea -->
+        <xpath expr="//td[@name='td_subtotal']//span[@t-field='line.price_subtotal']" position="attributes">
+            <attribute name="t-options">{"widget": "monetary", "display_currency": o.currency_id}</attribute>
+        </xpath>
+
+        <!-- Forzar 2 decimales en saldo pendiente -->
+        <xpath expr="//span[@t-field='o.amount_residual']" position="attributes">
+            <attribute name="t-options">{"widget": "monetary", "display_currency": o.currency_id}</attribute>
+        </xpath>
+
         <!-- Ocultar Fecha límite original (due_date) -->
         <xpath expr="//div[@name='due_date']" position="attributes">
             <attribute name="t-if">False</attribute>

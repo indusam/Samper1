@@ -3,6 +3,12 @@ from odoo import models, fields, api
 from dateutil.relativedelta import relativedelta
 
 
+class SaleOrderLine(models.Model):
+    _inherit = 'sale.order.line'
+
+    price_unit = fields.Float(digits=(12, 2))
+
+
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
