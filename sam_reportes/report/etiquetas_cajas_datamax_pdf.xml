@@ -48,37 +48,37 @@
                         <div class="col-6 small o_bold" style="margin-top:-5px">
                             <span>Industrias Alimenticias SAM SA de CV</span>
                         </div>
-                        <div class="col-6" style="margin-top:-5px; font-size:9px;">
+                        <div class="col-6" style="margin-top:-5px; font-size:9px; line-height:1.2;">
                             <span t-field="doc.product_id.x_ingredientes1"/>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" style="margin-top:-8px;">
                         <div class="col-6 small">
                             <span>Cuvier 107, col. Nueva Anzures, 11590</span>
                         </div>
-                        <div class="col-6" style="margin-top:-2px; font-size:9px;">
+                        <div class="col-6" style="font-size:9px; line-height:1.2;">
                             <span t-field="doc.product_id.x_ingredientes2"/>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" style="margin-top:-8px;">
                         <div class="col-6 small">
                             <span>Miguel Hidalgo, CDMX</span>
                         </div>
-                        <div class="col-6" style="margin-top:-3px; font-size:9px;">
+                        <div class="col-6" style="font-size:9px; line-height:1.2;">
                             <span t-field="doc.product_id.x_ingredientes3"/>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" style="margin-top:-8px;">
                         <div class="col-6">
                         </div>
-                        <div class="col-6" style="margin-top:-3px; font-size:9px;">
+                        <div class="col-6" style="font-size:9px; line-height:1.2;">
                             <span t-field="doc.product_id.x_ingredientes4"/>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" style="margin-top:-8px;">
                         <div class="col-6">
                         </div>
-                        <div class="col-6" style="margin-top:-5px; font-size:9px;">
+                        <div class="col-6" style="font-size:9px; line-height:1.2;">
                             <span t-field="doc.product_id.x_ingredientes5"/>
                         </div>
                     </div>
@@ -163,7 +163,7 @@
                         </div>
                         <div class="col-4 text-end">
                             <img class="img-fluid" src="/web/image/107182/tif_samper.png"
-                                 style="max-height:40px"/>
+                                 style="max-height:70px"/>
                         </div>
                     </div>
 
