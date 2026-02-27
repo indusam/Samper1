@@ -75,7 +75,7 @@
                             <span t-field="doc.product_id.x_ingredientes4"/>
                         </div>
                     </div>
-                    <div class="row" style="margin-top:-5px;">
+                    <div class="row">
                         <div class="col-6">
                         </div>
                         <div class="col-6" style="font-size:9px; line-height:1.2;">
