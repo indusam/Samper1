@@ -37,48 +37,48 @@
 
                     <!-- SECCIÓN 1: Elaborado por + Ingredientes -->
                     <div class="row">
-                        <div class="col-5 small">
+                        <div class="col-6 small">
                             <span>Elaborado por:</span>
                         </div>
-                        <div class="col-7 small">
+                        <div class="col-6 small" style="padding-right:0;">
                             <span>Ingredientes:</span>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-5 small o_bold">
+                        <div class="col-6 small o_bold">
                             <span>Industrias Alimenticias SAM SA de CV</span>
                         </div>
-                        <div class="col-7" style="font-size:9px; line-height:1.2;">
+                        <div class="col-6" style="font-size:8px; line-height:1.2; padding-right:0;">
                             <span t-field="doc.product_id.x_ingredientes1"/>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-5 small">
+                        <div class="col-6 small">
                             <span>Cuvier 107, col. Nueva Anzures, 11590</span>
                         </div>
-                        <div class="col-7" style="font-size:9px; line-height:1.2;">
+                        <div class="col-6" style="font-size:8px; line-height:1.2; padding-right:0;">
                             <span t-field="doc.product_id.x_ingredientes2"/>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-5 small">
+                        <div class="col-6 small">
                             <span>Miguel Hidalgo, CDMX</span>
                         </div>
-                        <div class="col-7" style="font-size:9px; line-height:1.2;">
+                        <div class="col-6" style="font-size:8px; line-height:1.2; padding-right:0;">
                             <span t-field="doc.product_id.x_ingredientes3"/>
                         </div>
                     </div>
                     <div class="row" style="margin-top:-5px;">
-                        <div class="col-5">
+                        <div class="col-6">
                         </div>
-                        <div class="col-7" style="font-size:9px; line-height:1.2;">
+                        <div class="col-6" style="font-size:8px; line-height:1.2; padding-right:0;">
                             <span t-field="doc.product_id.x_ingredientes4"/>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-5">
+                        <div class="col-6">
                         </div>
-                        <div class="col-7" style="font-size:9px; line-height:1.2;">
+                        <div class="col-6" style="font-size:8px; line-height:1.2; padding-right:0;">
                             <span t-field="doc.product_id.x_ingredientes5"/>
                         </div>
                     </div>
