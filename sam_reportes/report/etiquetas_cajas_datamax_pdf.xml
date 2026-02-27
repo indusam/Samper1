@@ -45,14 +45,14 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-6 small o_bold" style="margin-top:-5px">
+                        <div class="col-6 small o_bold">
                             <span>Industrias Alimenticias SAM SA de CV</span>
                         </div>
-                        <div class="col-6" style="margin-top:-5px; font-size:9px; line-height:1.2;">
+                        <div class="col-6" style="font-size:9px; line-height:1.2;">
                             <span t-field="doc.product_id.x_ingredientes1"/>
                         </div>
                     </div>
-                    <div class="row" style="margin-top:-8px;">
+                    <div class="row">
                         <div class="col-6 small">
                             <span>Cuvier 107, col. Nueva Anzures, 11590</span>
                         </div>
@@ -60,7 +60,7 @@
                             <span t-field="doc.product_id.x_ingredientes2"/>
                         </div>
                     </div>
-                    <div class="row" style="margin-top:-8px;">
+                    <div class="row">
                         <div class="col-6 small">
                             <span>Miguel Hidalgo, CDMX</span>
                         </div>
@@ -68,14 +68,14 @@
                             <span t-field="doc.product_id.x_ingredientes3"/>
                         </div>
                     </div>
-                    <div class="row" style="margin-top:-8px;">
+                    <div class="row" style="margin-top:-5px;">
                         <div class="col-6">
                         </div>
                         <div class="col-6" style="font-size:9px; line-height:1.2;">
                             <span t-field="doc.product_id.x_ingredientes4"/>
                         </div>
                     </div>
-                    <div class="row" style="margin-top:-8px;">
+                    <div class="row" style="margin-top:-5px;">
                         <div class="col-6">
                         </div>
                         <div class="col-6" style="font-size:9px; line-height:1.2;">
@@ -161,7 +161,7 @@
                         <div class="col-8 small text-start">
                             <span>Inspeccionado y aprobado por SAGARPA México TIF 544</span>
                         </div>
-                        <div class="col-4 text-end">
+                        <div class="col-4 text-start">
                             <img class="img-fluid" src="/web/image/107182/tif_samper.png"
                                  style="max-height:70px"/>
                         </div>
