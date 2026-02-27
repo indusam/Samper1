@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ==================== PAPER FORMAT ==================== -->
+    <record id="paperformat_etiqueta_cajas_datamax" model="report.paperformat">
+        <field name="name">Etiqueta para cajas (Datamax)</field>
+        <field name="default" eval="False"/>
+        <field name="format">custom</field>
+        <field name="page_width">100</field>
+        <field name="page_height">150</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">5</field>
+        <field name="margin_bottom">5</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <!-- ==================== REPORT ACTION ==================== -->
+    <record id="etiquetas_cajas_datamax_reporte" model="ir.actions.report">
+        <field name="name">Etiquetas Cajas Datamax</field>
+        <field name="model">stock.lot</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">sam_reportes.etiquetas_cajas_datamax_template</field>
+        <field name="report_file">sam_reportes.etiquetas_cajas_datamax_template</field>
+        <field name="paperformat_id" ref="paperformat_etiqueta_cajas_datamax"/>
+        <field name="binding_model_id" ref="stock.model_stock_lot"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- ==================== QWEB TEMPLATE ==================== -->
+    <template id="etiquetas_cajas_datamax_template">
+        <t t-foreach="docs" t-as="doc">
+            <t t-call="web.basic_layout">
+                <div class="page" style="font-family: Arial, sans-serif; font-size: 11px;">
+
+                    <!-- SECCIÓN 1: Elaborado por + Ingredientes -->
+                    <div class="row">
+                        <div class="col-6 small">
+                            <span>Elaborado por:</span>
+                        </div>
+                        <div class="col-6 small">
+                            <span>Ingredientes:</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 small o_bold" style="margin-top:-5px">
+                            <span>Industrias Alimenticias SAM SA de CV</span>
+                        </div>
+                        <div class="col-6 small" style="margin-top:-5px">
+                            <span t-field="doc.product_id.x_ingredientes1" class="small"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 small">
+                            <span>Cuvier 107, col. Nueva Anzures, 11590</span>
+                        </div>
+                        <div class="col-6 small" style="margin-top:-2px">
+                            <span t-field="doc.product_id.x_ingredientes2" class="small"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 small">
+                            <span>Miguel Hidalgo, CDMX</span>
+                        </div>
+                        <div class="col-6 small" style="margin-top:-3px">
+                            <span t-field="doc.product_id.x_ingredientes3" class="small"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                        </div>
+                        <div class="col-6 small" style="margin-top:-3px">
+                            <span t-field="doc.product_id.x_ingredientes4" class="small"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                        </div>
+                        <div class="col-6 small" style="margin-top:-5px">
+                            <span t-field="doc.product_id.x_ingredientes5" class="small"/>
+                        </div>
+                    </div>
+
+                    <!-- SECCIÓN 2: Nombre del producto + Barcode -->
+                    <div class="row" style="margin-top:5px">
+                        <div class="col o_bold h2">
+                            <span t-field="doc.product_id.x_name"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <span t-field="doc.product_id.x_studio_nombre_lbl_code_128"
+                                  t-options-widget="&quot;barcode&quot;"
+                                  t-options-width="500"
+                                  t-options-height="25"/>
+                        </div>
+                    </div>
+
+                    <!-- SECCIÓN 3: Lote, Elaboración, Caducidad -->
+                    <div class="row" style="margin-top:10px">
+                        <div class="col-4 small">
+                            <b>Lote:</b>
+                            <span t-field="doc.name"/>
+                            <br/>
+                            <span t-field="doc.name"
+                                  t-options-widget="&quot;barcode&quot;"
+                                  t-options-height="25"
+                                  t-options-width="160"/>
+                        </div>
+                        <div class="col-4 small">
+                            <b>Elaboración:</b>
+                            <span t-field="doc.create_date"
+                                  t-options-widget="&quot;datetime&quot;"
+                                  t-options-date_only="True"/>
+                        </div>
+                        <div class="col-4 small">
+                            <b>Caducidad:</b>
+                            <span t-field="doc.expiration_date"
+                                  t-options-widget="&quot;datetime&quot;"
+                                  t-options-date_only="True"/>
+                            <br/>
+                            <span t-field="doc.x_life_date_text"
+                                  t-options-widget="&quot;barcode&quot;"
+                                  t-options-width="160"
+                                  t-options-height="25"/>
+                        </div>
+                    </div>
+
+                    <!-- SECCIÓN 4: Cantidad, Peso por caja, Especie -->
+                    <div class="row" style="margin-top:10px">
+                        <div class="col-4 small">
+                            <b>Cantidad:</b>
+                            <span t-field="doc.product_id.x_cantidad_por_caja"/>
+                        </div>
+                        <div class="col-4 small">
+                            <b>Peso por caja:</b>
+                            <span t-field="doc.product_id.x_peso_por_caja"/>
+                            <br/>
+                            <span t-field="doc.product_id.x_peso_por_caja"
+                                  t-options-widget="&quot;barcode&quot;"
+                                  t-options-height="25"
+                                  t-options-width="160"/>
+                        </div>
+                        <div class="col-4 small">
+                            <b>Especie:</b>
+                            <span t-field="doc.product_id.x_cod_especie"/>
+                        </div>
+                    </div>
+
+                    <!-- SECCIÓN 5: Refrigeración -->
+                    <div class="row" style="margin-top:10px">
+                        <div class="col small o_bold text-start">
+                            <span t-field="doc.product_id.x_studio_refrigeracion"/>
+                        </div>
+                    </div>
+
+                    <!-- SECCIÓN 6: SAGARPA + Logo TIF -->
+                    <div class="row" style="margin-top:15px">
+                        <div class="col-8 small text-start">
+                            <span>Inspeccionado y aprobado por SAGARPA México TIF 544</span>
+                        </div>
+                        <div class="col-4 text-end">
+                            <img class="img-fluid" src="/web/image/107182/tif_samper.png"
+                                 style="max-height:40px"/>
+                        </div>
+                    </div>
+
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>
