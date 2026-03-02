@@ -38,13 +38,13 @@
                     <!-- SECCIÓN 1: Elaborado por + Ingredientes -->
                     <table style="width:100%; border-collapse:collapse;">
                         <tr>
-                            <td style="width:45%; vertical-align:top; font-size:11px;">
+                            <td style="width:60%; vertical-align:top; font-size:11px;">
                                 <span class="small">Elaborado por:</span><br/>
                                 <b class="small">Industrias Alimenticias SAM SA de CV</b><br/>
                                 <span class="small">Cuvier 107, col. Nueva Anzures, 11590</span><br/>
                                 <span class="small">Miguel Hidalgo, CDMX</span>
                             </td>
-                            <td style="width:55%; vertical-align:top; font-size:8px; line-height:1.4; padding-left:10px;">
+                            <td style="width:40%; vertical-align:top; font-size:8px; line-height:1.4; padding-left:10px;">
                                 <span class="small" style="font-size:11px;">Ingredientes:</span><br/>
                                 <span t-field="doc.product_id.x_ingredientes1"/><br/>
                                 <span t-field="doc.product_id.x_ingredientes2"/><br/>
