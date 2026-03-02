@@ -36,52 +36,24 @@
                 <div class="page" style="font-family: Arial, sans-serif; font-size: 11px;">
 
                     <!-- SECCIÓN 1: Elaborado por + Ingredientes -->
-                    <div class="row">
-                        <div class="col-6 small">
-                            <span>Elaborado por:</span>
-                        </div>
-                        <div class="col-6 small" style="padding-right:0 !important;">
-                            <span>Ingredientes:</span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6 small o_bold">
-                            <span>Industrias Alimenticias SAM SA de CV</span>
-                        </div>
-                        <div class="col-6" style="font-size:8px; line-height:1.2; padding-right:0 !important;">
-                            <span t-field="doc.product_id.x_ingredientes1"/>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6 small">
-                            <span>Cuvier 107, col. Nueva Anzures, 11590</span>
-                        </div>
-                        <div class="col-6" style="font-size:8px; line-height:1.2; padding-right:0 !important;">
-                            <span t-field="doc.product_id.x_ingredientes2"/>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6 small">
-                            <span>Miguel Hidalgo, CDMX</span>
-                        </div>
-                        <div class="col-6" style="font-size:8px; line-height:1.2; padding-right:0 !important;">
-                            <span t-field="doc.product_id.x_ingredientes3"/>
-                        </div>
-                    </div>
-                    <div class="row" style="margin-top:-5px;">
-                        <div class="col-6">
-                        </div>
-                        <div class="col-6" style="font-size:8px; line-height:1.2; padding-right:0 !important;">
-                            <span t-field="doc.product_id.x_ingredientes4"/>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                        </div>
-                        <div class="col-6" style="font-size:8px; line-height:1.2; padding-right:0 !important;">
-                            <span t-field="doc.product_id.x_ingredientes5"/>
-                        </div>
-                    </div>
+                    <table style="width:100%; border-collapse:collapse;">
+                        <tr>
+                            <td style="width:45%; vertical-align:top; font-size:11px;">
+                                <span class="small">Elaborado por:</span><br/>
+                                <b class="small">Industrias Alimenticias SAM SA de CV</b><br/>
+                                <span class="small">Cuvier 107, col. Nueva Anzures, 11590</span><br/>
+                                <span class="small">Miguel Hidalgo, CDMX</span>
+                            </td>
+                            <td style="width:55%; vertical-align:top; font-size:8px; line-height:1.4; padding-left:10px;">
+                                <span class="small" style="font-size:11px;">Ingredientes:</span><br/>
+                                <span t-field="doc.product_id.x_ingredientes1"/><br/>
+                                <span t-field="doc.product_id.x_ingredientes2"/><br/>
+                                <span t-field="doc.product_id.x_ingredientes3"/><br/>
+                                <span t-field="doc.product_id.x_ingredientes4"/><br/>
+                                <span t-field="doc.product_id.x_ingredientes5"/>
+                            </td>
+                        </tr>
+                    </table>
 
                     <!-- SECCIÓN 2: Nombre del producto + Barcode -->
                     <div class="row" style="margin-top:5px">
