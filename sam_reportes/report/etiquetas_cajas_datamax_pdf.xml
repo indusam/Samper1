@@ -19,7 +19,7 @@
 
     <!-- ==================== REPORT ACTION ==================== -->
     <record id="etiquetas_cajas_datamax_reporte" model="ir.actions.report">
-        <field name="name">Etiquetas Cajas Datamax</field>
+        <field name="name">Etiquetas Cajas (Datamax)</field>
         <field name="model">stock.lot</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">sam_reportes.etiquetas_cajas_datamax_template</field>
