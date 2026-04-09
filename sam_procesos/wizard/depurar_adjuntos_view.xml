@@ -42,7 +42,7 @@
         id="depurar_adjuntos_menu"
         name="Depurar Adjuntos"
         action="action_depurar_adjuntos_wizard"
-        parent="account.menu_account_config"
+        parent="base.menu_custom"
         groups="base.group_user"
         sequence="651"/>
 </odoo>
