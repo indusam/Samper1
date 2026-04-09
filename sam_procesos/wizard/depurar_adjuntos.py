@@ -11,11 +11,9 @@ Fecha: 09/04/2026
 """
 
 import logging
-import os
 from datetime import timedelta
 
 from odoo import models, fields
-from odoo.tools import config
 
 _logger = logging.getLogger(__name__)
 
@@ -55,8 +53,12 @@ class DepurarAdjuntos(models.TransientModel):
         """
         Busca todos los adjuntos con extensiones soportadas anteriores a la
         fecha de corte, los agrupa en batches de 7 días (del archivo más
-        antiguo hasta la fecha de corte) y los elimina batch por batch,
+        antiguo hasta la fecha de corte) y los elimina (unlink) batch por batch,
         mostrando el progreso en el formulario.
+
+        Se usa unlink() en lugar de write() porque es el método estándar de Odoo
+        para eliminar adjuntos: borra el registro de la BD y dispara el garbage
+        collector que limpia el archivo del disco.
         """
         self.ensure_one()
 
@@ -76,12 +78,9 @@ class DepurarAdjuntos(models.TransientModel):
         fecha_inicio = min(archivos.mapped('create_date')).date()
         fecha_corte = self.corte
 
-        # Ruta real del filestore: {data_dir}/filestore/{dbname}
-        filestore_path = config.filestore(self.env.cr.dbname)
-
         filas_html = ''
-        total_eliminados = 0
-        total_desvinculados = 0
+        total_en_disco = 0
+        total_en_bd = 0
         batch_num = 1
         fecha_desde = fecha_inicio
 
@@ -93,38 +92,31 @@ class DepurarAdjuntos(models.TransientModel):
                 d <= a.create_date.date() <= h
             )
 
-            eliminados = 0
-            desvinculados = 0
-            for archivo in batch:
-                if archivo.store_fname:
-                    file_path = os.path.join(filestore_path, archivo.store_fname)
-                    if os.path.exists(file_path):
-                        os.remove(file_path)
-                        eliminados += 1
-                        _logger.info("Archivo eliminado: %s (%s)", archivo.name, file_path)
-                    else:
-                        desvinculados += 1
-                        _logger.warning("Archivo no encontrado en disco: %s", file_path)
-                else:
-                    desvinculados += 1
-                archivo.sudo().write({'res_id': 0})
+            # Contar antes de eliminar
+            en_disco = len(batch.filtered(lambda a: bool(a.store_fname)))
+            en_bd = len(batch) - en_disco
 
-            total_eliminados += eliminados
-            total_desvinculados += desvinculados
+            # unlink() elimina el registro de la BD y programa la limpieza
+            # del archivo en disco via garbage collector de Odoo
+            batch.sudo().unlink()
+
+            total_en_disco += en_disco
+            total_en_bd += en_bd
+
+            _logger.info(
+                "Batch %d (%s - %s): %d en disco, %d en BD — total %d eliminados",
+                batch_num, fecha_desde, fecha_hasta, en_disco, en_bd, len(batch)
+            )
 
             filas_html += (
                 f'<tr>'
                 f'<td style="text-align:center">{batch_num}</td>'
                 f'<td style="text-align:center">{fecha_desde.strftime("%d/%m/%Y")}</td>'
                 f'<td style="text-align:center">{fecha_hasta.strftime("%d/%m/%Y")}</td>'
-                f'<td style="text-align:center">{len(batch)}</td>'
-                f'<td style="text-align:center">{eliminados}</td>'
-                f'<td style="text-align:center">{desvinculados}</td>'
+                f'<td style="text-align:center">{en_disco + en_bd}</td>'
+                f'<td style="text-align:center">{en_disco}</td>'
+                f'<td style="text-align:center">{en_bd}</td>'
                 f'</tr>'
-            )
-            _logger.info(
-                "Batch %d (%s - %s): %d eliminados, %d desvinculados",
-                batch_num, fecha_desde, fecha_hasta, eliminados, desvinculados
             )
 
             batch_num += 1
@@ -138,9 +130,9 @@ class DepurarAdjuntos(models.TransientModel):
                         <th style="padding:6px 10px;">Batch</th>
                         <th style="padding:6px 10px;">Desde</th>
                         <th style="padding:6px 10px;">Hasta</th>
-                        <th style="padding:6px 10px;">Encontrados</th>
-                        <th style="padding:6px 10px;">Eliminados</th>
-                        <th style="padding:6px 10px;">Desvinculados</th>
+                        <th style="padding:6px 10px;">Total</th>
+                        <th style="padding:6px 10px;">En disco</th>
+                        <th style="padding:6px 10px;">En BD</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -148,9 +140,9 @@ class DepurarAdjuntos(models.TransientModel):
                 </tbody>
             </table>
             <p style="font-weight:bold;">
-                Total batches procesados: {batch_num - 1} &nbsp;|&nbsp;
-                Archivos eliminados del disco: {total_eliminados} &nbsp;|&nbsp;
-                Registros desvinculados: {total_desvinculados}
+                Batches procesados: {batch_num - 1} &nbsp;|&nbsp;
+                Archivos en disco eliminados: {total_en_disco} &nbsp;|&nbsp;
+                Registros en BD eliminados: {total_en_bd}
             </p>
         </div>
         """
