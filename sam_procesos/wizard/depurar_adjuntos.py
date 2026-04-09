@@ -83,14 +83,19 @@ class DepurarAdjuntos(models.TransientModel):
         total_en_bd = 0
         batch_num = 1
         fecha_desde = fecha_inicio
+        pendientes = archivos  # recordset que se reduce en cada iteración
 
         while fecha_desde <= fecha_corte:
             fecha_hasta = min(fecha_desde + timedelta(days=6), fecha_corte)
 
-            batch = archivos.filtered(
+            batch = pendientes.filtered(
                 lambda a, d=fecha_desde, h=fecha_hasta:
                 d <= a.create_date.date() <= h
             )
+
+            # Quitar el batch del conjunto ANTES del unlink para que la
+            # siguiente iteración no intente acceder a registros ya eliminados
+            pendientes = pendientes - batch
 
             # Contar antes de eliminar
             en_disco = len(batch.filtered(lambda a: bool(a.store_fname)))
