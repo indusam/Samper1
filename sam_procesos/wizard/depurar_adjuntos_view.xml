@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="depurar_adjuntos_wizard_view_form" model="ir.ui.view">
+        <field name="name">depurar.adjuntos.wizard.view.form</field>
+        <field name="model">depurar_adjuntos.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Depurar Adjuntos">
+                <group>
+                    <group>
+                        <field name="corte"/>
+                    </group>
+                    <group>
+                        <p style="color:#555;font-size:12px;">
+                            Tipos soportados: PDF, ZIP, JPG, JPEG, PNG.
+                            Los archivos se eliminan en batches semanales
+                            desde el más antiguo hasta la fecha de corte.
+                        </p>
+                    </group>
+                </group>
+                <group invisible="not progreso">
+                    <separator string="Progreso del proceso"/>
+                    <field name="progreso" widget="html" nolabel="1"/>
+                </group>
+                <footer>
+                    <button name="depurar" type="object" string="Depurar" class="btn-primary"/>
+                    <button special="cancel" string="Cerrar"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_depurar_adjuntos_wizard" model="ir.actions.act_window">
+        <field name="name">Depurar Adjuntos</field>
+        <field name="res_model">depurar_adjuntos.wizard</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="depurar_adjuntos_wizard_view_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem
+        id="depurar_adjuntos_menu"
+        name="Depurar Adjuntos"
+        action="action_depurar_adjuntos_wizard"
+        parent="base.menu_custom"
+        groups="base.group_user"
+        sequence="651"/>
+</odoo>

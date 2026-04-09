@@ -17,7 +17,7 @@
     'data': [
         'security/ir.model.access.csv',
         'views/account_move_views.xml',
-        'wizard/borra_pdf_view.xml',
+        'wizard/depurar_adjuntos_view.xml',
     ],
     'installable': True,
     'application': False,
