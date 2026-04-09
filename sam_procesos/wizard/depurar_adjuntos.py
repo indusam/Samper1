@@ -15,6 +15,7 @@ import os
 from datetime import timedelta
 
 from odoo import models, fields
+from odoo.tools import config
 
 _logger = logging.getLogger(__name__)
 
@@ -61,7 +62,7 @@ class DepurarAdjuntos(models.TransientModel):
 
         dominio_base = [('create_date', '<=', self.corte)]
         dominio_ext = self._build_ext_domain()
-        archivos = self.env['ir.attachment'].search(dominio_base + dominio_ext)
+        archivos = self.env['ir.attachment'].sudo().search(dominio_base + dominio_ext)
 
         if not archivos:
             self.write({
@@ -74,6 +75,9 @@ class DepurarAdjuntos(models.TransientModel):
 
         fecha_inicio = min(archivos.mapped('create_date')).date()
         fecha_corte = self.corte
+
+        # Ruta real del filestore: {data_dir}/filestore/{dbname}
+        filestore_path = config.filestore(self.env.cr.dbname)
 
         filas_html = ''
         total_eliminados = 0
@@ -93,9 +97,7 @@ class DepurarAdjuntos(models.TransientModel):
             desvinculados = 0
             for archivo in batch:
                 if archivo.store_fname:
-                    # _full_path() construye la ruta correcta:
-                    # {data_dir}/filestore/{dbname}/{store_fname}
-                    file_path = archivo._full_path(archivo.store_fname)
+                    file_path = os.path.join(filestore_path, archivo.store_fname)
                     if os.path.exists(file_path):
                         os.remove(file_path)
                         eliminados += 1
@@ -103,10 +105,9 @@ class DepurarAdjuntos(models.TransientModel):
                     else:
                         desvinculados += 1
                         _logger.warning("Archivo no encontrado en disco: %s", file_path)
-                    archivo.write({'store_fname': False, 'res_id': 0})
                 else:
-                    archivo.write({'res_id': 0})
                     desvinculados += 1
+                archivo.sudo().write({'res_id': 0})
 
             total_eliminados += eliminados
             total_desvinculados += desvinculados
