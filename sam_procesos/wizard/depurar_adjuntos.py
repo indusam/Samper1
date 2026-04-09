@@ -75,10 +75,6 @@ class DepurarAdjuntos(models.TransientModel):
         fecha_inicio = min(archivos.mapped('create_date')).date()
         fecha_corte = self.corte
 
-        filestore_path = self.env['ir.config_parameter'].sudo().get_param(
-            'ir_attachment.location', '/home/odoo/data/filestore'
-        )
-
         filas_html = ''
         total_eliminados = 0
         total_desvinculados = 0
@@ -97,7 +93,9 @@ class DepurarAdjuntos(models.TransientModel):
             desvinculados = 0
             for archivo in batch:
                 if archivo.store_fname:
-                    file_path = os.path.join(filestore_path, archivo.store_fname)
+                    # _full_path() construye la ruta correcta:
+                    # {data_dir}/filestore/{dbname}/{store_fname}
+                    file_path = archivo._full_path(archivo.store_fname)
                     if os.path.exists(file_path):
                         os.remove(file_path)
                         eliminados += 1
