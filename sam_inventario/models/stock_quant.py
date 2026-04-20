@@ -12,10 +12,10 @@ _GIBBERISH_PATTERNS = [
 _VOWELS = set('aeiouáéíóúüAEIOUÁÉÍÓÚÜ')
 
 
-def validar_texto_significativo(text):
+def _validar_texto_significativo(text):
     text = (text or '').strip()
     if not text:
-        raise ValidationError(_("El campo Notas es requerido."))
+        raise ValidationError(_("El campo Notas es requerido al aplicar un ajuste de inventario."))
 
     if len(text) < 5:
         raise ValidationError(_(
@@ -49,9 +49,14 @@ def validar_texto_significativo(text):
 class StockQuant(models.Model):
     _inherit = 'stock.quant'
 
-    x_notas = fields.Text(string='Notas', required=True)
+    x_notas = fields.Text(string='Notas')
 
-    @api.constrains('x_notas')
-    def _check_x_notas(self):
+    def action_apply_inventory(self):
         for rec in self:
-            validar_texto_significativo(rec.x_notas)
+            _validar_texto_significativo(rec.x_notas)
+        return super().action_apply_inventory()
+
+    def action_apply_all(self):
+        for rec in self:
+            _validar_texto_significativo(rec.x_notas)
+        return super().action_apply_all()
