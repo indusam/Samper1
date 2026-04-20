@@ -36,10 +36,18 @@ def _validar_texto_significativo(text):
             "Por favor ingrese información significativa."
         ))
 
-    words = re.findall(r'[a-záéíóúüñA-ZÁÉÍÓÚÜÑ]{2,}', text)
-    if len(words) >= 2:
-        with_vowels = sum(1 for w in words if any(c in _VOWELS for c in w))
-        if with_vowels / len(words) < 0.5:
+    # 4+ consonantes seguidas indican texto sin sentido (ej. "jdhsg")
+    if re.search(r'[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]{4,}', text):
+        raise ValidationError(_(
+            "El campo Notas contiene caracteres sin sentido. "
+            "Por favor ingrese información significativa."
+        ))
+
+    # Proporción de vocales sobre letras totales debe ser al menos 30%
+    letters = re.findall(r'[a-záéíóúüñA-ZÁÉÍÓÚÜÑ]', text)
+    if letters:
+        vowel_ratio = sum(1 for c in letters if c in _VOWELS) / len(letters)
+        if vowel_ratio < 0.30:
             raise ValidationError(_(
                 "El campo Notas parece contener texto sin sentido. "
                 "Por favor ingrese información significativa."
