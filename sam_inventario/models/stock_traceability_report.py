@@ -30,5 +30,5 @@ class StockTraceabilityReport(models.TransientModel):
     def _final_vals_to_lines(self, final_vals, level):
         lines = super()._final_vals_to_lines(final_vals, level)
         for line, val in zip(lines, final_vals):
-            line['columns'].append(val.get('x_notas', False))
+            line['columns'].insert(0, val.get('x_notas', False))
         return lines
