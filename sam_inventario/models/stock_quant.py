@@ -51,6 +51,10 @@ class StockQuant(models.Model):
 
     x_notas = fields.Text(string='Notas')
 
+    @api.model
+    def _get_inventory_fields_write(self):
+        return super()._get_inventory_fields_write() + ['x_notas']
+
     def action_apply_inventory(self):
         for rec in self:
             _validar_texto_significativo(rec.x_notas)
