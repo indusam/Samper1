@@ -37,7 +37,7 @@ class TestStockNoNegative(TransactionCase):
         product = self.product_model.create({
             'name': name,
             'categ_id': self.product_ctg.id,
-            'type': 'product',
+            'is_storable': True,
             'allow_negative_stock': False,
         })
         return product

@@ -96,20 +96,6 @@
                                                             <span t-field="o.x_studio_codigo"/>
                                                         </td>
                                                     </tr>
-                                                    <!-- Lote pieza -->
-                                                     <tr>
-                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                                            <span>
-                                                                <strong>Lote pieza</strong>
-                                                            </span>
-                                                        </td>
-                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                                            <span>:</span>
-                                                        </td>
-                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
-                                                            <span t-field="o.x_studio_lote_pieza"/>
-                                                        </td>
-                                                    </tr>
                                                     <!-- Fecha último análisis -->
                                                      <tr>
                                                         <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
@@ -183,6 +169,20 @@
                                                         </td>
                                                         <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
                                                             <span t-field="o.x_caducidad"/>
+                                                        </td>
+                                                    </tr>
+                                                    <!-- Lote pieza -->
+                                                     <tr>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                                            <span>
+                                                                <strong>Lote pieza</strong>
+                                                            </span>
+                                                        </td>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                                            <span>:</span>
+                                                        </td>
+                                                        <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                                            <span t-field="o.x_studio_lote_pieza"/>
                                                         </td>
                                                     </tr>
                                                 </table>
