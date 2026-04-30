@@ -1,21 +1,6 @@
 <odoo>
   <data>
-    <!-- Vista lista de ajustes de inventario -->
-    <record id="view_stock_quant_tree_inventory_sam_notas" model="ir.ui.view">
-      <field name="name">stock.quant.inventory.list.sam.notas</field>
-      <field name="model">stock.quant</field>
-      <field name="inherit_id" ref="stock.view_stock_quant_tree_inventory_editable"/>
-      <field name="arch" type="xml">
-        <xpath expr="//field[@name='inventory_quantity']" position="after">
-          <field name="x_notas"
-                 required="1"
-                 placeholder="Notas del ajuste..."/>
-        </xpath>
-      </field>
-    </record>
-
-
-<!-- explicit list view definition -->
+    <!-- explicit list view definition -->
 <!--
     <record model="ir.ui.view" id="sam_formulas.list">
       <field name="name">sam_formulas list</field>

@@ -28,14 +28,8 @@
         # 'security/ir.model.access.csv',
         'views/views.xml',
         'views/templates.xml',
-        'views/report_traceability_sam.xml',
         'wizards/peso_cantidad_caja_view.xml'
     ],
-    'assets': {
-        'web.assets_backend': [
-            'sam_inventario/static/src/stock_traceability_report_sam.xml',
-        ],
-    },
     # only loaded in demonstration mode
     'demo': [
         'demo/demo.xml',
