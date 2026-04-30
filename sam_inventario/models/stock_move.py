@@ -38,3 +38,13 @@ class StockMove(models.Model):
             
             # Asigna un nombre por defecto al movimiento
             self.name = 'Nuevo'  # La descripción es obligatoria
+
+    def action_editar_notas(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': 'wizard.editar.notas.move',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {'active_id': self.id},
+        }
