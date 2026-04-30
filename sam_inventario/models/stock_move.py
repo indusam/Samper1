@@ -17,6 +17,7 @@ class StockMove(models.Model):
 
     x_exis_origen = fields.Float(string='Exis Origen', help="Existencia del producto en la ubicación de origen.")
     x_merma_pct = fields.Float(string='% Merma', digits=(3, 2), help="Porcentaje de merma del producto durante el traslado.")
+    x_notas = fields.Char(string='Notas')
 
     @api.onchange('product_id')
     def onchange_product_id(self):
