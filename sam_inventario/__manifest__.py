@@ -25,11 +25,12 @@
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
+        'security/ir.model.access.csv',
         'views/views.xml',
         'views/templates.xml',
         'views/report_traceability_sam.xml',
-        'wizards/peso_cantidad_caja_view.xml'
+        'wizards/peso_cantidad_caja_view.xml',
+        'wizards/editar_notas_move_view.xml',
     ],
     'assets': {
         'web.assets_backend': [
