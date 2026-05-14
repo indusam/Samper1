@@ -35,6 +35,7 @@
         'studio_customization',
     ],
     'data': [
+        'data/certificados_calidad_fields.xml',
         'views/res_partner_views.xml',
         'views/factura_samper.xml',
         'views/stock_picking_form_views.xml',
