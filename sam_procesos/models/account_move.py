@@ -209,35 +209,67 @@ class AccountPayment(models.Model):
         if not xml_attachments:
             raise UserError('No se encontraron archivos XML para los pagos seleccionados.')
 
-        # Construir lista de nombres de PDF esperados basados en los XMLs
-        xml_to_res = {}  # pdf_name -> (res_model, res_id)
+        # --- Búsqueda de PDFs ---
+        # Fase 1: por nombre (mismo nombre que el XML pero .pdf)
         pdf_names_to_search = []
+        pdf_name_to_payment_id = {}
         for xml_att in xml_attachments:
             if xml_att.name.lower().endswith('.xml'):
                 pdf_name = xml_att.name[:-4] + '.pdf'
                 pdf_names_to_search.append(pdf_name)
-                xml_to_res[pdf_name] = (xml_att.res_model, xml_att.res_id)
+                if xml_att.res_model == 'account.payment':
+                    pdf_name_to_payment_id[pdf_name] = xml_att.res_id
+                else:
+                    payment = move_to_payment.get(xml_att.res_id)
+                    if payment:
+                        pdf_name_to_payment_id[pdf_name] = payment.id
 
-        # Buscar PDFs por nombre exacto
-        pdf_by_res = {}  # (res_model, res_id) -> pdf
+        pdf_by_payment_id = {}  # payment_id -> ir.attachment
+        payments_without_pdf = set(selected_payments.ids)
+
         if pdf_names_to_search:
-            pdf_attachments = self.env['ir.attachment'].search([
+            found_pdfs = self.env['ir.attachment'].search([
                 ('name', 'in', pdf_names_to_search),
-                ('mimetype', '=', 'application/pdf')
+                ('mimetype', '=', 'application/pdf'),
             ])
-            for pdf in pdf_attachments:
-                res_key = xml_to_res.get(pdf.name)
-                if res_key and res_key not in pdf_by_res:
-                    pdf_by_res[res_key] = pdf
+            for pdf in found_pdfs:
+                payment_id = pdf_name_to_payment_id.get(pdf.name)
+                if payment_id and payment_id not in pdf_by_payment_id:
+                    pdf_by_payment_id[payment_id] = pdf
+                    payments_without_pdf.discard(payment_id)
+
+        # Fase 2: búsqueda directa en account.payment y account.move vinculado
+        if payments_without_pdf:
+            for payment in selected_payments.filtered(lambda p: p.id in payments_without_pdf):
+                pdf = self.env['ir.attachment'].search([
+                    ('res_model', '=', 'account.payment'),
+                    ('res_id', '=', payment.id),
+                    ('mimetype', '=', 'application/pdf'),
+                ], limit=1)
+                if not pdf and payment.move_id:
+                    pdf = self.env['ir.attachment'].search([
+                        ('res_model', '=', 'account.move'),
+                        ('res_id', '=', payment.move_id.id),
+                        ('mimetype', '=', 'application/pdf'),
+                    ], limit=1)
+                if pdf:
+                    pdf_by_payment_id[payment.id] = pdf
+                    payments_without_pdf.discard(payment.id)
+
+        # Mapeo payment_id -> nombre del pago
+        payment_name_by_id = {p.id: (p.name or str(p.id)) for p in selected_payments}
+        # Para XMLs adjuntos al move, recuperar el nombre del pago
+        for xml_att in xml_attachments:
+            if xml_att.res_model == 'account.move':
+                payment = move_to_payment.get(xml_att.res_id)
+                if payment:
+                    payment_name_by_id[payment.id] = payment.name or str(payment.id)
 
         def _payment_name_for(res_model, res_id):
-            """Devuelve el nombre del pago dado el modelo y el id del adjunto."""
             if res_model == 'account.payment':
-                return self.browse(res_id).name or str(res_id)
+                return payment_name_by_id.get(res_id, str(res_id))
             payment = move_to_payment.get(res_id)
-            if payment:
-                return payment.name or str(res_id)
-            return self.env['account.move'].browse(res_id).name or str(res_id)
+            return payment_name_by_id.get(payment.id, str(res_id)) if payment else str(res_id)
 
         # Limpiar ZIPs temporales antiguos (más de 1 hora)
         old_zips = self.env['ir.attachment'].search([
@@ -258,8 +290,8 @@ class AccountPayment(models.Model):
                     used_keys.add(zip_key)
                     zip_file.writestr(attachment.name, base64.b64decode(attachment.datas))
 
-            for (res_model, res_id), pdf in pdf_by_res.items():
-                pname = _payment_name_for(res_model, res_id)
+            for payment_id, pdf in pdf_by_payment_id.items():
+                pname = payment_name_by_id.get(payment_id, str(payment_id))
                 zip_key = f"{pname}_pdf"
                 if zip_key not in used_keys:
                     used_keys.add(zip_key)
