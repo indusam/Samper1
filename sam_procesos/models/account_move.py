@@ -181,8 +181,9 @@ class AccountPayment(models.Model):
     def action_download_xml(self):
         """Descarga los archivos XML y PDF de los pagos seleccionados.
 
-        Los XMLs se obtienen de ir.attachment ligados a account.payment.
-        Los PDFs se buscan por nombre coincidente con el XML; si existen se incluyen.
+        En l10n_mx_edi los XMLs de complementos de pago se adjuntan al
+        account.move vinculado al pago. Se busca en ambos modelos por
+        compatibilidad.
         """
         active_ids = self.env.context.get('active_ids', [])
         if not active_ids:
@@ -192,36 +193,51 @@ class AccountPayment(models.Model):
         if not selected_payments:
             raise UserError('No se pudieron cargar los pagos seleccionados.')
 
-        # Buscar XMLs en ir.attachment (uno por pago)
+        # Obtener los account.move vinculados a los pagos
+        move_ids = selected_payments.mapped('move_id').ids
+        # Mapeo move_id -> payment para recuperar el nombre del pago
+        move_to_payment = {p.move_id.id: p for p in selected_payments if p.move_id}
+
+        # Buscar XMLs en account.payment y en el account.move vinculado
         xml_attachments = self.env['ir.attachment'].search([
-            ('res_model', '=', 'account.payment'),
-            ('res_id', 'in', selected_payments.ids),
-            ('name', 'ilike', '.xml')
+            ('name', 'ilike', '.xml'),
+            '|',
+            '&', ('res_model', '=', 'account.payment'), ('res_id', 'in', selected_payments.ids),
+            '&', ('res_model', '=', 'account.move'), ('res_id', 'in', move_ids),
         ])
 
         if not xml_attachments:
             raise UserError('No se encontraron archivos XML para los pagos seleccionados.')
 
         # Construir lista de nombres de PDF esperados basados en los XMLs
-        xml_to_payment = {}
+        xml_to_res = {}  # pdf_name -> (res_model, res_id)
         pdf_names_to_search = []
         for xml_att in xml_attachments:
             if xml_att.name.lower().endswith('.xml'):
                 pdf_name = xml_att.name[:-4] + '.pdf'
                 pdf_names_to_search.append(pdf_name)
-                xml_to_payment[pdf_name] = xml_att.res_id
+                xml_to_res[pdf_name] = (xml_att.res_model, xml_att.res_id)
 
         # Buscar PDFs por nombre exacto
-        pdf_by_payment = {}
+        pdf_by_res = {}  # (res_model, res_id) -> pdf
         if pdf_names_to_search:
             pdf_attachments = self.env['ir.attachment'].search([
                 ('name', 'in', pdf_names_to_search),
                 ('mimetype', '=', 'application/pdf')
             ])
             for pdf in pdf_attachments:
-                payment_id = xml_to_payment.get(pdf.name)
-                if payment_id and payment_id not in pdf_by_payment:
-                    pdf_by_payment[payment_id] = pdf
+                res_key = xml_to_res.get(pdf.name)
+                if res_key and res_key not in pdf_by_res:
+                    pdf_by_res[res_key] = pdf
+
+        def _payment_name_for(res_model, res_id):
+            """Devuelve el nombre del pago dado el modelo y el id del adjunto."""
+            if res_model == 'account.payment':
+                return self.browse(res_id).name or str(res_id)
+            payment = move_to_payment.get(res_id)
+            if payment:
+                return payment.name or str(res_id)
+            return self.env['account.move'].browse(res_id).name or str(res_id)
 
         # Limpiar ZIPs temporales antiguos (más de 1 hora)
         old_zips = self.env['ir.attachment'].search([
@@ -235,31 +251,19 @@ class AccountPayment(models.Model):
         zip_buffer = io.BytesIO()
         used_keys = set()
         with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zip_file:
-            # Agregar XMLs
             for attachment in xml_attachments:
-                fname = attachment.name
-                payment_key = None
-                for payment in selected_payments:
-                    if payment.name and payment.name in fname:
-                        payment_key = f"{payment.name}_xml"
-                        break
-                if not payment_key:
-                    payment_key = fname
+                pname = _payment_name_for(attachment.res_model, attachment.res_id)
+                zip_key = f"{pname}_xml"
+                if zip_key not in used_keys:
+                    used_keys.add(zip_key)
+                    zip_file.writestr(attachment.name, base64.b64decode(attachment.datas))
 
-                if payment_key not in used_keys:
-                    used_keys.add(payment_key)
-                    zip_file.writestr(fname, base64.b64decode(attachment.datas))
-
-            # Agregar PDFs si existen
-            pdf_to_payment_id = {pdf.id: payment_id for payment_id, pdf in pdf_by_payment.items()}
-            for pdf in pdf_by_payment.values():
-                payment_id = pdf_to_payment_id.get(pdf.id)
-                if payment_id:
-                    payment = self.browse(payment_id)
-                    payment_key = f"{payment.name}_pdf"
-                    if payment_key not in used_keys:
-                        used_keys.add(payment_key)
-                        zip_file.writestr(pdf.name, base64.b64decode(pdf.datas))
+            for (res_model, res_id), pdf in pdf_by_res.items():
+                pname = _payment_name_for(res_model, res_id)
+                zip_key = f"{pname}_pdf"
+                if zip_key not in used_keys:
+                    used_keys.add(zip_key)
+                    zip_file.writestr(pdf.name, base64.b64decode(pdf.datas))
 
         zip_data = base64.b64encode(zip_buffer.getvalue())
         zip_attachment = self.env['ir.attachment'].create({
