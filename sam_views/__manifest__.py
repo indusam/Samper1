@@ -32,6 +32,7 @@
         'account',
         'sale',
         'l10n_mx_edi',
+        'studio_customization',
     ],
     'data': [
         'views/res_partner_views.xml',
