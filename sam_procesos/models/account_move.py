@@ -173,3 +173,140 @@ class AccountMove(models.Model):
             'url': f'/web/content/{zip_attachment.id}?download=true',
             'target': 'self',
         }
+
+
+class AccountPayment(models.Model):
+    _inherit = 'account.payment'
+
+    def action_download_xml(self):
+        """Descarga los archivos XML y PDF de los pagos seleccionados.
+
+        En l10n_mx_edi los XMLs de complementos de pago se adjuntan al
+        account.move vinculado al pago. Se busca en ambos modelos por
+        compatibilidad.
+        """
+        active_ids = self.env.context.get('active_ids', [])
+        if not active_ids:
+            raise UserError('Debe seleccionar al menos un pago')
+
+        selected_payments = self.browse(active_ids)
+        if not selected_payments:
+            raise UserError('No se pudieron cargar los pagos seleccionados.')
+
+        # Obtener los account.move vinculados a los pagos
+        move_ids = selected_payments.mapped('move_id').ids
+        # Mapeo move_id -> payment para recuperar el nombre del pago
+        move_to_payment = {p.move_id.id: p for p in selected_payments if p.move_id}
+
+        # Buscar XMLs en account.payment y en el account.move vinculado
+        xml_attachments = self.env['ir.attachment'].search([
+            ('name', 'ilike', '.xml'),
+            '|',
+            '&', ('res_model', '=', 'account.payment'), ('res_id', 'in', selected_payments.ids),
+            '&', ('res_model', '=', 'account.move'), ('res_id', 'in', move_ids),
+        ])
+
+        if not xml_attachments:
+            raise UserError('No se encontraron archivos XML para los pagos seleccionados.')
+
+        # --- Búsqueda de PDFs ---
+        # Fase 1: por nombre (mismo nombre que el XML pero .pdf)
+        pdf_names_to_search = []
+        pdf_name_to_payment_id = {}
+        for xml_att in xml_attachments:
+            if xml_att.name.lower().endswith('.xml'):
+                pdf_name = xml_att.name[:-4] + '.pdf'
+                pdf_names_to_search.append(pdf_name)
+                if xml_att.res_model == 'account.payment':
+                    pdf_name_to_payment_id[pdf_name] = xml_att.res_id
+                else:
+                    payment = move_to_payment.get(xml_att.res_id)
+                    if payment:
+                        pdf_name_to_payment_id[pdf_name] = payment.id
+
+        pdf_by_payment_id = {}  # payment_id -> ir.attachment
+        payments_without_pdf = set(selected_payments.ids)
+
+        if pdf_names_to_search:
+            found_pdfs = self.env['ir.attachment'].search([
+                ('name', 'in', pdf_names_to_search),
+                ('mimetype', '=', 'application/pdf'),
+            ])
+            for pdf in found_pdfs:
+                payment_id = pdf_name_to_payment_id.get(pdf.name)
+                if payment_id and payment_id not in pdf_by_payment_id:
+                    pdf_by_payment_id[payment_id] = pdf
+                    payments_without_pdf.discard(payment_id)
+
+        # Fase 2: búsqueda directa en account.payment y account.move vinculado
+        if payments_without_pdf:
+            for payment in selected_payments.filtered(lambda p: p.id in payments_without_pdf):
+                pdf = self.env['ir.attachment'].search([
+                    ('res_model', '=', 'account.payment'),
+                    ('res_id', '=', payment.id),
+                    ('mimetype', '=', 'application/pdf'),
+                ], limit=1)
+                if not pdf and payment.move_id:
+                    pdf = self.env['ir.attachment'].search([
+                        ('res_model', '=', 'account.move'),
+                        ('res_id', '=', payment.move_id.id),
+                        ('mimetype', '=', 'application/pdf'),
+                    ], limit=1)
+                if pdf:
+                    pdf_by_payment_id[payment.id] = pdf
+                    payments_without_pdf.discard(payment.id)
+
+        # Mapeo payment_id -> nombre del XML (para renombrar el PDF)
+        xml_name_by_payment_id = {}
+        for xml_att in xml_attachments:
+            if xml_att.res_model == 'account.payment':
+                xml_name_by_payment_id[xml_att.res_id] = xml_att.name
+            elif xml_att.res_model == 'account.move':
+                payment = move_to_payment.get(xml_att.res_id)
+                if payment:
+                    xml_name_by_payment_id[payment.id] = xml_att.name
+
+        # Limpiar ZIPs temporales antiguos (más de 1 hora)
+        old_zips = self.env['ir.attachment'].search([
+            ('name', '=', 'pagos_xml_pdf.zip'),
+            ('res_model', '=', False),
+            ('create_date', '<', fields.Datetime.now() - timedelta(hours=1))
+        ])
+        old_zips.unlink()
+
+        # Crear ZIP
+        zip_buffer = io.BytesIO()
+        used_keys = set()
+        with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zip_file:
+            for attachment in xml_attachments:
+                if attachment.name not in used_keys:
+                    used_keys.add(attachment.name)
+                    zip_file.writestr(attachment.name, base64.b64decode(attachment.datas))
+
+            for payment_id, pdf in pdf_by_payment_id.items():
+                xml_name = xml_name_by_payment_id.get(payment_id, '')
+                # Renombrar el PDF igual que el XML pero con extensión .pdf
+                if xml_name.lower().endswith('.xml'):
+                    pdf_filename = xml_name[:-4] + '.pdf'
+                else:
+                    # Fallback: usar solo el nombre base sin rutas
+                    pdf_filename = pdf.name.split('/')[-1]
+                if pdf_filename not in used_keys:
+                    used_keys.add(pdf_filename)
+                    zip_file.writestr(pdf_filename, base64.b64decode(pdf.datas))
+
+        zip_data = base64.b64encode(zip_buffer.getvalue())
+        zip_attachment = self.env['ir.attachment'].create({
+            'name': 'pagos_xml_pdf.zip',
+            'type': 'binary',
+            'datas': zip_data,
+            'mimetype': 'application/zip',
+            'res_model': False,
+            'res_id': False
+        })
+
+        return {
+            'type': 'ir.actions.act_url',
+            'url': f'/web/content/{zip_attachment.id}?download=true',
+            'target': 'self',
+        }

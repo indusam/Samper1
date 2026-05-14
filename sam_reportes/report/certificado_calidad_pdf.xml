@@ -287,6 +287,14 @@
                                         <t t-esc="o.x_studio_textura"/>
                                     </td>
                                 </tr>
+                                <!-- Apariencia -->
+                                <tr>    
+                                    <th style="text-align:left;border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">Apariencia</th>
+                                    <td style="border-style:none;padding-top:0px;padding-bottom:2px;font-size:10px">
+                                        <t t-esc="o.x_apariencia"/>
+                                    </td>
+                                </tr>
+
                             </tbody>
                         </table>
                         
