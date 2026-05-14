@@ -374,10 +374,20 @@ for ext_id, email in datos:
 
 msg = 'Actualizados: %d | Sin mapeo: %d | Errores: %d' % (ok, len(sin_mapeo), len(errores))
 if sin_mapeo:
-    msg += '\nSin mapeo:\n' + '\n'.join(sin_mapeo)
+    msg += '\nSin mapeo: ' + ', '.join(sin_mapeo)
 if errores:
-    msg += '\nErrores:\n' + '\n'.join(errores)
-raise UserError(msg)
+    msg += '\nErrores: ' + ', '.join(errores)
+
+action = {
+    'type': 'ir.actions.client',
+    'tag': 'display_notification',
+    'params': {
+        'title': 'Fix Emails Partners',
+        'message': msg,
+        'sticky': True,
+        'type': 'warning' if (sin_mapeo or errores) else 'success',
+    }
+}
 ]]></field>
         </record>
 
