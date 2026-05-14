@@ -256,20 +256,15 @@ class AccountPayment(models.Model):
                     pdf_by_payment_id[payment.id] = pdf
                     payments_without_pdf.discard(payment.id)
 
-        # Mapeo payment_id -> nombre del pago
-        payment_name_by_id = {p.id: (p.name or str(p.id)) for p in selected_payments}
-        # Para XMLs adjuntos al move, recuperar el nombre del pago
+        # Mapeo payment_id -> nombre del XML (para renombrar el PDF)
+        xml_name_by_payment_id = {}
         for xml_att in xml_attachments:
-            if xml_att.res_model == 'account.move':
+            if xml_att.res_model == 'account.payment':
+                xml_name_by_payment_id[xml_att.res_id] = xml_att.name
+            elif xml_att.res_model == 'account.move':
                 payment = move_to_payment.get(xml_att.res_id)
                 if payment:
-                    payment_name_by_id[payment.id] = payment.name or str(payment.id)
-
-        def _payment_name_for(res_model, res_id):
-            if res_model == 'account.payment':
-                return payment_name_by_id.get(res_id, str(res_id))
-            payment = move_to_payment.get(res_id)
-            return payment_name_by_id.get(payment.id, str(res_id)) if payment else str(res_id)
+                    xml_name_by_payment_id[payment.id] = xml_att.name
 
         # Limpiar ZIPs temporales antiguos (más de 1 hora)
         old_zips = self.env['ir.attachment'].search([
@@ -284,18 +279,21 @@ class AccountPayment(models.Model):
         used_keys = set()
         with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zip_file:
             for attachment in xml_attachments:
-                pname = _payment_name_for(attachment.res_model, attachment.res_id)
-                zip_key = f"{pname}_xml"
-                if zip_key not in used_keys:
-                    used_keys.add(zip_key)
+                if attachment.name not in used_keys:
+                    used_keys.add(attachment.name)
                     zip_file.writestr(attachment.name, base64.b64decode(attachment.datas))
 
             for payment_id, pdf in pdf_by_payment_id.items():
-                pname = payment_name_by_id.get(payment_id, str(payment_id))
-                zip_key = f"{pname}_pdf"
-                if zip_key not in used_keys:
-                    used_keys.add(zip_key)
-                    zip_file.writestr(pdf.name, base64.b64decode(pdf.datas))
+                xml_name = xml_name_by_payment_id.get(payment_id, '')
+                # Renombrar el PDF igual que el XML pero con extensión .pdf
+                if xml_name.lower().endswith('.xml'):
+                    pdf_filename = xml_name[:-4] + '.pdf'
+                else:
+                    # Fallback: usar solo el nombre base sin rutas
+                    pdf_filename = pdf.name.split('/')[-1]
+                if pdf_filename not in used_keys:
+                    used_keys.add(pdf_filename)
+                    zip_file.writestr(pdf_filename, base64.b64decode(pdf.datas))
 
         zip_data = base64.b64encode(zip_buffer.getvalue())
         zip_attachment = self.env['ir.attachment'].create({
