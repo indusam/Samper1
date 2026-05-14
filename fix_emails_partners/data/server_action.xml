@@ -360,23 +360,28 @@ datos = [
     ('__export__.res_partner_8015_8d42bd34', 'facturacion@cinemaswtc.com'),
 ]
 
-ok, sin_mapeo, errores = 0, [], []
+# Construir mapa {partner_id: nuevo_email}
+email_map = {}
+sin_mapeo = []
 for ext_id, email in datos:
     try:
-        partner = env.ref(ext_id, raise_if_not_found=False)
-        if not partner:
-            sin_mapeo.append(ext_id)
-            continue
-        partner.sudo().write({'email': email})
-        ok += 1
-    except Exception as e:
-        errores.append('%s -> %s' % (ext_id, str(e)))
+        partner_id = int(ext_id.split('.')[1].split('_')[2])
+        email_map[partner_id] = email
+    except Exception:
+        sin_mapeo.append(ext_id)
 
-msg = 'Actualizados: %d | Sin mapeo: %d | Errores: %d' % (ok, len(sin_mapeo), len(errores))
+# Una sola consulta para todos los partners
+records = env['res.partner'].search([('id', 'in', list(email_map.keys()))])
+
+encontrados = {r.id for r in records}
+sin_mapeo += [str(pid) for pid in email_map if pid not in encontrados]
+
+for record in records:
+    record.sudo().write({'email': email_map[record.id]})
+
+msg = 'Actualizados: %d | Sin mapeo: %d' % (len(records), len(sin_mapeo))
 if sin_mapeo:
     msg += '\nSin mapeo: ' + ', '.join(sin_mapeo)
-if errores:
-    msg += '\nErrores: ' + ', '.join(errores)
 
 action = {
     'type': 'ir.actions.client',
@@ -385,7 +390,7 @@ action = {
         'title': 'Fix Emails Partners',
         'message': msg,
         'sticky': True,
-        'type': 'warning' if (sin_mapeo or errores) else 'success',
+        'type': 'warning' if sin_mapeo else 'success',
     }
 }
 ]]></field>
