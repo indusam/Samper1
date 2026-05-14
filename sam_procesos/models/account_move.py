@@ -173,3 +173,106 @@ class AccountMove(models.Model):
             'url': f'/web/content/{zip_attachment.id}?download=true',
             'target': 'self',
         }
+
+
+class AccountPayment(models.Model):
+    _inherit = 'account.payment'
+
+    def action_download_xml(self):
+        """Descarga los archivos XML y PDF de los pagos seleccionados.
+
+        Los XMLs se obtienen de ir.attachment ligados a account.payment.
+        Los PDFs se buscan por nombre coincidente con el XML; si existen se incluyen.
+        """
+        active_ids = self.env.context.get('active_ids', [])
+        if not active_ids:
+            raise UserError('Debe seleccionar al menos un pago')
+
+        selected_payments = self.browse(active_ids)
+        if not selected_payments:
+            raise UserError('No se pudieron cargar los pagos seleccionados.')
+
+        # Buscar XMLs en ir.attachment (uno por pago)
+        xml_attachments = self.env['ir.attachment'].search([
+            ('res_model', '=', 'account.payment'),
+            ('res_id', 'in', selected_payments.ids),
+            ('name', 'ilike', '.xml')
+        ])
+
+        if not xml_attachments:
+            raise UserError('No se encontraron archivos XML para los pagos seleccionados.')
+
+        # Construir lista de nombres de PDF esperados basados en los XMLs
+        xml_to_payment = {}
+        pdf_names_to_search = []
+        for xml_att in xml_attachments:
+            if xml_att.name.lower().endswith('.xml'):
+                pdf_name = xml_att.name[:-4] + '.pdf'
+                pdf_names_to_search.append(pdf_name)
+                xml_to_payment[pdf_name] = xml_att.res_id
+
+        # Buscar PDFs por nombre exacto
+        pdf_by_payment = {}
+        if pdf_names_to_search:
+            pdf_attachments = self.env['ir.attachment'].search([
+                ('name', 'in', pdf_names_to_search),
+                ('mimetype', '=', 'application/pdf')
+            ])
+            for pdf in pdf_attachments:
+                payment_id = xml_to_payment.get(pdf.name)
+                if payment_id and payment_id not in pdf_by_payment:
+                    pdf_by_payment[payment_id] = pdf
+
+        # Limpiar ZIPs temporales antiguos (más de 1 hora)
+        old_zips = self.env['ir.attachment'].search([
+            ('name', '=', 'pagos_xml_pdf.zip'),
+            ('res_model', '=', False),
+            ('create_date', '<', fields.Datetime.now() - timedelta(hours=1))
+        ])
+        old_zips.unlink()
+
+        # Crear ZIP
+        zip_buffer = io.BytesIO()
+        used_keys = set()
+        with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zip_file:
+            # Agregar XMLs
+            for attachment in xml_attachments:
+                fname = attachment.name
+                payment_key = None
+                for payment in selected_payments:
+                    if payment.name and payment.name in fname:
+                        payment_key = f"{payment.name}_xml"
+                        break
+                if not payment_key:
+                    payment_key = fname
+
+                if payment_key not in used_keys:
+                    used_keys.add(payment_key)
+                    zip_file.writestr(fname, base64.b64decode(attachment.datas))
+
+            # Agregar PDFs si existen
+            pdf_to_payment_id = {pdf.id: payment_id for payment_id, pdf in pdf_by_payment.items()}
+            for pdf in pdf_by_payment.values():
+                payment_id = pdf_to_payment_id.get(pdf.id)
+                if payment_id:
+                    payment = self.browse(payment_id)
+                    payment_key = f"{payment.name}_pdf"
+                    if payment_key not in used_keys:
+                        used_keys.add(payment_key)
+                        zip_file.writestr(pdf.name, base64.b64decode(pdf.datas))
+
+        zip_data = base64.b64encode(zip_buffer.getvalue())
+        zip_attachment = self.env['ir.attachment'].create({
+            'name': 'pagos_xml_pdf.zip',
+            'type': 'binary',
+            'datas': zip_data,
+            'mimetype': 'application/zip',
+            'res_model': False,
+            'res_id': False
+        })
+
+        return {
+            'type': 'ir.actions.act_url',
+            'url': f'/web/content/{zip_attachment.id}?download=true',
+            'target': 'self',
+        }
