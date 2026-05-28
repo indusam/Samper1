@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!--
-    TEMPORALMENTE DESHABILITADO - Funcionalidad de Intermedios y Empaques
-    Se deshabilitó durante la migración a Odoo 18 para completar primero la actualización base.
-    Será reactivado y corregido después de completar la migración exitosa.
-    -->
-
-    <!--
     <record id="view_intermedios_empaques_list" model="ir.ui.view">
         <field name="name">intermedios.empaques.list</field>
         <field name="model">intermedios.empaques</field>
@@ -48,10 +41,9 @@
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
                 <page string="Intermedios y Empaques" name="intermedios_empaques">
-                    <field name="intermedios_empaques_ids" nolabel="1" context="{'default_lista_materiales': active_id}"/>
+                    <field name="intermedios_empaques_ids" nolabel="1" context="{'default_lista_materiales': id}"/>
                 </page>
             </xpath>
         </field>
     </record>
-    -->
 </odoo>
