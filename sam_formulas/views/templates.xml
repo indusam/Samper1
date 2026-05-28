@@ -41,7 +41,7 @@
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
                 <page string="Intermedios y Empaques" name="intermedios_empaques">
-                    <field name="intermedios_empaques_ids" nolabel="1" context="{'default_lista_materiales': active_id}"/>
+                    <field name="intermedios_empaques_ids" nolabel="1" context="{'default_lista_materiales': id}"/>
                 </page>
             </xpath>
         </field>
