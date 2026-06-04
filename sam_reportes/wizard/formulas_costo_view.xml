@@ -15,6 +15,7 @@
                         <field name="partidas" readonly="cantidad > 0 or ing_limitante != False or product_tmpl == False or cant_limitante > 0"/>
 
                         <field name="cantidad" readonly="ing_limitante != False or partidas > 0 or cant_limitante > 0 or product_tmpl == False"/>
+                        <field name="pct_merma" readonly="product_tmpl == False"/>
 
                         <field name="consolidado" />
                     </group>
