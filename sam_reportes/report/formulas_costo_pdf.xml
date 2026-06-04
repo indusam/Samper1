@@ -23,7 +23,7 @@
                                               <div>
                                                 <span><strong>Cantidad: </strong> <span t-esc="'{0:,.4f}'.format(masa_formula)"/> Kgs.</span>
                                                 <t t-if="pct_merma > 0">
-                                                  <span>&#160;&#160;<strong>% Merma: </strong><span t-esc="'{0:,.5f}'.format(pct_merma)"/>%&#160;&#160;
+                                                  <span>&#160;&#160;<strong>% Merma: </strong><span t-esc="'{0:,.2f}'.format(pct_merma)"/>%&#160;&#160;
                                                     <strong>Kg. después de merma: </strong><span t-esc="'{0:,.4f}'.format(cantidad_despues_merma)"/>
                                                   </span>
                                                 </t>
@@ -126,10 +126,10 @@
                                                 <t t-esc="'{0:,.4f}'.format(table_line['costo'])"/>
                                             </td>
                                             <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                <t t-esc="'{0:,.4f}'.format(table_line['costo'] * table_line['cant_comp'])"/>
+                                                <t t-esc="'{0:,.2f}'.format(table_line['costo'] * table_line['cant_comp'])"/>
                                             </td>
                                             <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                <t t-esc="'{0:,.3f}'.format((table_line['costo'] * table_line['cant_comp'] / combined_total) * 100 if combined_total > 0 else 0)"/>%
+                                                <t t-esc="'{0:,.2f}'.format((table_line['costo'] * table_line['cant_comp'] / combined_total) * 100 if combined_total > 0 else 0)"/>%
                                             </td>
                                         </tr>
                                     </t>
@@ -148,10 +148,10 @@
                                             <strong t-esc="'{0:,.4f}'.format(costo_kg_formula)"/>
                                         </td>
                                         <td class="table-secondary" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                            <strong t-esc="'{0:,.4f}'.format(total_cost_formula)"/>
+                                            <strong t-esc="'{0:,.2f}'.format(total_cost_formula)"/>
                                         </td>
                                         <td class="table-secondary" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                            <t t-esc="'{0:,.3f}'.format((total_cost_formula / combined_total) * 100 if combined_total > 0 else 0)"/>%
+                                            <t t-esc="'{0:,.2f}'.format((total_cost_formula / combined_total) * 100 if combined_total > 0 else 0)"/>%
                                         </td>
                                     </tr>
 
@@ -184,10 +184,10 @@
                                                     <t t-esc="'{0:,.4f}'.format(item_costo)"/>
                                                 </td>
                                                 <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                    <t t-esc="'{0:,.4f}'.format(item_import)"/>
+                                                    <t t-esc="'{0:,.2f}'.format(item_import)"/>
                                                 </td>
                                                 <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                    <t t-esc="'{0:,.3f}'.format((item_import / combined_total) * 100 if combined_total > 0 else 0)"/>%
+                                                    <t t-esc="'{0:,.2f}'.format((item_import / combined_total) * 100 if combined_total > 0 else 0)"/>%
                                                 </td>
                                             </tr>
                                         </t>
@@ -201,10 +201,10 @@
                                                 <strong t-esc="'{0:,.4f}'.format(costo_kg_int_antes)"/>
                                             </td>
                                             <td class="table-secondary" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                <strong t-esc="'{0:,.4f}'.format(total_cost_int_antes)"/>
+                                                <strong t-esc="'{0:,.2f}'.format(total_cost_int_antes)"/>
                                             </td>
                                             <td class="table-secondary" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                <t t-esc="'{0:,.3f}'.format((total_cost_int_antes / combined_total) * 100 if combined_total > 0 else 0)"/>%
+                                                <t t-esc="'{0:,.2f}'.format((total_cost_int_antes / combined_total) * 100 if combined_total > 0 else 0)"/>%
                                             </td>
                                         </tr>
                                     </t>
@@ -219,10 +219,10 @@
                                             <strong t-esc="'{0:,.4f}'.format(costo_kg_antes_merma)"/>
                                         </td>
                                         <td class="table-secondary" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                            <strong t-esc="'{0:,.4f}'.format(total_antes)"/>
+                                            <strong t-esc="'{0:,.2f}'.format(total_antes)"/>
                                         </td>
                                         <td class="table-secondary" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                            <t t-esc="'{0:,.3f}'.format((total_antes / combined_total) * 100 if combined_total > 0 else 0)"/>%
+                                            <t t-esc="'{0:,.2f}'.format((total_antes / combined_total) * 100 if combined_total > 0 else 0)"/>%
                                         </td>
                                     </tr>
 
@@ -231,7 +231,7 @@
                                         <t t-set="costo_kg_post_merma" t-value="total_antes / cantidad_despues_merma if cantidad_despues_merma > 0 else 0"/>
                                         <tr>
                                             <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
-                                                <strong>MERMA <t t-esc="'{0:,.5f}'.format(pct_merma)"/>%</strong>
+                                                <strong>MERMA <t t-esc="'{0:,.2f}'.format(pct_merma)"/>%</strong>
                                             </td>
                                             <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
                                             <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
@@ -245,10 +245,10 @@
                                                 <t t-esc="'{0:,.4f}'.format(costo_kg_post_merma)"/>
                                             </td>
                                             <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                <t t-esc="'{0:,.4f}'.format(total_antes)"/>
+                                                <t t-esc="'{0:,.2f}'.format(total_antes)"/>
                                             </td>
                                             <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                <t t-esc="'{0:,.3f}'.format((total_antes / combined_total) * 100 if combined_total > 0 else 0)"/>%
+                                                <t t-esc="'{0:,.2f}'.format((total_antes / combined_total) * 100 if combined_total > 0 else 0)"/>%
                                             </td>
                                         </tr>
                                     </t>
@@ -283,10 +283,10 @@
                                                     <t t-esc="'{0:,.4f}'.format(item_costo)"/>
                                                 </td>
                                                 <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                    <t t-esc="'{0:,.4f}'.format(item_import)"/>
+                                                    <t t-esc="'{0:,.2f}'.format(item_import)"/>
                                                 </td>
                                                 <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                    <t t-esc="'{0:,.3f}'.format((item_import / combined_total) * 100 if combined_total > 0 else 0)"/>%
+                                                    <t t-esc="'{0:,.2f}'.format((item_import / combined_total) * 100 if combined_total > 0 else 0)"/>%
                                                 </td>
                                             </tr>
                                         </t>
@@ -301,10 +301,10 @@
                                                 <strong t-esc="'{0:,.4f}'.format(costo_kg_int_despues)"/>
                                             </td>
                                             <td class="table-secondary" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                <strong t-esc="'{0:,.4f}'.format(total_cost_int_despues)"/>
+                                                <strong t-esc="'{0:,.2f}'.format(total_cost_int_despues)"/>
                                             </td>
                                             <td class="table-secondary" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                <t t-esc="'{0:,.3f}'.format((total_cost_int_despues / combined_total) * 100 if combined_total > 0 else 0)"/>%
+                                                <t t-esc="'{0:,.2f}'.format((total_cost_int_despues / combined_total) * 100 if combined_total > 0 else 0)"/>%
                                             </td>
                                         </tr>
                                     </t>
@@ -320,10 +320,10 @@
                                             <strong t-esc="'{0:,.4f}'.format(costo_final_kg)"/>
                                         </td>
                                         <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 2px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                            <strong t-esc="'{0:,.4f}'.format(combined_total)"/>
+                                            <strong t-esc="'{0:,.2f}'.format(combined_total)"/>
                                         </td>
                                         <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 2px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                            <strong>100.000%</strong>
+                                            <strong>100.00%</strong>
                                         </td>
                                     </tr>
 
