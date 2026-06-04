@@ -20,17 +20,15 @@
                                                   <strong>Tipo de cambio: </strong><span t-esc="'{0:,.4f}'.format(env.company.x_studio_tipo_de_cambio or 0.0)"/>
                                                 </span>
                                               </div>
-                                              <div style="position: relative;">
-                                                <span><strong>Cantidad: </strong> <span t-esc="'{0:,.4f}'.format(masa_formula)"/> Kgs.&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span>
+                                              <div>
+                                                <span><strong>Cantidad: </strong> <span t-esc="'{0:,.4f}'.format(masa_formula)"/> Kgs.</span>
                                                 <t t-if="pct_merma > 0">
                                                   <span>&#160;&#160;<strong>% Merma: </strong><span t-esc="'{0:,.5f}'.format(pct_merma)"/>%&#160;&#160;
                                                     <strong>Kg. después de merma: </strong><span t-esc="'{0:,.4f}'.format(cantidad_despues_merma)"/>
                                                   </span>
                                                 </t>
                                                 <t t-if="bom_code">
-                                                  <span style="position: absolute; left: 200px;">
-                                                    <strong></strong><span t-esc="bom_code"/>
-                                                  </span>
+                                                  <span>&#160;&#160;<span t-esc="bom_code"/></span>
                                                 </t>
                                                 <span style="float: right; white-space: nowrap; margin-left: 10px;">
                                                   <t t-if="tipo_costo">(<t t-esc="tipo_costo"/>)</t>
@@ -233,14 +231,14 @@
                                         <t t-set="costo_kg_post_merma" t-value="total_antes / cantidad_despues_merma if cantidad_despues_merma > 0 else 0"/>
                                         <tr>
                                             <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
-                                                <strong>MERMA</strong>
+                                                <strong>MERMA <t t-esc="'{0:,.5f}'.format(pct_merma)"/>%</strong>
                                             </td>
                                             <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
                                             <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
                                                 <t t-esc="'{0:,.4f}'.format(cantidad_despues_merma)"/>
                                             </td>
-                                            <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                <t t-esc="'{0:,.5f}'.format(pct_merma)"/>%
+                                            <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
+                                                KG
                                             </td>
                                             <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
                                             <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
