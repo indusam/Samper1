@@ -391,6 +391,14 @@ class FormulasCosto(models.TransientModel):
                     costo = self.get_ultimo_costo(rec.product_id)
                     costo_usd = self.get_ultimo_costo_usd(rec.product_id)
 
+                # Ajuste de costo por factor_inv de la unidad de compra:
+                #   costo_ajustado = (costo / factor_inv) * kgs_unidad (o unidad_pza)
+                factor_inv = rec.product_id.uom_po_id.factor_inv or 1.0
+                conversion = rec.kgs_unidad if rec.kgs_unidad > 0 else rec.unidad_pza
+                if factor_inv > 0 and conversion > 0:
+                    costo = (costo / factor_inv) * conversion
+                    costo_usd = (costo_usd / factor_inv) * conversion if costo_usd > 0 else 0.0
+
                 masa_base = masa_formula if rec.proceso == 2 else cantidad_despues_merma
                 if rec.kgs_unidad > 0:
                     qty_needed = masa_base / rec.kgs_unidad
