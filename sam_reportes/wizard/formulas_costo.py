@@ -401,9 +401,9 @@ class FormulasCosto(models.TransientModel):
 
                 masa_base = masa_formula if rec.proceso == 2 else cantidad_despues_merma
                 if rec.kgs_unidad > 0:
-                    qty_needed = masa_base / rec.kgs_unidad
+                    qty_needed = rec.kgs_unidad
                 elif rec.unidad_pza > 0:
-                    qty_needed = masa_base / rec.unidad_pza
+                    qty_needed = rec.unidad_pza
                 else:
                     qty_needed = 0.0
 
