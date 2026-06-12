@@ -31,6 +31,7 @@ class FormulasCosto(models.TransientModel):
     product_tmpl = fields.Many2one('product.template', string="Producto")
     producto = fields.Many2one('mrp.bom', string="Lista de Materiales", domain="[('product_tmpl_id', '=', product_tmpl)]")
     cantidad = fields.Float(string="Cantidad")
+    pct_merma = fields.Float(string="% Merma", digits=(6, 5))
     ing_limitante = fields.Many2one('mrp.bom.line',string="Ingrediente limitante")
     cant_limitante = fields.Float(string="Cantidad limitante")
     consolidado = fields.Boolean(string="Fórmula consolidada",  )
@@ -368,38 +369,61 @@ class FormulasCosto(models.TransientModel):
         
         # Get the display name of the selected cost type
         cost_type_display = dict(self._fields['tipo_costo'].selection).get(self.tipo_costo)
-        
-        # Get the intermedios_empaques records from the BOM and prepare them as dictionaries
-        intermedios_empaques = []
+
+        # Masa base y cálculo de merma
+        masa_formula = self.cantidad if self.cantidad > 0 else sum(v['cant_comp'] for v in vals)
+        cantidad_despues_merma = masa_formula * (1.0 - self.pct_merma / 100.0) if self.pct_merma > 0 else masa_formula
+
+        # Intermedios y empaques separados por proceso:
+        #   proceso == 1 → ANTES DE MERMA  (base: masa_formula)
+        #   proceso != 1 → DESPUES DE MERMA (base: cantidad_despues_merma)
+        intermedios_antes = []
+        intermedios_despues = []
         if self.producto and self.producto.intermedios_empaques_ids:
             records = self.env['intermedios.empaques'].search([
                 ('lista_materiales', '=', self.producto.id)
             ])
-            # Convert records to a list of dictionaries
-            intermedios_empaques = []
             for rec in records:
-                # Obtener el costo según el tipo seleccionado
                 if self.tipo_costo == 'autorizado':
                     costo = self.get_costo_autorizado(rec.product_id)
                     costo_usd = self.get_costo_autorizado_usd(rec.product_id)
                 else:
                     costo = self.get_ultimo_costo(rec.product_id)
                     costo_usd = self.get_ultimo_costo_usd(rec.product_id)
-                
-                intermedios_empaques.append({
+
+                # Ajuste de costo por factor_inv de la unidad de compra:
+                #   costo_ajustado = (costo / factor_inv) / kgs_unidad (o unidad_pza)
+                factor_inv = rec.product_id.uom_po_id.factor_inv or 1.0
+                conversion = rec.kgs_unidad if rec.kgs_unidad > 0 else rec.unidad_pza
+                if factor_inv > 0 and conversion > 0:
+                    costo = (costo / factor_inv) / conversion
+                    costo_usd = (costo_usd / factor_inv) / conversion if costo_usd > 0 else 0.0
+
+                masa_base = masa_formula if rec.proceso == 2 else cantidad_despues_merma
+                if rec.kgs_unidad > 0:
+                    qty_needed = rec.kgs_unidad
+                elif rec.unidad_pza > 0:
+                    qty_needed = rec.unidad_pza
+                else:
+                    qty_needed = 0.0
+
+                item = {
                     'id': rec.id,
                     'name': rec.name,
-                    'product_id': {
-                        'id': rec.product_id.id,
-                        'name': rec.product_id.name,
-                    },
+                    'product_id': {'id': rec.product_id.id, 'name': rec.product_id.name},
                     'product_uom_name': rec.product_uom_name,
                     'kgs_unidad': rec.kgs_unidad,
                     'unidad_pza': rec.unidad_pza,
+                    'qty_needed': qty_needed,
                     'costo': costo,
-                    'costo_usd': costo_usd
-                })
-            
+                    'costo_usd': costo_usd,
+                    'proceso': rec.proceso,
+                }
+                if rec.proceso == 2:
+                    intermedios_antes.append(item)
+                else:
+                    intermedios_despues.append(item)
+
         data = {
             'ids': self.ids,
             'model': self._name,
@@ -407,12 +431,17 @@ class FormulasCosto(models.TransientModel):
             'producto': self.producto.product_tmpl_id.name,
             'codigo': self.producto.product_tmpl_id.default_code,
             'cantidad': self.cantidad,
+            'masa_formula': masa_formula,
+            'pct_merma': self.pct_merma,
+            'cantidad_despues_merma': cantidad_despues_merma,
             'ing_limitante': self.ing_limitante,
             'nombre_il': self.ing_limitante.product_tmpl_id.name if self.ing_limitante else '',
             'cant_limitante': self.cant_limitante,
             'tipo_costo': cost_type_display.lower() if cost_type_display else '',
-            'intermedios_empaques': intermedios_empaques,
-            'bom_code': self.producto.code  # Add BOM code to the template context
+            'intermedios_antes': intermedios_antes,
+            'intermedios_despues': intermedios_despues,
+            'intermedios_empaques': intermedios_antes + intermedios_despues,
+            'bom_code': self.producto.code,
         }
 
         # Obtener la acción del reporte

@@ -8,6 +8,7 @@
                         <div class="row">
                             <div class="col">
                                 <table width="100%">
+                                    <!-- Encabezado: sin ingrediente limitante -->
                                     <tr>
                                         <t t-if="cant_limitante == 0">
                                             <th class="table-active" colspan="8" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:14px;vertical-align:middle; padding:2px">
@@ -19,12 +20,15 @@
                                                   <strong>Tipo de cambio: </strong><span t-esc="'{0:,.4f}'.format(env.company.x_studio_tipo_de_cambio or 0.0)"/>
                                                 </span>
                                               </div>
-                                              <div style="position: relative;">
-                                                <span><strong>Cantidad: </strong> <span t-esc="'{0:,.4f}'.format(cantidad)"/> Kgs.&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span>
-                                                <t t-if="bom_code">
-                                                  <span style="position: absolute; left: 200px;">
-                                                    <strong></strong><span t-esc="bom_code"/>
+                                              <div>
+                                                <span><strong>Cantidad: </strong> <span t-esc="'{0:,.4f}'.format(masa_formula)"/> Kgs.</span>
+                                                <t t-if="pct_merma > 0">
+                                                  <span>&#160;&#160;<strong>% Merma: </strong><span t-esc="'{0:,.2f}'.format(pct_merma)"/>%&#160;&#160;
+                                                    <strong>Kg. después de merma: </strong><span t-esc="'{0:,.4f}'.format(cantidad_despues_merma)"/>
                                                   </span>
+                                                </t>
+                                                <t t-if="bom_code">
+                                                  <span>&#160;&#160;<span t-esc="bom_code"/></span>
                                                 </t>
                                                 <span style="float: right; white-space: nowrap; margin-left: 10px;">
                                                   <t t-if="tipo_costo">(<t t-esc="tipo_costo"/>)</t>
@@ -50,7 +54,9 @@
                                             </th>
                                         </t>
                                     </tr>
-                                     <tr>
+
+                                    <!-- Encabezados de columnas -->
+                                    <tr>
                                         <td class="table-active" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle; padding:5px">
                                           <strong>Ingrediente</strong>
                                         </td>
@@ -70,170 +76,257 @@
                                           <strong>$ MXN</strong>
                                         </td>
                                         <td width="15" class="table-active" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle; padding:5px">
-                                          <strong>Importe total MN</strong>
+                                          <strong>Importe MN</strong>
                                         </td>
                                         <td width="15" class="table-active" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle; padding:5px">
                                           <strong>% Costo</strong>
                                         </td>
                                     </tr>
-                                    <t t-set="tot_gral" t-value="0"/>
-                                    <t t-set="tot_costo" t-value="0"/>
-                                    <!-- Calculate total cost of first section -->
-                                    <t t-set="total_cost" t-value="0"/>
+
+                                    <!-- ── Precalcular totales ── -->
+                                    <t t-set="total_cost_formula" t-value="0"/>
                                     <t t-foreach="vals" t-as="line">
-                                        <t t-set="total_cost" t-value="total_cost + (line['costo'] * line['cant_comp'])"/>
+                                        <t t-set="total_cost_formula" t-value="total_cost_formula + (line['costo'] * line['cant_comp'])"/>
                                     </t>
-                                    
-                                    <!-- Calculate total cost of intermedios y empaques -->
-                                    <t t-set="total_intermedios" t-value="0"/>
-                                    <t t-if="intermedios_empaques">
-                                        <t t-foreach="intermedios_empaques" t-as="item">
-                                            <t t-set="cant" t-value="item.get('kgs_unidad', 0.0) or item.get('unidad_pza', 0.0)"/>
-                                            <t t-set="costo" t-value="item.get('costo', 0.0)"/>
-                                            <t t-set="total_intermedios" t-value="total_intermedios + (cant * costo)"/>
-                                        </t>
+
+                                    <t t-set="total_cost_int_antes" t-value="0"/>
+                                    <t t-foreach="intermedios_antes" t-as="item">
+                                        <t t-set="total_cost_int_antes" t-value="total_cost_int_antes + (item.get('qty_needed', 0.0) * item.get('costo', 0.0))"/>
                                     </t>
-                                    
-                                    <!-- Combined total cost -->
-                                    <t t-set="combined_total" t-value="total_cost + total_intermedios"/>
+
+                                    <t t-set="total_cost_int_despues" t-value="0"/>
+                                    <t t-foreach="intermedios_despues" t-as="item">
+                                        <t t-set="total_cost_int_despues" t-value="total_cost_int_despues + (item.get('qty_needed', 0.0) * item.get('costo', 0.0))"/>
+                                    </t>
+
+                                    <t t-set="combined_total" t-value="total_cost_formula + total_cost_int_antes + total_cost_int_despues"/>
+                                    <t t-set="total_antes"    t-value="total_cost_formula + total_cost_int_antes"/>
+
+                                    <!-- ── SECCIÓN: FÓRMULAS ── -->
+                                    <t t-set="tot_gral_formula" t-value="0"/>
                                     <t t-foreach="vals" t-as="table_line">
                                         <tr>
-                                            <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
+                                            <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
                                                 <t t-esc="table_line['componente']"/>
                                             </td>
-                                            <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
+                                            <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
                                                 <t t-esc="table_line['cod_prov']"/>
                                             </td>
-                                            <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                            <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
                                                 <t t-esc="'{0:,.4f}'.format(table_line['cant_comp'])"/>
-                                                <t t-set="tot_gral" t-value="tot_gral + table_line['cant_comp']"/>
+                                                <t t-set="tot_gral_formula" t-value="tot_gral_formula + table_line['cant_comp']"/>
                                             </td>
-                                            <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" >
+                                            <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
                                                 <t t-esc="table_line['unidad']"/>
                                             </td>
-                                            <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                            <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
                                                 <t t-esc="'{0:,.4f}'.format(table_line['costo_usd'])"/>
                                             </td>
-                                            <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                            <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
                                                 <t t-esc="'{0:,.4f}'.format(table_line['costo'])"/>
                                             </td>
-                                            <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                <t t-esc="'{0:,.4f}'.format(table_line['costo'] * table_line['cant_comp'])"/>
-                                                <t t-set="tot_costo" t-value="tot_costo + (table_line['costo'] * table_line['cant_comp'])"/>
+                                            <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                <t t-esc="'{0:,.2f}'.format(table_line['costo'] * table_line['cant_comp'])"/>
                                             </td>
-                                            <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                            <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
                                                 <t t-esc="'{0:,.2f}'.format((table_line['costo'] * table_line['cant_comp'] / combined_total) * 100 if combined_total > 0 else 0)"/>%
                                             </td>
                                         </tr>
                                     </t>
+
+                                    <!-- Subtotal fórmulas -->
+                                    <t t-set="costo_kg_formula" t-value="total_cost_formula / tot_gral_formula if tot_gral_formula > 0 else 0"/>
                                     <tr>
-                                        <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
-                                        <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
-                                        <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle;" align="right"><strong t-esc="'{0:,.4f}'.format(tot_gral)"/></td>
-                                        <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
-                                        <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
-                                        <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
-                                        <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right"><strong t-esc="'{0:,.4f}'.format(tot_costo)"/></td>
-                                        <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                            <t t-esc="'{0:,.2f}'.format((tot_costo / combined_total) * 100 if combined_total > 0 else 0)"/>%
+                                        <td class="table-secondary" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"><strong>Total Fórmulas</strong></td>
+                                        <td class="table-secondary" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
+                                        <td class="table-secondary" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                            <strong t-esc="'{0:,.4f}'.format(tot_gral_formula)"/>
+                                        </td>
+                                        <td class="table-secondary" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"><strong>KG</strong></td>
+                                        <td class="table-secondary" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
+                                        <td class="table-secondary" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                            <strong t-esc="'{0:,.4f}'.format(costo_kg_formula)"/>
+                                        </td>
+                                        <td class="table-secondary" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                            <strong t-esc="'{0:,.2f}'.format(total_cost_formula)"/>
+                                        </td>
+                                        <td class="table-secondary" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                            <t t-esc="'{0:,.2f}'.format((total_cost_formula / combined_total) * 100 if combined_total > 0 else 0)"/>%
                                         </td>
                                     </tr>
-                                    <!-- Inicializar total_importe si es None -->
-                                    <t t-set="total_importe" t-value="total_importe or 0.0"/>
-                                    <!-- Calcular costo por kilo antes de intermedios y empaques -->
-                                    <t t-set="costo_ingredientes" t-value="0.0"/>
-                                    <t t-set="cantidad_ingredientes" t-value="0.0"/>
-                                    <t t-foreach="vals" t-as="line">
-                                        <t t-set="costo_ingredientes" t-value="costo_ingredientes + (line['costo'] * line['cant_comp'])"/>
-                                        <t t-set="cantidad_ingredientes" t-value="cantidad_ingredientes + line['cant_comp']"/>
-                                    </t>
-                                    <t t-set="costo_antes" t-value="costo_ingredientes / cantidad_ingredientes if cantidad_ingredientes > 0 else 0"/>
-                                    <tr>
-                                        <td colspan="6" class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                            <strong>Costo por kilo (antes de intermedios y empaques):</strong>
-                                        </td>
-                                        <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                            <strong t-esc="'{0:,.4f}'.format(costo_antes)"/>
-                                        </td>
-                                        <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
-                                    </tr>
-                                    
-                                    <!-- Sección de Intermedios y Empaques -->
-                                    <t t-if="intermedios_empaques and len(intermedios_empaques) > 0">
+
+                                    <!-- ── SECCIÓN: INT. Y EMP. ANTES DE MERMA ── -->
+                                    <t t-if="intermedios_antes">
                                         <tr>
-                                            <td colspan="8" class="table-active" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle; padding:2px">
-                                                <strong>Intermedios y Empaques</strong>
+                                            <td colspan="8" class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle; padding:2px">
+                                                <strong>Int. y Emp. Antes de Merma</strong>
                                             </td>
                                         </tr>
-
-                                        <t t-set="total_importe" t-value="0.0"/>
-                                        <t t-foreach="intermedios_empaques" t-as="item">
-                                            <t t-set="cantidad" t-value="item.get('kgs_unidad', 0.0) or item.get('unidad_pza', 0.0)"/>
-                                            <t t-set="costo" t-value="item.get('costo', 0.0)"/>
-                                            <t t-set="costo_total" t-value="cantidad * costo"/>
-                                            <t t-set="total_importe" t-value="total_importe + costo_total"/>
+                                        <t t-foreach="intermedios_antes" t-as="item">
+                                            <t t-set="item_qty"    t-value="item.get('qty_needed', 0.0)"/>
+                                            <t t-set="item_costo"  t-value="item.get('costo', 0.0)"/>
+                                            <t t-set="item_import" t-value="item_qty * item_costo"/>
                                             <tr>
-                                                <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
-                                                    <t t-esc="item.get('product_id', {}).get('name', '')" t-raw="0"/>
+                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
+                                                    <t t-esc="item.get('product_id', {}).get('name', '')"/>
                                                 </td>
-                                                <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
-                                                    <t t-esc="item.get('cod_prov', '')"/>
+                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
+                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                    <t t-esc="'{0:,.4f}'.format(item_qty)"/>
                                                 </td>
-                                                <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                    <t t-esc="'{0:,.4f}'.format(cantidad) if cantidad else '0.0000'"/>
-                                                    <t t-set="tot_gral" t-value="tot_gral + cantidad"/>
-                                                </td>
-                                                <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
+                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
                                                     <t t-esc="item.get('product_uom_name', '')"/>
                                                 </td>
-                                                <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                    <t t-esc="'{0:,.4f}'.format(item.get('costo_usd', 0.0)) if item.get('costo_usd') else '0.0000'"/>
+                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                    <t t-esc="'{0:,.4f}'.format(item.get('costo_usd', 0.0))"/>
                                                 </td>
-                                                <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                    <t t-esc="'{0:,.4f}'.format(costo) if costo else '0.0000'"/>
+                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                    <t t-esc="'{0:,.4f}'.format(item_costo)"/>
                                                 </td>
-                                                <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                    <t t-esc="'{0:,.4f}'.format(costo_total) if costo_total else '0.0000'"/>
-                                                    <t t-set="tot_costo" t-value="tot_costo + costo_total"/>
+                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                    <t t-esc="'{0:,.2f}'.format(item_import)"/>
                                                 </td>
-                                                <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                    <t t-esc="'{0:,.2f}'.format((costo_total / combined_total) * 100 if combined_total > 0 else 0)"/>%
+                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                    <t t-esc="'{0:,.2f}'.format((item_import / combined_total) * 100 if combined_total > 0 else 0)"/>%
                                                 </td>
                                             </tr>
                                         </t>
-                                        <!-- Total row for Intermedios y Empaques -->
-                                        <tr style="font-weight: bold;">
-                                            <td colspan="2" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                Total Intermedios y Empaques:
+                                        <!-- Subtotal int. antes -->
+                                        <t t-set="costo_kg_int_antes" t-value="total_cost_int_antes / masa_formula if masa_formula > 0 else 0"/>
+                                        <tr>
+                                            <td class="table-secondary" colspan="5" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                <strong>Costo por Kg. de masa (int. antes):</strong>
                                             </td>
-                                            <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                <strong t-esc="'{0:,.4f}'.format(tot_gral)"/>
+                                            <td class="table-secondary" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                <strong t-esc="'{0:,.4f}'.format(costo_kg_int_antes)"/>
                                             </td>
-                                            <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
-                                            <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
-                                            <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
-                                            <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                <strong t-esc="'{0:,.4f}'.format(total_importe) if total_importe else '0.0000'"/>
+                                            <td class="table-secondary" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                <strong t-esc="'{0:,.2f}'.format(total_cost_int_antes)"/>
                                             </td>
-                                            <td style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                <t t-esc="'{0:,.2f}'.format((total_importe / combined_total) * 100 if combined_total > 0 else 0)"/>%
+                                            <td class="table-secondary" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                <t t-esc="'{0:,.2f}'.format((total_cost_int_antes / combined_total) * 100 if combined_total > 0 else 0)"/>%
                                             </td>
                                         </tr>
-                                        <tr><td colspan="8" style="height: 15px;"></td></tr>
                                     </t>
-                                    
-                                    <!-- Costo por kilo después de intermedios y empaques -->
-                                    <t t-set="costo_intermedios_por_kilo" t-value="total_importe / cantidad if cantidad > 0 else 0"/>
-                                    <t t-set="costo_despues" t-value="costo_antes + costo_intermedios_por_kilo"/>
+
+                                    <!-- ── TOTAL ANTES DE MERMA ── -->
+                                    <t t-set="costo_kg_antes_merma" t-value="total_antes / masa_formula if masa_formula > 0 else 0"/>
                                     <tr>
-                                        <td colspan="6" class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                            <strong>Costo por kilo (después de intermedios y empaques):</strong>
+                                        <td class="table-secondary" colspan="5" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                            <strong>Costo por Kg. de prod. antes de merma:</strong>
                                         </td>
-                                        <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                            <strong t-esc="'{0:,.4f}'.format(costo_despues)"/>
+                                        <td class="table-secondary" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                            <strong t-esc="'{0:,.4f}'.format(costo_kg_antes_merma)"/>
                                         </td>
-                                        <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 1px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
+                                        <td class="table-secondary" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                            <strong t-esc="'{0:,.2f}'.format(total_antes)"/>
+                                        </td>
+                                        <td class="table-secondary" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                            <t t-esc="'{0:,.2f}'.format((total_antes / combined_total) * 100 if combined_total > 0 else 0)"/>%
+                                        </td>
                                     </tr>
+
+                                    <!-- ── MERMA ── -->
+                                    <t t-if="pct_merma > 0">
+                                        <t t-set="costo_kg_post_merma" t-value="total_antes / cantidad_despues_merma if cantidad_despues_merma > 0 else 0"/>
+                                        <tr>
+                                            <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
+                                                <strong>MERMA <t t-esc="'{0:,.2f}'.format(pct_merma)"/>%</strong>
+                                            </td>
+                                            <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
+                                            <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                <t t-esc="'{0:,.4f}'.format(cantidad_despues_merma)"/>
+                                            </td>
+                                            <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
+                                                KG
+                                            </td>
+                                            <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
+                                            <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                <t t-esc="'{0:,.4f}'.format(costo_kg_post_merma)"/>
+                                            </td>
+                                            <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                <t t-esc="'{0:,.2f}'.format(total_antes)"/>
+                                            </td>
+                                            <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                <t t-esc="'{0:,.2f}'.format((total_antes / combined_total) * 100 if combined_total > 0 else 0)"/>%
+                                            </td>
+                                        </tr>
+                                    </t>
+
+                                    <!-- ── SECCIÓN: INT. Y EMP. DESPUES DE MERMA ── -->
+                                    <t t-if="intermedios_despues">
+                                        <tr>
+                                            <td colspan="8" class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle; padding:2px">
+                                                <strong t-if="pct_merma > 0">Int. y Emp. Después de Merma</strong>
+                                                <strong t-else="">Intermedios y Empaques</strong>
+                                            </td>
+                                        </tr>
+                                        <t t-foreach="intermedios_despues" t-as="item">
+                                            <t t-set="item_qty"    t-value="item.get('qty_needed', 0.0)"/>
+                                            <t t-set="item_costo"  t-value="item.get('costo', 0.0)"/>
+                                            <t t-set="item_import" t-value="item_qty * item_costo"/>
+                                            <tr>
+                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
+                                                    <t t-esc="item.get('product_id', {}).get('name', '')"/>
+                                                </td>
+                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
+                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                    <t t-esc="'{0:,.4f}'.format(item_qty)"/>
+                                                </td>
+                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
+                                                    <t t-esc="item.get('product_uom_name', '')"/>
+                                                </td>
+                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                    <t t-esc="'{0:,.4f}'.format(item.get('costo_usd', 0.0))"/>
+                                                </td>
+                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                    <t t-esc="'{0:,.4f}'.format(item_costo)"/>
+                                                </td>
+                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                    <t t-esc="'{0:,.2f}'.format(item_import)"/>
+                                                </td>
+                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                    <t t-esc="'{0:,.2f}'.format((item_import / combined_total) * 100 if combined_total > 0 else 0)"/>%
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <!-- Subtotal int. después -->
+                                        <t t-set="base_despues"         t-value="cantidad_despues_merma if cantidad_despues_merma > 0 else masa_formula"/>
+                                        <t t-set="costo_kg_int_despues" t-value="total_cost_int_despues / base_despues if base_despues > 0 else 0"/>
+                                        <tr>
+                                            <td class="table-secondary" colspan="5" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                <strong>Costo por Kg. de masa (int. después):</strong>
+                                            </td>
+                                            <td class="table-secondary" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                <strong t-esc="'{0:,.4f}'.format(costo_kg_int_despues)"/>
+                                            </td>
+                                            <td class="table-secondary" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                <strong t-esc="'{0:,.2f}'.format(total_cost_int_despues)"/>
+                                            </td>
+                                            <td class="table-secondary" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                <t t-esc="'{0:,.2f}'.format((total_cost_int_despues / combined_total) * 100 if combined_total > 0 else 0)"/>%
+                                            </td>
+                                        </tr>
+                                    </t>
+
+                                    <!-- ── COSTO FINAL POR KG DE PRODUCTO ── -->
+                                    <t t-set="base_final"      t-value="cantidad_despues_merma if cantidad_despues_merma > 0 else masa_formula"/>
+                                    <t t-set="costo_final_kg"  t-value="combined_total / base_final if base_final > 0 else 0"/>
+                                    <tr>
+                                        <td class="table-secondary" colspan="5" style="border-style: solid;border-width: 1px;border-top: 2px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                            <strong>Costo final por Kg. de producto:</strong>
+                                        </td>
+                                        <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 2px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                            <strong t-esc="'{0:,.4f}'.format(costo_final_kg)"/>
+                                        </td>
+                                        <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 2px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                            <strong t-esc="'{0:,.2f}'.format(combined_total)"/>
+                                        </td>
+                                        <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 2px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                            <strong>100.00%</strong>
+                                        </td>
+                                    </tr>
+
                                 </table>
                             </div>
                         </div>
