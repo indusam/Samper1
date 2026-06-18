@@ -47,9 +47,13 @@ class IntermediosEmpaques(models.Model):
 
     @api.depends('product_id')
     def _compute_product_uom_name(self):
-        """Compute the UoM name based on the selected product."""
         for record in self:
-            record.product_uom_name = record.product_id.uom_id.name if record.product_id else ''
+            if record.product_id and record.product_id.uom_po_id:
+                record.product_uom_name = record.product_id.uom_po_id.x_studio_unidad or record.product_id.uom_po_id.name
+            elif record.product_id:
+                record.product_uom_name = record.product_id.uom_id.name
+            else:
+                record.product_uom_name = ''
     
     # CRUD methods
     # No need to override create - name and product_uom_name are computed fields
