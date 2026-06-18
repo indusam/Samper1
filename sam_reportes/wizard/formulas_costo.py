@@ -411,7 +411,7 @@ class FormulasCosto(models.TransientModel):
                     'id': rec.id,
                     'name': rec.name,
                     'product_id': {'id': rec.product_id.id, 'name': rec.product_id.name},
-                    'product_uom_name': rec.product_uom_name,
+                    'product_uom_name': (rec.product_id.uom_po_id.x_studio_unidad or rec.product_id.uom_po_id.name) if rec.product_id.uom_po_id else (rec.product_id.uom_id.name if rec.product_id else ''),
                     'kgs_unidad': rec.kgs_unidad,
                     'unidad_pza': rec.unidad_pza,
                     'qty_needed': qty_needed,
