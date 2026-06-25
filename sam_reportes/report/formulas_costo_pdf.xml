@@ -166,8 +166,8 @@
                                 </table>
 
                                 <!-- ════════════════════════════════════════
-                                     TABLA 2: INTERMEDIOS (10 columnas)
-                                     Ingrediente | Código | Kg/Unidad | Unidad/Pieza
+                                     TABLA 2: INTERMEDIOS (11 columnas)
+                                     Ingrediente | Código | Kg/Unidad | Unidad/Pieza | Cantidad
                                      | Unidad | $USD | $MXN | Importe MN | Costo kg/masa | % Costo
                                 ════════════════════════════════════════ -->
                                 <t t-if="intermedios_antes or intermedios_despues or pct_merma > 0">
@@ -177,16 +177,17 @@
                                     <t t-if="intermedios_antes">
                                         <!-- Título de sección -->
                                         <tr>
-                                            <td colspan="10" class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle; padding:2px">
+                                            <td colspan="11" class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle; padding:2px">
                                                 <strong>Intermedios</strong>
                                             </td>
                                         </tr>
-                                        <!-- Sub-encabezado fijo con las dos columnas de cantidad -->
+                                        <!-- Sub-encabezado -->
                                         <tr>
                                             <td class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>Ingrediente</strong></td>
                                             <td class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>Código</strong></td>
                                             <td class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>Kg/Unidad</strong></td>
                                             <td class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>Unidad/Pieza</strong></td>
+                                            <td class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>Cantidad</strong></td>
                                             <td width="18" class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>Unidad</strong></td>
                                             <td width="15" class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>$ USD</strong></td>
                                             <td width="15" class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>$ MXN</strong></td>
@@ -199,6 +200,8 @@
                                             <t t-set="item_qty"    t-value="item.get('qty_needed', 0.0)"/>
                                             <t t-set="item_costo"  t-value="item.get('costo', 0.0)"/>
                                             <t t-set="item_import" t-value="item_qty * item_costo"/>
+                                            <t t-set="item_divisor" t-value="item.get('kgs_unidad', 0) if item.get('kgs_unidad', 0) > 0 else item.get('unidad_pza', 0)"/>
+                                            <t t-set="item_cant"   t-value="masa_formula / item_divisor if item_divisor > 0 else 0"/>
                                             <tr>
                                                 <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
                                                     <t t-esc="item.get('product_id', {}).get('name', '')"/>
@@ -213,6 +216,9 @@
                                                     <t t-if="item.get('unidad_pza', 0) > 0">
                                                         <t t-esc="'{0:,.4f}'.format(item.get('unidad_pza', 0))"/>
                                                     </t>
+                                                </td>
+                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                    <t t-esc="'{0:,.4f}'.format(item_cant)"/>
                                                 </td>
                                                 <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
                                                     <t t-esc="item.get('product_uom_name', '')"/>
@@ -237,7 +243,7 @@
                                         <!-- Subtotal antes -->
                                         <t t-set="costo_kg_int_antes" t-value="total_cost_int_antes / masa_formula if masa_formula > 0 else 0"/>
                                         <tr>
-                                            <td class="table-secondary" colspan="6" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                            <td class="table-secondary" colspan="7" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
                                                 <strong>Costo por Kg. de masa (int. antes):</strong>
                                             </td>
                                             <td class="table-secondary" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
@@ -265,6 +271,7 @@
                                                 <t t-esc="'{0:,.4f}'.format(cantidad_despues_merma)"/>
                                             </td>
                                             <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
+                                            <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
                                             <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">KG</td>
                                             <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
                                             <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
@@ -284,16 +291,17 @@
                                     <t t-if="intermedios_despues">
                                         <!-- Título de sección -->
                                         <tr>
-                                            <td colspan="10" class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle; padding:2px">
+                                            <td colspan="11" class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle; padding:2px">
                                                 <strong>Intermedios</strong>
                                             </td>
                                         </tr>
-                                        <!-- Sub-encabezado fijo con las dos columnas de cantidad -->
+                                        <!-- Sub-encabezado -->
                                         <tr>
                                             <td class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>Ingrediente</strong></td>
                                             <td class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>Código</strong></td>
                                             <td class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>Kg/Unidad</strong></td>
                                             <td class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>Unidad/Pieza</strong></td>
+                                            <td class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>Cantidad</strong></td>
                                             <td width="18" class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>Unidad</strong></td>
                                             <td width="15" class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>$ USD</strong></td>
                                             <td width="15" class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>$ MXN</strong></td>
@@ -306,6 +314,8 @@
                                             <t t-set="item_qty"    t-value="item.get('qty_needed', 0.0)"/>
                                             <t t-set="item_costo"  t-value="item.get('costo', 0.0)"/>
                                             <t t-set="item_import" t-value="item_qty * item_costo"/>
+                                            <t t-set="item_divisor" t-value="item.get('kgs_unidad', 0) if item.get('kgs_unidad', 0) > 0 else item.get('unidad_pza', 0)"/>
+                                            <t t-set="item_cant"   t-value="masa_formula / item_divisor if item_divisor > 0 else 0"/>
                                             <tr>
                                                 <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
                                                     <t t-esc="item.get('product_id', {}).get('name', '')"/>
@@ -320,6 +330,9 @@
                                                     <t t-if="item.get('unidad_pza', 0) > 0">
                                                         <t t-esc="'{0:,.4f}'.format(item.get('unidad_pza', 0))"/>
                                                     </t>
+                                                </td>
+                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                    <t t-esc="'{0:,.4f}'.format(item_cant)"/>
                                                 </td>
                                                 <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
                                                     <t t-esc="item.get('product_uom_name', '')"/>
@@ -345,7 +358,7 @@
                                         <t t-set="base_despues"         t-value="cantidad_despues_merma if cantidad_despues_merma > 0 else masa_formula"/>
                                         <t t-set="costo_kg_int_despues" t-value="total_cost_int_despues / base_despues if base_despues > 0 else 0"/>
                                         <tr>
-                                            <td class="table-secondary" colspan="6" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                            <td class="table-secondary" colspan="7" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
                                                 <strong>Costo por Kg. de masa (int. después):</strong>
                                             </td>
                                             <td class="table-secondary" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
@@ -365,7 +378,7 @@
                                     <t t-set="base_final"     t-value="cantidad_despues_merma if cantidad_despues_merma > 0 else masa_formula"/>
                                     <t t-set="costo_final_kg" t-value="combined_total / base_final if base_final > 0 else 0"/>
                                     <tr>
-                                        <td class="table-secondary" colspan="6" style="border-style: solid;border-width: 1px;border-top: 2px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                        <td class="table-secondary" colspan="7" style="border-style: solid;border-width: 1px;border-top: 2px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
                                             <strong>Costo final por Kg. de producto:</strong>
                                         </td>
                                         <td class="table-secondary" style="border-style: solid;border-width: 1px;border-top: 2px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
