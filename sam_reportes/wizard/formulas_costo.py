@@ -397,7 +397,6 @@ class FormulasCosto(models.TransientModel):
                 conversion = rec.kgs_unidad if rec.kgs_unidad > 0 else rec.unidad_pza
                 if factor_inv > 0 and conversion > 0:
                     costo = (costo / factor_inv) / conversion
-                    costo_usd = (costo_usd / factor_inv) / conversion if costo_usd > 0 else 0.0
 
                 masa_base = masa_formula if rec.proceso == 2 else cantidad_despues_merma
                 if rec.kgs_unidad > 0:
@@ -407,6 +406,7 @@ class FormulasCosto(models.TransientModel):
                 else:
                     qty_needed = 0.0
 
+                uom_ratio = rec.product_id.uom_po_id.ratio if rec.product_id.uom_po_id else 1.0
                 item = {
                     'id': rec.id,
                     'name': rec.name,
@@ -417,6 +417,7 @@ class FormulasCosto(models.TransientModel):
                     'qty_needed': qty_needed,
                     'costo': costo,
                     'costo_usd': costo_usd,
+                    'uom_ratio': uom_ratio,
                     'proceso': rec.proceso,
                 }
                 if rec.proceso == 2:

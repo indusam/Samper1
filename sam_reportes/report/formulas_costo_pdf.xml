@@ -97,11 +97,17 @@
                                     </t>
                                     <t t-set="total_cost_int_antes" t-value="0"/>
                                     <t t-foreach="intermedios_antes" t-as="item">
-                                        <t t-set="total_cost_int_antes" t-value="total_cost_int_antes + (item.get('qty_needed', 0.0) * item.get('costo', 0.0))"/>
+                                        <t t-set="_d" t-value="item.get('kgs_unidad', 0) if item.get('kgs_unidad', 0) > 0 else item.get('unidad_pza', 0)"/>
+                                        <t t-set="_c" t-value="masa_formula / _d if _d > 0 else 0"/>
+                                        <t t-set="_r" t-value="item.get('uom_ratio', 1.0) or 1.0"/>
+                                        <t t-set="total_cost_int_antes" t-value="total_cost_int_antes + ((item.get('costo_usd', 0.0) / _r) * (env.company.x_studio_tipo_de_cambio or 1.0) * _c)"/>
                                     </t>
                                     <t t-set="total_cost_int_despues" t-value="0"/>
                                     <t t-foreach="intermedios_despues" t-as="item">
-                                        <t t-set="total_cost_int_despues" t-value="total_cost_int_despues + (item.get('qty_needed', 0.0) * item.get('costo', 0.0))"/>
+                                        <t t-set="_d" t-value="item.get('kgs_unidad', 0) if item.get('kgs_unidad', 0) > 0 else item.get('unidad_pza', 0)"/>
+                                        <t t-set="_c" t-value="masa_formula / _d if _d > 0 else 0"/>
+                                        <t t-set="_r" t-value="item.get('uom_ratio', 1.0) or 1.0"/>
+                                        <t t-set="total_cost_int_despues" t-value="total_cost_int_despues + ((item.get('costo_usd', 0.0) / _r) * (env.company.x_studio_tipo_de_cambio or 1.0) * _c)"/>
                                     </t>
                                     <t t-set="combined_total" t-value="total_cost_formula + total_cost_int_antes + total_cost_int_despues"/>
                                     <t t-set="total_antes"    t-value="total_cost_formula + total_cost_int_antes"/>
@@ -197,11 +203,11 @@
                                         </tr>
                                         <!-- Filas de datos -->
                                         <t t-foreach="intermedios_antes" t-as="item">
-                                            <t t-set="item_qty"    t-value="item.get('qty_needed', 0.0)"/>
-                                            <t t-set="item_costo"  t-value="item.get('costo', 0.0)"/>
-                                            <t t-set="item_import" t-value="item_qty * item_costo"/>
                                             <t t-set="item_divisor" t-value="item.get('kgs_unidad', 0) if item.get('kgs_unidad', 0) > 0 else item.get('unidad_pza', 0)"/>
-                                            <t t-set="item_cant"   t-value="masa_formula / item_divisor if item_divisor > 0 else 0"/>
+                                            <t t-set="item_cant"    t-value="masa_formula / item_divisor if item_divisor > 0 else 0"/>
+                                            <t t-set="item_ratio"   t-value="item.get('uom_ratio', 1.0) or 1.0"/>
+                                            <t t-set="item_mxn"     t-value="(item.get('costo_usd', 0.0) / item_ratio) * (env.company.x_studio_tipo_de_cambio or 1.0)"/>
+                                            <t t-set="item_import"  t-value="item_mxn * item_cant"/>
                                             <tr>
                                                 <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
                                                     <t t-esc="item.get('product_id', {}).get('name', '')"/>
@@ -224,10 +230,10 @@
                                                     <t t-esc="item.get('product_uom_name', '')"/>
                                                 </td>
                                                 <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                    <t t-esc="'{0:,.4f}'.format(item.get('costo_usd', 0.0))"/>
+                                                    <t t-esc="'{0:,.4f}'.format(item.get('costo_usd', 0.0) / item_ratio)"/>
                                                 </td>
                                                 <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                    <t t-esc="'{0:,.4f}'.format(item_costo)"/>
+                                                    <t t-esc="'{0:,.4f}'.format(item_mxn)"/>
                                                 </td>
                                                 <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
                                                     <t t-esc="'{0:,.2f}'.format(item_import)"/>
@@ -311,11 +317,11 @@
                                         </tr>
                                         <!-- Filas de datos -->
                                         <t t-foreach="intermedios_despues" t-as="item">
-                                            <t t-set="item_qty"    t-value="item.get('qty_needed', 0.0)"/>
-                                            <t t-set="item_costo"  t-value="item.get('costo', 0.0)"/>
-                                            <t t-set="item_import" t-value="item_qty * item_costo"/>
                                             <t t-set="item_divisor" t-value="item.get('kgs_unidad', 0) if item.get('kgs_unidad', 0) > 0 else item.get('unidad_pza', 0)"/>
-                                            <t t-set="item_cant"   t-value="masa_formula / item_divisor if item_divisor > 0 else 0"/>
+                                            <t t-set="item_cant"    t-value="masa_formula / item_divisor if item_divisor > 0 else 0"/>
+                                            <t t-set="item_ratio"   t-value="item.get('uom_ratio', 1.0) or 1.0"/>
+                                            <t t-set="item_mxn"     t-value="(item.get('costo_usd', 0.0) / item_ratio) * (env.company.x_studio_tipo_de_cambio or 1.0)"/>
+                                            <t t-set="item_import"  t-value="item_mxn * item_cant"/>
                                             <tr>
                                                 <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
                                                     <t t-esc="item.get('product_id', {}).get('name', '')"/>
@@ -338,10 +344,10 @@
                                                     <t t-esc="item.get('product_uom_name', '')"/>
                                                 </td>
                                                 <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                    <t t-esc="'{0:,.4f}'.format(item.get('costo_usd', 0.0))"/>
+                                                    <t t-esc="'{0:,.4f}'.format(item.get('costo_usd', 0.0) / item_ratio)"/>
                                                 </td>
                                                 <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                    <t t-esc="'{0:,.4f}'.format(item_costo)"/>
+                                                    <t t-esc="'{0:,.4f}'.format(item_mxn)"/>
                                                 </td>
                                                 <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
                                                     <t t-esc="'{0:,.2f}'.format(item_import)"/>
