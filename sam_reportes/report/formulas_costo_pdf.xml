@@ -224,7 +224,8 @@
                                                     <t t-esc="item.get('product_uom_name', '')"/>
                                                 </td>
                                                 <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                    <t t-esc="'{0:,.4f}'.format(item.get('costo_usd', 0.0))"/>
+                                                    <t t-set="item_ratio" t-value="item.get('uom_ratio', 1.0) or 1.0"/>
+                                                    <t t-esc="'{0:,.4f}'.format(item.get('costo_usd', 0.0) / item_ratio)"/>
                                                 </td>
                                                 <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
                                                     <t t-esc="'{0:,.4f}'.format(item_costo)"/>
@@ -338,7 +339,8 @@
                                                     <t t-esc="item.get('product_uom_name', '')"/>
                                                 </td>
                                                 <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                    <t t-esc="'{0:,.4f}'.format(item.get('costo_usd', 0.0))"/>
+                                                    <t t-set="item_ratio" t-value="item.get('uom_ratio', 1.0) or 1.0"/>
+                                                    <t t-esc="'{0:,.4f}'.format(item.get('costo_usd', 0.0) / item_ratio)"/>
                                                 </td>
                                                 <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
                                                     <t t-esc="'{0:,.4f}'.format(item_costo)"/>

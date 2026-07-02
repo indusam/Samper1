@@ -407,6 +407,7 @@ class FormulasCosto(models.TransientModel):
                 else:
                     qty_needed = 0.0
 
+                uom_ratio = rec.product_id.uom_po_id.ratio if rec.product_id.uom_po_id else 1.0
                 item = {
                     'id': rec.id,
                     'name': rec.name,
@@ -417,6 +418,7 @@ class FormulasCosto(models.TransientModel):
                     'qty_needed': qty_needed,
                     'costo': costo,
                     'costo_usd': costo_usd,
+                    'uom_ratio': uom_ratio,
                     'proceso': rec.proceso,
                 }
                 if rec.proceso == 2:
