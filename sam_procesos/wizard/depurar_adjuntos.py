@@ -66,6 +66,11 @@ class DepurarAdjuntos(models.TransientModel):
         dominio_ext = self._build_ext_domain()
         archivos = self.env['ir.attachment'].sudo().search(dominio_base + dominio_ext)
 
+        # Nunca eliminar imágenes propias del sistema (nombre "sam_img_*")
+        archivos = archivos.filtered(
+            lambda a: not (a.name or '').startswith('sam_img_')
+        )
+
         if not archivos:
             self.write({
                 'progreso': (
