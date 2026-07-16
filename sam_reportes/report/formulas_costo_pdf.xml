@@ -174,7 +174,7 @@
                                 <!-- ════════════════════════════════════════
                                      TABLA 2: INTERMEDIOS (11 columnas)
                                      Ingrediente | Código | Kg/Unidad | Unidad/Pieza | Cantidad
-                                     | Unidad | $USD | $MXN | Importe MN | Costo kg/masa | % Costo
+                                     | Unidad | $USD | $MN | Importe MN | Costo kg/masa | % Costo
                                 ════════════════════════════════════════ -->
                                 <t t-if="intermedios_antes or intermedios_despues or pct_merma > 0">
                                 <table width="100%" style="margin-top: 4px;">
@@ -196,9 +196,9 @@
                                             <td width="15" class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>Cantidad</strong></td>
                                             <td width="18" class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>Unidad</strong></td>
                                             <td width="15" class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>$ USD</strong></td>
-                                            <td width="15" class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>$ MXN</strong></td>
+                                            <td width="15" class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>$ MN</strong></td>
                                             <td width="15" class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>Importe MN</strong></td>
-                                            <td width="15" class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>Costo kg/masa</strong></td>
+                                            <td width="15" class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>Costo kg</strong></td>
                                             <td width="15" class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>% Costo</strong></td>
                                         </tr>
                                         <!-- Filas de datos -->
@@ -310,7 +310,7 @@
                                             <td width="15" class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>Cantidad</strong></td>
                                             <td width="18" class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>Unidad</strong></td>
                                             <td width="15" class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>$ USD</strong></td>
-                                            <td width="15" class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>$ MXN</strong></td>
+                                            <td width="15" class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>$ MN</strong></td>
                                             <td width="15" class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>Importe MN</strong></td>
                                             <td width="15" class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>Costo kg/masa</strong></td>
                                             <td width="15" class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>% Costo</strong></td>
