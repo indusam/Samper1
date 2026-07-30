@@ -12,13 +12,13 @@ class MermasBom(models.Model):
     """
     _inherit = 'mrp.bom'
 
-    pct_merma_cocimiento = fields.Float(string='% Merma Cocimiento', digits=(6, 4),
+    x_pct_merma_cocimiento = fields.Float(string='% Merma Cocimiento', digits=(6, 4),
         help="Porcentaje de merma en la etapa de cocimiento")
-    pct_merma_secado = fields.Float(string='% Merma Secado', digits=(6, 4),
+    x_pct_merma_secado = fields.Float(string='% Merma Secado', digits=(6, 4),
         help="Porcentaje de merma en la etapa de secado")
-    pct_merma_rebanado = fields.Float(string='% Merma Rebanado', digits=(6, 4),
+    x_pct_merma_rebanado = fields.Float(string='% Merma Rebanado', digits=(6, 4),
         help="Porcentaje de merma en la etapa de rebanado")
-    pct_merma_empaque = fields.Float(string='% Merma Empaque', digits=(6, 4),
+    x_pct_merma_empaque = fields.Float(string='% Merma Empaque', digits=(6, 4),
         help="Porcentaje de merma en la etapa de empaque")
-    pct_merma_otros = fields.Float(string='% Merma Otros', digits=(6, 4),
+    x_pct_merma_otros = fields.Float(string='% Merma Otros', digits=(6, 4),
         help="Porcentaje de merma en otras etapas del proceso")
