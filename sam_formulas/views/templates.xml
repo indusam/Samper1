@@ -68,6 +68,22 @@
                     <field name="intermedios_empaques_ids" nolabel="1" context="{'default_lista_materiales': id}"/>
                 </page>
             </xpath>
+            <!--
+                Pestaña "Merma", ubicada a la derecha de "Intermedios y Empaques".
+                Muestra los porcentajes de merma por etapa del proceso
+                (campos definidos en models/mermas.py, herencia de mrp.bom).
+            -->
+            <xpath expr="//page[@name='intermedios_empaques']" position="after">
+                <page string="Merma" name="merma">
+                    <group>
+                        <field name="x_pct_merma_cocimiento"/>
+                        <field name="x_pct_merma_secado"/>
+                        <field name="x_pct_merma_rebanado"/>
+                        <field name="x_pct_merma_empaque"/>
+                        <field name="x_pct_merma_otros"/>
+                    </group>
+                </page>
+            </xpath>
         </field>
     </record>
 </odoo>
