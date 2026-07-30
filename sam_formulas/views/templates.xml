@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!--
+        Vista de lista (editable) para el modelo intermedios.empaques.
+        Se usa como vista embebida del campo One2many "intermedios_empaques_ids"
+        dentro de la pestaña "Intermedios y Empaques" del formulario de mrp.bom
+        (ver vista view_mrp_bom_form_inherit_intermedios_empaques más abajo).
+        No muestra los campos calculados "name" ni "product_uom_name",
+        ni el campo "lista_materiales" (se completa por contexto, no por el usuario).
+    -->
     <record id="view_intermedios_empaques_list" model="ir.ui.view">
         <field name="name">intermedios.empaques.list</field>
         <field name="model">intermedios.empaques</field>
@@ -13,6 +21,13 @@
         </field>
     </record>
 
+    <!--
+        Vista de formulario standalone para intermedios.empaques.
+        Se usaría al abrir/editar un registro de forma independiente
+        (por ejemplo, desde una acción de ventana propia del modelo).
+        Misma observación que la vista de lista: no expone "name",
+        "product_uom_name" ni "lista_materiales".
+    -->
     <record id="view_intermedios_empaques_form" model="ir.ui.view">
         <field name="name">intermedios.empaques.form</field>
         <field name="model">intermedios.empaques</field>
@@ -34,6 +49,15 @@
         </field>
     </record>
 
+    <!--
+        Vista heredada del formulario estándar de Lista de Materiales (mrp.bom).
+        Agrega la pestaña "Intermedios y Empaques" al notebook del BOM,
+        mostrando el One2many "intermedios_empaques_ids" (definido en
+        models/models.py, inverso de "lista_materiales" en intermedios.empaques).
+        El context "default_lista_materiales" precarga el BOM actual (id) al
+        crear una línea nueva desde esta pestaña, para que el usuario no tenga
+        que seleccionarlo manualmente.
+    -->
     <record id="view_mrp_bom_form_inherit_intermedios_empaques" model="ir.ui.view">
         <field name="name">mrp.bom.form.inherit.intermedios.empaques</field>
         <field name="model">mrp.bom</field>
@@ -42,6 +66,22 @@
             <xpath expr="//notebook" position="inside">
                 <page string="Intermedios y Empaques" name="intermedios_empaques">
                     <field name="intermedios_empaques_ids" nolabel="1" context="{'default_lista_materiales': id}"/>
+                </page>
+            </xpath>
+            <!--
+                Pestaña "Merma", ubicada a la derecha de "Intermedios y Empaques".
+                Muestra los porcentajes de merma por etapa del proceso
+                (campos definidos en models/mermas.py, herencia de mrp.bom).
+            -->
+            <xpath expr="//page[@name='intermedios_empaques']" position="after">
+                <page string="Merma" name="merma">
+                    <group>
+                        <field name="x_pct_merma_cocimiento"/>
+                        <field name="x_pct_merma_secado"/>
+                        <field name="x_pct_merma_rebanado"/>
+                        <field name="x_pct_merma_empaque"/>
+                        <field name="x_pct_merma_otros"/>
+                    </group>
                 </page>
             </xpath>
         </field>
