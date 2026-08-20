@@ -16,7 +16,7 @@
                 <field name="product_id" required="1"/>
                 <field name="kgs_unidad" string="Kgs/Unidad"/>
                 <field name="unidad_pza" string="Unidad/Pieza"/>
-                <field name="proceso" string="Proceso"/>
+                <field name="proceso" string="Módulo"/>
             </list>
         </field>
     </record>
@@ -41,7 +41,7 @@
                             <field name="unidad_pza" string="Unidad/Pieza"/>
                         </group>
                         <group>
-                            <field name="proceso" string="Proceso"/>
+                            <field name="proceso" string="Módulo"/>
                         </group>
                     </group>
                 </sheet>
