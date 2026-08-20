@@ -79,19 +79,19 @@
             <xpath expr="//page[@name='intermedios_empaques']" position="after">
                 <page string="Merma" name="merma">
                     <group>
-                        <group>
-                            <field name="x_pct_merma_cocimiento"/>
-                            <field name="x_pct_merma_secado"/>
-                            <field name="x_pct_merma_rebanado"/>
-                            <field name="x_pct_merma_empaque"/>
-                            <field name="x_pct_merma_otros"/>
+                        <group string="% Merma">
+                            <field name="x_pct_merma_cocimiento" string="Cocimiento"/>
+                            <field name="x_pct_merma_secado" string="Secado"/>
+                            <field name="x_pct_merma_rebanado" string="Rebanado"/>
+                            <field name="x_pct_merma_empaque" string="Empaque"/>
+                            <field name="x_pct_merma_otros" string="Otros"/>
                         </group>
-                        <group>
-                            <field name="x_modulo_merma_cocimiento"/>
-                            <field name="x_modulo_merma_secado"/>
-                            <field name="x_modulo_merma_rebanado"/>
-                            <field name="x_modulo_merma_empaque"/>
-                            <field name="x_modulo_merma_otros"/>
+                        <group string="Módulo">
+                            <field name="x_modulo_merma_cocimiento" string="Cocimiento"/>
+                            <field name="x_modulo_merma_secado" string="Secado"/>
+                            <field name="x_modulo_merma_rebanado" string="Rebanado"/>
+                            <field name="x_modulo_merma_empaque" string="Empaque"/>
+                            <field name="x_modulo_merma_otros" string="Otros"/>
                         </group>
                     </group>
                 </page>
