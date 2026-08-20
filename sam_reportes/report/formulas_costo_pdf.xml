@@ -158,9 +158,10 @@
 
                                      Se recorre "bloques_modulo" (calculado en el wizard): un bloque
                                      por cada módulo implementado (1 = masa del producto, sin ítems
-                                     propios; 2 = "Intermedios"). Cada bloque imprime, en este orden,
-                                     su sección de ítems (si tiene layout/nombre e ítems) y luego su
-                                     merma asociada (si el módulo tiene una ligada en mermas.py).
+                                     propios; 2-4 = Intermedios/Empaques/Empaques de rebanados, mismo
+                                     layout). Cada bloque imprime, en este orden, su sección de ítems
+                                     (si tiene nombre e ítems) y luego su merma asociada (si el
+                                     módulo tiene una ligada en mermas.py).
                                 ════════════════════════════════════════ -->
                                 <t t-if="bloques_modulo">
                                 <table width="100%" style="margin-top: 4px;">

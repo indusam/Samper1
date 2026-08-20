@@ -378,11 +378,10 @@ class FormulasCosto(models.TransientModel):
         masa_formula = self.cantidad if self.cantidad > 0 else tot_gral_formula
 
         # Merma por módulo, definida en la lista de materiales (models/mermas.py).
-        # Módulo 1 = masa del producto (fórmula). Módulo 2 = Intermedios.
-        # Los módulos 3 (Empaques) y 4 (Empaques de rebanados) aún no tienen
-        # layout de impresión definido, así que por ahora se ignoran.
-        NOMBRE_MODULO = {2: 'Intermedios'}
-        MODULOS_IMPLEMENTADOS = [1, 2]
+        # Módulo 1 = masa del producto (fórmula, sin ítems propios).
+        # Módulos 2-4 usan el mismo layout de Intermedios (ítems + merma).
+        NOMBRE_MODULO = {2: 'Intermedios', 3: 'Empaques', 4: 'Empaques de rebanados'}
+        MODULOS_IMPLEMENTADOS = [1, 2, 3, 4]
 
         merma_por_modulo = {}
         if self.producto:
