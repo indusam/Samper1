@@ -16,7 +16,7 @@
                 <field name="product_id" required="1"/>
                 <field name="kgs_unidad" string="Kgs/Unidad"/>
                 <field name="unidad_pza" string="Unidad/Pieza"/>
-                <field name="proceso" string="Proceso"/>
+                <field name="proceso" string="Módulo"/>
             </list>
         </field>
     </record>
@@ -41,7 +41,7 @@
                             <field name="unidad_pza" string="Unidad/Pieza"/>
                         </group>
                         <group>
-                            <field name="proceso" string="Proceso"/>
+                            <field name="proceso" string="Módulo"/>
                         </group>
                     </group>
                 </sheet>
@@ -70,17 +70,29 @@
             </xpath>
             <!--
                 Pestaña "Merma", ubicada a la derecha de "Intermedios y Empaques".
-                Muestra los porcentajes de merma por etapa del proceso
-                (campos definidos en models/mermas.py, herencia de mrp.bom).
+                Muestra los porcentajes de merma por etapa del proceso y, a la
+                derecha de cada uno, su módulo correspondiente (campos definidos
+                en models/mermas.py, herencia de mrp.bom). Se usan dos <group>
+                anidados (columna izquierda: %, columna derecha: Módulo) en el
+                mismo orden, para que cada par quede alineado en la misma fila.
             -->
             <xpath expr="//page[@name='intermedios_empaques']" position="after">
                 <page string="Merma" name="merma">
                     <group>
-                        <field name="x_pct_merma_cocimiento"/>
-                        <field name="x_pct_merma_secado"/>
-                        <field name="x_pct_merma_rebanado"/>
-                        <field name="x_pct_merma_empaque"/>
-                        <field name="x_pct_merma_otros"/>
+                        <group string="% Merma">
+                            <field name="x_pct_merma_cocimiento" string="Cocimiento"/>
+                            <field name="x_pct_merma_secado" string="Secado"/>
+                            <field name="x_pct_merma_rebanado" string="Rebanado"/>
+                            <field name="x_pct_merma_empaque" string="Empaque"/>
+                            <field name="x_pct_merma_otros" string="Otros"/>
+                        </group>
+                        <group string="Módulo">
+                            <field name="x_modulo_merma_cocimiento" string="Cocimiento"/>
+                            <field name="x_modulo_merma_secado" string="Secado"/>
+                            <field name="x_modulo_merma_rebanado" string="Rebanado"/>
+                            <field name="x_modulo_merma_empaque" string="Empaque"/>
+                            <field name="x_modulo_merma_otros" string="Otros"/>
+                        </group>
                     </group>
                 </page>
             </xpath>
