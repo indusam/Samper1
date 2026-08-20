@@ -22,3 +22,14 @@ class MermasBom(models.Model):
         help="Porcentaje de merma en la etapa de empaque")
     x_pct_merma_otros = fields.Float(string='% Merma Otros', digits=(6, 4),
         help="Porcentaje de merma en otras etapas del proceso")
+
+    x_modulo_merma_cocimiento = fields.Integer(string='Módulo Merma Cocimiento',
+        help="Módulo de merma en la etapa de cocimiento")
+    x_modulo_merma_secado = fields.Integer(string='Módulo Merma Secado',
+        help="Módulo de merma en la etapa de secado")
+    x_modulo_merma_rebanado = fields.Integer(string='Módulo Merma Rebanado',
+        help="Módulo de merma en la etapa de rebanado")
+    x_modulo_merma_empaque = fields.Integer(string='Módulo Merma Empaque',
+        help="Módulo de merma en la etapa de empaque")
+    x_modulo_merma_otros = fields.Integer(string='Módulo Merma Otros',
+        help="Módulo de merma en otras etapas del proceso")

@@ -70,17 +70,24 @@
             </xpath>
             <!--
                 Pestaña "Merma", ubicada a la derecha de "Intermedios y Empaques".
-                Muestra los porcentajes de merma por etapa del proceso
-                (campos definidos en models/mermas.py, herencia de mrp.bom).
+                Muestra los porcentajes de merma por etapa del proceso y, a la
+                derecha de cada uno, su módulo correspondiente (campos definidos
+                en models/mermas.py, herencia de mrp.bom). col="4" agrupa dos
+                pares label/valor por fila (% y Módulo) en la misma línea.
             -->
             <xpath expr="//page[@name='intermedios_empaques']" position="after">
                 <page string="Merma" name="merma">
-                    <group>
+                    <group col="4">
                         <field name="x_pct_merma_cocimiento"/>
+                        <field name="x_modulo_merma_cocimiento"/>
                         <field name="x_pct_merma_secado"/>
+                        <field name="x_modulo_merma_secado"/>
                         <field name="x_pct_merma_rebanado"/>
+                        <field name="x_modulo_merma_rebanado"/>
                         <field name="x_pct_merma_empaque"/>
+                        <field name="x_modulo_merma_empaque"/>
                         <field name="x_pct_merma_otros"/>
+                        <field name="x_modulo_merma_otros"/>
                     </group>
                 </page>
             </xpath>
