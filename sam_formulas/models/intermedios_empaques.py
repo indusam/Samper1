@@ -80,3 +80,10 @@ class IntermediosEmpaques(models.Model):
             if record.kgs_unidad != 0 and record.unidad_pza != 0:
                 raise ValidationError(_("Solo puede especificar Kgs/Unidad o Unidad/Pieza, no ambos"))
 
+    @api.constrains('proceso')
+    def _check_proceso(self):
+        """El módulo debe estar entre 2 y 4 (mayor a 1 y menor a 5)."""
+        for record in self:
+            if not (1 < record.proceso < 5):
+                raise ValidationError(_("El módulo debe ser 2, 3 o 4"))
+
