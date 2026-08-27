@@ -78,7 +78,7 @@
             -->
             <xpath expr="//page[@name='intermedios_empaques']" position="after">
                 <page string="Merma" name="merma">
-                    <group style="width: 50%;">
+                    <group style="width: 65%;">
                         <group string="% Merma">
                             <field name="x_pct_merma_cocimiento" string="Cocimiento"/>
                             <field name="x_pct_merma_secado" string="Secado"/>
