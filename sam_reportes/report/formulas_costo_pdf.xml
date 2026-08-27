@@ -250,6 +250,27 @@
 
                                         <!-- ── Merma asociada a este módulo (si existe) ── -->
                                         <t t-if="bloque['merma']">
+                                            <!-- Título de sección (mismo formato que la sección de ítems que la precede) -->
+                                            <tr>
+                                                <td colspan="11" class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:12px;vertical-align:middle; padding:2px">
+                                                    <strong>MERMA <t t-esc="bloque['merma']['nombre']"/> <t t-esc="'{0:,.2f}'.format(bloque['merma']['pct'])"/>%</strong>
+                                                </td>
+                                            </tr>
+                                            <!-- Sub-encabezado (idéntico al de la sección de ítems) -->
+                                            <tr>
+                                                <td class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>Ingrediente</strong></td>
+                                                <td class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>Código</strong></td>
+                                                <td width="15" class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>Kg/Unidad</strong></td>
+                                                <td width="15" class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>Unidad/Pieza</strong></td>
+                                                <td width="15" class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>Cantidad</strong></td>
+                                                <td width="18" class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>Unidad</strong></td>
+                                                <td width="15" class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>$ USD</strong></td>
+                                                <td width="15" class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>$ MN</strong></td>
+                                                <td width="15" class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>Importe MN</strong></td>
+                                                <td width="15" class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>Costo kg/masa</strong></td>
+                                                <td width="15" class="table-active" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:5px"><strong>% Costo</strong></td>
+                                            </tr>
+                                            <!-- Fila de datos -->
                                             <tr>
                                                 <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
                                                     <strong>MERMA <t t-esc="bloque['merma']['nombre']"/> <t t-esc="'{0:,.2f}'.format(bloque['merma']['pct'])"/>%</strong>
