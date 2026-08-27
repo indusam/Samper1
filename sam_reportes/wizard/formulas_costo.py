@@ -31,7 +31,6 @@ class FormulasCosto(models.TransientModel):
     product_tmpl = fields.Many2one('product.template', string="Producto")
     producto = fields.Many2one('mrp.bom', string="Lista de Materiales", domain="[('product_tmpl_id', '=', product_tmpl)]")
     cantidad = fields.Float(string="Cantidad")
-    pct_merma = fields.Float(string="% Merma", digits=(6, 5))
     ing_limitante = fields.Many2one('mrp.bom.line',string="Ingrediente limitante")
     cant_limitante = fields.Float(string="Cantidad limitante")
     consolidado = fields.Boolean(string="Fórmula consolidada",  )
@@ -46,7 +45,6 @@ class FormulasCosto(models.TransientModel):
     unidad = fields.Char(string="Unidad")
     pct_formula = fields.Float(string="% Fórmula", digits=(6, 4))
     pct_categoria = fields.Float(string="% Grupo", digits=(6, 4))
-    pct_merma = fields.Float(string="% Merma", digits=(6, 4))
     x_orden = fields.Char(string="Orden", required=False, )
     costo = fields.Float(string="Costo")
     costo_usd = fields.Float(string="Costo USD")
@@ -432,7 +430,15 @@ class FormulasCosto(models.TransientModel):
 
         # Cadena módulo por módulo: cada módulo reduce la masa vigente si tiene
         # merma asociada, y esa masa reducida es la base del siguiente módulo.
+        #
+        # La merma del módulo 1 (ligada a la masa del producto, sin ítems
+        # propios) se guarda aparte en "bloque_masa": se imprime dentro de la
+        # Tabla 1 (ver XML) en vez de la Tabla 2, porque al vivir en el mismo
+        # <table> que la fórmula, sus columnas alinean exactamente con ella
+        # (dos <table> distintos nunca alinean sus anchos entre sí, aunque
+        # tengan el mismo número de columnas).
         bloques_modulo = []
+        bloque_masa = None
         masa_actual = masa_formula
         total_acumulado = total_cost_formula
 
@@ -465,13 +471,17 @@ class FormulasCosto(models.TransientModel):
                 }
                 masa_actual = masa_despues
 
+            if modulo == 1:
+                bloque_masa = bloque
+                continue
+
             if items or bloque['merma']:
                 bloques_modulo.append(bloque)
 
         cantidad_despues_merma = masa_actual
         combined_total = total_acumulado
 
-        for bloque in bloques_modulo:
+        for bloque in bloques_modulo + ([bloque_masa] if bloque_masa else []):
             for it in bloque['items']:
                 it['pct_costo'] = (it['item_import'] / combined_total) * 100 if combined_total > 0 else 0.0
                 it['costo_kg_masa_formula'] = it['item_import'] / masa_formula if masa_formula > 0 else 0.0
@@ -490,7 +500,7 @@ class FormulasCosto(models.TransientModel):
             'codigo': self.producto.product_tmpl_id.default_code,
             'cantidad': self.cantidad,
             'masa_formula': masa_formula,
-            'pct_merma': self.pct_merma,
+            'pct_merma': 0.0,  # campo obsoleto; se conserva sólo para el encabezado de la Tabla 1
             'cantidad_despues_merma': cantidad_despues_merma,
             'ing_limitante': self.ing_limitante,
             'nombre_il': self.ing_limitante.product_tmpl_id.name if self.ing_limitante else '',
@@ -500,6 +510,7 @@ class FormulasCosto(models.TransientModel):
             'combined_total': combined_total,
             'costo_final_kg': costo_final_kg,
             'bloques_modulo': bloques_modulo,
+            'merma_masa': bloque_masa['merma'] if bloque_masa else None,
             'bom_code': self.producto.code,
         }
 
