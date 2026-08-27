@@ -149,6 +149,33 @@
                                             <t t-esc="'{0:,.2f}'.format((total_cost_formula / combined_total) * 100 if combined_total > 0 else 0)"/>%
                                         </td>
                                     </tr>
+
+                                    <!-- ── Merma del módulo 1 (ligada a la masa del producto) ──
+                                         Vive en esta misma tabla (no en la de Intermedios) para que
+                                         sus columnas alineen exactamente con las de la fórmula. -->
+                                    <t t-if="merma_masa">
+                                        <tr>
+                                            <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
+                                                <strong>MERMA <t t-esc="merma_masa['nombre']"/> <t t-esc="'{0:,.2f}'.format(merma_masa['pct'])"/>%</strong>
+                                            </td>
+                                            <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
+                                            <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                <t t-esc="'{0:,.4f}'.format(merma_masa['masa_despues'])"/>
+                                            </td>
+                                            <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">KG</td>
+                                            <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
+                                            <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
+                                            <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                <t t-esc="'{0:,.2f}'.format(merma_masa['total_acumulado'])"/>
+                                            </td>
+                                            <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                <t t-esc="'{0:,.4f}'.format(merma_masa['costo_kg_post_merma'])"/>
+                                            </td>
+                                            <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                <t t-esc="'{0:,.2f}'.format(merma_masa['pct_costo'])"/>%
+                                            </td>
+                                        </tr>
+                                    </t>
                                 </table>
 
                                 <!-- ════════════════════════════════════════
