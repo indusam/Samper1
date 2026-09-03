@@ -250,7 +250,7 @@
                                                         <t t-esc="'{0:,.2f}'.format(item['item_import'])"/>
                                                     </td>
                                                     <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                        <t t-esc="'{0:,.4f}'.format(item['costo_kg_masa_formula'])"/>
+                                                        <t t-esc="'{0:,.4f}'.format(item['costo_kg_masa_base'])"/>
                                                     </td>
                                                     <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
                                                         <t t-esc="'{0:,.2f}'.format(item['pct_costo'])"/>%
