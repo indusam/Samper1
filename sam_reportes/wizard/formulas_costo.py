@@ -395,7 +395,11 @@ class FormulasCosto(models.TransientModel):
                 for nombre, pct, modulo in etapas_merma if modulo
             }
 
-        # Intermedios y empaques agrupados por módulo (sólo los módulos con layout implementado)
+        # Intermedios y empaques agrupados por módulo (sólo los módulos con layout implementado).
+        # Todavía no se calculan cantidades/importes aquí: dependen de la masa
+        # vigente en ese punto de la cadena (masa_base del bloque, ya mermada
+        # por los módulos anteriores), que sólo se conoce al recorrer los
+        # módulos en orden más abajo.
         intermedios_por_modulo = {}
         if self.producto and self.producto.intermedios_empaques_ids:
             records = self.env['intermedios.empaques'].search([
@@ -410,26 +414,24 @@ class FormulasCosto(models.TransientModel):
                 else:
                     costo_usd = self.get_ultimo_costo_usd(rec.product_id)
 
-                item_divisor = rec.kgs_unidad if rec.kgs_unidad > 0 else rec.unidad_pza
-                item_cant = masa_formula / item_divisor if item_divisor > 0 else 0.0
                 item_ratio = (rec.product_id.uom_po_id.ratio if rec.product_id.uom_po_id else 1.0) or 1.0
                 item_costo_usd_unit = costo_usd / item_ratio
                 item_mxn = item_costo_usd_unit * tipo_cambio
-                item_import = item_mxn * item_cant
 
                 intermedios_por_modulo.setdefault(rec.proceso, []).append({
                     'name': rec.product_id.name,
                     'kgs_unidad': rec.kgs_unidad,
                     'unidad_pza': rec.unidad_pza,
                     'product_uom_name': (rec.product_id.uom_po_id.x_studio_unidad or rec.product_id.uom_po_id.name) if rec.product_id.uom_po_id else (rec.product_id.uom_id.name if rec.product_id else ''),
-                    'item_cant': item_cant,
+                    'item_divisor': rec.kgs_unidad if rec.kgs_unidad > 0 else rec.unidad_pza,
                     'item_costo_usd_unit': item_costo_usd_unit,
                     'item_mxn': item_mxn,
-                    'item_import': item_import,
                 })
 
         # Cadena módulo por módulo: cada módulo reduce la masa vigente si tiene
-        # merma asociada, y esa masa reducida es la base del siguiente módulo.
+        # merma asociada, y esa masa reducida (ya "mermada") es la base tanto
+        # de las cantidades/importes de sus propios ítems como del siguiente
+        # módulo en la cadena.
         #
         # La merma del módulo 1 (ligada a la masa del producto, sin ítems
         # propios) se guarda aparte en "bloque_masa": se imprime dentro de la
@@ -446,6 +448,11 @@ class FormulasCosto(models.TransientModel):
             items = intermedios_por_modulo.get(modulo, [])
             merma_info = merma_por_modulo.get(modulo)
 
+            masa_base = masa_actual  # masa vigente (ya mermada por módulos previos)
+            for it in items:
+                it['item_cant'] = masa_base / it['item_divisor'] if it['item_divisor'] > 0 else 0.0
+                it['item_import'] = it['item_mxn'] * it['item_cant']
+
             total_bloque = sum(it['item_import'] for it in items)
             total_acumulado += total_bloque
 
@@ -454,8 +461,8 @@ class FormulasCosto(models.TransientModel):
                 'nombre': NOMBRE_MODULO.get(modulo),
                 'items': items,
                 'total_bloque': total_bloque,
-                'masa_base': masa_actual,
-                'costo_kg_bloque': (total_bloque / masa_actual) if items and masa_actual > 0 else 0.0,
+                'masa_base': masa_base,
+                'costo_kg_bloque': (total_bloque / masa_base) if items and masa_base > 0 else 0.0,
                 'pct_costo_bloque': 0.0,
                 'merma': None,
             }
@@ -484,7 +491,7 @@ class FormulasCosto(models.TransientModel):
         for bloque in bloques_modulo + ([bloque_masa] if bloque_masa else []):
             for it in bloque['items']:
                 it['pct_costo'] = (it['item_import'] / combined_total) * 100 if combined_total > 0 else 0.0
-                it['costo_kg_masa_formula'] = it['item_import'] / masa_formula if masa_formula > 0 else 0.0
+                it['costo_kg_masa_base'] = it['item_import'] / bloque['masa_base'] if bloque['masa_base'] > 0 else 0.0
             bloque['pct_costo_bloque'] = (bloque['total_bloque'] / combined_total) * 100 if bloque['items'] and combined_total > 0 else 0.0
             if bloque['merma']:
                 bloque['merma']['pct_costo'] = (bloque['merma']['total_acumulado'] / combined_total) * 100 if combined_total > 0 else 0.0
