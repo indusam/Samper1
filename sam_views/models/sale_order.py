@@ -16,10 +16,6 @@ class SaleOrder(models.Model):
         string='Fecha de vencimiento',
         compute='_compute_x_date_due',
     )
-    x_partner_category_id = fields.Many2many(
-        related='partner_id.category_id',
-        string='Etiquetas del Cliente',
-    )
 
     @api.depends('date_order', 'payment_term_id', 'payment_term_id.line_ids.nb_days')
     def _compute_x_date_due(self):
