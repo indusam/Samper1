@@ -1,33 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!--
-        Fix CRPER654 / CRPER659 y similares: l10n_mx_edi hardcodea precision=6
-        en los campos de importe del Complemento de Pago 2.0, generando valores
-        como 6804.564000 o 0.000000 que el SAT rechaza porque MXN solo permite
-        2 decimales. Se corrigen BaseP, ImporteP, BaseDR e ImporteDR.
-        TasaOCuota se deja en precision=6 (son tasas, no importes en moneda).
-    -->
-    <template id="payment20_fix" inherit_id="l10n_mx_edi.payment20">
-
-        <!-- Fix BaseP: CRPER654 -->
+    <!-- Fix CRPER654: BaseP — ya instalado y funcionando, mantener igual -->
+    <template id="payment20_basep_fix" inherit_id="l10n_mx_edi.payment20">
         <xpath expr="//*[@t-att-BaseP=&quot;format_float(tax_values['base'], precision=6)&quot;]" position="attributes">
             <attribute name="t-att-BaseP">format_float(round(tax_values['base'], 2), precision=2)</attribute>
         </xpath>
+    </template>
 
-        <!-- Fix ImporteP: CRPER659 (aplica a RetencionP y TrasladoP) -->
+    <!-- Fix CRPER659 y siguientes: ImporteP, BaseDR, ImporteDR -->
+    <template id="payment20_imports_fix" inherit_id="l10n_mx_edi.payment20">
+        <!-- ImporteP: aplica a RetencionP (línea 117) y TrasladoP (línea 126) -->
         <xpath expr="//*[@t-att-ImporteP=&quot;format_float(tax_values['importe'], precision=6)&quot;]" position="attributes">
             <attribute name="t-att-ImporteP">format_float(round(tax_values['importe'], 2), precision=2)</attribute>
         </xpath>
-
-        <!-- Fix BaseDR: documentos relacionados (dos bloques en el template) -->
+        <!-- BaseDR: dos bloques en el template (líneas 91 y 102) -->
         <xpath expr="//*[@t-att-BaseDR=&quot;invoice_values['format_float'](tax_values['base'], precision=6)&quot;]" position="attributes">
             <attribute name="t-att-BaseDR">invoice_values['format_float'](round(tax_values['base'], 2), precision=2)</attribute>
         </xpath>
-
-        <!-- Fix ImporteDR: documentos relacionados (dos bloques en el template) -->
+        <!-- ImporteDR: dos bloques en el template (líneas 92 y 103) -->
         <xpath expr="//*[@t-att-ImporteDR=&quot;invoice_values['format_float'](tax_values['importe'], precision=6)&quot;]" position="attributes">
             <attribute name="t-att-ImporteDR">invoice_values['format_float'](round(tax_values['importe'], 2), precision=2)</attribute>
         </xpath>
-
     </template>
 </odoo>
