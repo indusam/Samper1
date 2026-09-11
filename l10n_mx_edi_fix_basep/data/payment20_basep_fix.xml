@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Fix CRPER654: l10n_mx_edi hardcodea precision=6 en BaseP, lo que genera
+        valores como 6804.564000 que el SAT rechaza por exceder los 2 decimales
+        permitidos para MXN. Se redondea a 2 decimales antes de formatear.
+        Aplica a todas las monedas del CFDI MX (MXN, USD, EUR = 2 decimales).
+    -->
+    <template id="payment20_basep_fix" inherit_id="l10n_mx_edi.payment20">
+        <xpath expr="//*[@t-att-BaseP=&quot;format_float(tax_values['base'], precision=6)&quot;]" position="attributes">
+            <attribute name="t-att-BaseP">format_float(round(tax_values['base'], 2), precision=2)</attribute>
+        </xpath>
+    </template>
+</odoo>
