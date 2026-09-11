@@ -11,7 +11,7 @@ error CRPER654 for currencies such as MXN (max 2 decimals).
 """,
     'author': "Samper",
     'license': 'LGPL-3',
-    'depends': ['l10n_mx_edi'],
+    'depends': ['account', 'l10n_mx_edi'],
     'data': [
         'data/payment20_basep_fix.xml',
     ],
