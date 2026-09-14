@@ -1,30 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Fix CRPER654: BaseP — ya instalado y funcionando, mantener igual -->
-    <template id="payment20_basep_fix" inherit_id="l10n_mx_edi.payment20">
-        <xpath expr="//*[@t-att-BaseP=&quot;format_float(tax_values['base'], precision=6)&quot;]" position="attributes">
-            <attribute name="t-att-BaseP">format_float(round(tax_values['base'], 2), precision=2)</attribute>
-        </xpath>
-    </template>
-
-    <!-- Fix CRPER659 y siguientes: un xpath por cada tipo de elemento -->
+    <!-- BaseDR e ImporteDR en pago20:TrasladoDR siguen con precision=6 en enterprise.
+         BaseP, ImporteP y Totales ya fueron corregidos por Odoo.
+         El fix de CRP20268 (BaseP = Σ BaseDR) se maneja en models/account_move.py -->
     <template id="payment20_imports_fix" inherit_id="l10n_mx_edi.payment20">
-
-        <!-- ImporteP en pago20:TrasladoP (línea 126) -->
-        <xpath expr="//*[local-name()='TrasladoP']" position="attributes">
-            <attribute name="t-att-ImporteP">format_float(round(tax_values['importe'], 2), precision=2)</attribute>
-        </xpath>
-
-        <!-- ImporteP en pago20:RetencionP (línea 117) -->
-        <xpath expr="//*[local-name()='RetencionP']" position="attributes">
-            <attribute name="t-att-ImporteP">format_float(round(tax_values['importe'], 2), precision=2)</attribute>
-        </xpath>
-
-        <!-- BaseDR e ImporteDR en pago20:TrasladoDR (líneas 91 y 102) -->
         <xpath expr="//*[local-name()='TrasladoDR']" position="attributes">
             <attribute name="t-att-BaseDR">invoice_values['format_float'](round(tax_values['base'], 2), precision=2)</attribute>
             <attribute name="t-att-ImporteDR">invoice_values['format_float'](round(tax_values['importe'], 2), precision=2)</attribute>
         </xpath>
-
     </template>
 </odoo>
