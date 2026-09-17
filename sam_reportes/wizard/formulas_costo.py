@@ -465,6 +465,7 @@ class FormulasCosto(models.TransientModel):
                 'costo_kg_bloque': (total_bloque / masa_base) if items and masa_base > 0 else 0.0,
                 'pct_costo_bloque': 0.0,
                 'merma': None,
+                'acumulado': None,
             }
 
             if merma_info and merma_info['pct'] > 0:
@@ -478,11 +479,29 @@ class FormulasCosto(models.TransientModel):
                 }
                 masa_actual = masa_despues
 
+            # Renglón "acumulado" (masa + costo total hasta este módulo, ya
+            # sumando la fórmula y todos los módulos anteriores). Antes sólo
+            # se imprimía cuando el módulo tenía merma propia (reutilizando el
+            # renglón de MERMA); ahora se calcula siempre que el módulo tenga
+            # ítems (o merma), tenga o no merma, para que el acumulado sea
+            # visible en toda la cadena. Un módulo vacío (sin ítems ni merma)
+            # no imprime nada, igual que antes.
+            if modulo != 1 and (items or bloque['merma']):
+                bloque['acumulado'] = {
+                    'tiene_merma': bool(bloque['merma']),
+                    'nombre_merma': merma_info['nombre'] if bloque['merma'] else None,
+                    'pct_merma': merma_info['pct'] if bloque['merma'] else None,
+                    'masa': masa_actual,
+                    'total_acumulado': total_acumulado,
+                    'costo_kg': (total_acumulado / masa_actual) if masa_actual > 0 else 0.0,
+                    'pct_costo': 0.0,
+                }
+
             if modulo == 1:
                 bloque_masa = bloque
                 continue
 
-            if items or bloque['merma']:
+            if items or bloque['acumulado']:
                 bloques_modulo.append(bloque)
 
         cantidad_despues_merma = masa_actual
@@ -495,6 +514,8 @@ class FormulasCosto(models.TransientModel):
             bloque['pct_costo_bloque'] = (bloque['total_bloque'] / combined_total) * 100 if bloque['items'] and combined_total > 0 else 0.0
             if bloque['merma']:
                 bloque['merma']['pct_costo'] = (bloque['merma']['total_acumulado'] / combined_total) * 100 if combined_total > 0 else 0.0
+            if bloque['acumulado']:
+                bloque['acumulado']['pct_costo'] = (bloque['acumulado']['total_acumulado'] / combined_total) * 100 if combined_total > 0 else 0.0
 
         base_final = cantidad_despues_merma if cantidad_despues_merma > 0 else masa_formula
         costo_final_kg = combined_total / base_final if base_final > 0 else 0.0
