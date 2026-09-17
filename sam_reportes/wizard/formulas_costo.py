@@ -474,6 +474,7 @@ class FormulasCosto(models.TransientModel):
                     'nombre': merma_info['nombre'],
                     'pct': merma_info['pct'],
                     'masa_despues': masa_despues,
+                    'masa_perdida': masa_actual - masa_despues,
                     'total_acumulado': total_acumulado,
                     'costo_kg_post_merma': (total_acumulado / masa_despues) if masa_despues > 0 else 0.0,
                 }
@@ -481,10 +482,10 @@ class FormulasCosto(models.TransientModel):
 
             # Renglón "Total acumulado" (masa + costo total hasta este módulo,
             # ya sumando la fórmula y todos los módulos anteriores). Se
-            # imprime siempre que el módulo tenga ítems o merma, tenga o no
-            # merma propia — es independiente del renglón "MERMA <nombre> %"
-            # (que sigue imprimiéndose aparte cuando aplica): cuando hay
-            # merma, ambos renglones aparecen uno debajo del otro.
+            # imprime SIEMPRE que el módulo tenga ítems o merma, sin importar
+            # si tiene merma propia — es un renglón distinto e independiente
+            # del de "MERMA <nombre> %" (que se sigue imprimiendo aparte,
+            # arriba, cuando el módulo sí tiene merma).
             if modulo != 1 and (items or bloque['merma']):
                 bloque['acumulado'] = {
                     'masa': masa_actual,
