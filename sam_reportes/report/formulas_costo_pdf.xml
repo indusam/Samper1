@@ -276,8 +276,13 @@
                                         </t>
 
                                         <!-- ── Merma asociada a este módulo (si existe) ──
-                                             Sin título/sub-encabezado propios: continúa dentro de la
-                                             misma tabla y columnas de la sección que la precede. -->
+                                             Renglón independiente del de "Total acumulado" de abajo:
+                                             éste muestra específicamente el evento de merma en sí (masa
+                                             PERDIDA, no la masa resultante) — las columnas de costo se
+                                             dejan en blanco porque la merma no es un importe, ya se ve
+                                             reflejada en el costo/kg del renglón "Total acumulado". Sin
+                                             título/sub-encabezado propios: continúa dentro de la misma
+                                             tabla y columnas de la sección que la precede. -->
                                         <t t-if="bloque['merma']">
                                             <tr>
                                                 <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
@@ -285,31 +290,25 @@
                                                 </td>
                                                 <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
                                                 <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                    <t t-esc="'{0:,.4f}'.format(bloque['merma']['masa_despues'])"/>
+                                                    <t t-esc="'{0:,.4f}'.format(bloque['merma']['masa_perdida'])"/>
                                                 </td>
                                                 <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
                                                 <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
                                                 <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">KG</td>
                                                 <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
                                                 <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
-                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                    <t t-esc="'{0:,.2f}'.format(bloque['merma']['total_acumulado'])"/>
-                                                </td>
-                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                    <t t-esc="'{0:,.4f}'.format(bloque['merma']['costo_kg_post_merma'])"/>
-                                                </td>
-                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                    <t t-esc="'{0:,.2f}'.format(bloque['merma']['pct_costo'])"/>%
-                                                </td>
+                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
+                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
+                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
                                             </tr>
                                         </t>
 
                                         <!-- ── Total acumulado (masa + costo total hasta aquí) ──
-                                             Siempre se imprime si el módulo tuvo ítems o merma,
-                                             independientemente de si tiene merma propia: cuando sí la
-                                             tiene, este renglón va debajo del de "MERMA ..." de arriba.
-                                             Sin título/sub-encabezado propios: continúa dentro de la
-                                             misma tabla y columnas de la sección que la precede. -->
+                                             Se imprime SIEMPRE que el módulo tenga ítems o merma, tenga
+                                             o no merma propia — es un renglón distinto e independiente
+                                             del de "MERMA ..." de arriba. Sin título/sub-encabezado
+                                             propios: continúa dentro de la misma tabla y columnas de la
+                                             sección que la precede. -->
                                         <t t-if="bloque['acumulado']">
                                             <tr>
                                                 <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
