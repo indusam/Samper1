@@ -259,8 +259,8 @@
                                             </t>
                                             <!-- Subtotal del módulo -->
                                             <tr>
-                                                <td class="table-secondary" colspan="7" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                    <strong>Costo por Kg. de masa (<t t-esc="bloque['nombre']"/>):</strong>
+                                                <td class="table-secondary" colspan="7" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="left">
+                                                    <strong>Costo <t t-esc="bloque['nombre']"/></strong>
                                                 </td>
                                                 <td class="table-secondary" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
                                                 <td class="table-secondary" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
@@ -275,64 +275,63 @@
                                             </tr>
                                         </t>
 
-                                        <!-- ── Merma asociada a este módulo (si existe) ──
-                                             Renglón independiente del de "Total acumulado" de abajo:
-                                             éste muestra específicamente el evento de merma en sí (masa
-                                             PERDIDA, no la masa resultante) — las columnas de costo se
-                                             dejan en blanco porque la merma no es un importe, ya se ve
-                                             reflejada en el costo/kg del renglón "Total acumulado". Sin
-                                             título/sub-encabezado propios: continúa dentro de la misma
-                                             tabla y columnas de la sección que la precede. -->
-                                        <t t-if="bloque['merma']">
-                                            <tr>
-                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
-                                                    <strong>MERMA <t t-esc="bloque['merma']['nombre']"/> <t t-esc="'{0:,.2f}'.format(bloque['merma']['pct'])"/>%</strong>
-                                                </td>
-                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
-                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                    <t t-esc="'{0:,.4f}'.format(bloque['merma']['masa_perdida'])"/>
-                                                </td>
-                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
-                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
-                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">KG</td>
-                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
-                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
-                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
-                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
-                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
-                                            </tr>
-                                        </t>
+                                        <!-- ── Secuencia por sección (> 1) ──
+                                             (1) total de la sección: fila "Costo por Kg. de masa (…)" de arriba
+                                             (2) acumulado ANTES de merma (total sección anterior ya mermada + esta)
+                                             (3) merma, si el módulo la tiene (masa PERDIDA; sin costos)
+                                             (4) acumulado DESPUÉS de merma (mismo costo, masa reducida)
+                                             Si no hay merma sólo sale (2).
+                                             Sin título/sub-encabezado propios: continúan en la misma tabla. -->
+                                        <t t-foreach="['acumulado_antes', 'acumulado_despues']" t-as="clave">
 
-                                        <!-- ── Total acumulado (masa + costo total hasta aquí) ──
-                                             Se imprime SIEMPRE que el módulo tenga ítems o merma, tenga
-                                             o no merma propia — es un renglón distinto e independiente
-                                             del de "MERMA ..." de arriba. Sin título/sub-encabezado
-                                             propios: continúa dentro de la misma tabla y columnas de la
-                                             sección que la precede. -->
-                                        <t t-if="bloque['acumulado']">
-                                            <tr>
-                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
-                                                    <strong>Total acumulado</strong>
-                                                </td>
-                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
-                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                    <t t-esc="'{0:,.4f}'.format(bloque['acumulado']['masa'])"/>
-                                                </td>
-                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
-                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
-                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">KG</td>
-                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
-                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
-                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                    <t t-esc="'{0:,.2f}'.format(bloque['acumulado']['total_acumulado'])"/>
-                                                </td>
-                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                    <t t-esc="'{0:,.4f}'.format(bloque['acumulado']['costo_kg'])"/>
-                                                </td>
-                                                <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                    <t t-esc="'{0:,.2f}'.format(bloque['acumulado']['pct_costo'])"/>%
-                                                </td>
-                                            </tr>
+                                            <t t-if="clave == 'acumulado_despues' and bloque['merma']">
+                                                <tr>
+                                                    <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
+                                                        <strong>MERMA <t t-esc="bloque['merma']['nombre']"/> <t t-esc="'{0:,.2f}'.format(bloque['merma']['pct'])"/>%</strong>
+                                                    </td>
+                                                    <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
+                                                    <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                        <t t-esc="'{0:,.4f}'.format(bloque['merma']['masa_perdida'])"/>
+                                                    </td>
+                                                    <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
+                                                    <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
+                                                    <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">KG</td>
+                                                    <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
+                                                    <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
+                                                    <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
+                                                    <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
+                                                    <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
+                                                </tr>
+                                            </t>
+
+                                            <t t-if="bloque[clave]">
+                                                <tr>
+                                                    <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
+                                                        <strong>
+                                                            <t t-if="clave == 'acumulado_despues'">Total <t t-esc="bloque['nombre']"/> después de merma</t>
+                                                            <t t-else="">Costo acumulado <t t-esc="bloque['nombre']"/></t>
+                                                        </strong>
+                                                    </td>
+                                                    <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
+                                                    <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                        <t t-esc="'{0:,.4f}'.format(bloque[clave]['masa'])"/>
+                                                    </td>
+                                                    <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
+                                                    <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
+                                                    <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">KG</td>
+                                                    <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
+                                                    <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
+                                                    <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                        <t t-esc="'{0:,.2f}'.format(bloque[clave]['total_acumulado'])"/>
+                                                    </td>
+                                                    <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                        <t t-esc="'{0:,.4f}'.format(bloque[clave]['costo_kg'])"/>
+                                                    </td>
+                                                    <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                        <t t-esc="'{0:,.2f}'.format(bloque[clave]['pct_costo'])"/>%
+                                                    </td>
+                                                </tr>
+                                            </t>
                                         </t>
                                     </t>
 

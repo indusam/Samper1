@@ -465,10 +465,29 @@ class FormulasCosto(models.TransientModel):
                 'costo_kg_bloque': (total_bloque / masa_base) if items and masa_base > 0 else 0.0,
                 'pct_costo_bloque': 0.0,
                 'merma': None,
-                'acumulado': None,
+                'acumulado_antes': None,
+                'acumulado_despues': None,
             }
 
-            if merma_info and merma_info['pct'] > 0:
+            tiene_merma = bool(merma_info and merma_info['pct'] > 0)
+
+            # Secciones > 1, en este orden de impresión:
+            #   1) total de la sección (total_bloque)
+            #   2) acumulado ANTES de merma: total de la sección anterior ya
+            #      mermada + total de esta sección, sobre la masa vigente
+            #   3) merma (sólo si el módulo la tiene)
+            #   4) acumulado DESPUÉS de merma: mismo costo, masa ya reducida
+            #      (sólo si hay merma; sin merma sería idéntico a (2))
+            # El siguiente módulo acumula a partir de (4) — o de (2) si no hubo merma.
+            if modulo != 1 and (items or tiene_merma):
+                bloque['acumulado_antes'] = {
+                    'masa': masa_base,
+                    'total_acumulado': total_acumulado,
+                    'costo_kg': (total_acumulado / masa_base) if masa_base > 0 else 0.0,
+                    'pct_costo': 0.0,
+                }
+
+            if tiene_merma:
                 masa_despues = masa_actual * (1.0 - merma_info['pct'] / 100.0)
                 bloque['merma'] = {
                     'nombre': merma_info['nombre'],
@@ -480,25 +499,19 @@ class FormulasCosto(models.TransientModel):
                 }
                 masa_actual = masa_despues
 
-            # Renglón "Total acumulado" (masa + costo total hasta este módulo,
-            # ya sumando la fórmula y todos los módulos anteriores). Se
-            # imprime SIEMPRE que el módulo tenga ítems o merma, sin importar
-            # si tiene merma propia — es un renglón distinto e independiente
-            # del de "MERMA <nombre> %" (que se sigue imprimiendo aparte,
-            # arriba, cuando el módulo sí tiene merma).
-            if modulo != 1 and (items or bloque['merma']):
-                bloque['acumulado'] = {
-                    'masa': masa_actual,
-                    'total_acumulado': total_acumulado,
-                    'costo_kg': (total_acumulado / masa_actual) if masa_actual > 0 else 0.0,
-                    'pct_costo': 0.0,
-                }
+                if modulo != 1:
+                    bloque['acumulado_despues'] = {
+                        'masa': masa_despues,
+                        'total_acumulado': total_acumulado,
+                        'costo_kg': (total_acumulado / masa_despues) if masa_despues > 0 else 0.0,
+                        'pct_costo': 0.0,
+                    }
 
             if modulo == 1:
                 bloque_masa = bloque
                 continue
 
-            if items or bloque['acumulado']:
+            if items or bloque['acumulado_antes']:
                 bloques_modulo.append(bloque)
 
         cantidad_despues_merma = masa_actual
@@ -511,8 +524,9 @@ class FormulasCosto(models.TransientModel):
             bloque['pct_costo_bloque'] = (bloque['total_bloque'] / combined_total) * 100 if bloque['items'] and combined_total > 0 else 0.0
             if bloque['merma']:
                 bloque['merma']['pct_costo'] = (bloque['merma']['total_acumulado'] / combined_total) * 100 if combined_total > 0 else 0.0
-            if bloque['acumulado']:
-                bloque['acumulado']['pct_costo'] = (bloque['acumulado']['total_acumulado'] / combined_total) * 100 if combined_total > 0 else 0.0
+            for clave in ('acumulado_antes', 'acumulado_despues'):
+                if bloque[clave]:
+                    bloque[clave]['pct_costo'] = (bloque[clave]['total_acumulado'] / combined_total) * 100 if combined_total > 0 else 0.0
 
         base_final = cantidad_despues_merma if cantidad_despues_merma > 0 else masa_formula
         costo_final_kg = combined_total / base_final if base_final > 0 else 0.0
