@@ -292,6 +292,10 @@
                                         <t t-foreach="['acumulado_antes', 'acumulado_despues']" t-as="clave">
 
                                             <t t-if="clave == 'acumulado_despues' and bloque['merma']">
+                                                <!-- Renglón en blanco antes de la merma -->
+                                                <tr>
+                                                    <td colspan="11" style="border:none;padding:0px;font-size:11px;">&#160;</td>
+                                                </tr>
                                                 <tr>
                                                     <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
                                                         <strong>MERMA <t t-esc="bloque['merma']['nombre']"/> <t t-esc="'{0:,.2f}'.format(bloque['merma']['pct'])"/>%</strong>
@@ -308,6 +312,10 @@
                                                     <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
                                                     <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
                                                     <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
+                                                </tr>
+                                                <!-- Renglón en blanco después de la merma -->
+                                                <tr>
+                                                    <td colspan="11" style="border:none;padding:0px;font-size:11px;">&#160;</td>
                                                 </tr>
                                             </t>
 
