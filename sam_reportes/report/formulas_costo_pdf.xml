@@ -195,6 +195,13 @@
 
                                     <t t-foreach="bloques_modulo" t-as="bloque">
 
+                                        <!-- Renglón en blanco entre secciones (no antes de la primera) -->
+                                        <t t-if="not bloque_first">
+                                            <tr>
+                                                <td colspan="11" style="border:none;padding:0px;font-size:11px;">&#160;</td>
+                                            </tr>
+                                        </t>
+
                                         <!-- ── Sección de ítems del módulo (si ya tiene layout implementado) ── -->
                                         <t t-if="bloque['nombre'] and bloque['items']">
                                             <!-- Título de sección -->
