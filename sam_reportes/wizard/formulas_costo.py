@@ -368,8 +368,6 @@ class FormulasCosto(models.TransientModel):
         # Get the display name of the selected cost type
         cost_type_display = dict(self._fields['tipo_costo'].selection).get(self.tipo_costo)
 
-        tipo_cambio = self.env.company.x_studio_tipo_de_cambio or 1.0
-
         # Totales de la Tabla 1 (fórmula)
         total_cost_formula = sum(v['costo'] * v['cant_comp'] for v in vals)
         tot_gral_formula = sum(v['cant_comp'] for v in vals)
@@ -409,14 +407,19 @@ class FormulasCosto(models.TransientModel):
                 if rec.proceso not in NOMBRE_MODULO:
                     continue
 
+                # costo (MXN) ya viene convertido si la compra/costo autorizado
+                # está en USD; costo_usd sólo trae valor si está en USD (0 si
+                # está en pesos). Igual que en la Tabla 1.
                 if self.tipo_costo == 'autorizado':
+                    costo = self.get_costo_autorizado(rec.product_id)
                     costo_usd = self.get_costo_autorizado_usd(rec.product_id)
                 else:
+                    costo = self.get_ultimo_costo(rec.product_id)
                     costo_usd = self.get_ultimo_costo_usd(rec.product_id)
 
                 item_ratio = (rec.product_id.uom_po_id.ratio if rec.product_id.uom_po_id else 1.0) or 1.0
                 item_costo_usd_unit = costo_usd / item_ratio
-                item_mxn = item_costo_usd_unit * tipo_cambio
+                item_mxn = costo / item_ratio
 
                 intermedios_por_modulo.setdefault(rec.proceso, []).append({
                     'name': rec.product_id.name,
