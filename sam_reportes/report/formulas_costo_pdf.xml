@@ -342,6 +342,11 @@
                                         </t>
                                     </t>
 
+                                    <!-- Renglón en blanco entre la última sección y el costo final -->
+                                    <tr>
+                                        <td colspan="11" style="border:none;padding:0px;font-size:11px;">&#160;</td>
+                                    </tr>
+
                                     <!-- ── COSTO FINAL ── -->
                                     <tr>
                                         <td class="table-secondary" colspan="7" style="border-style: solid;border-width: 1px;border-top: 2px solid #000000;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
