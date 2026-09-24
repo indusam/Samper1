@@ -260,7 +260,7 @@
                                             <!-- Subtotal del módulo -->
                                             <tr>
                                                 <td class="table-secondary" colspan="7" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
-                                                    <strong>Costo por Kg. de masa (<t t-esc="bloque['nombre']"/>):</strong>
+                                                    <strong>Costo <t t-esc="bloque['nombre']"/></strong>
                                                 </td>
                                                 <td class="table-secondary" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
                                                 <td class="table-secondary" style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
@@ -280,7 +280,7 @@
                                              (2) acumulado ANTES de merma (total sección anterior ya mermada + esta)
                                              (3) merma, si el módulo la tiene (masa PERDIDA; sin costos)
                                              (4) acumulado DESPUÉS de merma (mismo costo, masa reducida)
-                                             Si no hay merma sólo sale (2), con la etiqueta "Total acumulado".
+                                             Si no hay merma sólo sale (2).
                                              Sin título/sub-encabezado propios: continúan en la misma tabla. -->
                                         <t t-foreach="['acumulado_antes', 'acumulado_despues']" t-as="clave">
 
@@ -308,9 +308,8 @@
                                                 <tr>
                                                     <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
                                                         <strong>
-                                                            <t t-if="clave == 'acumulado_despues'">Total acumulado con merma</t>
-                                                            <t t-elif="bloque['merma']">Total acumulado antes de merma</t>
-                                                            <t t-else="">Total acumulado</t>
+                                                            <t t-if="clave == 'acumulado_despues'">Total <t t-esc="bloque['nombre']"/> después de merma</t>
+                                                            <t t-else="">Costo acumulado <t t-esc="bloque['nombre']"/></t>
                                                         </strong>
                                                     </td>
                                                     <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
