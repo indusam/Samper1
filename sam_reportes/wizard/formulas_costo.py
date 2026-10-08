@@ -509,6 +509,11 @@ class FormulasCosto(models.TransientModel):
                         'costo_kg': (total_acumulado / masa_despues) if masa_despues > 0 else 0.0,
                         'pct_costo': 0.0,
                     }
+                    # Diferencia de costo/kg que provoca la merma: costo/kg
+                    # después de merma - costo/kg acumulado antes de merma.
+                    bloque['merma']['costo_kg_diferencia'] = (
+                        bloque['acumulado_despues']['costo_kg'] - bloque['acumulado_antes']['costo_kg']
+                    )
 
             if modulo == 1:
                 bloque_masa = bloque

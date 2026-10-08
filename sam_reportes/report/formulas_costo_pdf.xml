@@ -294,7 +294,7 @@
                                             <t t-if="clave == 'acumulado_despues' and bloque['merma']">
                                                 <!-- Renglón en blanco antes de la merma -->
                                                 <tr>
-                                                    <td colspan="11" style="border:none;padding:0px;height:4px;line-height:4px;font-size:1px;">&#160;</td>
+                                                    <td colspan="11" style="border:none;padding:0px;font-size:11px;">&#160;</td>
                                                 </tr>
                                                 <tr>
                                                     <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
@@ -310,12 +310,14 @@
                                                     <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
                                                     <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
                                                     <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
-                                                    <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
+                                                    <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px" align="right">
+                                                        <t t-esc="'{0:,.4f}'.format(bloque['merma']['costo_kg_diferencia'])"/>
+                                                    </td>
                                                     <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px"/>
                                                 </tr>
                                                 <!-- Renglón en blanco después de la merma -->
                                                 <tr>
-                                                    <td colspan="11" style="border:none;padding:0px;height:4px;line-height:4px;font-size:1px;">&#160;</td>
+                                                    <td colspan="11" style="border:none;padding:0px;font-size:11px;">&#160;</td>
                                                 </tr>
                                             </t>
 
@@ -323,7 +325,7 @@
                                                 <tr>
                                                     <td style="border-style: solid;border-width: 1px;padding-bottom:0px;padding-top:0px;font-size:11px;vertical-align:middle; padding:2px">
                                                         <strong>
-                                                            <t t-if="clave == 'acumulado_despues'">Total <t t-esc="bloque['nombre']"/> después de merma</t>
+                                                            <t t-if="clave == 'acumulado_despues'">Costo Merma</t>
                                                             <t t-else="">Costo acumulado <t t-esc="bloque['nombre']"/></t>
                                                         </strong>
                                                     </td>
