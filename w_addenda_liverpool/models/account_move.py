@@ -1,5 +1,14 @@
 # -*- encoding: utf-8 -*-
-from odoo import models, fields, api
+from odoo import models, fields, api, _
+from odoo.exceptions import UserError
+
+
+# Campos obligatorios de la addenda Liverpool antes de enviar a timbrar
+ADDENDA_LIVERPOOL_REQUIRED_FIELDS = (
+    'purchase_order_liv',
+    'delivery_folio',
+    'date_delivery',
+)
 
 
 class AccountMove(models.Model):
@@ -28,8 +37,42 @@ class AccountMove(models.Model):
     )
 
     def _l10n_mx_edi_cfdi_invoice_try_send(self):
+        self._check_addenda_liverpool_data()
         self = self.with_context(l10n_mx_edi_cfdi_record=self)
         return super()._l10n_mx_edi_cfdi_invoice_try_send()
+
+    def _addenda_liverpool_is_expected(self):
+        """Whether the Liverpool addenda must be part of the CFDI of this move.
+
+        It is expected both when the addenda is already being generated
+        (``require_addenda_liverpool``) and when the customer is configured to
+        generate it, so an invoice for Liverpool cannot be stamped with the
+        addenda silently missing.
+        """
+        self.ensure_one()
+        if self.move_type == 'entry':
+            return False
+        return bool(self.require_addenda_liverpool or self.show_addenda_liverpool)
+
+    def _check_addenda_liverpool_data(self):
+        """Block the CFDI stamping while the Liverpool addenda data is incomplete."""
+        for move in self:
+            if not move._addenda_liverpool_is_expected():
+                continue
+            missing = [
+                move._fields[field_name].get_description(move.env)['string']
+                for field_name in ADDENDA_LIVERPOOL_REQUIRED_FIELDS
+                if not move[field_name]
+            ]
+            if missing:
+                raise UserError(_(
+                    "No se puede enviar a timbrar la factura %(move)s porque la "
+                    "addenda Liverpool está incompleta.\n\n"
+                    "Capture los siguientes datos en la pestaña "
+                    "\"Addenda Liverpool\":\n%(fields)s",
+                    move=move.display_name,
+                    fields="\n".join("- %s" % label for label in missing),
+                ))
 
     @api.depends('purchase_order_liv', 'delivery_folio', 'date_delivery')
     def _compute_require_addenda_liverpool(self):
