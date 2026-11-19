@@ -27,7 +27,7 @@ from odoo import models, fields
 class MrpProduction(models.Model):
     _inherit = 'mrp.production'
 
-    x_pedido_produccion_linea_id = fields.Many2one(
+    x_ped_produccion_id = fields.Many2one(
         comodel_name='x_calculo_de_minimos_y_line_b519a',
         string='Pedido a producción',
         index=True,

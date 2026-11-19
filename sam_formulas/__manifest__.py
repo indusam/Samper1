@@ -28,8 +28,12 @@
         'security/ir.model.access.csv',
         'views/views.xml',
         'views/templates.xml',
-        'views/mrp_production_auto_lot_views.xml',
+        # mrp_production_pedido_views.xml debe cargarse ANTES que
+        # mrp_production_auto_lot_views.xml: ambas heredan del mismo
+        # formulario y la validación recombina todo el árbol de vistas,
+        # así que la versión en BD de esta vista debe estar ya al día.
         'views/mrp_production_pedido_views.xml',
+        'views/mrp_production_auto_lot_views.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

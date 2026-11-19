@@ -10,7 +10,7 @@
                  El domain va aquí (y no en el campo Python) porque cita product_id,
                  que es un campo del registro en edición y debe estar en esta vista. -->
             <xpath expr="//div[@name='bom_div']" position="after">
-                <field name="x_pedido_produccion_linea_id"
+                <field name="x_ped_produccion_id"
                        domain="[('x_entregado', '=', False), ('x_product_id', '=', product_id)]"
                        options="{'no_create': True, 'no_open': False}"
                        readonly="not product_id or state in ['done', 'cancel']"/>
