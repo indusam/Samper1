@@ -6,11 +6,14 @@
         <field name="model">mrp.production</field>
         <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
         <field name="arch" type="xml">
-            <!-- Justo debajo de la Lista de Materiales, en la columna izquierda -->
+            <!-- Justo debajo de la Lista de Materiales, en la columna izquierda.
+                 El domain va aquí (y no en el campo Python) porque cita product_id,
+                 que es un campo del registro en edición y debe estar en esta vista. -->
             <xpath expr="//div[@name='bom_div']" position="after">
-                <field name="x_pedido_produccion_id"
+                <field name="x_pedido_produccion_linea_id"
+                       domain="[('x_entregado', '=', False), ('x_product_id', '=', product_id)]"
                        options="{'no_create': True, 'no_open': False}"
-                       readonly="state in ['done', 'cancel']"/>
+                       readonly="not product_id or state in ['done', 'cancel']"/>
             </xpath>
         </field>
     </record>
