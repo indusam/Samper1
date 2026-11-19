@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Añade el campo "Pedido a producción" al formulario de la orden de fabricación -->
+    <record id="view_mrp_production_form_inherit_pedido" model="ir.ui.view">
+        <field name="name">mrp.production.form.inherit.pedido.produccion</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <!-- Justo debajo de la Lista de Materiales, en la columna izquierda -->
+            <xpath expr="//div[@name='bom_div']" position="after">
+                <field name="x_pedido_produccion_id"
+                       options="{'no_create': True, 'no_open': False}"
+                       readonly="state in ['done', 'cancel']"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
