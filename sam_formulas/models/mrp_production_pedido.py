@@ -34,5 +34,5 @@ class MrpProduction(models.Model):
         ondelete='set null',
         help='Línea del pedido a producción (Cálculo de mínimos y máximos) '
              'que cubre esta orden de fabricación. Sólo se ofrecen las líneas '
-             'del mismo producto que aún no están entregadas.',
+             'confirmadas, no entregadas y del mismo producto que la orden.',
     )

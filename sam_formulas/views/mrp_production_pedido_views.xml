@@ -11,7 +11,9 @@
                  que es un campo del registro en edición y debe estar en esta vista. -->
             <xpath expr="//div[@name='bom_div']" position="after">
                 <field name="x_ped_produccion_id"
-                       domain="[('x_entregado', '=', False), ('x_product_id', '=', product_id)]"
+                       domain="[('x_confirmada', '=', True),
+                               ('x_entregado', '=', False),
+                               ('x_product_id', '=', product_id)]"
                        options="{'no_create': True, 'no_open': False}"
                        readonly="not product_id or state in ['done', 'cancel']"/>
             </xpath>
